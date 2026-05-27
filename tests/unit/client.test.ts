@@ -31,9 +31,32 @@ describe("OtariClient constructor", () => {
     process.env = { ...envBackup };
   });
 
-  it("throws when apiBase is not provided and env is unset", () => {
+  it("throws when apiBase is not provided and env is unset (non-platform mode)", () => {
     delete process.env.GATEWAY_API_BASE;
+    delete process.env.GATEWAY_PLATFORM_TOKEN;
     expect(() => new OtariClient()).toThrow("api_base is required");
+  });
+
+  it("defaults to https://gateway.otari.ai when only platformToken is given", () => {
+    delete process.env.GATEWAY_API_BASE;
+    delete process.env.GATEWAY_PLATFORM_TOKEN;
+    const client = new OtariClient({ platformToken: "tk_test" });
+    expect(client.platformMode).toBe(true);
+    expect(client.openai.baseURL).toBe("https://gateway.otari.ai/v1");
+  });
+
+  it("defaults to https://gateway.otari.ai when only GATEWAY_PLATFORM_TOKEN env is set", () => {
+    delete process.env.GATEWAY_API_BASE;
+    process.env.GATEWAY_PLATFORM_TOKEN = "tk_env_default";
+    const client = new OtariClient();
+    expect(client.platformMode).toBe(true);
+    expect(client.openai.baseURL).toBe("https://gateway.otari.ai/v1");
+  });
+
+  it("does not default the base URL in non-platform (apiKey) mode", () => {
+    delete process.env.GATEWAY_API_BASE;
+    delete process.env.GATEWAY_PLATFORM_TOKEN;
+    expect(() => new OtariClient({ apiKey: "k" })).toThrow("api_base is required");
   });
 
   it("uses apiBase from options", () => {
