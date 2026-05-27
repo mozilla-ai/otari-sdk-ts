@@ -33,28 +33,32 @@ describe("OtariClient constructor", () => {
 
   it("throws when apiBase is not provided and env is unset (non-platform mode)", () => {
     delete process.env.GATEWAY_API_BASE;
+    delete process.env.OTARI_AI_TOKEN;
     delete process.env.GATEWAY_PLATFORM_TOKEN;
     expect(() => new OtariClient()).toThrow("api_base is required");
   });
 
-  it("defaults to https://gateway.otari.ai when only platformToken is given", () => {
+  it("defaults to https://api.otari.ai when only platformToken is given", () => {
     delete process.env.GATEWAY_API_BASE;
+    delete process.env.OTARI_AI_TOKEN;
     delete process.env.GATEWAY_PLATFORM_TOKEN;
     const client = new OtariClient({ platformToken: "tk_test" });
     expect(client.platformMode).toBe(true);
-    expect(client.openai.baseURL).toBe("https://gateway.otari.ai/v1");
+    expect(client.openai.baseURL).toBe("https://api.otari.ai/v1");
   });
 
-  it("defaults to https://gateway.otari.ai when only GATEWAY_PLATFORM_TOKEN env is set", () => {
+  it("defaults to https://api.otari.ai when only OTARI_AI_TOKEN env is set", () => {
     delete process.env.GATEWAY_API_BASE;
-    process.env.GATEWAY_PLATFORM_TOKEN = "tk_env_default";
+    delete process.env.GATEWAY_PLATFORM_TOKEN;
+    process.env.OTARI_AI_TOKEN = "tk_env_default";
     const client = new OtariClient();
     expect(client.platformMode).toBe(true);
-    expect(client.openai.baseURL).toBe("https://gateway.otari.ai/v1");
+    expect(client.openai.baseURL).toBe("https://api.otari.ai/v1");
   });
 
   it("does not default the base URL in non-platform (apiKey) mode", () => {
     delete process.env.GATEWAY_API_BASE;
+    delete process.env.OTARI_AI_TOKEN;
     delete process.env.GATEWAY_PLATFORM_TOKEN;
     expect(() => new OtariClient({ apiKey: "k" })).toThrow("api_base is required");
   });
@@ -91,8 +95,9 @@ describe("OtariClient constructor", () => {
       expect(client.openai.apiKey).toBe("tk_test123");
     });
 
-    it("activates via GATEWAY_PLATFORM_TOKEN env when no apiKey is set", () => {
-      process.env.GATEWAY_PLATFORM_TOKEN = "tk_env_token";
+    it("activates via OTARI_AI_TOKEN env when no apiKey is set", () => {
+      delete process.env.GATEWAY_PLATFORM_TOKEN;
+      process.env.OTARI_AI_TOKEN = "tk_env_token";
       const client = new OtariClient({
         apiBase: "http://localhost:8000",
       });
@@ -100,8 +105,27 @@ describe("OtariClient constructor", () => {
       expect(client.openai.apiKey).toBe("tk_env_token");
     });
 
+    it("falls back to legacy GATEWAY_PLATFORM_TOKEN env when OTARI_AI_TOKEN is unset", () => {
+      delete process.env.OTARI_AI_TOKEN;
+      process.env.GATEWAY_PLATFORM_TOKEN = "tk_legacy_token";
+      const client = new OtariClient({
+        apiBase: "http://localhost:8000",
+      });
+      expect(client.platformMode).toBe(true);
+      expect(client.openai.apiKey).toBe("tk_legacy_token");
+    });
+
+    it("prefers OTARI_AI_TOKEN over the legacy GATEWAY_PLATFORM_TOKEN", () => {
+      process.env.OTARI_AI_TOKEN = "tk_canonical";
+      process.env.GATEWAY_PLATFORM_TOKEN = "tk_legacy";
+      const client = new OtariClient({
+        apiBase: "http://localhost:8000",
+      });
+      expect(client.openai.apiKey).toBe("tk_canonical");
+    });
+
     it("does not activate when apiKey option is also provided", () => {
-      process.env.GATEWAY_PLATFORM_TOKEN = "tk_env_token";
+      process.env.OTARI_AI_TOKEN = "tk_env_token";
       const client = new OtariClient({
         apiBase: "http://localhost:8000",
         apiKey: "my-key",
@@ -113,6 +137,7 @@ describe("OtariClient constructor", () => {
 
   describe("non-platform mode", () => {
     it("is the default when no platform token is available", () => {
+      delete process.env.OTARI_AI_TOKEN;
       delete process.env.GATEWAY_PLATFORM_TOKEN;
       const client = new OtariClient({
         apiBase: "http://localhost:8000",
@@ -133,6 +158,7 @@ describe("OtariClient constructor", () => {
 
     it("falls back to GATEWAY_API_KEY env var", () => {
       process.env.GATEWAY_API_KEY = "env-key";
+      delete process.env.OTARI_AI_TOKEN;
       delete process.env.GATEWAY_PLATFORM_TOKEN;
       const client = new OtariClient({
         apiBase: "http://localhost:8000",

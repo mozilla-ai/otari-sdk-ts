@@ -135,7 +135,8 @@ export interface RerankResponse {
  *
  * Auth resolution order (mirrors the Python GatewayProvider):
  *  1. Explicit `platformToken` -> platform mode (Bearer token in Authorization header)
- *  2. `GATEWAY_PLATFORM_TOKEN` env var (when no `apiKey`) -> platform mode
+ *  2. `OTARI_AI_TOKEN` (or legacy `GATEWAY_PLATFORM_TOKEN`) env var (when no
+ *     `apiKey`) -> platform mode
  *  3. `apiKey` or `GATEWAY_API_KEY` env var -> non-platform mode (Otari-Key header)
  *  4. No credentials -> non-platform mode, no auth header
  */
@@ -156,7 +157,8 @@ export interface OtariClientOptions {
   /**
    * Platform token for platform mode.
    * Sent as a standard Bearer token in the Authorization header.
-   * Falls back to the `GATEWAY_PLATFORM_TOKEN` environment variable.
+   * Falls back to the `OTARI_AI_TOKEN` environment variable
+   * (or the legacy `GATEWAY_PLATFORM_TOKEN` alias).
    */
   platformToken?: string;
 

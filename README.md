@@ -40,75 +40,19 @@ const response = await client.completion({
 console.log(response.choices[0].message.content);
 ```
 
-That's it — the client defaults to the hosted gateway at `https://gateway.otari.ai`. Change the `model` string to switch providers.
+That's it — the client defaults to the hosted gateway at `https://api.otari.ai`. Change the `model` string to switch providers.
 
 Prefer to keep secrets out of code? Create a `.env` (copy [`.env.example`](./.env.example)) and run with `node --env-file=.env your-script.js` — Node 20.6+ loads it natively, no extra dependency:
 
 ```ini
-GATEWAY_PLATFORM_TOKEN=tk_your_project_token
+OTARI_AI_TOKEN=tk_your_project_token
 ```
 
 Then `new OtariClient()` picks up the token from the environment.
 
-## Where to point the SDK
+## Self-hosting the gateway
 
-The SDK always talks to a gateway. You have two options:
-
-### Option A — Hosted gateway at otari.ai (recommended)
-
-Sign up at [otari.ai](https://otari.ai/), create a project, and grab a project token. The SDK defaults to `https://gateway.otari.ai`, so you only need the token:
-
-```ini
-GATEWAY_PLATFORM_TOKEN=tk_your_project_token
-```
-
-(Or pass `platformToken` directly in the constructor — see the [Quickstart](#quickstart).)
-
-### Option B — Self-host the gateway
-
-You decide where it runs — locally, in a VM, in a container. Point `GATEWAY_API_BASE` wherever that is.
-
-Locally with [`uv`](https://docs.astral.sh/uv/) (no Docker required):
-
-```bash
-git clone https://github.com/mozilla-ai/otari.git
-cd otari
-uv venv && source .venv/bin/activate
-uv sync --dev
-cp config.example.yml config.yml      # then edit master_key + provider creds
-uv run gateway serve --config config.yml
-```
-
-A self-hosted gateway runs in **standalone mode** by default. Authenticate with one of the API keys it issues (`/v1/keys` or the bootstrap key printed at startup).
-
-For Docker, docker-compose, production deployment, and configuration options, see the [otari gateway repo](https://github.com/mozilla-ai/otari).
-
-## Authentication modes
-
-The SDK auto-detects which mode to use from env vars (or you can pass options explicitly).
-
-### Platform mode — Bearer token
-
-Use this for the hosted otari.ai gateway, or any self-hosted gateway you've connected to otari.ai (via `OTARI_AI_TOKEN`). The SDK sends the token in the standard `Authorization: Bearer …` header.
-
-```typescript
-// Defaults apiBase to https://gateway.otari.ai
-const client = new OtariClient({
-  platformToken: "tk_your_project_token",
-});
-
-// Or point at a self-hosted, platform-connected gateway:
-const client2 = new OtariClient({
-  apiBase: "https://gateway.example.com",
-  platformToken: "tk_your_project_token",
-});
-```
-
-Env: `GATEWAY_PLATFORM_TOKEN` (optionally `GATEWAY_API_BASE` to override the default).
-
-### API-key mode — `Otari-Key` header
-
-Use this for a standalone self-hosted gateway, which manages its own API keys. The SDK sends the key via the custom `Otari-Key: Bearer …` header.
+Prefer to run the gateway yourself instead of using the hosted otari.ai? Follow the setup in the [otari gateway repo](https://github.com/mozilla-ai/otari), then point the SDK at it:
 
 ```typescript
 const client = new OtariClient({
@@ -117,7 +61,7 @@ const client = new OtariClient({
 });
 ```
 
-Env: `GATEWAY_API_BASE` + `GATEWAY_API_KEY`.
+The SDK sends `apiKey` via the custom `Otari-Key: Bearer …` header. Env: `GATEWAY_API_BASE` + `GATEWAY_API_KEY`.
 
 ## Usage
 
