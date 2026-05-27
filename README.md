@@ -79,19 +79,9 @@ cp config.example.yml config.yml      # then edit master_key + provider creds
 uv run gateway serve --config config.yml
 ```
 
-Or with Docker:
-
-```bash
-docker run \
-  -p 8000:8000 \
-  -v "$(pwd)/config.yml:/app/config.yml:ro" \
-  mzdotai/otari:latest \
-  gateway serve --config /app/config.yml
-```
-
 A self-hosted gateway runs in **standalone mode** by default. Authenticate with one of the API keys it issues (`/v1/keys` or the bootstrap key printed at startup).
 
-See the [otari gateway repo](https://github.com/mozilla-ai/otari) for full deployment, configuration, and multi-provider routing options.
+For Docker, docker-compose, production deployment, and configuration options, see the [otari gateway repo](https://github.com/mozilla-ai/otari).
 
 ## Authentication modes
 
