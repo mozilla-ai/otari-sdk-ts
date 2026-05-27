@@ -51,8 +51,7 @@
   },
   "homepage": "https://github.com/mozilla-ai/otari-sdk-ts#readme",
   "publishConfig": {
-    "access": "public",
-    "provenance": true
+    "access": "public"
   },
   "engines": {
     "node": ">=24"
