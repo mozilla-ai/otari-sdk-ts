@@ -3,20 +3,24 @@
   "version": "0.1.0",
   "description": "TypeScript SDK for the otari gateway",
   "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "default": "./dist/index.js"
     }
   },
   "files": [
     "dist",
-    "LICENSE"
+    "LICENSE",
+    "README.md"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsc",
     "test": "vitest run",
     "test:unit": "vitest run tests/unit",
     "test:watch": "vitest",
@@ -26,6 +30,7 @@
     "format": "biome format src/ tests/",
     "format:fix": "biome format --write src/ tests/",
     "check": "biome check src/ tests/ && tsc --noEmit",
+    "clean": "rm -rf dist",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
@@ -35,22 +40,30 @@
     "openai",
     "otari"
   ],
+  "author": "Mozilla.ai",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mozilla-ai/otari-sdk-ts"
+    "url": "git+https://github.com/mozilla-ai/otari-sdk-ts.git"
   },
-  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/mozilla-ai/otari-sdk-ts/issues"
+  },
+  "homepage": "https://github.com/mozilla-ai/otari-sdk-ts#readme",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "dependencies": {
-    "openai": "^6.34.0"
+    "openai": "^6.39.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.11",
-    "@types/node": "^25.6.0",
-    "tsup": "^8.4.0",
-    "typescript": "^6.0.2",
-    "vitest": "^4.1.4"
+    "@biomejs/biome": "^2.4.16",
+    "@types/node": "^24.12.4",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.7"
   }
 }

@@ -50,6 +50,7 @@ import type {
 
 const PROVIDER_NAME = "gateway";
 const GATEWAY_HEADER_NAME = "Otari-Key";
+const DEFAULT_PLATFORM_API_BASE = "https://api.otari.ai";
 
 /**
  * Locked phrasing used by the gateway to signal that the selected
@@ -61,7 +62,10 @@ const UNSUPPORTED_MODERATION_RE = /does not support (?:multimodal )?moderation/;
 
 const ENV_API_BASE = "GATEWAY_API_BASE";
 const ENV_API_KEY = "GATEWAY_API_KEY";
-const ENV_PLATFORM_TOKEN = "GATEWAY_PLATFORM_TOKEN";
+// Canonical platform-token env var, plus a legacy alias kept for back-compat.
+// Matches the gateway server's own alias chain (OTARI_AI_TOKEN preferred).
+const ENV_PLATFORM_TOKEN = "OTARI_AI_TOKEN";
+const ENV_PLATFORM_TOKEN_LEGACY = "GATEWAY_PLATFORM_TOKEN";
 
 /** Map of HTTP status codes to error constructors (for simple 1:1 mappings). */
 const STATUS_TO_ERROR: Record<number, typeof AuthenticationError | typeof ModelNotFoundError> = {
@@ -114,7 +118,24 @@ export class OtariClient {
   private readonly authHeaders: Record<string, string>;
 
   constructor(options: OtariClientOptions = {}) {
-    const rawBase = options.apiBase ?? process.env[ENV_API_BASE];
+    const platformToken =
+      options.platformToken ??
+      process.env[ENV_PLATFORM_TOKEN] ??
+      process.env[ENV_PLATFORM_TOKEN_LEGACY];
+    const apiKey = options.apiKey ?? process.env[ENV_API_KEY] ?? "";
+
+    // Platform mode activates when a platformToken is available and the caller
+    // hasn't explicitly passed an apiKey (which would force non-platform mode).
+    const willUsePlatformMode = Boolean(platformToken) && !options.apiKey;
+
+    // In platform mode, fall back to the hosted otari.ai gateway so that
+    // `new OtariClient({ platformToken })` works with no further setup.
+    // For standalone gateways the caller must supply apiBase — we have no
+    // way to know where they've hosted it.
+    const rawBase =
+      options.apiBase ??
+      process.env[ENV_API_BASE] ??
+      (willUsePlatformMode ? DEFAULT_PLATFORM_API_BASE : undefined);
 
     if (!rawBase) {
       throw new Error(
@@ -131,9 +152,6 @@ export class OtariClient {
       : `${rawBase.replace(/\/+$/, "")}/v1`;
 
     this.baseURL = apiBase;
-
-    const platformToken = options.platformToken ?? process.env[ENV_PLATFORM_TOKEN];
-    const apiKey = options.apiKey ?? process.env[ENV_API_KEY] ?? "";
 
     const headers: Record<string, string> = { ...options.defaultHeaders };
 
