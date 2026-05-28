@@ -347,25 +347,22 @@ describe("OtariClient gateway error body translation", () => {
     [404, "Model 'openai:gpt-4o-mini' is not available.", ModelNotFoundError],
     [401, "Invalid token.", AuthenticationError],
     [429, "Daily request quota exceeded.", RateLimitError],
-  ])(
-    "surfaces gateway detail in the error message (%i %s)",
-    async (status, detail, ErrorClass) => {
-      stubFetchWithBody(status, { detail });
-      const client = new OtariClient({
-        apiBase: "http://localhost:8000",
-        platformToken: "tk_test",
-      });
-      await expect(
-        client.completion({
-          model: "openai:gpt-4o-mini",
-          messages: [{ role: "user", content: "hi" }],
-        }),
-      ).rejects.toMatchObject({
-        constructor: ErrorClass,
-        message: expect.stringContaining(detail),
-      });
-    },
-  );
+  ])("surfaces gateway detail in the error message (%i %s)", async (status, detail, ErrorClass) => {
+    stubFetchWithBody(status, { detail });
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      platformToken: "tk_test",
+    });
+    await expect(
+      client.completion({
+        model: "openai:gpt-4o-mini",
+        messages: [{ role: "user", content: "hi" }],
+      }),
+    ).rejects.toMatchObject({
+      constructor: ErrorClass,
+      message: expect.stringContaining(detail),
+    });
+  });
 });
 
 describe("OtariClient error handling (non-platform mode)", () => {
