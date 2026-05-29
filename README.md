@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/otari-logo.svg" width="320" alt="otari logo"/>
+</p>
+
 <div align="center">
 
 # otari (TypeScript)
