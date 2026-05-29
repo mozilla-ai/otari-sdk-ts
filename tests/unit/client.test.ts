@@ -320,6 +320,51 @@ describe("OtariClient error handling (platform mode)", () => {
   });
 });
 
+describe("OtariClient gateway error body translation", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  // Replace the OpenAI SDK's underlying fetch with one that always
+  // returns a response built from the given status + body. Exercises
+  // the wrapper that rewrites `{detail: "..."}` into the shape the
+  // OpenAI SDK reads when generating error messages.
+  function stubFetchWithBody(status: number, body: unknown): void {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(
+        async () =>
+          new Response(JSON.stringify(body), {
+            status,
+            headers: { "content-type": "application/json" },
+          }),
+      ),
+    );
+  }
+
+  it.each([
+    [404, "ProviderKey not found.", ModelNotFoundError],
+    [404, "Model 'openai:gpt-4o-mini' is not available.", ModelNotFoundError],
+    [401, "Invalid token.", AuthenticationError],
+    [429, "Daily request quota exceeded.", RateLimitError],
+  ])("surfaces gateway detail in the error message (%i %s)", async (status, detail, ErrorClass) => {
+    stubFetchWithBody(status, { detail });
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      platformToken: "tk_test",
+    });
+    await expect(
+      client.completion({
+        model: "openai:gpt-4o-mini",
+        messages: [{ role: "user", content: "hi" }],
+      }),
+    ).rejects.toMatchObject({
+      constructor: ErrorClass,
+      message: expect.stringContaining(detail),
+    });
+  });
+});
+
 describe("OtariClient error handling (non-platform mode)", () => {
   it("does not map errors in non-platform mode", async () => {
     const client = new OtariClient({
