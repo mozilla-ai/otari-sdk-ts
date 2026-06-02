@@ -53,6 +53,37 @@ const GATEWAY_HEADER_NAME = "Otari-Key";
 const DEFAULT_PLATFORM_API_BASE = "https://api.otari.ai";
 
 /**
+ * Wrap a fetch implementation so gateway error bodies (`{"detail":"…"}`)
+ * are translated into the `{error:{message:"…"}}` shape the OpenAI SDK
+ * reads when constructing error messages. Without this every typed
+ * otari error surfaces as `"<status> status code (no body)"` instead of
+ * the actual detail returned by the gateway.
+ */
+function wrapFetchForGatewayErrors(baseFetch: typeof fetch): typeof fetch {
+  return async (input, init) => {
+    const response = await baseFetch(input, init);
+    if (response.ok) return response;
+
+    const text = await response.text();
+    let body = text;
+    try {
+      const parsed = JSON.parse(text) as { detail?: unknown; error?: unknown };
+      if (typeof parsed.detail === "string" && parsed.error === undefined) {
+        body = JSON.stringify({ error: { message: parsed.detail } });
+      }
+    } catch {
+      // Body wasn't JSON — leave it untouched.
+    }
+
+    return new Response(body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: response.headers,
+    });
+  };
+}
+
+/**
  * Locked phrasing used by the gateway to signal that the selected
  * provider does not support a moderation request. Matches both the
  * plain "does not support moderation" and "does not support multimodal
@@ -159,6 +190,13 @@ export class OtariClient {
     // 1. Explicit platformToken -> platform mode
     // 2. GATEWAY_PLATFORM_TOKEN env + no apiKey option -> platform mode
     // 3. Otherwise -> non-platform mode
+    // Route the OpenAI client through a fetch wrapper that rewrites
+    // gateway error bodies into the shape OpenAI's SDK reads, so typed
+    // errors carry the real detail instead of "no body".
+    const userOpenAIOptions = { ...options.openaiOptions } as Record<string, unknown>;
+    const userFetch = (userOpenAIOptions.fetch as typeof fetch | undefined) ?? globalThis.fetch;
+    userOpenAIOptions.fetch = wrapFetchForGatewayErrors(userFetch);
+
     if (platformToken && !options.apiKey) {
       this.platformMode = true;
       this.platformToken = platformToken;
@@ -166,7 +204,7 @@ export class OtariClient {
         apiKey: platformToken,
         baseURL: apiBase,
         defaultHeaders: headers,
-        ...options.openaiOptions,
+        ...userOpenAIOptions,
       });
     } else {
       this.platformMode = false;
@@ -181,7 +219,7 @@ export class OtariClient {
         apiKey: apiKey || "unused",
         baseURL: apiBase,
         defaultHeaders: headers,
-        ...options.openaiOptions,
+        ...userOpenAIOptions,
       });
     }
 

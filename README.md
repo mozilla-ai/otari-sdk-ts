@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/otari-logo.svg" width="320" alt="otari logo"/>
+</p>
+
 <div align="center">
 
 # otari (TypeScript)
@@ -11,7 +15,7 @@
 **TypeScript client for [otari-gateway](https://github.com/mozilla-ai/otari).**
 Talk to any LLM provider through the gateway using a single, typed interface.
 
-[Python SDK](https://github.com/mozilla-ai/otari) · [Hosted Platform (Beta)](https://otari.ai/)
+[Hosted Platform (Beta)](https://otari.ai/)
 
 </div>
 
@@ -23,13 +27,13 @@ Install:
 npm install @mozilla-ai/otari
 ```
 
-Grab a project token from [otari.ai](https://otari.ai/) and use the client:
+Generate an API token at [otari.ai/organization-settings/api-tokens](https://otari.ai/organization-settings/api-tokens), then add a provider key (e.g. OpenAI) at [otari.ai/organization-settings/provider-keys](https://otari.ai/organization-settings/provider-keys) so the gateway can route requests to that provider. Then use the client:
 
 ```typescript
 import { OtariClient } from "@mozilla-ai/otari";
 
 const client = new OtariClient({
-  platformToken: "tk_your_project_token",
+  platformToken: "tk_your_api_token",
 });
 
 const response = await client.completion({
@@ -45,7 +49,7 @@ That's it — the client defaults to the hosted gateway at `https://api.otari.ai
 Prefer to keep secrets out of code? Create a `.env` (copy [`.env.example`](./.env.example)) and run with `node --env-file=.env your-script.js` — Node 20.6+ loads it natively, no extra dependency:
 
 ```ini
-OTARI_AI_TOKEN=tk_your_project_token
+OTARI_AI_TOKEN=tk_your_api_token
 ```
 
 Then `new OtariClient()` picks up the token from the environment.
@@ -62,6 +66,8 @@ const client = new OtariClient({
 ```
 
 The SDK sends `apiKey` via the custom `Otari-Key: Bearer …` header. Env: `GATEWAY_API_BASE` + `GATEWAY_API_KEY`.
+
+Make sure your gateway has provider keys configured (e.g. OpenAI) so it can route requests upstream — see the [otari gateway repo](https://github.com/mozilla-ai/otari) for setup.
 
 ## Usage
 
@@ -179,7 +185,7 @@ try {
 | 400 (capability) | `UnsupportedCapabilityError` | Selected provider does not support the requested capability (e.g. moderation) |
 | 401, 403 | `AuthenticationError` | Invalid or missing credentials |
 | 402 | `InsufficientFundsError` | Budget or credits exhausted |
-| 404 | `ModelNotFoundError` | Model not found or unavailable |
+| 404 | `ModelNotFoundError` | Model not found, or no provider key configured for the requested provider — add one at [otari.ai/organization-settings/provider-keys](https://otari.ai/organization-settings/provider-keys). The exception's `message` contains the gateway's detail. |
 | 429 | `RateLimitError` | Rate limit exceeded (includes `retryAfter`) |
 | 502 | `UpstreamProviderError` | Upstream provider unreachable |
 | 504 | `GatewayTimeoutError` | Gateway timed out waiting for provider |
