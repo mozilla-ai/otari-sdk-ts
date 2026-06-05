@@ -18,6 +18,7 @@
  */
 
 export { OtariClient } from "./client.js";
+export { ControlPlane } from "./controlPlane.js";
 export type { OtariErrorOptions } from "./errors.js";
 export {
   AuthenticationError,

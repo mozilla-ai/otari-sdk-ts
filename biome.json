@@ -25,7 +25,7 @@
     }
   },
   "files": {
-    "includes": ["src/**", "tests/**"]
+    "includes": ["src/**", "tests/**", "!src/_control_plane/**"]
   },
   "overrides": [
     {

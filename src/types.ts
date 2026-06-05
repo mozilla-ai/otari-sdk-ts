@@ -163,6 +163,13 @@ export interface OtariClientOptions {
   platformToken?: string;
 
   /**
+   * Admin/master credential for the control-plane (management) endpoints,
+   * sent as `Authorization: Bearer <key>`. Falls back to the
+   * `GATEWAY_ADMIN_KEY` environment variable, then to `platformToken`.
+   */
+  adminKey?: string;
+
+  /**
    * Additional default headers to send with every request.
    */
   defaultHeaders?: Record<string, string>;

@@ -23,7 +23,7 @@ import type {
   ResponseStreamEvent,
 } from "openai/resources/responses/responses";
 import type { Stream } from "openai/streaming";
-
+import { ControlPlane } from "./controlPlane.js";
 import {
   AuthenticationError,
   BatchNotCompleteError,
@@ -93,6 +93,7 @@ const UNSUPPORTED_MODERATION_RE = /does not support (?:multimodal )?moderation/;
 
 const ENV_API_BASE = "GATEWAY_API_BASE";
 const ENV_API_KEY = "GATEWAY_API_KEY";
+const ENV_ADMIN_KEY = "GATEWAY_ADMIN_KEY";
 // Canonical platform-token env var, plus a legacy alias kept for back-compat.
 // Matches the gateway server's own alias chain (OTARI_AI_TOKEN preferred).
 const ENV_PLATFORM_TOKEN = "OTARI_AI_TOKEN";
@@ -147,6 +148,14 @@ export class OtariClient {
 
   /** Auth headers for batch method direct HTTP calls. */
   private readonly authHeaders: Record<string, string>;
+
+  /** Gateway root URL (without the `/v1` suffix), for the control-plane client. */
+  private readonly gatewayRoot: string;
+
+  /** Admin/master credential for the control-plane (management) endpoints. */
+  private readonly adminToken?: string;
+
+  private cachedControlPlane?: ControlPlane;
 
   constructor(options: OtariClientOptions = {}) {
     const platformToken =
@@ -233,6 +242,32 @@ export class OtariClient {
     if (options.defaultHeaders) {
       Object.assign(this.authHeaders, options.defaultHeaders);
     }
+
+    // Control-plane (management) endpoints expect `Authorization: Bearer
+    // <admin/master key>`. In platform mode the platform token already serves
+    // as that bearer; for a self-hosted gateway the caller passes the master
+    // key as `adminKey` (or via GATEWAY_ADMIN_KEY). The control-plane client
+    // targets the gateway root (the generated paths already include `/v1`).
+    this.gatewayRoot = apiBase.replace(/\/v1$/, "");
+    this.adminToken = options.adminKey ?? process.env[ENV_ADMIN_KEY] ?? platformToken;
+  }
+
+  /**
+   * Typed client for the management endpoints (keys, users, budgets, pricing, usage).
+   *
+   * Requires an admin credential: pass `adminKey` (the gateway master key), set
+   * `GATEWAY_ADMIN_KEY`, or use `platformToken` (which doubles as the
+   * control-plane bearer in platform mode).
+   */
+  get controlPlane(): ControlPlane {
+    if (!this.adminToken) {
+      throw new OtariError({
+        message:
+          "control-plane management requires an admin credential; pass adminKey or use platformToken",
+      });
+    }
+    this.cachedControlPlane ??= new ControlPlane(this.gatewayRoot, this.adminToken);
+    return this.cachedControlPlane;
   }
 
   // -- Chat completions -----------------------------------------------------
