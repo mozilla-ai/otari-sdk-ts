@@ -1,0 +1,149 @@
+# otari-control-plane@0.0.0-dev
+
+A TypeScript SDK client for the localhost API.
+
+## Usage
+
+First, install the SDK from npm.
+
+```bash
+npm install otari-control-plane --save
+```
+
+Next, try it out.
+
+
+```ts
+import {
+  Configuration,
+  BudgetsApi,
+} from 'otari-control-plane';
+import type { CreateBudgetV1BudgetsPostRequest } from 'otari-control-plane';
+
+async function example() {
+  console.log("🚀 Testing otari-control-plane SDK...");
+  const api = new BudgetsApi();
+
+  const body = {
+    // CreateBudgetRequest
+    createBudgetRequest: ...,
+  } satisfies CreateBudgetV1BudgetsPostRequest;
+
+  try {
+    const data = await api.createBudgetV1BudgetsPost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+
+## Documentation
+
+### API Endpoints
+
+All URIs are relative to *http://localhost*
+
+| Class | Method | HTTP request | Description
+| ----- | ------ | ------------ | -------------
+*BudgetsApi* | [**createBudgetV1BudgetsPost**](docs/BudgetsApi.md#createbudgetv1budgetspost) | **POST** /v1/budgets | Create Budget
+*BudgetsApi* | [**deleteBudgetV1BudgetsBudgetIdDelete**](docs/BudgetsApi.md#deletebudgetv1budgetsbudgetiddelete) | **DELETE** /v1/budgets/{budget_id} | Delete Budget
+*BudgetsApi* | [**getBudgetV1BudgetsBudgetIdGet**](docs/BudgetsApi.md#getbudgetv1budgetsbudgetidget) | **GET** /v1/budgets/{budget_id} | Get Budget
+*BudgetsApi* | [**listBudgetsV1BudgetsGet**](docs/BudgetsApi.md#listbudgetsv1budgetsget) | **GET** /v1/budgets | List Budgets
+*BudgetsApi* | [**updateBudgetV1BudgetsBudgetIdPatch**](docs/BudgetsApi.md#updatebudgetv1budgetsbudgetidpatch) | **PATCH** /v1/budgets/{budget_id} | Update Budget
+*KeysApi* | [**createKeyV1KeysPost**](docs/KeysApi.md#createkeyv1keyspost) | **POST** /v1/keys | Create Key
+*KeysApi* | [**deleteKeyV1KeysKeyIdDelete**](docs/KeysApi.md#deletekeyv1keyskeyiddelete) | **DELETE** /v1/keys/{key_id} | Delete Key
+*KeysApi* | [**getKeyV1KeysKeyIdGet**](docs/KeysApi.md#getkeyv1keyskeyidget) | **GET** /v1/keys/{key_id} | Get Key
+*KeysApi* | [**listKeysV1KeysGet**](docs/KeysApi.md#listkeysv1keysget) | **GET** /v1/keys | List Keys
+*KeysApi* | [**updateKeyV1KeysKeyIdPatch**](docs/KeysApi.md#updatekeyv1keyskeyidpatch) | **PATCH** /v1/keys/{key_id} | Update Key
+*PricingApi* | [**deletePricingV1PricingModelKeyDelete**](docs/PricingApi.md#deletepricingv1pricingmodelkeydelete) | **DELETE** /v1/pricing/{model_key} | Delete Pricing
+*PricingApi* | [**getPricingHistoryV1PricingModelKeyHistoryGet**](docs/PricingApi.md#getpricinghistoryv1pricingmodelkeyhistoryget) | **GET** /v1/pricing/{model_key}/history | Get Pricing History
+*PricingApi* | [**getPricingV1PricingModelKeyGet**](docs/PricingApi.md#getpricingv1pricingmodelkeyget) | **GET** /v1/pricing/{model_key} | Get Pricing
+*PricingApi* | [**listPricingV1PricingGet**](docs/PricingApi.md#listpricingv1pricingget) | **GET** /v1/pricing | List Pricing
+*PricingApi* | [**setPricingV1PricingPost**](docs/PricingApi.md#setpricingv1pricingpost) | **POST** /v1/pricing | Set Pricing
+*UsageApi* | [**listUsageV1UsageGet**](docs/UsageApi.md#listusagev1usageget) | **GET** /v1/usage | List Usage
+*UsersApi* | [**createUserV1UsersPost**](docs/UsersApi.md#createuserv1userspost) | **POST** /v1/users | Create User
+*UsersApi* | [**deleteUserV1UsersUserIdDelete**](docs/UsersApi.md#deleteuserv1usersuseriddelete) | **DELETE** /v1/users/{user_id} | Delete User
+*UsersApi* | [**getUserUsageV1UsersUserIdUsageGet**](docs/UsersApi.md#getuserusagev1usersuseridusageget) | **GET** /v1/users/{user_id}/usage | Get User Usage
+*UsersApi* | [**getUserV1UsersUserIdGet**](docs/UsersApi.md#getuserv1usersuseridget) | **GET** /v1/users/{user_id} | Get User
+*UsersApi* | [**listUsersV1UsersGet**](docs/UsersApi.md#listusersv1usersget) | **GET** /v1/users | List Users
+*UsersApi* | [**updateUserV1UsersUserIdPatch**](docs/UsersApi.md#updateuserv1usersuseridpatch) | **PATCH** /v1/users/{user_id} | Update User
+
+
+### Models
+
+- [BudgetResponse](docs/BudgetResponse.md)
+- [CreateBudgetRequest](docs/CreateBudgetRequest.md)
+- [CreateKeyRequest](docs/CreateKeyRequest.md)
+- [CreateKeyResponse](docs/CreateKeyResponse.md)
+- [CreateUserRequest](docs/CreateUserRequest.md)
+- [HTTPValidationError](docs/HTTPValidationError.md)
+- [KeyInfo](docs/KeyInfo.md)
+- [LocationInner](docs/LocationInner.md)
+- [PricingResponse](docs/PricingResponse.md)
+- [SetPricingRequest](docs/SetPricingRequest.md)
+- [UpdateBudgetRequest](docs/UpdateBudgetRequest.md)
+- [UpdateKeyRequest](docs/UpdateKeyRequest.md)
+- [UpdateUserRequest](docs/UpdateUserRequest.md)
+- [UsageEntry](docs/UsageEntry.md)
+- [UsageLogResponse](docs/UsageLogResponse.md)
+- [UserResponse](docs/UserResponse.md)
+- [ValidationError](docs/ValidationError.md)
+
+### Authorization
+
+Endpoints do not require authorization.
+
+
+## About
+
+This TypeScript SDK client supports the [Fetch API](https://fetch.spec.whatwg.org/)
+and is automatically generated by the
+[OpenAPI Generator](https://openapi-generator.tech) project:
+
+- API version: `0.0.0-dev`
+- Package version: `0.0.0-dev`
+- Generator version: `7.22.0`
+- Build package: `org.openapitools.codegen.languages.TypeScriptFetchClientCodegen`
+
+The generated npm module supports the following:
+
+- Environments
+  * Node.js
+  * Webpack
+  * Browserify
+- Language levels
+  * ES5 - you must have a Promises/A+ library installed
+  * ES6
+- Module systems
+  * CommonJS
+  * ES6 module system
+
+
+## Development
+
+### Building
+
+To build the TypeScript source code, you need to have Node.js and npm installed.
+After cloning the repository, navigate to the project directory and run:
+
+```bash
+npm install
+npm run build
+```
+
+### Publishing
+
+Once you've built the package, you can publish it to npm:
+
+```bash
+npm publish
+```
+
+## License
+
+[]()
