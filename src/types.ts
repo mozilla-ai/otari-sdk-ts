@@ -1,57 +1,48 @@
 /**
  * Configuration and type re-exports for the otari gateway client.
+ *
+ * Option C: response/request types come from the OpenAPI-generated core in
+ * `./_client` (modeled from the *otari* spec, not OpenAI's), re-exported here
+ * so consumers can name them without reaching into the generated package.
  */
 
-import type OpenAI from "openai";
-import type { ChatCompletion } from "openai/resources/chat/completions";
+// ---------------------------------------------------------------------------
+// Re-export the generated models that callers interact with directly.
+// ---------------------------------------------------------------------------
+export type {
+  ChatCompletion,
+  ChatCompletionChunk,
+  ChatCompletionRequest,
+  CreateEmbeddingResponse,
+  EmbeddingRequest,
+  MessageResponse,
+  MessagesRequest,
+  ModelListResponse,
+  ModelObject,
+  ModerationRequest,
+  ModerationResponse,
+  ModerationResult,
+  RerankRequest,
+  RerankResponse,
+  ResponsesRequest,
+  RRRerankResult as RerankResult,
+} from "./_client/index.js";
 
-// Batches
-export type { Batch } from "openai/resources/batches";
-
-import type { Batch } from "openai/resources/batches";
+// ---------------------------------------------------------------------------
+// Batch types
+// ---------------------------------------------------------------------------
 
 /**
  * Batch response with the gateway-injected `provider` field.
  *
- * The gateway adds a `provider` string to the response on `POST /v1/batches`
- * (create). The OpenAI `Batch` type does not include this field, so this
- * intersection type captures it for callers who need it.
+ * The gateway adds a `provider` string to the response on `POST /v1/batches`.
+ * The generated batch responses are untyped (`any`), so this captures the
+ * provider field for callers who need it.
  */
-export type BatchWithProvider = Batch & { provider: string };
-// Re-export OpenAI types that callers will interact with directly.
-// This avoids forcing consumers to install/import 'openai' themselves.
-export type {
-  // Chat completions
-  ChatCompletion,
-  ChatCompletionChunk,
-  ChatCompletionCreateParams,
-  ChatCompletionMessageParam,
-} from "openai/resources/chat/completions";
-// Embeddings
-export type {
-  CreateEmbeddingResponse,
-  EmbeddingCreateParams,
-} from "openai/resources/embeddings";
-// Models
-export type { Model } from "openai/resources/models";
-// Moderation — re-exported from the OpenAI SDK for the default path.
-export type {
-  Moderation,
-  ModerationCreateParams,
-  ModerationCreateResponse,
-} from "openai/resources/moderations";
-
-// Responses API
-export type {
-  Response,
-  ResponseCreateParams,
-  ResponseStreamEvent,
-} from "openai/resources/responses/responses";
-
-// Streaming
-export type { Stream } from "openai/streaming";
-
-// -- Batch types ------------------------------------------------------------
+export type BatchWithProvider = { id: string; status: string; provider: string } & Record<
+  string,
+  unknown
+>;
 
 export interface BatchRequestItem {
   custom_id: string;
@@ -77,7 +68,7 @@ export interface BatchResultError {
 
 export interface BatchResultItem {
   custom_id: string;
-  result?: ChatCompletion;
+  result?: Record<string, unknown>;
   error?: BatchResultError;
 }
 
@@ -85,7 +76,9 @@ export interface BatchResult {
   results: BatchResultItem[];
 }
 
-// ── Rerank types (no OpenAI SDK equivalent) ──────────────────────
+// ---------------------------------------------------------------------------
+// Rerank params
+// ---------------------------------------------------------------------------
 
 /** Parameters for a rerank request. */
 export interface RerankParams {
@@ -103,91 +96,30 @@ export interface RerankParams {
   user?: string;
 }
 
-/** A single reranked result. */
-export interface RerankResult {
-  /** Zero-based index into the original documents array */
-  index: number;
-  /** Relevance score (higher = more relevant) */
-  relevance_score: number;
+// ---------------------------------------------------------------------------
+// Moderation params / extended responses
+// ---------------------------------------------------------------------------
+
+/** Parameters for a moderation request. */
+export interface ModerationCreateParams {
+  model: string;
+  input: string | string[] | Array<Record<string, unknown>>;
+  [key: string]: unknown;
 }
 
-/** Provider-specific billing metadata. */
-export interface RerankMeta {
-  billed_units?: Record<string, number>;
-  tokens?: Record<string, number>;
-}
-
-/** Normalized token usage. */
-export interface RerankUsage {
-  total_tokens?: number;
-}
-
-/** Rerank response from the gateway. */
-export interface RerankResponse {
+/** Default moderation response shape. */
+export interface ModerationCreateResponse {
   id: string;
-  results: RerankResult[];
-  meta?: RerankMeta;
-  usage?: RerankUsage;
+  model: string;
+  results: Array<{
+    flagged: boolean;
+    categories: Record<string, boolean>;
+    category_scores: Record<string, number>;
+    [key: string]: unknown;
+  }>;
 }
 
-/**
- * Options for constructing a {@link OtariClient}.
- *
- * Auth resolution order (mirrors the Python GatewayProvider):
- *  1. Explicit `platformToken` -> platform mode (Bearer token in Authorization header)
- *  2. `OTARI_AI_TOKEN` (or legacy `GATEWAY_PLATFORM_TOKEN`) env var (when no
- *     `apiKey`) -> platform mode
- *  3. `apiKey` or `GATEWAY_API_KEY` env var -> non-platform mode (Otari-Key header)
- *  4. No credentials -> non-platform mode, no auth header
- */
-export interface OtariClientOptions {
-  /**
-   * Base URL of the gateway (e.g. "http://localhost:8000").
-   * Falls back to the `GATEWAY_API_BASE` environment variable.
-   */
-  apiBase?: string;
-
-  /**
-   * API key for non-platform mode.
-   * Sent via the `Otari-Key: Bearer <key>` header.
-   * Falls back to the `GATEWAY_API_KEY` environment variable.
-   */
-  apiKey?: string;
-
-  /**
-   * Platform token for platform mode.
-   * Sent as a standard Bearer token in the Authorization header.
-   * Falls back to the `OTARI_AI_TOKEN` environment variable
-   * (or the legacy `GATEWAY_PLATFORM_TOKEN` alias).
-   */
-  platformToken?: string;
-
-  /**
-   * Admin/master credential for the control-plane (management) endpoints,
-   * sent as `Authorization: Bearer <key>`. Falls back to the
-   * `GATEWAY_ADMIN_KEY` environment variable, then to `platformToken`.
-   */
-  adminKey?: string;
-
-  /**
-   * Additional default headers to send with every request.
-   */
-  defaultHeaders?: Record<string, string>;
-
-  /**
-   * Extra options forwarded to the underlying OpenAI client constructor.
-   */
-  openaiOptions?: Omit<
-    ConstructorParameters<typeof OpenAI>[0],
-    "apiKey" | "baseURL" | "defaultHeaders"
-  >;
-}
-
-/**
- * Extended moderation result with optional `provider_raw`. Returned by
- * {@link OtariClient.moderation} only when the caller passes
- * `{ includeRaw: true }`.
- */
+/** Extended moderation result with optional `provider_raw` (returned with `includeRaw: true`). */
 export interface ModerationResultExt {
   category_applied_input_types?: Record<string, string[]>;
   category_scores: Record<string, number>;
@@ -196,13 +128,60 @@ export interface ModerationResultExt {
   provider_raw?: unknown;
 }
 
-/**
- * Extended moderation response shape used when `includeRaw: true` is
- * requested. Identical to OpenAI's shape but with {@link ModerationResultExt}
- * elements that preserve the provider's raw response body.
- */
+/** Extended moderation response used when `includeRaw: true` is requested. */
 export interface ModerationResponseExt {
   id: string;
   model: string;
   results: ModerationResultExt[];
+}
+
+// ---------------------------------------------------------------------------
+// Client options
+// ---------------------------------------------------------------------------
+
+/**
+ * Options for constructing an {@link OtariClient}.
+ *
+ * Auth resolution order (mirrors the Python SDK):
+ *  1. Explicit `platformToken` -> platform mode (Bearer in Authorization header)
+ *  2. `OTARI_AI_TOKEN` (or legacy `GATEWAY_PLATFORM_TOKEN`) env var (when no
+ *     `apiKey`) -> platform mode
+ *  3. `apiKey` or `GATEWAY_API_KEY` env var -> non-platform mode (`Otari-Key` header)
+ *  4. No credentials -> non-platform mode, no auth header
+ */
+export interface OtariClientOptions {
+  /**
+   * Base URL of the gateway (e.g. "http://localhost:8000").
+   * Falls back to `GATEWAY_API_BASE`; in platform mode defaults to
+   * `https://api.otari.ai`.
+   */
+  apiBase?: string;
+
+  /**
+   * API key for non-platform mode. Sent via `Otari-Key: Bearer <key>`.
+   * Falls back to `GATEWAY_API_KEY`.
+   */
+  apiKey?: string;
+
+  /**
+   * Platform token for platform mode. Sent as Bearer in the Authorization
+   * header. Falls back to `OTARI_AI_TOKEN` (or legacy `GATEWAY_PLATFORM_TOKEN`).
+   */
+  platformToken?: string;
+
+  /**
+   * Admin/master credential for the control-plane (management) endpoints, sent
+   * as `Authorization: Bearer <key>`. Falls back to `GATEWAY_ADMIN_KEY`, then
+   * to `platformToken`.
+   */
+  adminKey?: string;
+
+  /** Additional default headers to send with every request. */
+  defaultHeaders?: Record<string, string>;
+
+  /**
+   * Custom `fetch` implementation, shared across the generated core, the SSE
+   * streaming shim, and the control-plane. Defaults to the global `fetch`.
+   */
+  fetch?: typeof fetch;
 }
