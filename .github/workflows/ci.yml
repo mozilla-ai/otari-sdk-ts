@@ -55,6 +55,12 @@ jobs:
 
       - run: npm run test:unit
 
+      # Endpoint-coverage drift gate: fetches the canonical gateway OpenAPI spec
+      # and fails if it exposes an endpoint absent from sdk-endpoints.txt
+      # ([covered] or [excluded]). Network is available in CI, so it must not skip.
+      - name: Endpoint-coverage drift gate
+        run: npx vitest run tests/unit/endpointCoverage.test.ts
+
   build:
     name: Build
     runs-on: ubuntu-latest
