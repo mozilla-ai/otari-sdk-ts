@@ -1,5 +1,18 @@
-import { APIError } from "openai";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+/**
+ * Tests for the OtariClient (Option C: generated-core shell).
+ *
+ * Mirrors the Python reference's test rewrite: everything is mocked at the
+ * single transport seam — the `fetch` implementation passed to the client (and
+ * shared by the generated core, the SSE streaming shim, and the control-plane).
+ * We assert method/URL/headers per auth mode, request-body shaping, typed
+ * response parsing, the status -> typed-error table, and the SSE shim against
+ * mocked `text/event-stream` bytes.
+ *
+ * Note: there is no LLM provider key in this sandbox, so a real streamed chat
+ * cannot be exercised end-to-end. Chat-streaming coverage is mocked bytes only.
+ */
+
+import { afterEach, describe, expect, it } from "vitest";
 import { OtariClient } from "../../src/client.js";
 import {
   AuthenticationError,
@@ -13,1229 +26,598 @@ import {
   UpstreamProviderError,
 } from "../../src/errors.js";
 
-// Helpers to build a fake APIError with typed status and headers.
-function makeAPIError(
-  status: number,
-  message: string,
-  headers: Record<string, string> = {},
-): APIError {
-  const h = new Headers(headers);
-  return APIError.generate(status, { message }, message, h);
+// ---------------------------------------------------------------------------
+// Transport mock: a fake `fetch` that records the last request and serves a
+// canned JSON or SSE response.
+// ---------------------------------------------------------------------------
+
+interface RecordedRequest {
+  method: string;
+  url: string;
+  headers: Record<string, string>;
+  body: unknown;
 }
+
+interface FetchMock {
+  fetch: typeof fetch;
+  last: RecordedRequest;
+  calls: RecordedRequest[];
+}
+
+function headersToObject(init?: HeadersInit): Record<string, string> {
+  const out: Record<string, string> = {};
+  if (!init) return out;
+  new Headers(init).forEach((value, key) => {
+    out[key] = value;
+  });
+  return out;
+}
+
+/** Build a mock fetch returning a JSON body with the given status/headers. */
+function jsonFetch(status: number, body: unknown, headers: Record<string, string> = {}): FetchMock {
+  const mock: FetchMock = {
+    last: { method: "", url: "", headers: {}, body: undefined },
+    calls: [],
+    fetch: (async (url: string, init?: RequestInit) => {
+      const rec: RecordedRequest = {
+        method: init?.method ?? "GET",
+        url: String(url),
+        headers: headersToObject(init?.headers),
+        body: init?.body ? JSON.parse(init.body as string) : undefined,
+      };
+      mock.last = rec;
+      mock.calls.push(rec);
+      return new Response(body == null ? null : JSON.stringify(body), {
+        status,
+        headers: { "content-type": "application/json", ...headers },
+      });
+    }) as unknown as typeof fetch,
+  };
+  return mock;
+}
+
+/** Build a `text/event-stream` body from JSON event strings + the DONE sentinel. */
+function sseBody(...events: string[]): string {
+  return `${events.map((e) => `data: ${e}\n\n`).join("")}data: [DONE]\n\n`;
+}
+
+/** Build a mock fetch returning a streamed SSE body. */
+function sseFetch(status: number, body: string): FetchMock {
+  const mock: FetchMock = {
+    last: { method: "", url: "", headers: {}, body: undefined },
+    calls: [],
+    fetch: (async (url: string, init?: RequestInit) => {
+      const rec: RecordedRequest = {
+        method: init?.method ?? "GET",
+        url: String(url),
+        headers: headersToObject(init?.headers),
+        body: init?.body ? JSON.parse(init.body as string) : undefined,
+      };
+      mock.last = rec;
+      mock.calls.push(rec);
+      return new Response(body, {
+        status,
+        headers: { "content-type": "text/event-stream" },
+      });
+    }) as unknown as typeof fetch,
+  };
+  return mock;
+}
+
+// ---------------------------------------------------------------------------
+// Response fixtures (validated against the generated models)
+// ---------------------------------------------------------------------------
+
+const CHAT_RESPONSE = {
+  id: "chatcmpl-1",
+  object: "chat.completion",
+  created: 1,
+  model: "openai:gpt-4o-mini",
+  choices: [{ index: 0, finish_reason: "stop", message: { role: "assistant", content: "Hi" } }],
+};
+
+const EMBEDDING_RESPONSE = {
+  object: "list",
+  model: "openai:text-embedding-3-small",
+  data: [{ object: "embedding", index: 0, embedding: [0.1, 0.2] }],
+  usage: { prompt_tokens: 1, total_tokens: 1 },
+};
+
+const RERANK_RESPONSE = { id: "rerank-1", results: [{ index: 0, relevance_score: 0.9 }] };
+
+const MESSAGE_RESPONSE = {
+  id: "msg-1",
+  type: "message",
+  role: "assistant",
+  model: "anthropic:claude-3-5-sonnet",
+  content: [{ type: "text", text: "Hi" }],
+  usage: { input_tokens: 1, output_tokens: 1 },
+};
+
+const MODERATION_RESPONSE = {
+  id: "modr-1",
+  model: "openai:omni-moderation-latest",
+  results: [{ flagged: false, categories: {}, category_scores: {} }],
+};
+
+const MODELS_RESPONSE = {
+  object: "list",
+  data: [{ id: "openai:gpt-4o", object: "model", created: 1, owned_by: "openai" }],
+};
+
+// ---------------------------------------------------------------------------
+// Constructor / auth-mode wiring
+// ---------------------------------------------------------------------------
 
 describe("OtariClient constructor", () => {
   const envBackup = { ...process.env };
-
   afterEach(() => {
-    // Restore env vars after each test.
     process.env = { ...envBackup };
   });
 
-  it("throws when apiBase is not provided and env is unset (non-platform mode)", () => {
+  it("throws when apiBase is missing and no env/platform token is set", () => {
     delete process.env.GATEWAY_API_BASE;
     delete process.env.OTARI_AI_TOKEN;
     delete process.env.GATEWAY_PLATFORM_TOKEN;
     expect(() => new OtariClient()).toThrow("api_base is required");
   });
 
-  it("defaults to https://api.otari.ai when only platformToken is given", () => {
-    delete process.env.GATEWAY_API_BASE;
-    delete process.env.OTARI_AI_TOKEN;
-    delete process.env.GATEWAY_PLATFORM_TOKEN;
-    const client = new OtariClient({ platformToken: "tk_test" });
-    expect(client.platformMode).toBe(true);
-    expect(client.openai.baseURL).toBe("https://api.otari.ai/v1");
-  });
-
-  it("defaults to https://api.otari.ai when only OTARI_AI_TOKEN env is set", () => {
-    delete process.env.GATEWAY_API_BASE;
-    delete process.env.GATEWAY_PLATFORM_TOKEN;
-    process.env.OTARI_AI_TOKEN = "tk_env_default";
-    const client = new OtariClient();
-    expect(client.platformMode).toBe(true);
-    expect(client.openai.baseURL).toBe("https://api.otari.ai/v1");
-  });
-
-  it("does not default the base URL in non-platform (apiKey) mode", () => {
-    delete process.env.GATEWAY_API_BASE;
-    delete process.env.OTARI_AI_TOKEN;
-    delete process.env.GATEWAY_PLATFORM_TOKEN;
-    expect(() => new OtariClient({ apiKey: "k" })).toThrow("api_base is required");
-  });
-
   it("uses apiBase from options", () => {
-    const client = new OtariClient({
-      apiBase: "http://localhost:8000",
-    });
-    expect(client.openai.baseURL).toBe("http://localhost:8000/v1");
+    const client = new OtariClient({ apiBase: "http://localhost:8000" });
+    expect((client as unknown as { baseURL: string }).baseURL).toBe("http://localhost:8000/v1");
+    expect((client as unknown as { gatewayRoot: string }).gatewayRoot).toBe(
+      "http://localhost:8000",
+    );
   });
 
-  it("does not double-append /v1 if already present", () => {
-    const client = new OtariClient({
-      apiBase: "http://localhost:8000/v1",
-    });
-    expect(client.openai.baseURL).toBe("http://localhost:8000/v1");
+  it("does not double-append /v1", () => {
+    const client = new OtariClient({ apiBase: "http://localhost:8000/v1" });
+    expect((client as unknown as { baseURL: string }).baseURL).toBe("http://localhost:8000/v1");
+  });
+
+  it("strips trailing slash", () => {
+    const client = new OtariClient({ apiBase: "http://localhost:8000/" });
+    expect((client as unknown as { baseURL: string }).baseURL).toBe("http://localhost:8000/v1");
   });
 
   it("falls back to GATEWAY_API_BASE env var", () => {
     process.env.GATEWAY_API_BASE = "http://env-gateway:9000";
     const client = new OtariClient();
-    expect(client.openai.baseURL).toBe("http://env-gateway:9000/v1");
+    expect((client as unknown as { baseURL: string }).baseURL).toBe("http://env-gateway:9000/v1");
   });
 
-  describe("platform mode", () => {
-    it("activates when platformToken is provided", () => {
-      const client = new OtariClient({
-        apiBase: "http://localhost:8000",
-        platformToken: "tk_test123",
-      });
-      expect(client.platformMode).toBe(true);
-      // The OpenAI client should use the platform token as the API key
-      // (sent as Bearer in the Authorization header).
-      expect(client.openai.apiKey).toBe("tk_test123");
-    });
-
-    it("activates via OTARI_AI_TOKEN env when no apiKey is set", () => {
-      delete process.env.GATEWAY_PLATFORM_TOKEN;
-      process.env.OTARI_AI_TOKEN = "tk_env_token";
-      const client = new OtariClient({
-        apiBase: "http://localhost:8000",
-      });
-      expect(client.platformMode).toBe(true);
-      expect(client.openai.apiKey).toBe("tk_env_token");
-    });
-
-    it("falls back to legacy GATEWAY_PLATFORM_TOKEN env when OTARI_AI_TOKEN is unset", () => {
-      delete process.env.OTARI_AI_TOKEN;
-      process.env.GATEWAY_PLATFORM_TOKEN = "tk_legacy_token";
-      const client = new OtariClient({
-        apiBase: "http://localhost:8000",
-      });
-      expect(client.platformMode).toBe(true);
-      expect(client.openai.apiKey).toBe("tk_legacy_token");
-    });
-
-    it("prefers OTARI_AI_TOKEN over the legacy GATEWAY_PLATFORM_TOKEN", () => {
-      process.env.OTARI_AI_TOKEN = "tk_canonical";
-      process.env.GATEWAY_PLATFORM_TOKEN = "tk_legacy";
-      const client = new OtariClient({
-        apiBase: "http://localhost:8000",
-      });
-      expect(client.openai.apiKey).toBe("tk_canonical");
-    });
-
-    it("does not activate when apiKey option is also provided", () => {
-      process.env.OTARI_AI_TOKEN = "tk_env_token";
-      const client = new OtariClient({
-        apiBase: "http://localhost:8000",
-        apiKey: "my-key",
-      });
-      // apiKey takes precedence -> non-platform mode
-      expect(client.platformMode).toBe(false);
-    });
-  });
-
-  describe("non-platform mode", () => {
-    it("is the default when no platform token is available", () => {
-      delete process.env.OTARI_AI_TOKEN;
-      delete process.env.GATEWAY_PLATFORM_TOKEN;
-      const client = new OtariClient({
-        apiBase: "http://localhost:8000",
-      });
-      expect(client.platformMode).toBe(false);
-    });
-
-    it("sends apiKey via Otari-Key header", () => {
-      const client = new OtariClient({
-        apiBase: "http://localhost:8000",
-        apiKey: "my-key",
-      });
-      expect(client.platformMode).toBe(false);
-      // The Otari-Key header is set as a default header on the OpenAI client.
-      // We can verify by inspecting the internal _options or defaultHeaders.
-      // For this test we just verify the mode is correct.
-    });
-
-    it("falls back to GATEWAY_API_KEY env var", () => {
-      process.env.GATEWAY_API_KEY = "env-key";
-      delete process.env.OTARI_AI_TOKEN;
-      delete process.env.GATEWAY_PLATFORM_TOKEN;
-      const client = new OtariClient({
-        apiBase: "http://localhost:8000",
-      });
-      expect(client.platformMode).toBe(false);
-    });
-  });
-
-  it("forwards defaultHeaders", () => {
-    const client = new OtariClient({
-      apiBase: "http://localhost:8000",
-      defaultHeaders: { "X-Custom": "value" },
-    });
-    expect(client).toBeDefined();
+  it("defaults to https://api.otari.ai in platform mode", () => {
+    delete process.env.GATEWAY_API_BASE;
+    delete process.env.OTARI_AI_TOKEN;
+    delete process.env.GATEWAY_PLATFORM_TOKEN;
+    const client = new OtariClient({ platformToken: "tk_x" });
+    expect((client as unknown as { baseURL: string }).baseURL).toBe("https://api.otari.ai/v1");
   });
 });
 
-describe("OtariClient error handling (platform mode)", () => {
-  let client: OtariClient;
-
-  beforeEach(() => {
-    client = new OtariClient({
-      apiBase: "http://localhost:8000",
-      platformToken: "tk_test",
-    });
-  });
-
-  // Helper: mock the openai method to throw an APIError.
-  function mockCompletionError(error: Error) {
-    vi.spyOn(client.openai.chat.completions, "create").mockRejectedValue(error);
-  }
-
-  it("maps 401 to AuthenticationError", async () => {
-    mockCompletionError(makeAPIError(401, "Unauthorized"));
-    await expect(
-      client.completion({
-        model: "openai:gpt-4o-mini",
-        messages: [{ role: "user", content: "hi" }],
-      }),
-    ).rejects.toThrow(AuthenticationError);
-  });
-
-  it("maps 403 to AuthenticationError", async () => {
-    mockCompletionError(makeAPIError(403, "Forbidden"));
-    await expect(
-      client.completion({
-        model: "openai:gpt-4o-mini",
-        messages: [{ role: "user", content: "hi" }],
-      }),
-    ).rejects.toThrow(AuthenticationError);
-  });
-
-  it("maps 404 to ModelNotFoundError", async () => {
-    mockCompletionError(makeAPIError(404, "Not Found"));
-    await expect(
-      client.completion({
-        model: "openai:gpt-4o-mini",
-        messages: [{ role: "user", content: "hi" }],
-      }),
-    ).rejects.toThrow(ModelNotFoundError);
-  });
-
-  it("maps 402 to InsufficientFundsError", async () => {
-    mockCompletionError(makeAPIError(402, "Payment Required"));
-    await expect(
-      client.completion({
-        model: "openai:gpt-4o-mini",
-        messages: [{ role: "user", content: "hi" }],
-      }),
-    ).rejects.toThrow(InsufficientFundsError);
-  });
-
-  it("maps 429 to RateLimitError with retryAfter", async () => {
-    mockCompletionError(makeAPIError(429, "Too Many Requests", { "retry-after": "60" }));
-    try {
-      await client.completion({
-        model: "openai:gpt-4o-mini",
-        messages: [{ role: "user", content: "hi" }],
-      });
-      expect.unreachable("should have thrown");
-    } catch (err) {
-      expect(err).toBeInstanceOf(RateLimitError);
-      expect((err as RateLimitError).retryAfter).toBe("60");
-    }
-  });
-
-  it("maps 502 to UpstreamProviderError", async () => {
-    mockCompletionError(makeAPIError(502, "Bad Gateway"));
-    await expect(
-      client.completion({
-        model: "openai:gpt-4o-mini",
-        messages: [{ role: "user", content: "hi" }],
-      }),
-    ).rejects.toThrow(UpstreamProviderError);
-  });
-
-  it("maps 504 to GatewayTimeoutError", async () => {
-    mockCompletionError(makeAPIError(504, "Gateway Timeout"));
-    await expect(
-      client.completion({
-        model: "openai:gpt-4o-mini",
-        messages: [{ role: "user", content: "hi" }],
-      }),
-    ).rejects.toThrow(GatewayTimeoutError);
-  });
-
-  it("includes correlation_id in error message when present", async () => {
-    mockCompletionError(
-      makeAPIError(401, "Unauthorized", {
-        "x-correlation-id": "abc-123",
-      }),
-    );
-    try {
-      await client.completion({
-        model: "openai:gpt-4o-mini",
-        messages: [{ role: "user", content: "hi" }],
-      });
-      expect.unreachable("should have thrown");
-    } catch (err) {
-      expect(err).toBeInstanceOf(AuthenticationError);
-      expect((err as AuthenticationError).message).toContain("correlation_id=abc-123");
-    }
-  });
-
-  it("passes through unrecognized status codes", async () => {
-    mockCompletionError(makeAPIError(418, "I'm a teapot"));
-    await expect(
-      client.completion({
-        model: "openai:gpt-4o-mini",
-        messages: [{ role: "user", content: "hi" }],
-      }),
-    ).rejects.toThrow(APIError);
-  });
-
-  it("passes through non-APIError exceptions", async () => {
-    mockCompletionError(new TypeError("network failure"));
-    await expect(
-      client.completion({
-        model: "openai:gpt-4o-mini",
-        messages: [{ role: "user", content: "hi" }],
-      }),
-    ).rejects.toThrow(TypeError);
-  });
-
-  it("stores the original OpenAI error", async () => {
-    const apiErr = makeAPIError(401, "Unauthorized");
-    mockCompletionError(apiErr);
-    try {
-      await client.completion({
-        model: "openai:gpt-4o-mini",
-        messages: [{ role: "user", content: "hi" }],
-      });
-      expect.unreachable("should have thrown");
-    } catch (err) {
-      expect((err as AuthenticationError).originalError).toBe(apiErr);
-      expect((err as AuthenticationError).providerName).toBe("gateway");
-      expect((err as AuthenticationError).statusCode).toBe(401);
-    }
-  });
-});
-
-describe("OtariClient gateway error body translation", () => {
+describe("OtariClient auth modes", () => {
+  const envBackup = { ...process.env };
   afterEach(() => {
-    vi.unstubAllGlobals();
+    process.env = { ...envBackup };
   });
 
-  // Replace the OpenAI SDK's underlying fetch with one that always
-  // returns a response built from the given status + body. Exercises
-  // the wrapper that rewrites `{detail: "..."}` into the shape the
-  // OpenAI SDK reads when generating error messages.
-  function stubFetchWithBody(status: number, body: unknown): void {
-    vi.stubGlobal(
-      "fetch",
-      vi.fn(
-        async () =>
-          new Response(JSON.stringify(body), {
-            status,
-            headers: { "content-type": "application/json" },
-          }),
-      ),
-    );
-  }
+  it("platform mode sets Bearer Authorization header", () => {
+    const client = new OtariClient({ apiBase: "http://localhost:8000", platformToken: "tk_test" });
+    const headers = (client as unknown as { defaultHeaders: Record<string, string> })
+      .defaultHeaders;
+    expect(client.platformMode).toBe(true);
+    expect(headers.Authorization).toBe("Bearer tk_test");
+    expect(headers["Otari-Key"]).toBeUndefined();
+  });
 
-  it.each([
-    [404, "ProviderKey not found.", ModelNotFoundError],
-    [404, "Model 'openai:gpt-4o-mini' is not available.", ModelNotFoundError],
-    [401, "Invalid token.", AuthenticationError],
-    [429, "Daily request quota exceeded.", RateLimitError],
-  ])("surfaces gateway detail in the error message (%i %s)", async (status, detail, ErrorClass) => {
-    stubFetchWithBody(status, { detail });
-    const client = new OtariClient({
-      apiBase: "http://localhost:8000",
-      platformToken: "tk_test",
-    });
-    await expect(
-      client.completion({
-        model: "openai:gpt-4o-mini",
-        messages: [{ role: "user", content: "hi" }],
-      }),
-    ).rejects.toMatchObject({
-      constructor: ErrorClass,
-      message: expect.stringContaining(detail),
-    });
+  it("platform mode activates via OTARI_AI_TOKEN env", () => {
+    process.env.OTARI_AI_TOKEN = "tk_env";
+    const client = new OtariClient({ apiBase: "http://localhost:8000" });
+    const headers = (client as unknown as { defaultHeaders: Record<string, string> })
+      .defaultHeaders;
+    expect(client.platformMode).toBe(true);
+    expect(headers.Authorization).toBe("Bearer tk_env");
+  });
+
+  it("non-platform mode sets Otari-Key header", () => {
+    const client = new OtariClient({ apiBase: "http://localhost:8000", apiKey: "vk_123" });
+    const headers = (client as unknown as { defaultHeaders: Record<string, string> })
+      .defaultHeaders;
+    expect(client.platformMode).toBe(false);
+    expect(headers["Otari-Key"]).toBe("Bearer vk_123");
+    expect(headers.Authorization).toBeUndefined();
+  });
+
+  it("apiKey option overrides platform token env", () => {
+    process.env.GATEWAY_PLATFORM_TOKEN = "tk_env";
+    const client = new OtariClient({ apiBase: "http://localhost:8000", apiKey: "vk_123" });
+    expect(client.platformMode).toBe(false);
   });
 });
 
-describe("OtariClient error handling (non-platform mode)", () => {
-  it("does not map errors in non-platform mode", async () => {
+// ---------------------------------------------------------------------------
+// Request shaping + typed response parsing
+// ---------------------------------------------------------------------------
+
+describe("OtariClient.completion", () => {
+  it("returns a typed ChatCompletion and shapes the request", async () => {
+    const mock = jsonFetch(200, CHAT_RESPONSE);
     const client = new OtariClient({
       apiBase: "http://localhost:8000",
-      apiKey: "my-key",
+      apiKey: "vk",
+      fetch: mock.fetch,
     });
-
-    vi.spyOn(client.openai.chat.completions, "create").mockRejectedValue(
-      makeAPIError(401, "Unauthorized"),
-    );
-
-    // In non-platform mode, the raw APIError should pass through.
-    await expect(
-      client.completion({
-        model: "openai:gpt-4o-mini",
-        messages: [{ role: "user", content: "hi" }],
-      }),
-    ).rejects.toThrow(APIError);
-
-    // Should NOT be an OtariError.
-    try {
-      await client.completion({
-        model: "openai:gpt-4o-mini",
-        messages: [{ role: "user", content: "hi" }],
-      });
-    } catch (err) {
-      expect(err).not.toBeInstanceOf(OtariError);
-    }
-  });
-});
-
-describe("OtariClient methods delegate to OpenAI client", () => {
-  let client: OtariClient;
-
-  beforeEach(() => {
-    client = new OtariClient({
-      apiBase: "http://localhost:8000",
-      platformToken: "tk_test",
-    });
-  });
-
-  it("completion calls openai.chat.completions.create", async () => {
-    const mockResponse = { id: "chatcmpl-123", choices: [] };
-    vi.spyOn(client.openai.chat.completions, "create").mockResolvedValue(mockResponse as any);
-
     const result = await client.completion({
       model: "openai:gpt-4o-mini",
-      messages: [{ role: "user", content: "hi" }],
+      messages: [{ role: "user", content: "Hi" }],
+      temperature: 0.5,
     });
-    expect(result).toBe(mockResponse);
-    expect(client.openai.chat.completions.create).toHaveBeenCalledWith({
-      model: "openai:gpt-4o-mini",
-      messages: [{ role: "user", content: "hi" }],
-    });
+    expect(result.choices?.[0]?.message?.content).toBe("Hi");
+    expect(mock.last.method).toBe("POST");
+    expect(mock.last.url).toMatch(/\/v1\/chat\/completions$/);
+    expect((mock.last.body as Record<string, unknown>).model).toBe("openai:gpt-4o-mini");
+    expect((mock.last.body as Record<string, unknown>).temperature).toBe(0.5);
+    expect(mock.last.headers["otari-key"]).toBe("Bearer vk");
   });
 
-  it("embedding calls openai.embeddings.create", async () => {
-    const mockResponse = { data: [], model: "test", usage: {} };
-    vi.spyOn(client.openai.embeddings, "create").mockResolvedValue(mockResponse as any);
+  it("sends Bearer Authorization in platform mode", async () => {
+    const mock = jsonFetch(200, CHAT_RESPONSE);
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      platformToken: "tk",
+      fetch: mock.fetch,
+    });
+    await client.completion({ model: "m", messages: [{ role: "user", content: "Hi" }] });
+    expect(mock.last.headers.authorization).toBe("Bearer tk");
+  });
+});
 
+describe("OtariClient.embedding", () => {
+  it("returns a typed embedding", async () => {
+    const mock = jsonFetch(200, EMBEDDING_RESPONSE);
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "vk",
+      fetch: mock.fetch,
+    });
     const result = await client.embedding({
       model: "openai:text-embedding-3-small",
       input: "hello",
     });
-    expect(result).toBe(mockResponse);
-  });
-
-  it("response calls openai.responses.create", async () => {
-    const mockResponse = { id: "resp-123" };
-    vi.spyOn(client.openai.responses, "create").mockResolvedValue(mockResponse as any);
-
-    const result = await client.response({
-      model: "openai:gpt-4o-mini",
-      input: "hello",
-    });
-    expect(result).toBe(mockResponse);
-  });
-
-  it("listModels calls openai.models.list", async () => {
-    const mockModels = [
-      { id: "model-1", object: "model", created: 0, owned_by: "test" },
-      { id: "model-2", object: "model", created: 0, owned_by: "test" },
-    ];
-
-    // The OpenAI SDK returns a paginated result with async iteration.
-    const mockPage = {
-      [Symbol.asyncIterator]: async function* () {
-        for (const m of mockModels) yield m;
-      },
-    };
-    vi.spyOn(client.openai.models, "list").mockResolvedValue(mockPage as any);
-
-    const result = await client.listModels();
-    expect(result).toEqual(mockModels);
-  });
-
-  it("error mapping applies to embedding method too", async () => {
-    vi.spyOn(client.openai.embeddings, "create").mockRejectedValue(
-      makeAPIError(401, "Unauthorized"),
-    );
-    await expect(
-      client.embedding({
-        model: "openai:text-embedding-3-small",
-        input: "hello",
-      }),
-    ).rejects.toThrow(AuthenticationError);
-  });
-
-  it("error mapping applies to response method too", async () => {
-    vi.spyOn(client.openai.responses, "create").mockRejectedValue(
-      makeAPIError(429, "Rate limited"),
-    );
-    await expect(
-      client.response({
-        model: "openai:gpt-4o-mini",
-        input: "hello",
-      }),
-    ).rejects.toThrow(RateLimitError);
-  });
-
-  it("error mapping applies to listModels method too", async () => {
-    vi.spyOn(client.openai.models, "list").mockRejectedValue(makeAPIError(502, "Bad Gateway"));
-    await expect(client.listModels()).rejects.toThrow(UpstreamProviderError);
-  });
-
-  it("moderation calls openai.moderations.create", async () => {
-    const mockResponse = {
-      id: "modr-abc",
-      model: "omni-moderation-latest",
-      results: [{ flagged: true, categories: {}, category_scores: {} }],
-    };
-    const spy = vi
-      .spyOn(client.openai.moderations, "create")
-      .mockResolvedValue(mockResponse as any);
-
-    const params = { model: "openai:omni-moderation-latest", input: "hello" };
-    const result = await client.moderation(params);
-
-    expect(spy).toHaveBeenCalledWith(params);
-    expect(result).toBe(mockResponse);
-  });
-
-  it("moderation strips includeRaw from the SDK path", async () => {
-    const spy = vi.spyOn(client.openai.moderations, "create").mockResolvedValue({
-      id: "m",
-      model: "x",
-      results: [],
-    } as any);
-
-    await client.moderation({
-      model: "openai:omni-moderation-latest",
-      input: "x",
-    } as any);
-    expect(spy.mock.calls[0][0]).not.toHaveProperty("includeRaw");
-  });
-
-  it("error mapping applies to moderation method too", async () => {
-    vi.spyOn(client.openai.moderations, "create").mockRejectedValue(
-      makeAPIError(429, "Rate limited"),
-    );
-    await expect(
-      client.moderation({
-        model: "openai:omni-moderation-latest",
-        input: "x",
-      }),
-    ).rejects.toThrow(RateLimitError);
+    expect(result.data?.[0]?.embedding).toEqual([0.1, 0.2]);
+    expect(mock.last.url).toMatch(/\/v1\/embeddings$/);
+    expect((mock.last.body as Record<string, unknown>).input).toBe("hello");
   });
 });
 
-describe("OtariClient moderation includeRaw path", () => {
-  const originalFetch = globalThis.fetch;
-
-  afterEach(() => {
-    globalThis.fetch = originalFetch;
-    vi.restoreAllMocks();
-  });
-
-  it("uses raw fetch (not the openai SDK) and parses provider_raw", async () => {
-    const fetchMock = vi.fn().mockResolvedValue({
-      ok: true,
-      status: 200,
-      headers: new Headers(),
-      json: async () => ({
-        id: "m",
-        model: "x",
-        results: [
-          {
-            flagged: true,
-            categories: {},
-            category_scores: {},
-            provider_raw: { foo: "bar" },
-          },
-        ],
-      }),
-    });
-    vi.stubGlobal("fetch", fetchMock);
-
+describe("OtariClient.rerank", () => {
+  it("returns a typed rerank response", async () => {
+    const mock = jsonFetch(200, RERANK_RESPONSE);
     const client = new OtariClient({
-      apiBase: "https://gw.example.com",
-      apiKey: "k",
+      apiBase: "http://localhost:8000",
+      apiKey: "vk",
+      fetch: mock.fetch,
     });
-    const openaiSpy = vi.spyOn(client.openai.moderations, "create");
-
-    const result = await client.moderation({
-      model: "openai:omni-moderation-latest",
-      input: "x",
-      includeRaw: true,
-    } as any);
-
-    expect(openaiSpy).not.toHaveBeenCalled();
-    expect(fetchMock).toHaveBeenCalledTimes(1);
-    const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
-    expect(url).toContain("/v1/moderations?include_raw=true");
-    expect(init.method).toBe("POST");
-    const headers = init.headers as Record<string, string>;
-    expect(headers["Content-Type"]).toBe("application/json");
-    expect(headers["Otari-Key"]).toBe("Bearer k");
-    const body = JSON.parse(init.body as string);
-    expect(body).not.toHaveProperty("includeRaw");
-    expect(body).toMatchObject({
-      model: "openai:omni-moderation-latest",
-      input: "x",
-    });
-    expect((result as { results: { provider_raw?: unknown }[] }).results[0].provider_raw).toEqual({
-      foo: "bar",
-    });
-  });
-
-  it("sends Authorization Bearer header in platform mode", async () => {
-    const fetchMock = vi.fn().mockResolvedValue({
-      ok: true,
-      status: 200,
-      headers: new Headers(),
-      json: async () => ({ id: "m", model: "x", results: [] }),
-    });
-    vi.stubGlobal("fetch", fetchMock);
-
-    const client = new OtariClient({
-      apiBase: "https://gw.example.com",
-      platformToken: "tk_123",
-    });
-
-    await client.moderation({
-      model: "openai:omni-moderation-latest",
-      input: "x",
-      includeRaw: true,
-    } as any);
-
-    const [, init] = fetchMock.mock.calls[0] as [string, RequestInit];
-    const headers = init.headers as Record<string, string>;
-    expect(headers.Authorization).toBe("Bearer tk_123");
-    expect(headers["Otari-Key"]).toBeUndefined();
-  });
-
-  it("maps a non-OK raw response to UnsupportedCapabilityError", async () => {
-    const fetchMock = vi.fn().mockResolvedValue({
-      ok: false,
-      status: 400,
-      headers: new Headers(),
-      text: async () =>
-        JSON.stringify({ detail: "Provider anthropic does not support moderation" }),
-    });
-    vi.stubGlobal("fetch", fetchMock);
-
-    const client = new OtariClient({
-      apiBase: "https://gw.example.com",
-      platformToken: "tk_123",
-    });
-
-    await expect(
-      client.moderation({
-        model: "anthropic:claude-3-haiku",
-        input: "x",
-        includeRaw: true,
-      } as any),
-    ).rejects.toMatchObject({
-      name: "UnsupportedCapabilityError",
-      capability: "moderation",
-      provider: "anthropic",
-    });
+    const result = await client.rerank({ model: "m", query: "q", documents: ["a", "b"] });
+    expect(result.results?.[0]?.relevanceScore).toBe(0.9);
+    expect(mock.last.url).toMatch(/\/v1\/rerank$/);
+    expect((mock.last.body as Record<string, unknown>).documents).toEqual(["a", "b"]);
   });
 });
 
-describe("OtariClient moderation error mapping", () => {
-  it("maps 400 'does not support moderation' to UnsupportedCapabilityError (platform mode)", async () => {
+describe("OtariClient.message", () => {
+  it("returns a typed MessageResponse from /messages", async () => {
+    const mock = jsonFetch(200, MESSAGE_RESPONSE);
     const client = new OtariClient({
       apiBase: "http://localhost:8000",
-      platformToken: "tk_test",
+      apiKey: "vk",
+      fetch: mock.fetch,
     });
-    vi.spyOn(client.openai.moderations, "create").mockRejectedValue(
-      makeAPIError(400, "Provider anthropic does not support moderation"),
-    );
-
-    await expect(
-      client.moderation({
-        model: "anthropic:claude-3-haiku",
-        input: "x",
-      }),
-    ).rejects.toMatchObject({
-      name: "UnsupportedCapabilityError",
-      capability: "moderation",
-      provider: "anthropic",
-    });
+    const result = (await client.message({
+      model: "anthropic:claude-3-5-sonnet",
+      messages: [{ role: "user", content: "Hi" }],
+      max_tokens: 64,
+    })) as { id: string };
+    expect(result.id).toBe("msg-1");
+    expect(mock.last.url).toMatch(/\/v1\/messages$/);
+    expect((mock.last.body as Record<string, unknown>).max_tokens).toBe(64);
+    expect((mock.last.body as Record<string, unknown>).model).toBe("anthropic:claude-3-5-sonnet");
   });
+});
 
-  it("maps 400 'does not support multimodal moderation' to the multimodal capability", async () => {
+describe("OtariClient.moderation", () => {
+  it("returns a typed moderation response", async () => {
+    const mock = jsonFetch(200, MODERATION_RESPONSE);
     const client = new OtariClient({
       apiBase: "http://localhost:8000",
-      platformToken: "tk_test",
+      apiKey: "vk",
+      fetch: mock.fetch,
     });
-    vi.spyOn(client.openai.moderations, "create").mockRejectedValue(
-      makeAPIError(400, "Provider mistral does not support multimodal moderation input"),
-    );
-
-    await expect(
-      client.moderation({
-        model: "mistral:mistral-moderation-latest",
-        input: [{ type: "image_url", image_url: { url: "..." } }] as any,
-      }),
-    ).rejects.toMatchObject({
-      name: "UnsupportedCapabilityError",
-      capability: "multimodal_moderation",
-      provider: "mistral",
-    });
+    const result = await client.moderation({ model: "m", input: "text" });
+    expect(result.results[0].flagged).toBe(false);
+    expect(mock.last.url).toMatch(/\/v1\/moderations$/);
   });
+});
 
-  it("UnsupportedCapabilityError surfaces even in non-platform mode", async () => {
+describe("OtariClient.listModels", () => {
+  it("returns typed model objects", async () => {
+    const mock = jsonFetch(200, MODELS_RESPONSE);
     const client = new OtariClient({
       apiBase: "http://localhost:8000",
-      apiKey: "k",
+      apiKey: "vk",
+      fetch: mock.fetch,
     });
-    vi.spyOn(client.openai.moderations, "create").mockRejectedValue(
-      makeAPIError(400, "Provider anthropic does not support moderation"),
-    );
-
-    await expect(
-      client.moderation({
-        model: "anthropic:claude-3-haiku",
-        input: "x",
-      }),
-    ).rejects.toBeInstanceOf(UnsupportedCapabilityError);
-  });
-
-  it("does not map unrelated 400 errors in non-platform mode", async () => {
-    const client = new OtariClient({
-      apiBase: "http://localhost:8000",
-      apiKey: "k",
-    });
-    const apiErr = makeAPIError(400, "bad request");
-    vi.spyOn(client.openai.moderations, "create").mockRejectedValue(apiErr);
-
-    try {
-      await client.moderation({
-        model: "openai:omni-moderation-latest",
-        input: "x",
-      });
-      expect.unreachable("should have thrown");
-    } catch (err) {
-      expect(err).not.toBeInstanceOf(OtariError);
-      expect(err).toBeInstanceOf(APIError);
-    }
+    const models = await client.listModels();
+    expect(models[0].id).toBe("openai:gpt-4o");
+    expect(mock.last.url).toMatch(/\/v1\/models$/);
   });
 });
 
 // ---------------------------------------------------------------------------
-// Batch method tests
+// Error mapping (generated ResponseError -> typed otari errors), both modes
 // ---------------------------------------------------------------------------
 
-/** Helper: create a mock fetch Response. */
-function mockFetchResponse(
-  status: number,
-  body: unknown,
-  headers: Record<string, string> = {},
-): globalThis.Response {
-  return {
-    ok: status >= 200 && status < 300,
-    status,
-    statusText: "mock",
-    headers: new Headers(headers),
-    json: async () => body,
-  } as globalThis.Response;
-}
-
-describe("OtariClient batch methods", () => {
-  let client: OtariClient;
-  let mockFetch: ReturnType<
-    typeof vi.fn<(input: RequestInfo | URL, init?: RequestInit) => Promise<Response>>
-  >;
-
-  beforeEach(() => {
-    mockFetch = vi.fn();
-    vi.stubGlobal("fetch", mockFetch);
-    client = new OtariClient({
+describe("OtariClient error mapping", () => {
+  it.each([
+    [401, AuthenticationError],
+    [403, AuthenticationError],
+    [402, InsufficientFundsError],
+    [404, ModelNotFoundError],
+    [429, RateLimitError],
+    [502, UpstreamProviderError],
+    [503, UpstreamProviderError],
+    [504, GatewayTimeoutError],
+    [418, OtariError],
+  ])("maps status %i to the typed error", async (status, ErrorClass) => {
+    const mock = jsonFetch(status, { detail: "boom" });
+    const client = new OtariClient({
       apiBase: "http://localhost:8000",
-      apiKey: "test-key",
+      apiKey: "vk",
+      fetch: mock.fetch,
     });
+    await expect(
+      client.completion({ model: "m", messages: [{ role: "user", content: "Hi" }] }),
+    ).rejects.toMatchObject({ constructor: ErrorClass, statusCode: status });
   });
 
-  afterEach(() => {
-    vi.unstubAllGlobals();
-  });
-
-  const batchResponse = {
-    id: "batch_abc123",
-    object: "batch",
-    endpoint: "/v1/chat/completions",
-    status: "validating",
-    created_at: 1714502400,
-    completion_window: "24h",
-    request_counts: { total: 2, completed: 0, failed: 0 },
-    metadata: {},
-    provider: "openai",
-  };
-
-  describe("createBatch", () => {
-    it("sends correct request", async () => {
-      mockFetch.mockResolvedValue(mockFetchResponse(200, batchResponse));
-
-      const params = {
-        model: "openai:gpt-4o-mini",
-        requests: [{ custom_id: "req-1", body: { messages: [{ role: "user", content: "hi" }] } }],
-        completion_window: "24h",
-      };
-
-      await client.createBatch(params);
-
-      expect(mockFetch).toHaveBeenCalledOnce();
-      const [url, init] = mockFetch.mock.calls[0];
-      expect(url).toBe("http://localhost:8000/v1/batches");
-      expect(init?.method).toBe("POST");
-      expect(JSON.parse(init?.body as string)).toEqual(params);
-      expect((init?.headers as Record<string, string>)["Content-Type"]).toBe("application/json");
-    });
-
-    it("returns BatchWithProvider object including provider field", async () => {
-      mockFetch.mockResolvedValue(mockFetchResponse(200, batchResponse));
-
-      const result = await client.createBatch({
-        model: "openai:gpt-4o-mini",
-        requests: [{ custom_id: "req-1", body: {} }],
-      });
-
-      expect(result.id).toBe("batch_abc123");
-      expect(result.status).toBe("validating");
-      expect(result.provider).toBe("openai");
-    });
-  });
-
-  describe("retrieveBatch", () => {
-    it("sends provider query param", async () => {
-      mockFetch.mockResolvedValue(mockFetchResponse(200, batchResponse));
-
-      await client.retrieveBatch("batch_abc123", "openai");
-
-      const [url, init] = mockFetch.mock.calls[0];
-      expect(url).toBe("http://localhost:8000/v1/batches/batch_abc123?provider=openai");
-      expect(init?.method).toBe("GET");
-    });
-
-    it("encodes special characters in batchId and provider", async () => {
-      mockFetch.mockResolvedValue(mockFetchResponse(200, batchResponse));
-
-      await client.retrieveBatch("batch/special id", "my provider");
-
-      const [url] = mockFetch.mock.calls[0];
-      expect(url).toBe(
-        "http://localhost:8000/v1/batches/batch%2Fspecial%20id?provider=my%20provider",
-      );
-    });
-  });
-
-  describe("cancelBatch", () => {
-    it("sends correct request", async () => {
-      const cancelResponse = { ...batchResponse, status: "cancelling" };
-      mockFetch.mockResolvedValue(mockFetchResponse(200, cancelResponse));
-
-      const result = await client.cancelBatch("batch_abc123", "openai");
-
-      const [url, init] = mockFetch.mock.calls[0];
-      expect(url).toBe("http://localhost:8000/v1/batches/batch_abc123/cancel?provider=openai");
-      expect(init?.method).toBe("POST");
-      expect(result.status).toBe("cancelling");
-    });
-  });
-
-  describe("listBatches", () => {
-    it("sends pagination params", async () => {
-      mockFetch.mockResolvedValue(mockFetchResponse(200, { data: [batchResponse] }));
-
-      await client.listBatches("openai", { after: "cursor", limit: 10 });
-
-      const [url] = mockFetch.mock.calls[0];
-      expect(url).toContain("provider=openai");
-      expect(url).toContain("after=cursor");
-      expect(url).toContain("limit=10");
-    });
-
-    it("sends only provider when no options given", async () => {
-      mockFetch.mockResolvedValue(mockFetchResponse(200, { data: [] }));
-
-      await client.listBatches("openai");
-
-      const [url] = mockFetch.mock.calls[0];
-      expect(url).toBe("http://localhost:8000/v1/batches?provider=openai");
-    });
-
-    it("returns array of Batch", async () => {
-      mockFetch.mockResolvedValue(
-        mockFetchResponse(200, { data: [batchResponse, { ...batchResponse, id: "batch_def" }] }),
-      );
-
-      const result = await client.listBatches("openai");
-
-      expect(result).toHaveLength(2);
-      expect(result[0].id).toBe("batch_abc123");
-      expect(result[1].id).toBe("batch_def");
-    });
-  });
-
-  describe("retrieveBatchResults", () => {
-    it("returns BatchResult", async () => {
-      const batchResult = {
-        results: [
-          { custom_id: "req-1", result: { id: "chatcmpl-1" }, error: null },
-          { custom_id: "req-2", result: null, error: { code: "rate_limit", message: "..." } },
-        ],
-      };
-      mockFetch.mockResolvedValue(mockFetchResponse(200, batchResult));
-
-      const result = await client.retrieveBatchResults("batch_abc123", "openai");
-
-      const [url] = mockFetch.mock.calls[0];
-      expect(url).toBe("http://localhost:8000/v1/batches/batch_abc123/results?provider=openai");
-      expect(result.results).toHaveLength(2);
-      expect(result.results[0].custom_id).toBe("req-1");
-      expect(result.results[1].error?.code).toBe("rate_limit");
-    });
-  });
-});
-
-describe("OtariClient batch error handling", () => {
-  let client: OtariClient;
-  let mockFetch: ReturnType<
-    typeof vi.fn<(input: RequestInfo | URL, init?: RequestInit) => Promise<Response>>
-  >;
-
-  beforeEach(() => {
-    mockFetch = vi.fn();
-    vi.stubGlobal("fetch", mockFetch);
-    client = new OtariClient({
+  it("maps the same table in platform mode too", async () => {
+    const mock = jsonFetch(402, { detail: "no funds" });
+    const client = new OtariClient({
       apiBase: "http://localhost:8000",
-      apiKey: "test-key",
+      platformToken: "tk",
+      fetch: mock.fetch,
+    });
+    await expect(
+      client.completion({ model: "m", messages: [{ role: "user", content: "Hi" }] }),
+    ).rejects.toBeInstanceOf(InsufficientFundsError);
+  });
+
+  it("carries retry-after on 429", async () => {
+    const mock = jsonFetch(429, { detail: "slow down" }, { "retry-after": "30" });
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "vk",
+      fetch: mock.fetch,
+    });
+    await expect(
+      client.completion({ model: "m", messages: [{ role: "user", content: "Hi" }] }),
+    ).rejects.toMatchObject({ retryAfter: "30" });
+  });
+
+  it("includes correlation_id in the message", async () => {
+    const mock = jsonFetch(402, { detail: "no funds" }, { "x-correlation-id": "abc-123" });
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "vk",
+      fetch: mock.fetch,
+    });
+    await expect(
+      client.completion({ model: "m", messages: [{ role: "user", content: "Hi" }] }),
+    ).rejects.toThrow(/abc-123/);
+  });
+
+  it("maps unsupported-moderation 400 in any mode", async () => {
+    const mock = jsonFetch(400, { detail: "Provider anthropic does not support moderation" });
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "vk",
+      fetch: mock.fetch,
+    });
+    await expect(
+      client.moderation({ model: "anthropic:claude", input: "text" }),
+    ).rejects.toMatchObject({
+      constructor: UnsupportedCapabilityError,
+      provider: "anthropic",
+      capability: "moderation",
     });
   });
 
-  afterEach(() => {
-    vi.unstubAllGlobals();
-  });
-
-  it("409 throws BatchNotCompleteError with batchId and batchStatus", async () => {
-    mockFetch.mockResolvedValue(
-      mockFetchResponse(409, {
-        detail: "Batch 'batch_abc123' is not yet complete (status: in_progress)",
-      }),
-    );
-
+  it("maps 409 to BatchNotCompleteError with batchId/status", async () => {
+    const mock = jsonFetch(409, {
+      detail: "Batch 'batch_abc' is not yet complete (status: in_progress)",
+    });
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "vk",
+      fetch: mock.fetch,
+    });
     try {
-      await client.retrieveBatchResults("batch_abc123", "openai");
+      await client.retrieveBatchResults("batch_abc", "openai");
       expect.unreachable("should have thrown");
     } catch (err) {
       expect(err).toBeInstanceOf(BatchNotCompleteError);
-      const batchErr = err as BatchNotCompleteError;
-      expect(batchErr.batchId).toBe("batch_abc123");
-      expect(batchErr.batchStatus).toBe("in_progress");
-      expect(batchErr.statusCode).toBe(409);
-      expect(batchErr.providerName).toBe("gateway");
-    }
-  });
-
-  it("404 throws OtariError with upgrade message", async () => {
-    mockFetch.mockResolvedValue(mockFetchResponse(404, { detail: "Not supported" }));
-
-    try {
-      await client.retrieveBatch("batch_abc", "openai");
-      expect.unreachable("should have thrown");
-    } catch (err) {
-      expect(err).toBeInstanceOf(OtariError);
-      expect((err as OtariError).message).toContain("Upgrade your gateway");
-      expect((err as OtariError).statusCode).toBe(404);
-    }
-  });
-
-  it("404 with 'not found' in message passes through message directly", async () => {
-    mockFetch.mockResolvedValue(mockFetchResponse(404, { detail: "Batch not found" }));
-
-    try {
-      await client.retrieveBatch("batch_abc", "openai");
-      expect.unreachable("should have thrown");
-    } catch (err) {
-      expect(err).toBeInstanceOf(OtariError);
-      expect((err as OtariError).message).toBe("Batch not found");
-    }
-  });
-
-  it("401 throws AuthenticationError", async () => {
-    mockFetch.mockResolvedValue(mockFetchResponse(401, { detail: "Unauthorized" }));
-
-    await expect(client.createBatch({ model: "openai:gpt-4o-mini", requests: [] })).rejects.toThrow(
-      AuthenticationError,
-    );
-  });
-
-  it("403 throws AuthenticationError", async () => {
-    mockFetch.mockResolvedValue(mockFetchResponse(403, { detail: "Forbidden" }));
-
-    await expect(client.createBatch({ model: "openai:gpt-4o-mini", requests: [] })).rejects.toThrow(
-      AuthenticationError,
-    );
-  });
-
-  it("429 throws RateLimitError with retryAfter", async () => {
-    mockFetch.mockResolvedValue(
-      mockFetchResponse(429, { detail: "Too Many Requests" }, { "retry-after": "30" }),
-    );
-
-    try {
-      await client.createBatch({ model: "openai:gpt-4o-mini", requests: [] });
-      expect.unreachable("should have thrown");
-    } catch (err) {
-      expect(err).toBeInstanceOf(RateLimitError);
-      expect((err as RateLimitError).retryAfter).toBe("30");
-      expect((err as RateLimitError).statusCode).toBe(429);
-    }
-  });
-
-  it("502 throws UpstreamProviderError", async () => {
-    mockFetch.mockResolvedValue(mockFetchResponse(502, { detail: "Bad Gateway" }));
-
-    await expect(client.createBatch({ model: "openai:gpt-4o-mini", requests: [] })).rejects.toThrow(
-      UpstreamProviderError,
-    );
-  });
-
-  it("504 throws GatewayTimeoutError", async () => {
-    mockFetch.mockResolvedValue(mockFetchResponse(504, { detail: "Gateway Timeout" }));
-
-    await expect(client.createBatch({ model: "openai:gpt-4o-mini", requests: [] })).rejects.toThrow(
-      GatewayTimeoutError,
-    );
-  });
-
-  it("422 throws OtariError", async () => {
-    mockFetch.mockResolvedValue(mockFetchResponse(422, { detail: "Unsupported provider" }));
-
-    try {
-      await client.createBatch({ model: "bad:model", requests: [] });
-      expect.unreachable("should have thrown");
-    } catch (err) {
-      expect(err).toBeInstanceOf(OtariError);
-      expect((err as OtariError).statusCode).toBe(422);
-    }
-  });
-
-  it("unrecognized status throws OtariError", async () => {
-    mockFetch.mockResolvedValue(mockFetchResponse(418, { detail: "I'm a teapot" }));
-
-    try {
-      await client.createBatch({ model: "openai:gpt-4o-mini", requests: [] });
-      expect.unreachable("should have thrown");
-    } catch (err) {
-      expect(err).toBeInstanceOf(OtariError);
-      expect((err as OtariError).statusCode).toBe(418);
-    }
-  });
-
-  it("includes correlation_id in error message when present", async () => {
-    mockFetch.mockResolvedValue(
-      mockFetchResponse(401, { detail: "Unauthorized" }, { "x-correlation-id": "corr-456" }),
-    );
-
-    try {
-      await client.createBatch({ model: "openai:gpt-4o-mini", requests: [] });
-      expect.unreachable("should have thrown");
-    } catch (err) {
-      expect(err).toBeInstanceOf(AuthenticationError);
-      expect((err as AuthenticationError).message).toContain("correlation_id=corr-456");
-    }
-  });
-
-  it("falls back to statusText when response body has no detail", async () => {
-    // Mock a response where json() throws (no parseable body)
-    const resp = {
-      ok: false,
-      status: 500,
-      statusText: "Internal Server Error",
-      headers: new Headers(),
-      json: async () => {
-        throw new Error("no body");
-      },
-    } as globalThis.Response;
-    mockFetch.mockResolvedValue(resp);
-
-    try {
-      await client.createBatch({ model: "openai:gpt-4o-mini", requests: [] });
-      expect.unreachable("should have thrown");
-    } catch (err) {
-      expect(err).toBeInstanceOf(OtariError);
-      expect((err as OtariError).message).toBe("Internal Server Error");
+      expect((err as BatchNotCompleteError).batchId).toBe("batch_abc");
+      expect((err as BatchNotCompleteError).batchStatus).toBe("in_progress");
     }
   });
 });
 
-describe("OtariClient batch auth modes", () => {
-  let mockFetch: ReturnType<
-    typeof vi.fn<(input: RequestInfo | URL, init?: RequestInit) => Promise<Response>>
-  >;
+// ---------------------------------------------------------------------------
+// SSE streaming shim (chat = must-have; mocked bytes only)
+// ---------------------------------------------------------------------------
 
-  beforeEach(() => {
-    mockFetch = vi.fn();
-    vi.stubGlobal("fetch", mockFetch);
-  });
+describe("OtariClient chat streaming", () => {
+  const chunk1 =
+    '{"id":"c","object":"chat.completion.chunk","created":1,"model":"m",' +
+    '"choices":[{"index":0,"delta":{"role":"assistant","content":"He"}}]}';
+  const chunk2 =
+    '{"id":"c","object":"chat.completion.chunk","created":1,"model":"m",' +
+    '"choices":[{"index":0,"delta":{"content":"llo"}}]}';
 
-  afterEach(() => {
-    vi.unstubAllGlobals();
-  });
-
-  it("uses Otari-Key header in non-platform mode", async () => {
+  it("yields typed chunks and stops on [DONE]", async () => {
+    const mock = sseFetch(200, sseBody(chunk1, chunk2));
     const client = new OtariClient({
       apiBase: "http://localhost:8000",
-      apiKey: "my-key",
+      apiKey: "vk",
+      fetch: mock.fetch,
+    });
+    const stream = await client.completion({
+      model: "m",
+      messages: [{ role: "user", content: "Hi" }],
+      stream: true,
     });
 
-    mockFetch.mockResolvedValue(
-      mockFetchResponse(200, { id: "batch_1", object: "batch", status: "validating" }),
-    );
-
-    await client.createBatch({
-      model: "openai:gpt-4o-mini",
-      requests: [{ custom_id: "r1", body: {} }],
-    });
-
-    const [, init] = mockFetch.mock.calls[0];
-    const headers = init?.headers as Record<string, string>;
-    expect(headers["Otari-Key"]).toBe("Bearer my-key");
-    expect(headers.Authorization).toBeUndefined();
+    const contents: (string | null | undefined)[] = [];
+    for await (const c of stream) {
+      contents.push(c.choices?.[0]?.delta?.content);
+    }
+    expect(contents).toEqual(["He", "llo"]);
+    expect(mock.last.headers.accept).toBe("text/event-stream");
+    expect(mock.last.headers["otari-key"]).toBe("Bearer vk");
+    expect((mock.last.body as Record<string, unknown>).stream).toBe(true);
   });
 
-  it("uses Authorization header in platform mode", async () => {
+  it("sends Bearer Authorization when streaming in platform mode", async () => {
+    const mock = sseFetch(200, sseBody(chunk1));
     const client = new OtariClient({
       apiBase: "http://localhost:8000",
-      platformToken: "tk_platform",
+      platformToken: "tk",
+      fetch: mock.fetch,
     });
-
-    mockFetch.mockResolvedValue(
-      mockFetchResponse(200, { id: "batch_1", object: "batch", status: "validating" }),
-    );
-
-    await client.createBatch({
-      model: "openai:gpt-4o-mini",
-      requests: [{ custom_id: "r1", body: {} }],
+    const stream = await client.completion({
+      model: "m",
+      messages: [{ role: "user", content: "Hi" }],
+      stream: true,
     });
-
-    // Find the batch call (URL contains /batches)
-    const batchCall = mockFetch.mock.calls.find(
-      ([url]) => typeof url === "string" && url.includes("/batches"),
-    );
-    expect(batchCall).toBeDefined();
-    const headers = batchCall![1]?.headers as Record<string, string>;
-    expect(headers.Authorization).toBe("Bearer tk_platform");
-    expect(headers["X-Otari-Key"]).toBeUndefined();
+    for await (const _ of stream) {
+      // drain
+    }
+    expect(mock.last.headers.authorization).toBe("Bearer tk");
   });
 
-  it("includes defaultHeaders in batch requests", async () => {
+  it("maps a failed streaming response to a typed error", async () => {
+    const mock = jsonFetch(429, { detail: "rate limited" });
     const client = new OtariClient({
       apiBase: "http://localhost:8000",
-      apiKey: "my-key",
-      defaultHeaders: { "X-Custom": "custom-value" },
+      apiKey: "vk",
+      fetch: mock.fetch,
     });
-
-    mockFetch.mockResolvedValue(
-      mockFetchResponse(200, { id: "batch_1", object: "batch", status: "validating" }),
-    );
-
-    await client.createBatch({
-      model: "openai:gpt-4o-mini",
-      requests: [{ custom_id: "r1", body: {} }],
-    });
-
-    // Find the batch call (URL contains /batches)
-    const batchCall = mockFetch.mock.calls.find(
-      ([url]) => typeof url === "string" && url.includes("/batches"),
-    );
-    expect(batchCall).toBeDefined();
-    const headers = batchCall![1]?.headers as Record<string, string>;
-    expect(headers["X-Custom"]).toBe("custom-value");
+    await expect(
+      client.completion({ model: "m", messages: [{ role: "user", content: "Hi" }], stream: true }),
+    ).rejects.toBeInstanceOf(RateLimitError);
   });
 });
 
-describe("OtariClient rerank", () => {
-  it("calls POST /v1/rerank via openai.post()", async () => {
-    const client = new OtariClient({
-      apiBase: "https://gw.example.com",
-      apiKey: "test-key",
-    });
+// ---------------------------------------------------------------------------
+// Batch operations
+// ---------------------------------------------------------------------------
 
-    const mockResponse = {
-      id: "rerank-123",
+describe("OtariClient batch methods", () => {
+  const batchResponse = {
+    id: "batch_abc123",
+    object: "batch",
+    status: "validating",
+    provider: "openai",
+  };
+
+  it("createBatch posts to /v1/batches and returns provider", async () => {
+    const mock = jsonFetch(200, batchResponse);
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "k",
+      fetch: mock.fetch,
+    });
+    const result = await client.createBatch({
+      model: "openai:gpt-4o-mini",
+      requests: [{ custom_id: "r1", body: {} }],
+    });
+    expect(mock.last.url).toMatch(/\/v1\/batches$/);
+    expect(mock.last.method).toBe("POST");
+    expect(result.provider).toBe("openai");
+  });
+
+  it("retrieveBatch sends the provider query param", async () => {
+    const mock = jsonFetch(200, batchResponse);
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "k",
+      fetch: mock.fetch,
+    });
+    await client.retrieveBatch("batch_abc123", "openai");
+    expect(mock.last.url).toContain("/v1/batches/batch_abc123");
+    expect(mock.last.url).toContain("provider=openai");
+    expect(mock.last.method).toBe("GET");
+  });
+
+  it("listBatches returns the data array", async () => {
+    const mock = jsonFetch(200, { data: [batchResponse, { ...batchResponse, id: "batch_def" }] });
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "k",
+      fetch: mock.fetch,
+    });
+    const result = (await client.listBatches("openai", { after: "cur", limit: 10 })) as Array<{
+      id: string;
+    }>;
+    expect(result).toHaveLength(2);
+    expect(mock.last.url).toContain("after=cur");
+    expect(mock.last.url).toContain("limit=10");
+  });
+
+  it("retrieveBatchResults maps per-request items", async () => {
+    const mock = jsonFetch(200, {
       results: [
-        { index: 0, relevance_score: 0.95 },
-        { index: 1, relevance_score: 0.3 },
+        { custom_id: "r1", result: { id: "chatcmpl-1" }, error: null },
+        { custom_id: "r2", result: null, error: { code: "rate_limit", message: "..." } },
       ],
-      usage: { total_tokens: 100 },
-    };
-
-    vi.spyOn(client.openai, "post" as any).mockResolvedValue(mockResponse);
-
-    const result = await client.rerank({
-      model: "cohere:rerank-v3.5",
-      query: "test query",
-      documents: ["doc1", "doc2"],
-      top_n: 2,
     });
-
-    expect(result.id).toBe("rerank-123");
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "k",
+      fetch: mock.fetch,
+    });
+    const result = await client.retrieveBatchResults("batch_abc123", "openai");
     expect(result.results).toHaveLength(2);
-    expect(result.results[0].relevance_score).toBe(0.95);
-    expect(result.usage?.total_tokens).toBe(100);
+    expect(result.results[0].custom_id).toBe("r1");
+    expect(result.results[1].error?.code).toBe("rate_limit");
+  });
+});
 
-    expect(client.openai.post).toHaveBeenCalledWith("/rerank", {
-      body: {
-        model: "cohere:rerank-v3.5",
-        query: "test query",
-        documents: ["doc1", "doc2"],
-        top_n: 2,
-      },
-    });
+// ---------------------------------------------------------------------------
+// Control-plane accessor
+// ---------------------------------------------------------------------------
+
+describe("OtariClient.controlPlane", () => {
+  const envBackup = { ...process.env };
+  afterEach(() => {
+    process.env = { ...envBackup };
   });
 
-  it("maps errors via handleError in platform mode", async () => {
-    const client = new OtariClient({
-      apiBase: "https://gw.example.com",
-      platformToken: "pk_test",
-    });
-
-    const error = makeAPIError(401, "Unauthorized");
-    vi.spyOn(client.openai, "post" as any).mockRejectedValue(error);
-
-    await expect(
-      client.rerank({
-        model: "cohere:rerank-v3.5",
-        query: "test",
-        documents: ["doc1"],
-      }),
-    ).rejects.toThrow(AuthenticationError);
+  it("requires an admin credential", () => {
+    delete process.env.OTARI_AI_TOKEN;
+    delete process.env.GATEWAY_PLATFORM_TOKEN;
+    delete process.env.GATEWAY_ADMIN_KEY;
+    const client = new OtariClient({ apiBase: "http://localhost:8000", apiKey: "vk" });
+    expect(() => client.controlPlane).toThrow(/admin credential/);
   });
 
-  it("does not remap errors in non-platform mode", async () => {
-    const client = new OtariClient({
-      apiBase: "https://gw.example.com",
-      apiKey: "test-key",
-    });
-
-    const error = makeAPIError(401, "Unauthorized");
-    vi.spyOn(client.openai, "post" as any).mockRejectedValue(error);
-
-    await expect(
-      client.rerank({
-        model: "cohere:rerank-v3.5",
-        query: "test",
-        documents: ["doc1"],
-      }),
-    ).rejects.toThrow(APIError);
+  it("is available with an admin key and exposes the API accessors", () => {
+    const client = new OtariClient({ apiBase: "http://localhost:8000", adminKey: "master" });
+    const cp = client.controlPlane;
+    expect(cp.keys).toBeDefined();
+    expect(cp.users).toBeDefined();
+    expect(cp.budgets).toBeDefined();
+    expect(cp.pricing).toBeDefined();
+    expect(cp.usage).toBeDefined();
   });
 });

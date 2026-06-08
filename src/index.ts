@@ -1,6 +1,9 @@
 /**
  * @mozilla-ai/otari - TypeScript SDK for the otari gateway.
  *
+ * Option C: a thin shell over a core generated from the otari OpenAPI spec
+ * (`./_client`), not a wrapper around the official `openai` package.
+ *
  * @example
  * ```ts
  * import { OtariClient } from "@mozilla-ai/otari";
@@ -18,6 +21,7 @@
  */
 
 export { OtariClient } from "./client.js";
+export { ControlPlane } from "./controlPlane.js";
 export type { OtariErrorOptions } from "./errors.js";
 export {
   AuthenticationError,
@@ -30,9 +34,9 @@ export {
   UnsupportedCapabilityError,
   UpstreamProviderError,
 } from "./errors.js";
+export { Stream } from "./streaming.js";
 
 export type {
-  Batch,
   BatchRequestItem,
   BatchResult,
   BatchResultError,
@@ -40,26 +44,26 @@ export type {
   BatchWithProvider,
   ChatCompletion,
   ChatCompletionChunk,
-  ChatCompletionCreateParams,
-  ChatCompletionMessageParam,
+  ChatCompletionRequest,
   CreateBatchParams,
   CreateEmbeddingResponse,
-  EmbeddingCreateParams,
+  EmbeddingRequest,
   ListBatchesOptions,
-  Model,
-  Moderation,
+  MessageResponse,
+  MessagesRequest,
+  ModelListResponse,
+  ModelObject,
   ModerationCreateParams,
   ModerationCreateResponse,
+  ModerationRequest,
+  ModerationResponse,
   ModerationResponseExt,
+  ModerationResult,
   ModerationResultExt,
   OtariClientOptions,
-  RerankMeta,
   RerankParams,
+  RerankRequest,
   RerankResponse,
   RerankResult,
-  RerankUsage,
-  Response,
-  ResponseCreateParams,
-  ResponseStreamEvent,
-  Stream,
+  ResponsesRequest,
 } from "./types.js";
