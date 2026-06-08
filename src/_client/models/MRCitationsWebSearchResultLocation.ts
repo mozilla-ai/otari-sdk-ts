@@ -66,9 +66,11 @@ export type MRCitationsWebSearchResultLocationTypeEnum = typeof MRCitationsWebSe
  * Check if a given object implements the MRCitationsWebSearchResultLocation interface.
  */
 export function instanceOfMRCitationsWebSearchResultLocation(value: object): value is MRCitationsWebSearchResultLocation {
-    if (!('citedText' in value) || value['citedText'] === undefined) return false;
-    if (!('encryptedIndex' in value) || value['encryptedIndex'] === undefined) return false;
+    if ((!('citedText' in value) && !('cited_text' in value)) || (value['citedText'] === undefined && value['cited_text'] === undefined)) return false;
+    if ((!('encryptedIndex' in value) && !('encrypted_index' in value)) || (value['encryptedIndex'] === undefined && value['encrypted_index'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'web_search_result_location') return false;
+    
     if (!('url' in value) || value['url'] === undefined) return false;
     return true;
 }

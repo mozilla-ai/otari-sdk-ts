@@ -62,8 +62,10 @@ export type MSGChatCompletionMessageFunctionToolCallParamTypeEnum = typeof MSGCh
  */
 export function instanceOfMSGChatCompletionMessageFunctionToolCallParam(value: object): value is MSGChatCompletionMessageFunctionToolCallParam {
     if (!('id' in value) || value['id'] === undefined) return false;
-    if (!('_function' in value) || value['_function'] === undefined) return false;
+    if ((!('_function' in value) && !('function' in value)) || (value['_function'] === undefined && value['function'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'function') return false;
+    
     return true;
 }
 

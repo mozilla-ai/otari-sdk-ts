@@ -10,7 +10,7 @@ Name | Type
 `completionTokens` | number
 `promptTokens` | number
 `totalTokens` | number
-`completionTokensDetails` | [CCCompletionTokensDetails](CCCompletionTokensDetails.md)
+`completionTokensDetails` | [CCKCompletionTokensDetails](CCKCompletionTokensDetails.md)
 `promptTokensDetails` | [CCPromptTokensDetails](CCPromptTokensDetails.md)
 
 ## Example

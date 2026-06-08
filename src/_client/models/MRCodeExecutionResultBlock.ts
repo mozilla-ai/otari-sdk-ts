@@ -75,10 +75,12 @@ export type MRCodeExecutionResultBlockTypeEnum = typeof MRCodeExecutionResultBlo
  */
 export function instanceOfMRCodeExecutionResultBlock(value: object): value is MRCodeExecutionResultBlock {
     if (!('content' in value) || value['content'] === undefined) return false;
-    if (!('returnCode' in value) || value['returnCode'] === undefined) return false;
+    if ((!('returnCode' in value) && !('return_code' in value)) || (value['returnCode'] === undefined && value['return_code'] === undefined)) return false;
     if (!('stderr' in value) || value['stderr'] === undefined) return false;
     if (!('stdout' in value) || value['stdout'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'code_execution_result') return false;
+    
     return true;
 }
 

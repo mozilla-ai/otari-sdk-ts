@@ -61,8 +61,10 @@ export type MRWebSearchToolResultErrorTypeEnum = typeof MRWebSearchToolResultErr
  * Check if a given object implements the MRWebSearchToolResultError interface.
  */
 export function instanceOfMRWebSearchToolResultError(value: object): value is MRWebSearchToolResultError {
-    if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
+    if ((!('errorCode' in value) && !('error_code' in value)) || (value['errorCode'] === undefined && value['error_code'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'web_search_tool_result_error') return false;
+    
     return true;
 }
 

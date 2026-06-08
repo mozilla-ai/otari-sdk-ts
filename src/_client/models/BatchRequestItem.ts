@@ -38,7 +38,7 @@ export interface BatchRequestItem {
  */
 export function instanceOfBatchRequestItem(value: object): value is BatchRequestItem {
     if (!('body' in value) || value['body'] === undefined) return false;
-    if (!('customId' in value) || value['customId'] === undefined) return false;
+    if ((!('customId' in value) && !('custom_id' in value)) || (value['customId'] === undefined && value['custom_id'] === undefined)) return false;
     return true;
 }
 

@@ -53,7 +53,7 @@ export interface CCChatCompletionAudio {
 export function instanceOfCCChatCompletionAudio(value: object): value is CCChatCompletionAudio {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('data' in value) || value['data'] === undefined) return false;
-    if (!('expiresAt' in value) || value['expiresAt'] === undefined) return false;
+    if ((!('expiresAt' in value) && !('expires_at' in value)) || (value['expiresAt'] === undefined && value['expires_at'] === undefined)) return false;
     if (!('transcript' in value) || value['transcript'] === undefined) return false;
     return true;
 }

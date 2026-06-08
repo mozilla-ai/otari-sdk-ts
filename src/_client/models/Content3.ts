@@ -106,10 +106,10 @@ export type Content3TypeEnum = typeof Content3TypeEnum[keyof typeof Content3Type
  * Check if a given object implements the Content3 interface.
  */
 export function instanceOfContent3(value: object): value is Content3 {
-    if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
+    if ((!('errorCode' in value) && !('error_code' in value)) || (value['errorCode'] === undefined && value['error_code'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     if (!('content' in value) || value['content'] === undefined) return false;
-    if (!('returnCode' in value) || value['returnCode'] === undefined) return false;
+    if ((!('returnCode' in value) && !('return_code' in value)) || (value['returnCode'] === undefined && value['return_code'] === undefined)) return false;
     if (!('stderr' in value) || value['stderr'] === undefined) return false;
     if (!('stdout' in value) || value['stdout'] === undefined) return false;
     return true;

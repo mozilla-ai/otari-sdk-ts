@@ -56,6 +56,8 @@ export function instanceOfMSGChatCompletionFunctionMessageParam(value: object): 
     if (!('content' in value) || value['content'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('role' in value) || value['role'] === undefined) return false;
+    if (value['role'] !== 'function') return false;
+    
     return true;
 }
 

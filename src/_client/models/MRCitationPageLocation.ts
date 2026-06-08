@@ -78,11 +78,13 @@ export type MRCitationPageLocationTypeEnum = typeof MRCitationPageLocationTypeEn
  * Check if a given object implements the MRCitationPageLocation interface.
  */
 export function instanceOfMRCitationPageLocation(value: object): value is MRCitationPageLocation {
-    if (!('citedText' in value) || value['citedText'] === undefined) return false;
-    if (!('documentIndex' in value) || value['documentIndex'] === undefined) return false;
-    if (!('endPageNumber' in value) || value['endPageNumber'] === undefined) return false;
-    if (!('startPageNumber' in value) || value['startPageNumber'] === undefined) return false;
+    if ((!('citedText' in value) && !('cited_text' in value)) || (value['citedText'] === undefined && value['cited_text'] === undefined)) return false;
+    if ((!('documentIndex' in value) && !('document_index' in value)) || (value['documentIndex'] === undefined && value['document_index'] === undefined)) return false;
+    if ((!('endPageNumber' in value) && !('end_page_number' in value)) || (value['endPageNumber'] === undefined && value['end_page_number'] === undefined)) return false;
+    if ((!('startPageNumber' in value) && !('start_page_number' in value)) || (value['startPageNumber'] === undefined && value['start_page_number'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'page_location') return false;
+    
     return true;
 }
 

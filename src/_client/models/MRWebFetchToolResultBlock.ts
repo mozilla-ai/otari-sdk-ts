@@ -76,8 +76,10 @@ export type MRWebFetchToolResultBlockTypeEnum = typeof MRWebFetchToolResultBlock
  */
 export function instanceOfMRWebFetchToolResultBlock(value: object): value is MRWebFetchToolResultBlock {
     if (!('content' in value) || value['content'] === undefined) return false;
-    if (!('toolUseId' in value) || value['toolUseId'] === undefined) return false;
+    if ((!('toolUseId' in value) && !('tool_use_id' in value)) || (value['toolUseId'] === undefined && value['tool_use_id'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'web_fetch_tool_result') return false;
+    
     return true;
 }
 

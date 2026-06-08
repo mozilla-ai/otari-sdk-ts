@@ -49,6 +49,8 @@ export type MSGChatCompletionContentPartRefusalParamTypeEnum = typeof MSGChatCom
 export function instanceOfMSGChatCompletionContentPartRefusalParam(value: object): value is MSGChatCompletionContentPartRefusalParam {
     if (!('refusal' in value) || value['refusal'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'refusal') return false;
+    
     return true;
 }
 

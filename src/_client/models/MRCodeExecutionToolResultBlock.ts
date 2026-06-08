@@ -63,8 +63,10 @@ export type MRCodeExecutionToolResultBlockTypeEnum = typeof MRCodeExecutionToolR
  */
 export function instanceOfMRCodeExecutionToolResultBlock(value: object): value is MRCodeExecutionToolResultBlock {
     if (!('content' in value) || value['content'] === undefined) return false;
-    if (!('toolUseId' in value) || value['toolUseId'] === undefined) return false;
+    if ((!('toolUseId' in value) && !('tool_use_id' in value)) || (value['toolUseId'] === undefined && value['tool_use_id'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'code_execution_tool_result') return false;
+    
     return true;
 }
 

@@ -71,9 +71,9 @@ export interface CCKCompletionUsage {
  * Check if a given object implements the CCKCompletionUsage interface.
  */
 export function instanceOfCCKCompletionUsage(value: object): value is CCKCompletionUsage {
-    if (!('completionTokens' in value) || value['completionTokens'] === undefined) return false;
-    if (!('promptTokens' in value) || value['promptTokens'] === undefined) return false;
-    if (!('totalTokens' in value) || value['totalTokens'] === undefined) return false;
+    if ((!('completionTokens' in value) && !('completion_tokens' in value)) || (value['completionTokens'] === undefined && value['completion_tokens'] === undefined)) return false;
+    if ((!('promptTokens' in value) && !('prompt_tokens' in value)) || (value['promptTokens'] === undefined && value['prompt_tokens'] === undefined)) return false;
+    if ((!('totalTokens' in value) && !('total_tokens' in value)) || (value['totalTokens'] === undefined && value['total_tokens'] === undefined)) return false;
     return true;
 }
 

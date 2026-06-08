@@ -73,14 +73,14 @@ export interface KeyInfo {
  * Check if a given object implements the KeyInfo interface.
  */
 export function instanceOfKeyInfo(value: object): value is KeyInfo {
-    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
-    if (!('expiresAt' in value) || value['expiresAt'] === undefined) return false;
+    if ((!('createdAt' in value) && !('created_at' in value)) || (value['createdAt'] === undefined && value['created_at'] === undefined)) return false;
+    if ((!('expiresAt' in value) && !('expires_at' in value)) || (value['expiresAt'] === undefined && value['expires_at'] === undefined)) return false;
     if (!('id' in value) || value['id'] === undefined) return false;
-    if (!('isActive' in value) || value['isActive'] === undefined) return false;
-    if (!('keyName' in value) || value['keyName'] === undefined) return false;
-    if (!('lastUsedAt' in value) || value['lastUsedAt'] === undefined) return false;
+    if ((!('isActive' in value) && !('is_active' in value)) || (value['isActive'] === undefined && value['is_active'] === undefined)) return false;
+    if ((!('keyName' in value) && !('key_name' in value)) || (value['keyName'] === undefined && value['key_name'] === undefined)) return false;
+    if ((!('lastUsedAt' in value) && !('last_used_at' in value)) || (value['lastUsedAt'] === undefined && value['last_used_at'] === undefined)) return false;
     if (!('metadata' in value) || value['metadata'] === undefined) return false;
-    if (!('userId' in value) || value['userId'] === undefined) return false;
+    if ((!('userId' in value) && !('user_id' in value)) || (value['userId'] === undefined && value['user_id'] === undefined)) return false;
     return true;
 }
 

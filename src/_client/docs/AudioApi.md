@@ -99,8 +99,8 @@ async function example() {
   const api = new AudioApi();
 
   const body = {
-    // string
-    file: file_example,
+    // Blob
+    file: BINARY_DATA_HERE,
     // string
     model: model_example,
     // string (optional)
@@ -132,7 +132,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **file** | `string` |  | [Defaults to `undefined`] |
+| **file** | `Blob` |  | [Defaults to `undefined`] |
 | **model** | `string` |  | [Defaults to `undefined`] |
 | **language** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **prompt** | `string` |  | [Optional] [Defaults to `undefined`] |

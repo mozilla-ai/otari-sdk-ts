@@ -55,11 +55,11 @@ export interface BudgetResponse {
  * Check if a given object implements the BudgetResponse interface.
  */
 export function instanceOfBudgetResponse(value: object): value is BudgetResponse {
-    if (!('budgetDurationSec' in value) || value['budgetDurationSec'] === undefined) return false;
-    if (!('budgetId' in value) || value['budgetId'] === undefined) return false;
-    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
-    if (!('maxBudget' in value) || value['maxBudget'] === undefined) return false;
-    if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
+    if ((!('budgetDurationSec' in value) && !('budget_duration_sec' in value)) || (value['budgetDurationSec'] === undefined && value['budget_duration_sec'] === undefined)) return false;
+    if ((!('budgetId' in value) && !('budget_id' in value)) || (value['budgetId'] === undefined && value['budget_id'] === undefined)) return false;
+    if ((!('createdAt' in value) && !('created_at' in value)) || (value['createdAt'] === undefined && value['created_at'] === undefined)) return false;
+    if ((!('maxBudget' in value) && !('max_budget' in value)) || (value['maxBudget'] === undefined && value['max_budget'] === undefined)) return false;
+    if ((!('updatedAt' in value) && !('updated_at' in value)) || (value['updatedAt'] === undefined && value['updated_at'] === undefined)) return false;
     return true;
 }
 

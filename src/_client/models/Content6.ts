@@ -93,9 +93,9 @@ export type Content6TypeEnum = typeof Content6TypeEnum[keyof typeof Content6Type
  * Check if a given object implements the Content6 interface.
  */
 export function instanceOfContent6(value: object): value is Content6 {
-    if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
+    if ((!('errorCode' in value) && !('error_code' in value)) || (value['errorCode'] === undefined && value['error_code'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
-    if (!('toolReferences' in value) || value['toolReferences'] === undefined) return false;
+    if ((!('toolReferences' in value) && !('tool_references' in value)) || (value['toolReferences'] === undefined && value['tool_references'] === undefined)) return false;
     return true;
 }
 

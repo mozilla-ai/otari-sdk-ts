@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { CCKCompletionTokensDetails } from './CCKCompletionTokensDetails';
+import {
+    CCKCompletionTokensDetailsFromJSON,
+    CCKCompletionTokensDetailsFromJSONTyped,
+    CCKCompletionTokensDetailsToJSON,
+    CCKCompletionTokensDetailsToJSONTyped,
+} from './CCKCompletionTokensDetails';
 import type { CCPromptTokensDetails } from './CCPromptTokensDetails';
 import {
     CCPromptTokensDetailsFromJSON,
@@ -20,13 +27,6 @@ import {
     CCPromptTokensDetailsToJSON,
     CCPromptTokensDetailsToJSONTyped,
 } from './CCPromptTokensDetails';
-import type { CCCompletionTokensDetails } from './CCCompletionTokensDetails';
-import {
-    CCCompletionTokensDetailsFromJSON,
-    CCCompletionTokensDetailsFromJSONTyped,
-    CCCompletionTokensDetailsToJSON,
-    CCCompletionTokensDetailsToJSONTyped,
-} from './CCCompletionTokensDetails';
 
 /**
  * Usage statistics for the completion request.
@@ -55,10 +55,10 @@ export interface CCCompletionUsage {
     totalTokens: number;
     /**
      * 
-     * @type {CCCompletionTokensDetails}
+     * @type {CCKCompletionTokensDetails}
      * @memberof CCCompletionUsage
      */
-    completionTokensDetails?: CCCompletionTokensDetails | null;
+    completionTokensDetails?: CCKCompletionTokensDetails | null;
     /**
      * 
      * @type {CCPromptTokensDetails}
@@ -71,9 +71,9 @@ export interface CCCompletionUsage {
  * Check if a given object implements the CCCompletionUsage interface.
  */
 export function instanceOfCCCompletionUsage(value: object): value is CCCompletionUsage {
-    if (!('completionTokens' in value) || value['completionTokens'] === undefined) return false;
-    if (!('promptTokens' in value) || value['promptTokens'] === undefined) return false;
-    if (!('totalTokens' in value) || value['totalTokens'] === undefined) return false;
+    if ((!('completionTokens' in value) && !('completion_tokens' in value)) || (value['completionTokens'] === undefined && value['completion_tokens'] === undefined)) return false;
+    if ((!('promptTokens' in value) && !('prompt_tokens' in value)) || (value['promptTokens'] === undefined && value['prompt_tokens'] === undefined)) return false;
+    if ((!('totalTokens' in value) && !('total_tokens' in value)) || (value['totalTokens'] === undefined && value['total_tokens'] === undefined)) return false;
     return true;
 }
 
@@ -91,7 +91,7 @@ export function CCCompletionUsageFromJSONTyped(json: any, ignoreDiscriminator: b
         'completionTokens': json['completion_tokens'],
         'promptTokens': json['prompt_tokens'],
         'totalTokens': json['total_tokens'],
-        'completionTokensDetails': json['completion_tokens_details'] == null ? undefined : CCCompletionTokensDetailsFromJSON(json['completion_tokens_details']),
+        'completionTokensDetails': json['completion_tokens_details'] == null ? undefined : CCKCompletionTokensDetailsFromJSON(json['completion_tokens_details']),
         'promptTokensDetails': json['prompt_tokens_details'] == null ? undefined : CCPromptTokensDetailsFromJSON(json['prompt_tokens_details']),
     };
 }
@@ -111,7 +111,7 @@ export function CCCompletionUsageToJSONTyped(value?: CCCompletionUsage | null, i
         'completion_tokens': value['completionTokens'],
         'prompt_tokens': value['promptTokens'],
         'total_tokens': value['totalTokens'],
-        'completion_tokens_details': CCCompletionTokensDetailsToJSON(value['completionTokensDetails']),
+        'completion_tokens_details': CCKCompletionTokensDetailsToJSON(value['completionTokensDetails']),
         'prompt_tokens_details': CCPromptTokensDetailsToJSON(value['promptTokensDetails']),
     };
 }

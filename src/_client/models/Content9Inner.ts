@@ -253,8 +253,8 @@ export function instanceOfContent9Inner(value: object): value is Content9Inner {
     if (!('input' in value) || value['input'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('content' in value) || value['content'] === undefined) return false;
-    if (!('toolUseId' in value) || value['toolUseId'] === undefined) return false;
-    if (!('fileId' in value) || value['fileId'] === undefined) return false;
+    if ((!('toolUseId' in value) && !('tool_use_id' in value)) || (value['toolUseId'] === undefined && value['tool_use_id'] === undefined)) return false;
+    if ((!('fileId' in value) && !('file_id' in value)) || (value['fileId'] === undefined && value['file_id'] === undefined)) return false;
     return true;
 }
 

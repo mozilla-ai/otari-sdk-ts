@@ -43,6 +43,8 @@ export type MRDirectCallerTypeEnum = typeof MRDirectCallerTypeEnum[keyof typeof 
  */
 export function instanceOfMRDirectCaller(value: object): value is MRDirectCaller {
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'direct') return false;
+    
     return true;
 }
 

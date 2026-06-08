@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
-import type { CCTopLogprob } from './CCTopLogprob';
+import type { CCKTopLogprob } from './CCKTopLogprob';
 import {
-    CCTopLogprobFromJSON,
-    CCTopLogprobFromJSONTyped,
-    CCTopLogprobToJSON,
-    CCTopLogprobToJSONTyped,
-} from './CCTopLogprob';
+    CCKTopLogprobFromJSON,
+    CCKTopLogprobFromJSONTyped,
+    CCKTopLogprobToJSON,
+    CCKTopLogprobToJSONTyped,
+} from './CCKTopLogprob';
 
 /**
  * 
@@ -48,10 +48,10 @@ export interface CCChatCompletionTokenLogprob {
     logprob: number;
     /**
      * 
-     * @type {Array<CCTopLogprob>}
+     * @type {Array<CCKTopLogprob>}
      * @memberof CCChatCompletionTokenLogprob
      */
-    topLogprobs: Array<CCTopLogprob>;
+    topLogprobs: Array<CCKTopLogprob>;
 }
 
 /**
@@ -60,7 +60,7 @@ export interface CCChatCompletionTokenLogprob {
 export function instanceOfCCChatCompletionTokenLogprob(value: object): value is CCChatCompletionTokenLogprob {
     if (!('token' in value) || value['token'] === undefined) return false;
     if (!('logprob' in value) || value['logprob'] === undefined) return false;
-    if (!('topLogprobs' in value) || value['topLogprobs'] === undefined) return false;
+    if ((!('topLogprobs' in value) && !('top_logprobs' in value)) || (value['topLogprobs'] === undefined && value['top_logprobs'] === undefined)) return false;
     return true;
 }
 
@@ -78,7 +78,7 @@ export function CCChatCompletionTokenLogprobFromJSONTyped(json: any, ignoreDiscr
         'token': json['token'],
         'bytes': json['bytes'] == null ? undefined : json['bytes'],
         'logprob': json['logprob'],
-        'topLogprobs': ((json['top_logprobs'] as Array<any>).map(CCTopLogprobFromJSON)),
+        'topLogprobs': ((json['top_logprobs'] as Array<any>).map(CCKTopLogprobFromJSON)),
     };
 }
 
@@ -97,7 +97,7 @@ export function CCChatCompletionTokenLogprobToJSONTyped(value?: CCChatCompletion
         'token': value['token'],
         'bytes': value['bytes'],
         'logprob': value['logprob'],
-        'top_logprobs': ((value['topLogprobs'] as Array<any>).map(CCTopLogprobToJSON)),
+        'top_logprobs': ((value['topLogprobs'] as Array<any>).map(CCKTopLogprobToJSON)),
     };
 }
 

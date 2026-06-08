@@ -39,7 +39,7 @@ export interface MRContainer {
  */
 export function instanceOfMRContainer(value: object): value is MRContainer {
     if (!('id' in value) || value['id'] === undefined) return false;
-    if (!('expiresAt' in value) || value['expiresAt'] === undefined) return false;
+    if ((!('expiresAt' in value) && !('expires_at' in value)) || (value['expiresAt'] === undefined && value['expires_at'] === undefined)) return false;
     return true;
 }
 

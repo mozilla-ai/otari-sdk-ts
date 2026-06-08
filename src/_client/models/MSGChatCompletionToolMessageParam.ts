@@ -63,7 +63,9 @@ export type MSGChatCompletionToolMessageParamRoleEnum = typeof MSGChatCompletion
 export function instanceOfMSGChatCompletionToolMessageParam(value: object): value is MSGChatCompletionToolMessageParam {
     if (!('content' in value) || value['content'] === undefined) return false;
     if (!('role' in value) || value['role'] === undefined) return false;
-    if (!('toolCallId' in value) || value['toolCallId'] === undefined) return false;
+    if (value['role'] !== 'tool') return false;
+    
+    if ((!('toolCallId' in value) && !('tool_call_id' in value)) || (value['toolCallId'] === undefined && value['tool_call_id'] === undefined)) return false;
     return true;
 }
 

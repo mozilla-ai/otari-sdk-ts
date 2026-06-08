@@ -77,6 +77,8 @@ export type MRDocumentBlockTypeEnum = typeof MRDocumentBlockTypeEnum[keyof typeo
 export function instanceOfMRDocumentBlock(value: object): value is MRDocumentBlock {
     if (!('source' in value) || value['source'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'document') return false;
+    
     return true;
 }
 

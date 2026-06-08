@@ -90,7 +90,7 @@ export type ToolCallsInnerTypeEnum = typeof ToolCallsInnerTypeEnum[keyof typeof 
  */
 export function instanceOfToolCallsInner(value: object): value is ToolCallsInner {
     if (!('id' in value) || value['id'] === undefined) return false;
-    if (!('_function' in value) || value['_function'] === undefined) return false;
+    if ((!('_function' in value) && !('function' in value)) || (value['_function'] === undefined && value['function'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     if (!('custom' in value) || value['custom'] === undefined) return false;
     return true;

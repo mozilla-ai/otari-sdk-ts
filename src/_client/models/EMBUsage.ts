@@ -38,8 +38,8 @@ export interface EMBUsage {
  * Check if a given object implements the EMBUsage interface.
  */
 export function instanceOfEMBUsage(value: object): value is EMBUsage {
-    if (!('promptTokens' in value) || value['promptTokens'] === undefined) return false;
-    if (!('totalTokens' in value) || value['totalTokens'] === undefined) return false;
+    if ((!('promptTokens' in value) && !('prompt_tokens' in value)) || (value['promptTokens'] === undefined && value['prompt_tokens'] === undefined)) return false;
+    if ((!('totalTokens' in value) && !('total_tokens' in value)) || (value['totalTokens'] === undefined && value['total_tokens'] === undefined)) return false;
     return true;
 }
 

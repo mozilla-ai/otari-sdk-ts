@@ -48,8 +48,10 @@ export type MRServerToolCallerTypeEnum = typeof MRServerToolCallerTypeEnum[keyof
  * Check if a given object implements the MRServerToolCaller interface.
  */
 export function instanceOfMRServerToolCaller(value: object): value is MRServerToolCaller {
-    if (!('toolId' in value) || value['toolId'] === undefined) return false;
+    if ((!('toolId' in value) && !('tool_id' in value)) || (value['toolId'] === undefined && value['tool_id'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'code_execution_20250825') return false;
+    
     return true;
 }
 

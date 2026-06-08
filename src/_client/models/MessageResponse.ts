@@ -157,7 +157,11 @@ export function instanceOfMessageResponse(value: object): value is MessageRespon
     if (!('content' in value) || value['content'] === undefined) return false;
     if (!('model' in value) || value['model'] === undefined) return false;
     if (!('role' in value) || value['role'] === undefined) return false;
+    if (value['role'] !== 'assistant') return false;
+    
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'message') return false;
+    
     if (!('usage' in value) || value['usage'] === undefined) return false;
     return true;
 }

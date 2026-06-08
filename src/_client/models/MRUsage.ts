@@ -101,8 +101,8 @@ export type MRUsageServiceTierEnum = typeof MRUsageServiceTierEnum[keyof typeof 
  * Check if a given object implements the MRUsage interface.
  */
 export function instanceOfMRUsage(value: object): value is MRUsage {
-    if (!('inputTokens' in value) || value['inputTokens'] === undefined) return false;
-    if (!('outputTokens' in value) || value['outputTokens'] === undefined) return false;
+    if ((!('inputTokens' in value) && !('input_tokens' in value)) || (value['inputTokens'] === undefined && value['input_tokens'] === undefined)) return false;
+    if ((!('outputTokens' in value) && !('output_tokens' in value)) || (value['outputTokens'] === undefined && value['output_tokens'] === undefined)) return false;
     return true;
 }
 

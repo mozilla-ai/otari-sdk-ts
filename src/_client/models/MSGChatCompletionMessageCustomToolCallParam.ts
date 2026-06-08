@@ -64,6 +64,8 @@ export function instanceOfMSGChatCompletionMessageCustomToolCallParam(value: obj
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('custom' in value) || value['custom'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'custom') return false;
+    
     return true;
 }
 

@@ -66,9 +66,11 @@ export type MRWebSearchResultBlockTypeEnum = typeof MRWebSearchResultBlockTypeEn
  * Check if a given object implements the MRWebSearchResultBlock interface.
  */
 export function instanceOfMRWebSearchResultBlock(value: object): value is MRWebSearchResultBlock {
-    if (!('encryptedContent' in value) || value['encryptedContent'] === undefined) return false;
+    if ((!('encryptedContent' in value) && !('encrypted_content' in value)) || (value['encryptedContent'] === undefined && value['encrypted_content'] === undefined)) return false;
     if (!('title' in value) || value['title'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'web_search_result') return false;
+    
     if (!('url' in value) || value['url'] === undefined) return false;
     return true;
 }

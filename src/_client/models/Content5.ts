@@ -173,11 +173,11 @@ export type Content5FileTypeEnum = typeof Content5FileTypeEnum[keyof typeof Cont
  * Check if a given object implements the Content5 interface.
  */
 export function instanceOfContent5(value: object): value is Content5 {
-    if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
+    if ((!('errorCode' in value) && !('error_code' in value)) || (value['errorCode'] === undefined && value['error_code'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     if (!('content' in value) || value['content'] === undefined) return false;
-    if (!('fileType' in value) || value['fileType'] === undefined) return false;
-    if (!('isFileUpdate' in value) || value['isFileUpdate'] === undefined) return false;
+    if ((!('fileType' in value) && !('file_type' in value)) || (value['fileType'] === undefined && value['file_type'] === undefined)) return false;
+    if ((!('isFileUpdate' in value) && !('is_file_update' in value)) || (value['isFileUpdate'] === undefined && value['is_file_update'] === undefined)) return false;
     return true;
 }
 

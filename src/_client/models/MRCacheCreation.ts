@@ -38,8 +38,8 @@ export interface MRCacheCreation {
  * Check if a given object implements the MRCacheCreation interface.
  */
 export function instanceOfMRCacheCreation(value: object): value is MRCacheCreation {
-    if (!('ephemeral1hInputTokens' in value) || value['ephemeral1hInputTokens'] === undefined) return false;
-    if (!('ephemeral5mInputTokens' in value) || value['ephemeral5mInputTokens'] === undefined) return false;
+    if ((!('ephemeral1hInputTokens' in value) && !('ephemeral_1h_input_tokens' in value)) || (value['ephemeral1hInputTokens'] === undefined && value['ephemeral_1h_input_tokens'] === undefined)) return false;
+    if ((!('ephemeral5mInputTokens' in value) && !('ephemeral_5m_input_tokens' in value)) || (value['ephemeral5mInputTokens'] === undefined && value['ephemeral_5m_input_tokens'] === undefined)) return false;
     return true;
 }
 

@@ -60,7 +60,7 @@ export interface CCKChatCompletionTokenLogprob {
 export function instanceOfCCKChatCompletionTokenLogprob(value: object): value is CCKChatCompletionTokenLogprob {
     if (!('token' in value) || value['token'] === undefined) return false;
     if (!('logprob' in value) || value['logprob'] === undefined) return false;
-    if (!('topLogprobs' in value) || value['topLogprobs'] === undefined) return false;
+    if ((!('topLogprobs' in value) && !('top_logprobs' in value)) || (value['topLogprobs'] === undefined && value['top_logprobs'] === undefined)) return false;
     return true;
 }
 

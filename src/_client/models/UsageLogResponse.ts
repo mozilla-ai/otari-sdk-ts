@@ -103,19 +103,19 @@ export interface UsageLogResponse {
  * Check if a given object implements the UsageLogResponse interface.
  */
 export function instanceOfUsageLogResponse(value: object): value is UsageLogResponse {
-    if (!('apiKeyId' in value) || value['apiKeyId'] === undefined) return false;
-    if (!('completionTokens' in value) || value['completionTokens'] === undefined) return false;
+    if ((!('apiKeyId' in value) && !('api_key_id' in value)) || (value['apiKeyId'] === undefined && value['api_key_id'] === undefined)) return false;
+    if ((!('completionTokens' in value) && !('completion_tokens' in value)) || (value['completionTokens'] === undefined && value['completion_tokens'] === undefined)) return false;
     if (!('cost' in value) || value['cost'] === undefined) return false;
     if (!('endpoint' in value) || value['endpoint'] === undefined) return false;
-    if (!('errorMessage' in value) || value['errorMessage'] === undefined) return false;
+    if ((!('errorMessage' in value) && !('error_message' in value)) || (value['errorMessage'] === undefined && value['error_message'] === undefined)) return false;
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('model' in value) || value['model'] === undefined) return false;
-    if (!('promptTokens' in value) || value['promptTokens'] === undefined) return false;
+    if ((!('promptTokens' in value) && !('prompt_tokens' in value)) || (value['promptTokens'] === undefined && value['prompt_tokens'] === undefined)) return false;
     if (!('provider' in value) || value['provider'] === undefined) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
     if (!('timestamp' in value) || value['timestamp'] === undefined) return false;
-    if (!('totalTokens' in value) || value['totalTokens'] === undefined) return false;
-    if (!('userId' in value) || value['userId'] === undefined) return false;
+    if ((!('totalTokens' in value) && !('total_tokens' in value)) || (value['totalTokens'] === undefined && value['total_tokens'] === undefined)) return false;
+    if ((!('userId' in value) && !('user_id' in value)) || (value['userId'] === undefined && value['user_id'] === undefined)) return false;
     return true;
 }
 

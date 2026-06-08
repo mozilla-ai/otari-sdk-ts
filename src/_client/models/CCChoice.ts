@@ -79,7 +79,7 @@ export type CCChoiceFinishReasonEnum = typeof CCChoiceFinishReasonEnum[keyof typ
  * Check if a given object implements the CCChoice interface.
  */
 export function instanceOfCCChoice(value: object): value is CCChoice {
-    if (!('finishReason' in value) || value['finishReason'] === undefined) return false;
+    if ((!('finishReason' in value) && !('finish_reason' in value)) || (value['finishReason'] === undefined && value['finish_reason'] === undefined)) return false;
     if (!('index' in value) || value['index'] === undefined) return false;
     if (!('message' in value) || value['message'] === undefined) return false;
     return true;

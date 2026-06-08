@@ -78,11 +78,13 @@ export type MRCitationContentBlockLocationTypeEnum = typeof MRCitationContentBlo
  * Check if a given object implements the MRCitationContentBlockLocation interface.
  */
 export function instanceOfMRCitationContentBlockLocation(value: object): value is MRCitationContentBlockLocation {
-    if (!('citedText' in value) || value['citedText'] === undefined) return false;
-    if (!('documentIndex' in value) || value['documentIndex'] === undefined) return false;
-    if (!('endBlockIndex' in value) || value['endBlockIndex'] === undefined) return false;
-    if (!('startBlockIndex' in value) || value['startBlockIndex'] === undefined) return false;
+    if ((!('citedText' in value) && !('cited_text' in value)) || (value['citedText'] === undefined && value['cited_text'] === undefined)) return false;
+    if ((!('documentIndex' in value) && !('document_index' in value)) || (value['documentIndex'] === undefined && value['document_index'] === undefined)) return false;
+    if ((!('endBlockIndex' in value) && !('end_block_index' in value)) || (value['endBlockIndex'] === undefined && value['end_block_index'] === undefined)) return false;
+    if ((!('startBlockIndex' in value) && !('start_block_index' in value)) || (value['startBlockIndex'] === undefined && value['start_block_index'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'content_block_location') return false;
+    
     return true;
 }
 

@@ -13,7 +13,7 @@ Name | Type
 `audio` | [CCChatCompletionAudio](CCChatCompletionAudio.md)
 `functionCall` | [CCFunctionCall](CCFunctionCall.md)
 `toolCalls` | [Array&lt;CCChatCompletionMessageToolCallsInner&gt;](CCChatCompletionMessageToolCallsInner.md)
-`reasoning` | [CCReasoning](CCReasoning.md)
+`reasoning` | [CCKReasoning](CCKReasoning.md)
 
 ## Example
 

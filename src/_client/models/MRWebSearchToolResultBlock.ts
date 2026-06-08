@@ -76,8 +76,10 @@ export type MRWebSearchToolResultBlockTypeEnum = typeof MRWebSearchToolResultBlo
  */
 export function instanceOfMRWebSearchToolResultBlock(value: object): value is MRWebSearchToolResultBlock {
     if (!('content' in value) || value['content'] === undefined) return false;
-    if (!('toolUseId' in value) || value['toolUseId'] === undefined) return false;
+    if ((!('toolUseId' in value) && !('tool_use_id' in value)) || (value['toolUseId'] === undefined && value['tool_use_id'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'web_search_tool_result') return false;
+    
     return true;
 }
 

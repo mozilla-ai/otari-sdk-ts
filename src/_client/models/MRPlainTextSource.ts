@@ -63,8 +63,12 @@ export type MRPlainTextSourceTypeEnum = typeof MRPlainTextSourceTypeEnum[keyof t
  */
 export function instanceOfMRPlainTextSource(value: object): value is MRPlainTextSource {
     if (!('data' in value) || value['data'] === undefined) return false;
-    if (!('mediaType' in value) || value['mediaType'] === undefined) return false;
+    if ((!('mediaType' in value) && !('media_type' in value)) || (value['mediaType'] === undefined && value['media_type'] === undefined)) return false;
+    if (value['mediaType'] !== 'text/plain' && value['media_type'] !== 'text/plain') return false;
+    
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'text') return false;
+    
     return true;
 }
 

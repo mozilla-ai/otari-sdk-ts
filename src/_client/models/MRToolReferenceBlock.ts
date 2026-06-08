@@ -48,8 +48,10 @@ export type MRToolReferenceBlockTypeEnum = typeof MRToolReferenceBlockTypeEnum[k
  * Check if a given object implements the MRToolReferenceBlock interface.
  */
 export function instanceOfMRToolReferenceBlock(value: object): value is MRToolReferenceBlock {
-    if (!('toolName' in value) || value['toolName'] === undefined) return false;
+    if ((!('toolName' in value) && !('tool_name' in value)) || (value['toolName'] === undefined && value['tool_name'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'tool_reference') return false;
+    
     return true;
 }
 

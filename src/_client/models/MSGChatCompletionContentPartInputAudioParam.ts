@@ -55,8 +55,10 @@ export type MSGChatCompletionContentPartInputAudioParamTypeEnum = typeof MSGChat
  * Check if a given object implements the MSGChatCompletionContentPartInputAudioParam interface.
  */
 export function instanceOfMSGChatCompletionContentPartInputAudioParam(value: object): value is MSGChatCompletionContentPartInputAudioParam {
-    if (!('inputAudio' in value) || value['inputAudio'] === undefined) return false;
+    if ((!('inputAudio' in value) && !('input_audio' in value)) || (value['inputAudio'] === undefined && value['input_audio'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'input_audio') return false;
+    
     return true;
 }
 

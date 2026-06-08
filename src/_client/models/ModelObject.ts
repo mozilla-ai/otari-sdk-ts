@@ -65,7 +65,7 @@ export interface ModelObject {
 export function instanceOfModelObject(value: object): value is ModelObject {
     if (!('created' in value) || value['created'] === undefined) return false;
     if (!('id' in value) || value['id'] === undefined) return false;
-    if (!('ownedBy' in value) || value['ownedBy'] === undefined) return false;
+    if ((!('ownedBy' in value) && !('owned_by' in value)) || (value['ownedBy'] === undefined && value['owned_by'] === undefined)) return false;
     return true;
 }
 
