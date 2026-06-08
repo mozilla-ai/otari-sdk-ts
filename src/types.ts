@@ -1,7 +1,7 @@
 /**
  * Configuration and type re-exports for the otari gateway client.
  *
- * Option C: response/request types come from the OpenAPI-generated core in
+ * Response/request types come from the OpenAPI-generated core in
  * `./_client` (modeled from the *otari* spec, not OpenAI's), re-exported here
  * so consumers can name them without reaching into the generated package.
  */

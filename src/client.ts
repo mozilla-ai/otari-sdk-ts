@@ -1,7 +1,7 @@
 /**
  * OtariClient: TypeScript client for the otari gateway.
  *
- * Option C: a thin, ergonomic shell over the OpenAPI-generated core in
+ * A thin, ergonomic shell over the OpenAPI-generated core in
  * `./_client`. Non-streaming calls go through the generated typed API classes
  * (returning typed models such as `ChatCompletion`); streaming calls go through
  * the hand-written SSE shim in `./streaming`; generated `ResponseError`s are

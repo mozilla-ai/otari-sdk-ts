@@ -1,7 +1,7 @@
 /**
  * @mozilla-ai/otari - TypeScript SDK for the otari gateway.
  *
- * Option C: a thin shell over a core generated from the otari OpenAPI spec
+ * A thin shell over a core generated from the otari OpenAPI spec
  * (`./_client`), not a wrapper around the official `openai` package.
  *
  * @example

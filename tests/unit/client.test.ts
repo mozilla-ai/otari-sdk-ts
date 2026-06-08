@@ -1,5 +1,5 @@
 /**
- * Tests for the OtariClient (Option C: generated-core shell).
+ * Tests for the OtariClient (generated-core shell).
  *
  * Mirrors the Python reference's test rewrite: everything is mocked at the
  * single transport seam — the `fetch` implementation passed to the client (and
