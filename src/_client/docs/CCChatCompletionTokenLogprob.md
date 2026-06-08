@@ -9,7 +9,7 @@ Name | Type
 `token` | string
 `bytes` | Array&lt;number&gt;
 `logprob` | number
-`topLogprobs` | [Array&lt;CCTopLogprob&gt;](CCTopLogprob.md)
+`topLogprobs` | [Array&lt;CCKTopLogprob&gt;](CCKTopLogprob.md)
 
 ## Example
 

@@ -103,7 +103,7 @@ export type Content7TypeEnum = typeof Content7TypeEnum[keyof typeof Content7Type
  * Check if a given object implements the Content7 interface.
  */
 export function instanceOfContent7(value: object): value is Content7 {
-    if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
+    if ((!('errorCode' in value) && !('error_code' in value)) || (value['errorCode'] === undefined && value['error_code'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     if (!('content' in value) || value['content'] === undefined) return false;
     if (!('url' in value) || value['url'] === undefined) return false;

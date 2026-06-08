@@ -104,6 +104,8 @@ export function instanceOfChatCompletion(value: object): value is ChatCompletion
     if (!('created' in value) || value['created'] === undefined) return false;
     if (!('model' in value) || value['model'] === undefined) return false;
     if (!('object' in value) || value['object'] === undefined) return false;
+    if (value['object'] !== 'chat.completion') return false;
+    
     return true;
 }
 

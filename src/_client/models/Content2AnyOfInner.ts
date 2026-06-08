@@ -120,8 +120,8 @@ export type Content2AnyOfInnerTypeEnum = typeof Content2AnyOfInnerTypeEnum[keyof
 export function instanceOfContent2AnyOfInner(value: object): value is Content2AnyOfInner {
     if (!('text' in value) || value['text'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
-    if (!('imageUrl' in value) || value['imageUrl'] === undefined) return false;
-    if (!('inputAudio' in value) || value['inputAudio'] === undefined) return false;
+    if ((!('imageUrl' in value) && !('image_url' in value)) || (value['imageUrl'] === undefined && value['image_url'] === undefined)) return false;
+    if ((!('inputAudio' in value) && !('input_audio' in value)) || (value['inputAudio'] === undefined && value['input_audio'] === undefined)) return false;
     if (!('file' in value) || value['file'] === undefined) return false;
     return true;
 }

@@ -56,8 +56,10 @@ export type MRToolSearchToolSearchResultBlockTypeEnum = typeof MRToolSearchToolS
  * Check if a given object implements the MRToolSearchToolSearchResultBlock interface.
  */
 export function instanceOfMRToolSearchToolSearchResultBlock(value: object): value is MRToolSearchToolSearchResultBlock {
-    if (!('toolReferences' in value) || value['toolReferences'] === undefined) return false;
+    if ((!('toolReferences' in value) && !('tool_references' in value)) || (value['toolReferences'] === undefined && value['tool_references'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'tool_search_tool_search_result') return false;
+    
     return true;
 }
 

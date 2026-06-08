@@ -57,6 +57,8 @@ export type MSGFileTypeEnum = typeof MSGFileTypeEnum[keyof typeof MSGFileTypeEnu
 export function instanceOfMSGFile(value: object): value is MSGFile {
     if (!('file' in value) || value['file'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'file') return false;
+    
     return true;
 }
 

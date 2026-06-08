@@ -30,7 +30,6 @@ docs/CCChatCompletionMessageToolCallsInner.md
 docs/CCChatCompletionTokenLogprob.md
 docs/CCChoice.md
 docs/CCChoiceLogprobs.md
-docs/CCCompletionTokensDetails.md
 docs/CCCompletionUsage.md
 docs/CCCustom.md
 docs/CCFunction.md
@@ -48,8 +47,6 @@ docs/CCKPromptTokensDetails.md
 docs/CCKReasoning.md
 docs/CCKTopLogprob.md
 docs/CCPromptTokensDetails.md
-docs/CCReasoning.md
-docs/CCTopLogprob.md
 docs/Caller.md
 docs/ChatApi.md
 docs/ChatCompletion.md
@@ -205,7 +202,6 @@ models/CCChatCompletionMessageToolCallsInner.ts
 models/CCChatCompletionTokenLogprob.ts
 models/CCChoice.ts
 models/CCChoiceLogprobs.ts
-models/CCCompletionTokensDetails.ts
 models/CCCompletionUsage.ts
 models/CCCustom.ts
 models/CCFunction.ts
@@ -223,8 +219,6 @@ models/CCKPromptTokensDetails.ts
 models/CCKReasoning.ts
 models/CCKTopLogprob.ts
 models/CCPromptTokensDetails.ts
-models/CCReasoning.ts
-models/CCTopLogprob.ts
 models/Caller.ts
 models/ChatCompletion.ts
 models/ChatCompletionChunk.ts

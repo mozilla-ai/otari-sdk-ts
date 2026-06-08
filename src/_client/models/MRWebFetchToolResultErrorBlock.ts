@@ -63,8 +63,10 @@ export type MRWebFetchToolResultErrorBlockTypeEnum = typeof MRWebFetchToolResult
  * Check if a given object implements the MRWebFetchToolResultErrorBlock interface.
  */
 export function instanceOfMRWebFetchToolResultErrorBlock(value: object): value is MRWebFetchToolResultErrorBlock {
-    if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
+    if ((!('errorCode' in value) && !('error_code' in value)) || (value['errorCode'] === undefined && value['error_code'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'web_fetch_tool_result_error') return false;
+    
     return true;
 }
 

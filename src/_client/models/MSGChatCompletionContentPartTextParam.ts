@@ -49,6 +49,8 @@ export type MSGChatCompletionContentPartTextParamTypeEnum = typeof MSGChatComple
 export function instanceOfMSGChatCompletionContentPartTextParam(value: object): value is MSGChatCompletionContentPartTextParam {
     if (!('text' in value) || value['text'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'text') return false;
+    
     return true;
 }
 

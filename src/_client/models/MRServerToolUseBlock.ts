@@ -92,6 +92,8 @@ export function instanceOfMRServerToolUseBlock(value: object): value is MRServer
     if (!('input' in value) || value['input'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'server_tool_use') return false;
+    
     return true;
 }
 

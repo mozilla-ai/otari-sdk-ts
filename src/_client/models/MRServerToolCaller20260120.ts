@@ -48,8 +48,10 @@ export type MRServerToolCaller20260120TypeEnum = typeof MRServerToolCaller202601
  * Check if a given object implements the MRServerToolCaller20260120 interface.
  */
 export function instanceOfMRServerToolCaller20260120(value: object): value is MRServerToolCaller20260120 {
-    if (!('toolId' in value) || value['toolId'] === undefined) return false;
+    if ((!('toolId' in value) && !('tool_id' in value)) || (value['toolId'] === undefined && value['tool_id'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'code_execution_20260120') return false;
+    
     return true;
 }
 

@@ -107,6 +107,8 @@ export type MSGChatCompletionAssistantMessageParamRoleEnum = typeof MSGChatCompl
  */
 export function instanceOfMSGChatCompletionAssistantMessageParam(value: object): value is MSGChatCompletionAssistantMessageParam {
     if (!('role' in value) || value['role'] === undefined) return false;
+    if (value['role'] !== 'assistant') return false;
+    
     return true;
 }
 

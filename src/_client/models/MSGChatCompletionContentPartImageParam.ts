@@ -55,8 +55,10 @@ export type MSGChatCompletionContentPartImageParamTypeEnum = typeof MSGChatCompl
  * Check if a given object implements the MSGChatCompletionContentPartImageParam interface.
  */
 export function instanceOfMSGChatCompletionContentPartImageParam(value: object): value is MSGChatCompletionContentPartImageParam {
-    if (!('imageUrl' in value) || value['imageUrl'] === undefined) return false;
+    if ((!('imageUrl' in value) && !('image_url' in value)) || (value['imageUrl'] === undefined && value['image_url'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'image_url') return false;
+    
     return true;
 }
 

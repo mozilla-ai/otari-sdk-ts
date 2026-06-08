@@ -48,8 +48,10 @@ export type MRBashCodeExecutionOutputBlockTypeEnum = typeof MRBashCodeExecutionO
  * Check if a given object implements the MRBashCodeExecutionOutputBlock interface.
  */
 export function instanceOfMRBashCodeExecutionOutputBlock(value: object): value is MRBashCodeExecutionOutputBlock {
-    if (!('fileId' in value) || value['fileId'] === undefined) return false;
+    if ((!('fileId' in value) && !('file_id' in value)) || (value['fileId'] === undefined && value['file_id'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'bash_code_execution_output') return false;
+    
     return true;
 }
 

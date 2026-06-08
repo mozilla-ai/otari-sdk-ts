@@ -55,7 +55,7 @@ export interface CreateUserRequest {
  * Check if a given object implements the CreateUserRequest interface.
  */
 export function instanceOfCreateUserRequest(value: object): value is CreateUserRequest {
-    if (!('userId' in value) || value['userId'] === undefined) return false;
+    if ((!('userId' in value) && !('user_id' in value)) || (value['userId'] === undefined && value['user_id'] === undefined)) return false;
     return true;
 }
 

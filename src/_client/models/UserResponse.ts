@@ -93,15 +93,15 @@ export interface UserResponse {
 export function instanceOfUserResponse(value: object): value is UserResponse {
     if (!('alias' in value) || value['alias'] === undefined) return false;
     if (!('blocked' in value) || value['blocked'] === undefined) return false;
-    if (!('budgetId' in value) || value['budgetId'] === undefined) return false;
-    if (!('budgetStartedAt' in value) || value['budgetStartedAt'] === undefined) return false;
-    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if ((!('budgetId' in value) && !('budget_id' in value)) || (value['budgetId'] === undefined && value['budget_id'] === undefined)) return false;
+    if ((!('budgetStartedAt' in value) && !('budget_started_at' in value)) || (value['budgetStartedAt'] === undefined && value['budget_started_at'] === undefined)) return false;
+    if ((!('createdAt' in value) && !('created_at' in value)) || (value['createdAt'] === undefined && value['created_at'] === undefined)) return false;
     if (!('metadata' in value) || value['metadata'] === undefined) return false;
-    if (!('nextBudgetResetAt' in value) || value['nextBudgetResetAt'] === undefined) return false;
+    if ((!('nextBudgetResetAt' in value) && !('next_budget_reset_at' in value)) || (value['nextBudgetResetAt'] === undefined && value['next_budget_reset_at'] === undefined)) return false;
     if (!('reserved' in value) || value['reserved'] === undefined) return false;
     if (!('spend' in value) || value['spend'] === undefined) return false;
-    if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
-    if (!('userId' in value) || value['userId'] === undefined) return false;
+    if ((!('updatedAt' in value) && !('updated_at' in value)) || (value['updatedAt'] === undefined && value['updated_at'] === undefined)) return false;
+    if ((!('userId' in value) && !('user_id' in value)) || (value['userId'] === undefined && value['user_id'] === undefined)) return false;
     return true;
 }
 

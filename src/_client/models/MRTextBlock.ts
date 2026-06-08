@@ -64,6 +64,8 @@ export type MRTextBlockTypeEnum = typeof MRTextBlockTypeEnum[keyof typeof MRText
 export function instanceOfMRTextBlock(value: object): value is MRTextBlock {
     if (!('text' in value) || value['text'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'text') return false;
+    
     return true;
 }
 

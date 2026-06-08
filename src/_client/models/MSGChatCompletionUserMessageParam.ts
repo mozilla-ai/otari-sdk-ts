@@ -64,6 +64,8 @@ export type MSGChatCompletionUserMessageParamRoleEnum = typeof MSGChatCompletion
 export function instanceOfMSGChatCompletionUserMessageParam(value: object): value is MSGChatCompletionUserMessageParam {
     if (!('content' in value) || value['content'] === undefined) return false;
     if (!('role' in value) || value['role'] === undefined) return false;
+    if (value['role'] !== 'user') return false;
+    
     return true;
 }
 

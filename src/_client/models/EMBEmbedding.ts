@@ -57,6 +57,8 @@ export function instanceOfEMBEmbedding(value: object): value is EMBEmbedding {
     if (!('embedding' in value) || value['embedding'] === undefined) return false;
     if (!('index' in value) || value['index'] === undefined) return false;
     if (!('object' in value) || value['object'] === undefined) return false;
+    if (value['object'] !== 'embedding') return false;
+    
     return true;
 }
 

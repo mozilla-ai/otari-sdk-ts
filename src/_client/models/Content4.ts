@@ -119,13 +119,13 @@ export type Content4TypeEnum = typeof Content4TypeEnum[keyof typeof Content4Type
  * Check if a given object implements the Content4 interface.
  */
 export function instanceOfContent4(value: object): value is Content4 {
-    if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
+    if ((!('errorCode' in value) && !('error_code' in value)) || (value['errorCode'] === undefined && value['error_code'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     if (!('content' in value) || value['content'] === undefined) return false;
-    if (!('returnCode' in value) || value['returnCode'] === undefined) return false;
+    if ((!('returnCode' in value) && !('return_code' in value)) || (value['returnCode'] === undefined && value['return_code'] === undefined)) return false;
     if (!('stderr' in value) || value['stderr'] === undefined) return false;
     if (!('stdout' in value) || value['stdout'] === undefined) return false;
-    if (!('encryptedStdout' in value) || value['encryptedStdout'] === undefined) return false;
+    if ((!('encryptedStdout' in value) && !('encrypted_stdout' in value)) || (value['encryptedStdout'] === undefined && value['encrypted_stdout'] === undefined)) return false;
     return true;
 }
 

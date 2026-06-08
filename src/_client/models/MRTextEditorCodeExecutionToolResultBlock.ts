@@ -63,8 +63,10 @@ export type MRTextEditorCodeExecutionToolResultBlockTypeEnum = typeof MRTextEdit
  */
 export function instanceOfMRTextEditorCodeExecutionToolResultBlock(value: object): value is MRTextEditorCodeExecutionToolResultBlock {
     if (!('content' in value) || value['content'] === undefined) return false;
-    if (!('toolUseId' in value) || value['toolUseId'] === undefined) return false;
+    if ((!('toolUseId' in value) && !('tool_use_id' in value)) || (value['toolUseId'] === undefined && value['tool_use_id'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'text_editor_code_execution_tool_result') return false;
+    
     return true;
 }
 

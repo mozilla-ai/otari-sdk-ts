@@ -104,6 +104,8 @@ export function instanceOfChatCompletionChunk(value: object): value is ChatCompl
     if (!('created' in value) || value['created'] === undefined) return false;
     if (!('model' in value) || value['model'] === undefined) return false;
     if (!('object' in value) || value['object'] === undefined) return false;
+    if (value['object'] !== 'chat.completion.chunk') return false;
+    
     return true;
 }
 

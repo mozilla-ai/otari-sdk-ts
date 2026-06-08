@@ -75,10 +75,12 @@ export type MREncryptedCodeExecutionResultBlockTypeEnum = typeof MREncryptedCode
  */
 export function instanceOfMREncryptedCodeExecutionResultBlock(value: object): value is MREncryptedCodeExecutionResultBlock {
     if (!('content' in value) || value['content'] === undefined) return false;
-    if (!('encryptedStdout' in value) || value['encryptedStdout'] === undefined) return false;
-    if (!('returnCode' in value) || value['returnCode'] === undefined) return false;
+    if ((!('encryptedStdout' in value) && !('encrypted_stdout' in value)) || (value['encryptedStdout'] === undefined && value['encrypted_stdout'] === undefined)) return false;
+    if ((!('returnCode' in value) && !('return_code' in value)) || (value['returnCode'] === undefined && value['return_code'] === undefined)) return false;
     if (!('stderr' in value) || value['stderr'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'encrypted_code_execution_result') return false;
+    
     return true;
 }
 

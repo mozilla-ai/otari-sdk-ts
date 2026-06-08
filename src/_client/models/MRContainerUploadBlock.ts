@@ -48,8 +48,10 @@ export type MRContainerUploadBlockTypeEnum = typeof MRContainerUploadBlockTypeEn
  * Check if a given object implements the MRContainerUploadBlock interface.
  */
 export function instanceOfMRContainerUploadBlock(value: object): value is MRContainerUploadBlock {
-    if (!('fileId' in value) || value['fileId'] === undefined) return false;
+    if ((!('fileId' in value) && !('file_id' in value)) || (value['fileId'] === undefined && value['file_id'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'container_upload') return false;
+    
     return true;
 }
 

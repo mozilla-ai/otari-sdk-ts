@@ -57,6 +57,8 @@ export function instanceOfMRThinkingBlock(value: object): value is MRThinkingBlo
     if (!('signature' in value) || value['signature'] === undefined) return false;
     if (!('thinking' in value) || value['thinking'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'thinking') return false;
+    
     return true;
 }
 

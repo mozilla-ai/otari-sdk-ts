@@ -61,12 +61,12 @@ export interface PricingResponse {
  * Check if a given object implements the PricingResponse interface.
  */
 export function instanceOfPricingResponse(value: object): value is PricingResponse {
-    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
-    if (!('effectiveAt' in value) || value['effectiveAt'] === undefined) return false;
-    if (!('inputPricePerMillion' in value) || value['inputPricePerMillion'] === undefined) return false;
-    if (!('modelKey' in value) || value['modelKey'] === undefined) return false;
-    if (!('outputPricePerMillion' in value) || value['outputPricePerMillion'] === undefined) return false;
-    if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
+    if ((!('createdAt' in value) && !('created_at' in value)) || (value['createdAt'] === undefined && value['created_at'] === undefined)) return false;
+    if ((!('effectiveAt' in value) && !('effective_at' in value)) || (value['effectiveAt'] === undefined && value['effective_at'] === undefined)) return false;
+    if ((!('inputPricePerMillion' in value) && !('input_price_per_million' in value)) || (value['inputPricePerMillion'] === undefined && value['input_price_per_million'] === undefined)) return false;
+    if ((!('modelKey' in value) && !('model_key' in value)) || (value['modelKey'] === undefined && value['model_key'] === undefined)) return false;
+    if ((!('outputPricePerMillion' in value) && !('output_price_per_million' in value)) || (value['outputPricePerMillion'] === undefined && value['output_price_per_million'] === undefined)) return false;
+    if ((!('updatedAt' in value) && !('updated_at' in value)) || (value['updatedAt'] === undefined && value['updated_at'] === undefined)) return false;
     return true;
 }
 

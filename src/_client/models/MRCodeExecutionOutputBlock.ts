@@ -48,8 +48,10 @@ export type MRCodeExecutionOutputBlockTypeEnum = typeof MRCodeExecutionOutputBlo
  * Check if a given object implements the MRCodeExecutionOutputBlock interface.
  */
 export function instanceOfMRCodeExecutionOutputBlock(value: object): value is MRCodeExecutionOutputBlock {
-    if (!('fileId' in value) || value['fileId'] === undefined) return false;
+    if ((!('fileId' in value) && !('file_id' in value)) || (value['fileId'] === undefined && value['file_id'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'code_execution_output') return false;
+    
     return true;
 }
 

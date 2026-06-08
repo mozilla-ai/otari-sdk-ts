@@ -49,9 +49,9 @@ export interface SetPricingRequest {
  * Check if a given object implements the SetPricingRequest interface.
  */
 export function instanceOfSetPricingRequest(value: object): value is SetPricingRequest {
-    if (!('inputPricePerMillion' in value) || value['inputPricePerMillion'] === undefined) return false;
-    if (!('modelKey' in value) || value['modelKey'] === undefined) return false;
-    if (!('outputPricePerMillion' in value) || value['outputPricePerMillion'] === undefined) return false;
+    if ((!('inputPricePerMillion' in value) && !('input_price_per_million' in value)) || (value['inputPricePerMillion'] === undefined && value['input_price_per_million'] === undefined)) return false;
+    if ((!('modelKey' in value) && !('model_key' in value)) || (value['modelKey'] === undefined && value['model_key'] === undefined)) return false;
+    if ((!('outputPricePerMillion' in value) && !('output_price_per_million' in value)) || (value['outputPricePerMillion'] === undefined && value['output_price_per_million'] === undefined)) return false;
     return true;
 }
 

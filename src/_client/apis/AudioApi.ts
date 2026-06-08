@@ -29,7 +29,7 @@ export interface CreateSpeechV1AudioSpeechPostRequest {
 }
 
 export interface CreateTranscriptionV1AudioTranscriptionsPostRequest {
-    file: string;
+    file: Blob;
     model: string;
     language?: string | null;
     prompt?: string | null;
@@ -126,6 +126,8 @@ export class AudioApi extends runtime.BaseAPI {
 
         let formParams: { append(param: string, value: any): any };
         let useForm = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        useForm = canConsumeForm;
         if (useForm) {
             formParams = new FormData();
         } else {

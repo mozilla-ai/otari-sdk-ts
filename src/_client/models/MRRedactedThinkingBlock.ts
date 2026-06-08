@@ -50,6 +50,8 @@ export type MRRedactedThinkingBlockTypeEnum = typeof MRRedactedThinkingBlockType
 export function instanceOfMRRedactedThinkingBlock(value: object): value is MRRedactedThinkingBlock {
     if (!('data' in value) || value['data'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'redacted_thinking') return false;
+    
     return true;
 }
 

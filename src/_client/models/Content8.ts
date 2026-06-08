@@ -75,8 +75,10 @@ export type Content8TypeEnum = typeof Content8TypeEnum[keyof typeof Content8Type
  * Check if a given object implements the Content8 interface.
  */
 export function instanceOfContent8(value: object): value is Content8 {
-    if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
+    if ((!('errorCode' in value) && !('error_code' in value)) || (value['errorCode'] === undefined && value['error_code'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'web_search_tool_result_error') return false;
+    
     return true;
 }
 

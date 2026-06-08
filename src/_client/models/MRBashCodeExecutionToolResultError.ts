@@ -60,8 +60,10 @@ export type MRBashCodeExecutionToolResultErrorTypeEnum = typeof MRBashCodeExecut
  * Check if a given object implements the MRBashCodeExecutionToolResultError interface.
  */
 export function instanceOfMRBashCodeExecutionToolResultError(value: object): value is MRBashCodeExecutionToolResultError {
-    if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
+    if ((!('errorCode' in value) && !('error_code' in value)) || (value['errorCode'] === undefined && value['error_code'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'bash_code_execution_tool_result_error') return false;
+    
     return true;
 }
 

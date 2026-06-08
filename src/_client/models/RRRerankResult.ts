@@ -38,7 +38,7 @@ export interface RRRerankResult {
  */
 export function instanceOfRRRerankResult(value: object): value is RRRerankResult {
     if (!('index' in value) || value['index'] === undefined) return false;
-    if (!('relevanceScore' in value) || value['relevanceScore'] === undefined) return false;
+    if ((!('relevanceScore' in value) && !('relevance_score' in value)) || (value['relevanceScore'] === undefined && value['relevance_score'] === undefined)) return false;
     return true;
 }
 

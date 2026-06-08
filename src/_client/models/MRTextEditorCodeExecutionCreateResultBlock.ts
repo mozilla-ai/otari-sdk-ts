@@ -48,8 +48,10 @@ export type MRTextEditorCodeExecutionCreateResultBlockTypeEnum = typeof MRTextEd
  * Check if a given object implements the MRTextEditorCodeExecutionCreateResultBlock interface.
  */
 export function instanceOfMRTextEditorCodeExecutionCreateResultBlock(value: object): value is MRTextEditorCodeExecutionCreateResultBlock {
-    if (!('isFileUpdate' in value) || value['isFileUpdate'] === undefined) return false;
+    if ((!('isFileUpdate' in value) && !('is_file_update' in value)) || (value['isFileUpdate'] === undefined && value['is_file_update'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'text_editor_code_execution_create_result') return false;
+    
     return true;
 }
 

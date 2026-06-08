@@ -70,6 +70,8 @@ export type MRWebFetchBlockTypeEnum = typeof MRWebFetchBlockTypeEnum[keyof typeo
 export function instanceOfMRWebFetchBlock(value: object): value is MRWebFetchBlock {
     if (!('content' in value) || value['content'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'web_fetch_result') return false;
+    
     if (!('url' in value) || value['url'] === undefined) return false;
     return true;
 }

@@ -78,7 +78,9 @@ export type SourceTypeEnum = typeof SourceTypeEnum[keyof typeof SourceTypeEnum];
  */
 export function instanceOfSource(value: object): value is Source {
     if (!('data' in value) || value['data'] === undefined) return false;
-    if (!('mediaType' in value) || value['mediaType'] === undefined) return false;
+    if ((!('mediaType' in value) && !('media_type' in value)) || (value['mediaType'] === undefined && value['media_type'] === undefined)) return false;
+    if (value['mediaType'] !== 'text/plain' && value['media_type'] !== 'text/plain') return false;
+    
     if (!('type' in value) || value['type'] === undefined) return false;
     return true;
 }

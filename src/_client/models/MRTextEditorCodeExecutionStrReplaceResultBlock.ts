@@ -73,6 +73,8 @@ export type MRTextEditorCodeExecutionStrReplaceResultBlockTypeEnum = typeof MRTe
  */
 export function instanceOfMRTextEditorCodeExecutionStrReplaceResultBlock(value: object): value is MRTextEditorCodeExecutionStrReplaceResultBlock {
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'text_editor_code_execution_str_replace_result') return false;
+    
     return true;
 }
 

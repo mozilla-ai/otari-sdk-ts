@@ -78,11 +78,13 @@ export type MRCitationCharLocationTypeEnum = typeof MRCitationCharLocationTypeEn
  * Check if a given object implements the MRCitationCharLocation interface.
  */
 export function instanceOfMRCitationCharLocation(value: object): value is MRCitationCharLocation {
-    if (!('citedText' in value) || value['citedText'] === undefined) return false;
-    if (!('documentIndex' in value) || value['documentIndex'] === undefined) return false;
-    if (!('endCharIndex' in value) || value['endCharIndex'] === undefined) return false;
-    if (!('startCharIndex' in value) || value['startCharIndex'] === undefined) return false;
+    if ((!('citedText' in value) && !('cited_text' in value)) || (value['citedText'] === undefined && value['cited_text'] === undefined)) return false;
+    if ((!('documentIndex' in value) && !('document_index' in value)) || (value['documentIndex'] === undefined && value['document_index'] === undefined)) return false;
+    if ((!('endCharIndex' in value) && !('end_char_index' in value)) || (value['endCharIndex'] === undefined && value['end_char_index'] === undefined)) return false;
+    if ((!('startCharIndex' in value) && !('start_char_index' in value)) || (value['startCharIndex'] === undefined && value['start_char_index'] === undefined)) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'char_location') return false;
+    
     return true;
 }
 

@@ -38,8 +38,8 @@ export interface MRServerToolUsage {
  * Check if a given object implements the MRServerToolUsage interface.
  */
 export function instanceOfMRServerToolUsage(value: object): value is MRServerToolUsage {
-    if (!('webFetchRequests' in value) || value['webFetchRequests'] === undefined) return false;
-    if (!('webSearchRequests' in value) || value['webSearchRequests'] === undefined) return false;
+    if ((!('webFetchRequests' in value) && !('web_fetch_requests' in value)) || (value['webFetchRequests'] === undefined && value['web_fetch_requests'] === undefined)) return false;
+    if ((!('webSearchRequests' in value) && !('web_search_requests' in value)) || (value['webSearchRequests'] === undefined && value['web_search_requests'] === undefined)) return false;
     return true;
 }
 

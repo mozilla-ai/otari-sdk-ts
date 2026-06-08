@@ -167,7 +167,7 @@ export interface MessagesRequest {
  * Check if a given object implements the MessagesRequest interface.
  */
 export function instanceOfMessagesRequest(value: object): value is MessagesRequest {
-    if (!('maxTokens' in value) || value['maxTokens'] === undefined) return false;
+    if ((!('maxTokens' in value) && !('max_tokens' in value)) || (value['maxTokens'] === undefined && value['max_tokens'] === undefined)) return false;
     if (!('messages' in value) || value['messages'] === undefined) return false;
     if (!('model' in value) || value['model'] === undefined) return false;
     return true;

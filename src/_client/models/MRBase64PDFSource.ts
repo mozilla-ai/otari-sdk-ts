@@ -63,8 +63,12 @@ export type MRBase64PDFSourceTypeEnum = typeof MRBase64PDFSourceTypeEnum[keyof t
  */
 export function instanceOfMRBase64PDFSource(value: object): value is MRBase64PDFSource {
     if (!('data' in value) || value['data'] === undefined) return false;
-    if (!('mediaType' in value) || value['mediaType'] === undefined) return false;
+    if ((!('mediaType' in value) && !('media_type' in value)) || (value['mediaType'] === undefined && value['media_type'] === undefined)) return false;
+    if (value['mediaType'] !== 'application/pdf' && value['media_type'] !== 'application/pdf') return false;
+    
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'base64') return false;
+    
     return true;
 }
 

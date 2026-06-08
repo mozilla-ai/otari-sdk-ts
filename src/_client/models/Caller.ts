@@ -72,7 +72,7 @@ export type CallerTypeEnum = typeof CallerTypeEnum[keyof typeof CallerTypeEnum];
  */
 export function instanceOfCaller(value: object): value is Caller {
     if (!('type' in value) || value['type'] === undefined) return false;
-    if (!('toolId' in value) || value['toolId'] === undefined) return false;
+    if ((!('toolId' in value) && !('tool_id' in value)) || (value['toolId'] === undefined && value['tool_id'] === undefined)) return false;
     return true;
 }
 

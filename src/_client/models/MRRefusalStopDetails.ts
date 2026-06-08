@@ -64,6 +64,8 @@ export type MRRefusalStopDetailsTypeEnum = typeof MRRefusalStopDetailsTypeEnum[k
  */
 export function instanceOfMRRefusalStopDetails(value: object): value is MRRefusalStopDetails {
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'refusal') return false;
+    
     return true;
 }
 
