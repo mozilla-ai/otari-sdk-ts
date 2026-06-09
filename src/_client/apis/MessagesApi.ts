@@ -14,6 +14,16 @@
 
 import * as runtime from '../runtime';
 import {
+    type CountTokensRequest,
+    CountTokensRequestFromJSON,
+    CountTokensRequestToJSON,
+} from '../models/CountTokensRequest';
+import {
+    type CountTokensResponse,
+    CountTokensResponseFromJSON,
+    CountTokensResponseToJSON,
+} from '../models/CountTokensResponse';
+import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
@@ -29,6 +39,10 @@ import {
     MessagesRequestToJSON,
 } from '../models/MessagesRequest';
 
+export interface CountMessageTokensV1MessagesCountTokensPostRequest {
+    countTokensRequest: CountTokensRequest;
+}
+
 export interface CreateMessageV1MessagesPostRequest {
     messagesRequest: MessagesRequest;
 }
@@ -37,6 +51,55 @@ export interface CreateMessageV1MessagesPostRequest {
  * 
  */
 export class MessagesApi extends runtime.BaseAPI {
+
+    /**
+     * Creates request options for countMessageTokensV1MessagesCountTokensPost without sending the request
+     */
+    async countMessageTokensV1MessagesCountTokensPostRequestOpts(requestParameters: CountMessageTokensV1MessagesCountTokensPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['countTokensRequest'] == null) {
+            throw new runtime.RequiredError(
+                'countTokensRequest',
+                'Required parameter "countTokensRequest" was null or undefined when calling countMessageTokensV1MessagesCountTokensPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/v1/messages/count_tokens`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CountTokensRequestToJSON(requestParameters['countTokensRequest']),
+        };
+    }
+
+    /**
+     * Anthropic ``/v1/messages/count_tokens``-compatible endpoint.  Returns ``{\"input_tokens\": N}`` without contacting an upstream provider: counting is local, so there is no budget reservation, pricing, or usage logging. Authentication mirrors :func:`create_message` — platform mode resolves the caller\'s token against the platform, standalone mode validates the API key — so the endpoint is not an open token-counting oracle.
+     * Count Message Tokens
+     */
+    async countMessageTokensV1MessagesCountTokensPostRaw(requestParameters: CountMessageTokensV1MessagesCountTokensPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CountTokensResponse>> {
+        const requestOptions = await this.countMessageTokensV1MessagesCountTokensPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CountTokensResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Anthropic ``/v1/messages/count_tokens``-compatible endpoint.  Returns ``{\"input_tokens\": N}`` without contacting an upstream provider: counting is local, so there is no budget reservation, pricing, or usage logging. Authentication mirrors :func:`create_message` — platform mode resolves the caller\'s token against the platform, standalone mode validates the API key — so the endpoint is not an open token-counting oracle.
+     * Count Message Tokens
+     */
+    async countMessageTokensV1MessagesCountTokensPost(requestParameters: CountMessageTokensV1MessagesCountTokensPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CountTokensResponse> {
+        const response = await this.countMessageTokensV1MessagesCountTokensPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Creates request options for createMessageV1MessagesPost without sending the request

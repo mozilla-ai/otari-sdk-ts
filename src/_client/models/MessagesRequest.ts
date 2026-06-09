@@ -27,13 +27,13 @@ import {
     GuardrailConfigToJSON,
     GuardrailConfigToJSONTyped,
 } from './GuardrailConfig';
-import type { System } from './System';
+import type { System1 } from './System1';
 import {
-    SystemFromJSON,
-    SystemFromJSONTyped,
-    SystemToJSON,
-    SystemToJSONTyped,
-} from './System';
+    System1FromJSON,
+    System1FromJSONTyped,
+    System1ToJSON,
+    System1ToJSONTyped,
+} from './System1';
 
 /**
  * Anthropic Messages API-compatible request.
@@ -85,10 +85,10 @@ export interface MessagesRequest {
     mcpServers?: Array<McpServerConfig> | null;
     /**
      * 
-     * @type {Array<{ [key: string]: any; } | null>}
+     * @type {Array<{ [key: string]: any; }>}
      * @memberof MessagesRequest
      */
-    messages: Array<{ [key: string]: any; } | null>;
+    messages: Array<{ [key: string]: any; }>;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -115,10 +115,10 @@ export interface MessagesRequest {
     stream?: boolean;
     /**
      * 
-     * @type {System}
+     * @type {System1}
      * @memberof MessagesRequest
      */
-    system?: System | null;
+    system?: System1 | null;
     /**
      * 
      * @type {number}
@@ -194,7 +194,7 @@ export function MessagesRequestFromJSONTyped(json: any, ignoreDiscriminator: boo
         'model': json['model'],
         'stopSequences': json['stop_sequences'] == null ? undefined : json['stop_sequences'],
         'stream': json['stream'] == null ? undefined : json['stream'],
-        'system': json['system'] == null ? undefined : SystemFromJSON(json['system']),
+        'system': json['system'] == null ? undefined : System1FromJSON(json['system']),
         'temperature': json['temperature'] == null ? undefined : json['temperature'],
         'thinking': json['thinking'] == null ? undefined : json['thinking'],
         'toolChoice': json['tool_choice'] == null ? undefined : json['tool_choice'],
@@ -227,7 +227,7 @@ export function MessagesRequestToJSONTyped(value?: MessagesRequest | null, ignor
         'model': value['model'],
         'stop_sequences': value['stopSequences'],
         'stream': value['stream'],
-        'system': SystemToJSON(value['system']),
+        'system': System1ToJSON(value['system']),
         'temperature': value['temperature'],
         'thinking': value['thinking'],
         'tool_choice': value['toolChoice'],
