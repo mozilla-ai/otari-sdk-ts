@@ -2,7 +2,7 @@
  * Typed client for the gateway control-plane (management) endpoints.
  *
  * Rebuilt on the full OpenAPI-generated core in `./_client` (the same core that
- * backs the inference path under Option C). These endpoints authenticate with
+ * backs the inference path). These endpoints authenticate with
  * `Authorization: Bearer <admin/master key>`, distinct from the `Otari-Key`
  * virtual key used for inference. Obtain an instance via
  * {@link OtariClient.controlPlane}.
