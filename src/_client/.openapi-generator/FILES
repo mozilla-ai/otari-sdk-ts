@@ -68,6 +68,8 @@ docs/Content7.md
 docs/Content8.md
 docs/Content9Inner.md
 docs/ContentAnyOfInner.md
+docs/CountTokensRequest.md
+docs/CountTokensResponse.md
 docs/CreateBatchRequest.md
 docs/CreateBudgetRequest.md
 docs/CreateEmbeddingResponse.md
@@ -182,6 +184,7 @@ docs/ResponsesRequest.md
 docs/SetPricingRequest.md
 docs/Source.md
 docs/System.md
+docs/System1.md
 docs/ToolCallsInner.md
 docs/ToolChoice.md
 docs/UpdateBudgetRequest.md
@@ -242,6 +245,8 @@ models/Content7.ts
 models/Content8.ts
 models/Content9Inner.ts
 models/ContentAnyOfInner.ts
+models/CountTokensRequest.ts
+models/CountTokensResponse.ts
 models/CreateBatchRequest.ts
 models/CreateBudgetRequest.ts
 models/CreateEmbeddingResponse.ts
@@ -346,6 +351,7 @@ models/ResponsesRequest.ts
 models/SetPricingRequest.ts
 models/Source.ts
 models/System.ts
+models/System1.ts
 models/ToolCallsInner.ts
 models/ToolChoice.ts
 models/UpdateBudgetRequest.ts
