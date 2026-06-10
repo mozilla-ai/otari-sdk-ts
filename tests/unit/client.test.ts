@@ -134,6 +134,8 @@ const MESSAGE_RESPONSE = {
   usage: { input_tokens: 1, output_tokens: 1 },
 };
 
+const COUNT_TOKENS_RESPONSE = { input_tokens: 42 };
+
 const MODERATION_RESPONSE = {
   id: "modr-1",
   model: "openai:omni-moderation-latest",
@@ -322,6 +324,25 @@ describe("OtariClient.message", () => {
     expect(mock.last.url).toMatch(/\/v1\/messages$/);
     expect((mock.last.body as Record<string, unknown>).max_tokens).toBe(64);
     expect((mock.last.body as Record<string, unknown>).model).toBe("anthropic:claude-3-5-sonnet");
+  });
+});
+
+describe("OtariClient.countTokens", () => {
+  it("returns a typed CountTokensResponse from /messages/count_tokens", async () => {
+    const mock = jsonFetch(200, COUNT_TOKENS_RESPONSE);
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "vk",
+      fetch: mock.fetch,
+    });
+    const result = await client.countTokens({
+      model: "anthropic:claude-3-5-sonnet",
+      messages: [{ role: "user", content: "Hi" }],
+    });
+    expect(result.inputTokens).toBe(42);
+    expect(mock.last.url).toMatch(/\/v1\/messages\/count_tokens$/);
+    expect((mock.last.body as Record<string, unknown>).model).toBe("anthropic:claude-3-5-sonnet");
+    expect((mock.last.body as Record<string, unknown>).max_tokens).toBeUndefined();
   });
 });
 

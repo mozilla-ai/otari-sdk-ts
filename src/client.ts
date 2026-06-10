@@ -30,6 +30,8 @@ import {
   type ChatCompletion,
   ChatCompletionRequestFromJSON,
   Configuration,
+  CountTokensRequestFromJSON,
+  type CountTokensResponse,
   CreateBatchRequestFromJSON,
   type CreateEmbeddingResponse,
   EmbeddingRequestFromJSON,
@@ -296,6 +298,27 @@ export class OtariClient {
     return this.call(() =>
       this.messagesApi.createMessageV1MessagesPost({
         messagesRequest: MessagesRequestFromJSON(params),
+      }),
+    );
+  }
+
+  /**
+   * Count input tokens for an Anthropic-style message request via the gateway
+   * `/v1/messages/count_tokens` endpoint.
+   *
+   * Counts the tokens a `/messages` request would consume without generating a
+   * response, so `max_tokens` is not accepted. Returns a typed
+   * `CountTokensResponse`.
+   */
+  async countTokens(
+    params: {
+      model: string;
+      messages: unknown[];
+    } & Record<string, unknown>,
+  ): Promise<CountTokensResponse> {
+    return this.call(() =>
+      this.messagesApi.countMessageTokensV1MessagesCountTokensPost({
+        countTokensRequest: CountTokensRequestFromJSON(params),
       }),
     );
   }
