@@ -13,12 +13,12 @@ Name | Type
 `maxToolIterations` | number
 `mcpServerIds` | Array&lt;string&gt;
 `mcpServers` | [Array&lt;McpServerConfig&gt;](McpServerConfig.md)
-`messages` | Array&lt;{ [key: string]: any; } | null&gt;
+`messages` | Array&lt;{ [key: string]: any; }&gt;
 `metadata` | { [key: string]: any; }
 `model` | string
 `stopSequences` | Array&lt;string&gt;
 `stream` | boolean
-`system` | [System](System.md)
+`system` | [System1](System1.md)
 `temperature` | number
 `thinking` | { [key: string]: any; }
 `toolChoice` | { [key: string]: any; }
