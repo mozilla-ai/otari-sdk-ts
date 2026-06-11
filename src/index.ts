@@ -20,6 +20,12 @@
  * ```
  */
 
+/**
+ * The gateway/spec version the generated core was built from, stamped into the
+ * core by the gateway codegen pipeline. Surfaced so callers can tell which
+ * gateway spec this SDK targets.
+ */
+export { SPEC_VERSION } from "./_client/specVersion.js";
 export { OtariClient } from "./client.js";
 export { ControlPlane } from "./controlPlane.js";
 export type { OtariErrorOptions } from "./errors.js";
