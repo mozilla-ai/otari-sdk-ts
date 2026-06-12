@@ -11,7 +11,7 @@ Name | Type
 `refusal` | string
 `role` | string
 `toolCalls` | [Array&lt;CCKChoiceDeltaToolCall&gt;](CCKChoiceDeltaToolCall.md)
-`reasoning` | [CCKReasoning](CCKReasoning.md)
+`reasoning` | string
 
 ## Example
 

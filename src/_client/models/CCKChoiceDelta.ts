@@ -20,13 +20,6 @@ import {
     CCKChoiceDeltaToolCallToJSON,
     CCKChoiceDeltaToolCallToJSONTyped,
 } from './CCKChoiceDeltaToolCall';
-import type { CCKReasoning } from './CCKReasoning';
-import {
-    CCKReasoningFromJSON,
-    CCKReasoningFromJSONTyped,
-    CCKReasoningToJSON,
-    CCKReasoningToJSONTyped,
-} from './CCKReasoning';
 import type { CCKChoiceDeltaFunctionCall } from './CCKChoiceDeltaFunctionCall';
 import {
     CCKChoiceDeltaFunctionCallFromJSON,
@@ -73,11 +66,11 @@ export interface CCKChoiceDelta {
      */
     toolCalls?: Array<CCKChoiceDeltaToolCall> | null;
     /**
-     * 
-     * @type {CCKReasoning}
+     * Filter models by provider name
+     * @type {string}
      * @memberof CCKChoiceDelta
      */
-    reasoning?: CCKReasoning | null;
+    reasoning?: string | null;
 }
 
 
@@ -117,7 +110,7 @@ export function CCKChoiceDeltaFromJSONTyped(json: any, ignoreDiscriminator: bool
         'refusal': json['refusal'] == null ? undefined : json['refusal'],
         'role': json['role'] == null ? undefined : json['role'],
         'toolCalls': json['tool_calls'] == null ? undefined : ((json['tool_calls'] as Array<any>).map(CCKChoiceDeltaToolCallFromJSON)),
-        'reasoning': json['reasoning'] == null ? undefined : CCKReasoningFromJSON(json['reasoning']),
+        'reasoning': json['reasoning'] == null ? undefined : json['reasoning'],
     };
 }
 
@@ -138,7 +131,7 @@ export function CCKChoiceDeltaToJSONTyped(value?: CCKChoiceDelta | null, ignoreD
         'refusal': value['refusal'],
         'role': value['role'],
         'tool_calls': value['toolCalls'] == null ? undefined : ((value['toolCalls'] as Array<any>).map(CCKChoiceDeltaToolCallToJSON)),
-        'reasoning': CCKReasoningToJSON(value['reasoning']),
+        'reasoning': value['reasoning'],
     };
 }
 
