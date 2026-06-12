@@ -5,6 +5,7 @@ export * from './BatchesApi';
 export * from './BudgetsApi';
 export * from './ChatApi';
 export * from './EmbeddingsApi';
+export * from './FilesApi';
 export * from './HealthApi';
 export * from './ImagesApi';
 export * from './KeysApi';
