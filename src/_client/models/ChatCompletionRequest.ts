@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * otari-gateway
- * A clean FastAPI gateway for otari with API key management
+ * otari
+ * Otari, an OpenAI-compatible LLM gateway with API key management
  *
  * The version of the OpenAPI document: 0.0.0-dev
  * 
@@ -133,7 +133,7 @@ export interface ChatCompletionRequest {
      */
     tools?: Array<{ [key: string]: any; } | null> | null;
     /**
-     * Optional override for the lead-in that the gateway prepends before the per-tool hint block in the system message. Useful for expressing global tool-selection policy (e.g. 'prefer MCP tools over code_execution'). Falls back to GATEWAY_TOOLS_HEADER env, then to the built-in default.
+     * Optional override for the lead-in that the gateway prepends before the per-tool hint block in the system message. Useful for expressing global tool-selection policy (e.g. 'prefer MCP tools over code_execution'). Falls back to OTARI_TOOLS_HEADER env, then to the built-in default.
      * @type {string}
      * @memberof ChatCompletionRequest
      */
