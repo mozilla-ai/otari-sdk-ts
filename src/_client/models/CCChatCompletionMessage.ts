@@ -20,13 +20,6 @@ import {
     CCChatCompletionAudioToJSON,
     CCChatCompletionAudioToJSONTyped,
 } from './CCChatCompletionAudio';
-import type { CCReasoning } from './CCReasoning';
-import {
-    CCReasoningFromJSON,
-    CCReasoningFromJSONTyped,
-    CCReasoningToJSON,
-    CCReasoningToJSONTyped,
-} from './CCReasoning';
 import type { CCFunctionCall } from './CCFunctionCall';
 import {
     CCFunctionCallFromJSON,
@@ -92,11 +85,11 @@ export interface CCChatCompletionMessage {
      */
     toolCalls?: Array<CCChatCompletionMessageToolCallsInner> | null;
     /**
-     * 
-     * @type {CCReasoning}
+     * Filter models by provider name
+     * @type {string}
      * @memberof CCChatCompletionMessage
      */
-    reasoning?: CCReasoning | null;
+    reasoning?: string | null;
 }
 
 
@@ -135,7 +128,7 @@ export function CCChatCompletionMessageFromJSONTyped(json: any, ignoreDiscrimina
         'audio': json['audio'] == null ? undefined : CCChatCompletionAudioFromJSON(json['audio']),
         'functionCall': json['function_call'] == null ? undefined : CCFunctionCallFromJSON(json['function_call']),
         'toolCalls': json['tool_calls'] == null ? undefined : ((json['tool_calls'] as Array<any>).map(CCChatCompletionMessageToolCallsInnerFromJSON)),
-        'reasoning': json['reasoning'] == null ? undefined : CCReasoningFromJSON(json['reasoning']),
+        'reasoning': json['reasoning'] == null ? undefined : json['reasoning'],
     };
 }
 
@@ -158,7 +151,7 @@ export function CCChatCompletionMessageToJSONTyped(value?: CCChatCompletionMessa
         'audio': CCChatCompletionAudioToJSON(value['audio']),
         'function_call': CCFunctionCallToJSON(value['functionCall']),
         'tool_calls': value['toolCalls'] == null ? undefined : ((value['toolCalls'] as Array<any>).map(CCChatCompletionMessageToolCallsInnerToJSON)),
-        'reasoning': CCReasoningToJSON(value['reasoning']),
+        'reasoning': value['reasoning'],
     };
 }
 

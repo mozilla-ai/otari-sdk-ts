@@ -45,10 +45,8 @@ docs/CCKChunkChoice.md
 docs/CCKCompletionTokensDetails.md
 docs/CCKCompletionUsage.md
 docs/CCKPromptTokensDetails.md
-docs/CCKReasoning.md
 docs/CCKTopLogprob.md
 docs/CCPromptTokensDetails.md
-docs/CCReasoning.md
 docs/CCTopLogprob.md
 docs/Caller.md
 docs/ChatApi.md
@@ -223,10 +221,8 @@ models/CCKChunkChoice.ts
 models/CCKCompletionTokensDetails.ts
 models/CCKCompletionUsage.ts
 models/CCKPromptTokensDetails.ts
-models/CCKReasoning.ts
 models/CCKTopLogprob.ts
 models/CCPromptTokensDetails.ts
-models/CCReasoning.ts
 models/CCTopLogprob.ts
 models/Caller.ts
 models/ChatCompletion.ts
