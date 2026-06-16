@@ -36,6 +36,8 @@ import {
   type CreateEmbeddingResponse,
   EmbeddingRequestFromJSON,
   EmbeddingsApi,
+  ImageGenerationRequestFromJSON,
+  ImagesApi,
   type MessageResponse,
   MessagesApi,
   MessagesRequestFromJSON,
@@ -58,12 +60,15 @@ import type {
   BatchResult,
   BatchWithProvider,
   CreateBatchParams,
+  ImageGenerationParams,
   ListBatchesOptions,
   ModerationCreateParams,
   ModerationCreateResponse,
   ModerationResponseExt,
   OtariClientOptions,
   RerankParams,
+  SpeechParams,
+  TranscriptionParams,
 } from "./types.js";
 
 const GATEWAY_HEADER_NAME = "Otari-Key";
@@ -118,6 +123,7 @@ export class OtariClient {
   private readonly messagesApi: MessagesApi;
   private readonly modelsApi: ModelsApi;
   private readonly batchesApi: BatchesApi;
+  private readonly imagesApi: ImagesApi;
 
   private cachedControlPlane?: ControlPlane;
 
@@ -198,6 +204,7 @@ export class OtariClient {
     this.messagesApi = new MessagesApi(config);
     this.modelsApi = new ModelsApi(config);
     this.batchesApi = new BatchesApi(config);
+    this.imagesApi = new ImagesApi(config);
   }
 
   /**
@@ -373,6 +380,68 @@ export class OtariClient {
     );
   }
 
+  // -- Images ---------------------------------------------------------------
+
+  /**
+   * Generate images from a text prompt.
+   *
+   * Returns the gateway's OpenAI-compatible image payload as-is
+   * (`{ created, data: [...] }`). The generated core models this response as an
+   * opaque object, so the parsed JSON is returned unchanged.
+   */
+  async imageGeneration(params: ImageGenerationParams): Promise<Record<string, unknown>> {
+    return this.call(() =>
+      this.imagesApi.createImageV1ImagesGenerationsPost({
+        imageGenerationRequest: ImageGenerationRequestFromJSON(params),
+      }),
+    ) as Promise<Record<string, unknown>>;
+  }
+
+  // -- Audio ----------------------------------------------------------------
+
+  /**
+   * Synthesize speech (text-to-speech), returning the raw audio bytes.
+   *
+   * The gateway returns binary audio (`audio/mpeg` by default) with no JSON
+   * response model, so the generated JSON core cannot handle it. This posts a
+   * raw JSON `fetch` over the same transport as the streaming shim and returns
+   * the response body as a `Uint8Array`. A failed response is routed through the
+   * same error mapper as every other method.
+   */
+  async speech(params: SpeechParams): Promise<Uint8Array> {
+    const response = await this.post("/audio/speech", { json: { ...params } });
+    return new Uint8Array(await response.arrayBuffer());
+  }
+
+  /**
+   * Transcribe audio to text.
+   *
+   * `file` is the raw audio bytes (or a `Blob`) uploaded as multipart form data
+   * under the `file` field, with `model` and any other parameters as form
+   * fields. The generated core types its `file` param as a string and so cannot
+   * carry binary, so this posts multipart over the raw transport. Returns the
+   * parsed JSON for JSON response formats, or the raw text for `text` / `srt` /
+   * `vtt` formats.
+   */
+  async transcription(params: TranscriptionParams): Promise<unknown> {
+    const { model, file, filename = "audio", ...rest } = params;
+    const form = new FormData();
+    const blob = file instanceof Blob ? file : new Blob([file as BlobPart]);
+    form.append("file", blob, filename);
+    form.append("model", model);
+    for (const [key, value] of Object.entries(rest)) {
+      if (value !== undefined && value !== null) {
+        form.append(key, String(value));
+      }
+    }
+    const response = await this.post("/audio/transcriptions", { form });
+    const contentType = response.headers.get("content-type") ?? "";
+    if (contentType.includes("application/json")) {
+      return response.json();
+    }
+    return response.text();
+  }
+
   // -- Models ---------------------------------------------------------------
 
   /** List available models from the gateway. */
@@ -480,5 +549,42 @@ export class OtariClient {
     }
 
     return Stream.fromSSEResponse<Item>(response, controller, kind);
+  }
+
+  /**
+   * Issue a non-streaming raw `fetch` POST (JSON body or multipart form),
+   * mapping a failed response through the same typed-error mapper as every other
+   * method.
+   *
+   * The audio endpoints (binary speech out, multipart transcription in) do not
+   * fit the generated JSON core, so they post directly over the shared `fetch`
+   * here and reuse `mapResponse`. Both auth modes work because `defaultHeaders`
+   * carries the per-mode auth header. For multipart, the `Content-Type` is left
+   * to `fetch`/`FormData` so the boundary is set correctly.
+   */
+  private async post(
+    path: string,
+    body: { json: Record<string, unknown> } | { form: FormData },
+  ): Promise<Response> {
+    const url = `${this.baseURL}${path}`;
+    const headers: Record<string, string> = { ...this.defaultHeaders };
+    let payload: BodyInit;
+    if ("json" in body) {
+      headers["Content-Type"] = "application/json";
+      payload = JSON.stringify(body.json);
+    } else {
+      payload = body.form;
+    }
+
+    const response = await this.fetchApi(url, {
+      method: "POST",
+      headers,
+      body: payload,
+    });
+
+    if (!response.ok) {
+      throw await mapResponse(response);
+    }
+    return response;
   }
 }

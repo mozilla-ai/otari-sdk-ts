@@ -15,6 +15,7 @@ export type {
   ChatCompletionRequest,
   CreateEmbeddingResponse,
   EmbeddingRequest,
+  ImageGenerationRequest,
   MessageResponse,
   MessagesRequest,
   ModelListResponse,
@@ -94,6 +95,81 @@ export interface RerankParams {
   max_tokens_per_doc?: number;
   /** User ID for usage attribution (gateway) */
   user?: string;
+}
+
+// ---------------------------------------------------------------------------
+// Image generation params
+// ---------------------------------------------------------------------------
+
+/** Parameters for an image-generation request. */
+export interface ImageGenerationParams {
+  /** Provider-prefixed model ID, e.g. "openai:dall-e-3". */
+  model: string;
+  /** Text prompt describing the desired image(s). */
+  prompt: string;
+  /** Number of images to generate. */
+  n?: number;
+  /** Image size, e.g. "1024x1024". */
+  size?: string;
+  /** Image quality (provider-specific). */
+  quality?: string;
+  /** Response format: "url" or "b64_json". */
+  response_format?: string;
+  /** Image style (provider-specific). */
+  style?: string;
+  /** User ID for usage attribution (gateway). */
+  user?: string;
+  [key: string]: unknown;
+}
+
+// ---------------------------------------------------------------------------
+// Audio params
+// ---------------------------------------------------------------------------
+
+/** Parameters for a text-to-speech (speech) request. */
+export interface SpeechParams {
+  /** Provider-prefixed model ID, e.g. "openai:tts-1". */
+  model: string;
+  /** Text to synthesize. */
+  input: string;
+  /** Voice to use, e.g. "alloy". */
+  voice: string;
+  /** Output audio format, e.g. "mp3". */
+  response_format?: string;
+  /** Playback speed multiplier. */
+  speed?: number;
+  /** Optional voice/style instructions (provider-specific). */
+  instructions?: string;
+  /** User ID for usage attribution (gateway). */
+  user?: string;
+  [key: string]: unknown;
+}
+
+/** Parameters for an audio transcription request. */
+export interface TranscriptionParams {
+  /** Provider-prefixed model ID, e.g. "openai:whisper-1". */
+  model: string;
+  /**
+   * Raw audio bytes to transcribe, uploaded as the multipart `file` field.
+   * Either a `Blob` or any binary buffer (`Uint8Array`, `ArrayBuffer`).
+   */
+  file: Blob | Uint8Array | ArrayBuffer;
+  /**
+   * Filename for the multipart upload. Some providers infer the audio format
+   * from its extension. Defaults to "audio".
+   */
+  filename?: string;
+  /** Spoken language hint (ISO-639-1). */
+  language?: string;
+  /** Optional prompt to guide the transcription. */
+  prompt?: string;
+  /** Response format: "json", "text", "srt", "verbose_json", or "vtt". */
+  response_format?: string;
+  /** Sampling temperature. */
+  temperature?: number;
+  /** User ID for usage attribution (gateway). */
+  user?: string;
+  [key: string]: unknown;
 }
 
 // ---------------------------------------------------------------------------
