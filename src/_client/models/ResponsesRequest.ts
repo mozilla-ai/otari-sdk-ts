@@ -224,7 +224,7 @@ export interface ResponsesRequest {
      * @type {}
      * @memberof ResponsesRequest
      */
-    text?:  | null;
+    text?: any | null;
     /**
      * 
      * @type {ToolChoice1}
@@ -316,7 +316,7 @@ export function ResponsesRequestFromJSONTyped(json: any, ignoreDiscriminator: bo
         'stream': json['stream'] == null ? undefined : json['stream'],
         'streamOptions': json['stream_options'] == null ? undefined : json['stream_options'],
         'temperature': json['temperature'] == null ? undefined : json['temperature'],
-        'text': json['text'] == null ? undefined : FromJSON(json['text']),
+        'text': json['text'] == null ? undefined : json['text'],
         'toolChoice': json['tool_choice'] == null ? undefined : ToolChoice1FromJSON(json['tool_choice']),
         'tools': json['tools'] == null ? undefined : json['tools'],
         'toolsHeader': json['tools_header'] == null ? undefined : json['tools_header'],
@@ -366,7 +366,7 @@ export function ResponsesRequestToJSONTyped(value?: ResponsesRequest | null, ign
         'stream': value['stream'],
         'stream_options': value['streamOptions'],
         'temperature': value['temperature'],
-        'text': ToJSON(value['text']),
+        'text': value['text'],
         'tool_choice': ToolChoice1ToJSON(value['toolChoice']),
         'tools': value['tools'],
         'tools_header': value['toolsHeader'],
