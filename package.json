@@ -1,6 +1,6 @@
 {
   "name": "@mozilla-ai/otari",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "TypeScript SDK for the otari gateway",
   "type": "module",
   "sideEffects": false,
