@@ -505,13 +505,14 @@ describe("OtariClient.transcription", () => {
       apiKey: "vk",
       fetch: mock.fetch,
     });
-    const result = (await client.transcription({
+    const result = await client.transcription({
       model: "openai:whisper-1",
       file: new Uint8Array([1, 2, 3]),
       filename: "clip.mp3",
       language: "en",
-    })) as { text: string };
-    expect(result.text).toBe("hello world");
+    });
+    expect(result.json).toEqual({ text: "hello world" });
+    expect(result.text).toBeUndefined();
     expect(mock.last.method).toBe("POST");
     expect(mock.last.url).toMatch(/\/v1\/audio\/transcriptions$/);
     expect(mock.last.headers["otari-key"]).toBe("Bearer vk");
@@ -553,7 +554,8 @@ describe("OtariClient.transcription", () => {
       file: new Uint8Array([1]),
       response_format: "text",
     });
-    expect(result).toBe("plain transcript");
+    expect(result.text).toBe("plain transcript");
+    expect(result.json).toBeUndefined();
   });
 
   it("maps an error status to a typed error", async () => {

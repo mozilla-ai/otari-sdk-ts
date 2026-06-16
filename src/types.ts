@@ -172,6 +172,20 @@ export interface TranscriptionParams {
   [key: string]: unknown;
 }
 
+/**
+ * Result of an audio transcription request.
+ *
+ * Exactly one field is populated, chosen by the gateway response's content
+ * type: `json` for the default `json` / `verbose_json` formats, `text` for the
+ * plain `text` / `srt` / `vtt` formats.
+ */
+export interface TranscriptionResult {
+  /** Parsed JSON response, for `json` / `verbose_json` formats. */
+  json?: Record<string, unknown>;
+  /** Raw text response, for `text` / `srt` / `vtt` formats. */
+  text?: string;
+}
+
 // ---------------------------------------------------------------------------
 // Moderation params / extended responses
 // ---------------------------------------------------------------------------

@@ -76,4 +76,5 @@ export type {
   ResponsesRequest,
   SpeechParams,
   TranscriptionParams,
+  TranscriptionResult,
 } from "./types.js";

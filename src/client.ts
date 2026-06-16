@@ -69,6 +69,7 @@ import type {
   RerankParams,
   SpeechParams,
   TranscriptionParams,
+  TranscriptionResult,
 } from "./types.js";
 
 const GATEWAY_HEADER_NAME = "Otari-Key";
@@ -419,11 +420,11 @@ export class OtariClient {
    * `file` is the raw audio bytes (or a `Blob`) uploaded as multipart form data
    * under the `file` field, with `model` and any other parameters as form
    * fields. The generated core types its `file` param as a string and so cannot
-   * carry binary, so this posts multipart over the raw transport. Returns the
-   * parsed JSON for JSON response formats, or the raw text for `text` / `srt` /
-   * `vtt` formats.
+   * carry binary, so this posts multipart over the raw transport. Returns a
+   * `TranscriptionResult` whose `json` field is set for JSON response formats
+   * and whose `text` field is set for the `text` / `srt` / `vtt` formats.
    */
-  async transcription(params: TranscriptionParams): Promise<unknown> {
+  async transcription(params: TranscriptionParams): Promise<TranscriptionResult> {
     const { model, file, filename = "audio", ...rest } = params;
     const form = new FormData();
     const blob = file instanceof Blob ? file : new Blob([file as BlobPart]);
@@ -437,9 +438,9 @@ export class OtariClient {
     const response = await this.post("/audio/transcriptions", { form });
     const contentType = response.headers.get("content-type") ?? "";
     if (contentType.includes("application/json")) {
-      return response.json();
+      return { json: (await response.json()) as Record<string, unknown> };
     }
-    return response.text();
+    return { text: await response.text() };
   }
 
   // -- Models ---------------------------------------------------------------
