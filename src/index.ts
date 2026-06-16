@@ -54,6 +54,9 @@ export type {
   CreateBatchParams,
   CreateEmbeddingResponse,
   EmbeddingRequest,
+  ImageGenerationParams,
+  ImageGenerationRequest,
+  ImagesResponse,
   ListBatchesOptions,
   MessageResponse,
   MessagesRequest,
@@ -72,4 +75,7 @@ export type {
   RerankResponse,
   RerankResult,
   ResponsesRequest,
+  SpeechParams,
+  TranscriptionParams,
+  TranscriptionResult,
 } from "./types.js";

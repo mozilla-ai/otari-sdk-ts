@@ -360,6 +360,219 @@ describe("OtariClient.moderation", () => {
   });
 });
 
+const IMAGE_RESPONSE = {
+  created: 1,
+  data: [{ url: "https://example.com/cat.png" }],
+};
+
+const TRANSCRIPTION_RESPONSE = { text: "hello world" };
+
+/** Build a mock fetch returning a binary body with the given content-type. */
+function bytesFetch(status: number, bytes: Uint8Array, contentType = "audio/mpeg"): FetchMock {
+  const mock: FetchMock = {
+    last: { method: "", url: "", headers: {}, body: undefined },
+    calls: [],
+    fetch: (async (url: string, init?: RequestInit) => {
+      const rec: RecordedRequest = {
+        method: init?.method ?? "GET",
+        url: String(url),
+        headers: headersToObject(init?.headers),
+        body: init?.body,
+      };
+      mock.last = rec;
+      mock.calls.push(rec);
+      return new Response(bytes, {
+        status,
+        headers: { "content-type": contentType },
+      });
+    }) as unknown as typeof fetch,
+  };
+  return mock;
+}
+
+/** Build a mock fetch that records the raw (unparsed) body, returning JSON. */
+function rawBodyJsonFetch(status: number, body: unknown): FetchMock {
+  const mock: FetchMock = {
+    last: { method: "", url: "", headers: {}, body: undefined },
+    calls: [],
+    fetch: (async (url: string, init?: RequestInit) => {
+      const rec: RecordedRequest = {
+        method: init?.method ?? "GET",
+        url: String(url),
+        headers: headersToObject(init?.headers),
+        body: init?.body,
+      };
+      mock.last = rec;
+      mock.calls.push(rec);
+      return new Response(body == null ? null : JSON.stringify(body), {
+        status,
+        headers: { "content-type": "application/json" },
+      });
+    }) as unknown as typeof fetch,
+  };
+  return mock;
+}
+
+describe("OtariClient.imageGeneration", () => {
+  it("returns the typed ImagesResponse and shapes the request", async () => {
+    const mock = jsonFetch(200, IMAGE_RESPONSE);
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "vk",
+      fetch: mock.fetch,
+    });
+    const result = await client.imageGeneration({
+      model: "openai:dall-e-3",
+      prompt: "a cat",
+      size: "1024x1024",
+    });
+    expect(result.created).toBe(1);
+    expect(result.data?.[0].url).toBe("https://example.com/cat.png");
+    expect(mock.last.method).toBe("POST");
+    expect(mock.last.url).toMatch(/\/v1\/images\/generations$/);
+    expect((mock.last.body as Record<string, unknown>).model).toBe("openai:dall-e-3");
+    expect((mock.last.body as Record<string, unknown>).prompt).toBe("a cat");
+    expect((mock.last.body as Record<string, unknown>).size).toBe("1024x1024");
+    expect(mock.last.headers["otari-key"]).toBe("Bearer vk");
+  });
+
+  it("maps an error status to a typed error", async () => {
+    const mock = jsonFetch(404, { detail: "no such model" });
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "vk",
+      fetch: mock.fetch,
+    });
+    await expect(
+      client.imageGeneration({ model: "openai:missing", prompt: "x" }),
+    ).rejects.toBeInstanceOf(ModelNotFoundError);
+  });
+});
+
+describe("OtariClient.speech", () => {
+  it("returns raw audio bytes and posts JSON with the auth header", async () => {
+    const audio = new Uint8Array([1, 2, 3, 4]);
+    const mock = bytesFetch(200, audio);
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "vk",
+      fetch: mock.fetch,
+    });
+    const result = await client.speech({
+      model: "openai:tts-1",
+      input: "hello",
+      voice: "alloy",
+    });
+    expect(result).toBeInstanceOf(Uint8Array);
+    expect([...result]).toEqual([1, 2, 3, 4]);
+    expect(mock.last.method).toBe("POST");
+    expect(mock.last.url).toMatch(/\/v1\/audio\/speech$/);
+    expect(mock.last.headers["otari-key"]).toBe("Bearer vk");
+    expect(mock.last.headers["content-type"]).toBe("application/json");
+    const sentBody = JSON.parse(mock.last.body as string) as Record<string, unknown>;
+    expect(sentBody.input).toBe("hello");
+    expect(sentBody.voice).toBe("alloy");
+  });
+
+  it("sends Bearer Authorization in platform mode", async () => {
+    const mock = bytesFetch(200, new Uint8Array([9]));
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      platformToken: "tk",
+      fetch: mock.fetch,
+    });
+    await client.speech({ model: "openai:tts-1", input: "hi", voice: "alloy" });
+    expect(mock.last.headers.authorization).toBe("Bearer tk");
+  });
+
+  it("maps a 429 error to RateLimitError", async () => {
+    const mock = jsonFetch(429, { detail: "slow down" });
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "vk",
+      fetch: mock.fetch,
+    });
+    await expect(
+      client.speech({ model: "openai:tts-1", input: "hi", voice: "alloy" }),
+    ).rejects.toBeInstanceOf(RateLimitError);
+  });
+});
+
+describe("OtariClient.transcription", () => {
+  it("uploads multipart and returns the parsed JSON", async () => {
+    const mock = rawBodyJsonFetch(200, TRANSCRIPTION_RESPONSE);
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "vk",
+      fetch: mock.fetch,
+    });
+    const result = await client.transcription({
+      model: "openai:whisper-1",
+      file: new Uint8Array([1, 2, 3]),
+      filename: "clip.mp3",
+      language: "en",
+    });
+    expect(result.json).toEqual({ text: "hello world" });
+    expect(result.text).toBeUndefined();
+    expect(mock.last.method).toBe("POST");
+    expect(mock.last.url).toMatch(/\/v1\/audio\/transcriptions$/);
+    expect(mock.last.headers["otari-key"]).toBe("Bearer vk");
+    // multipart: the body is a FormData instance and Content-Type is left unset
+    // so fetch can attach the boundary.
+    expect(mock.last.body).toBeInstanceOf(FormData);
+    const form = mock.last.body as FormData;
+    expect(form.get("model")).toBe("openai:whisper-1");
+    expect(form.get("language")).toBe("en");
+    const file = form.get("file");
+    expect(file).toBeInstanceOf(Blob);
+    expect((file as File).name).toBe("clip.mp3");
+  });
+
+  it("returns raw text for text response formats", async () => {
+    const mock: FetchMock = {
+      last: { method: "", url: "", headers: {}, body: undefined },
+      calls: [],
+      fetch: (async (url: string, init?: RequestInit) => {
+        mock.last = {
+          method: init?.method ?? "GET",
+          url: String(url),
+          headers: headersToObject(init?.headers),
+          body: init?.body,
+        };
+        return new Response("plain transcript", {
+          status: 200,
+          headers: { "content-type": "text/plain" },
+        });
+      }) as unknown as typeof fetch,
+    };
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "vk",
+      fetch: mock.fetch,
+    });
+    const result = await client.transcription({
+      model: "openai:whisper-1",
+      file: new Uint8Array([1]),
+      response_format: "text",
+    });
+    expect(result.text).toBe("plain transcript");
+    expect(result.json).toBeUndefined();
+  });
+
+  it("maps an error status to a typed error", async () => {
+    // The multipart body is FormData, so use a mock that does not JSON-parse it.
+    const mock = rawBodyJsonFetch(402, { detail: "no funds" });
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "vk",
+      fetch: mock.fetch,
+    });
+    await expect(
+      client.transcription({ model: "openai:whisper-1", file: new Uint8Array([1]) }),
+    ).rejects.toBeInstanceOf(InsufficientFundsError);
+  });
+});
+
 describe("OtariClient.listModels", () => {
   it("returns typed model objects", async () => {
     const mock = jsonFetch(200, MODELS_RESPONSE);
