@@ -1,7 +1,7 @@
 
 # AudioSpeechRequest
 
-OpenAI-compatible audio speech (TTS) request.
+OpenAI-compatible audio speech (TTS) request.  The speech fields are derived from any-llm\'s ``AudioSpeechParams`` (see ``_schema_derive``) so the schema cannot silently drop a param any-llm forwards. ``user`` is gateway-only (billing / auth scoping); it is not an any-llm param and is stripped before the request is forwarded.
 
 ## Properties
 

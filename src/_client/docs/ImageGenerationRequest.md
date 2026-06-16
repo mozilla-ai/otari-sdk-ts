@@ -1,7 +1,7 @@
 
 # ImageGenerationRequest
 
-OpenAI-compatible image generation request.
+OpenAI-compatible image generation request.  Fields are derived from any-llm\'s ``ImageGenerationParams`` (see ``_schema_derive``) so the schema cannot silently drop a param any-llm forwards.
 
 ## Properties
 

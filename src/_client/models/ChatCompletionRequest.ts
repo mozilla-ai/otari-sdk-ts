@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * otari-gateway
- * A clean FastAPI gateway for otari with API key management
+ * otari
+ * Otari, an OpenAI-compatible LLM gateway with API key management
  *
  * The version of the OpenAPI document: 0.0.0-dev
  * 
@@ -27,6 +27,13 @@ import {
     McpServerConfigToJSON,
     McpServerConfigToJSONTyped,
 } from './McpServerConfig';
+import type { Stop } from './Stop';
+import {
+    StopFromJSON,
+    StopFromJSONTyped,
+    StopToJSON,
+    StopToJSONTyped,
+} from './Stop';
 import type { ChatMessageInput } from './ChatMessageInput';
 import {
     ChatMessageInputFromJSON,
@@ -44,16 +51,41 @@ import {
 
 /**
  * OpenAI-compatible chat completion request.
+ * 
+ * The completion-param fields are derived from any-llm's ``CompletionParams``
+ * (see ``_schema_derive``) so the schema cannot silently drop a param any-llm
+ * forwards. Fields below either tighten a derived field (``messages``,
+ * ``response_format``) or add gateway-internal behavior (``mcp_servers``,
+ * ``mcp_server_ids``, ``guardrails``, ``tools_header``, ``max_tool_iterations``)
+ * that is stripped before the request is forwarded upstream.
  * @export
  * @interface ChatCompletionRequest
  */
 export interface ChatCompletionRequest {
     /**
      * 
+     * @type {number}
+     * @memberof ChatCompletionRequest
+     */
+    frequencyPenalty?: number | null;
+    /**
+     * 
      * @type {Array<GuardrailConfig>}
      * @memberof ChatCompletionRequest
      */
     guardrails?: Array<GuardrailConfig> | null;
+    /**
+     * 
+     * @type {{ [key: string]: number; }}
+     * @memberof ChatCompletionRequest
+     */
+    logitBias?: { [key: string]: number; } | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChatCompletionRequest
+     */
+    logprobs?: boolean | null;
     /**
      * 
      * @type {number}
@@ -98,10 +130,46 @@ export interface ChatCompletionRequest {
     model: string;
     /**
      * 
+     * @type {number}
+     * @memberof ChatCompletionRequest
+     */
+    n?: number | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChatCompletionRequest
+     */
+    parallelToolCalls?: boolean | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChatCompletionRequest
+     */
+    presencePenalty?: number | null;
+    /**
+     * 
+     * @type {ChatCompletionRequestReasoningEffortEnum}
+     * @memberof ChatCompletionRequest
+     */
+    reasoningEffort?: ChatCompletionRequestReasoningEffortEnum | null;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof ChatCompletionRequest
      */
     responseFormat?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChatCompletionRequest
+     */
+    seed?: number | null;
+    /**
+     * 
+     * @type {Stop}
+     * @memberof ChatCompletionRequest
+     */
+    stop?: Stop | null;
     /**
      * 
      * @type {boolean}
@@ -133,11 +201,17 @@ export interface ChatCompletionRequest {
      */
     tools?: Array<{ [key: string]: any; } | null> | null;
     /**
-     * Optional override for the lead-in that the gateway prepends before the per-tool hint block in the system message. Useful for expressing global tool-selection policy (e.g. 'prefer MCP tools over code_execution'). Falls back to GATEWAY_TOOLS_HEADER env, then to the built-in default.
+     * Optional override for the lead-in that the gateway prepends before the per-tool hint block in the system message. Useful for expressing global tool-selection policy (e.g. 'prefer MCP tools over code_execution'). Falls back to OTARI_TOOLS_HEADER env, then to the built-in default.
      * @type {string}
      * @memberof ChatCompletionRequest
      */
     toolsHeader?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChatCompletionRequest
+     */
+    topLogprobs?: number | null;
     /**
      * 
      * @type {number}
@@ -151,6 +225,23 @@ export interface ChatCompletionRequest {
      */
     user?: string | null;
 }
+
+
+/**
+ * @export
+ */
+export const ChatCompletionRequestReasoningEffortEnum = {
+    None: 'none',
+    Minimal: 'minimal',
+    Low: 'low',
+    Medium: 'medium',
+    High: 'high',
+    Xhigh: 'xhigh',
+    Max: 'max',
+    Auto: 'auto'
+} as const;
+export type ChatCompletionRequestReasoningEffortEnum = typeof ChatCompletionRequestReasoningEffortEnum[keyof typeof ChatCompletionRequestReasoningEffortEnum];
+
 
 /**
  * Check if a given object implements the ChatCompletionRequest interface.
@@ -171,7 +262,10 @@ export function ChatCompletionRequestFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
+        'frequencyPenalty': json['frequency_penalty'] == null ? undefined : json['frequency_penalty'],
         'guardrails': json['guardrails'] == null ? undefined : ((json['guardrails'] as Array<any>).map(GuardrailConfigFromJSON)),
+        'logitBias': json['logit_bias'] == null ? undefined : json['logit_bias'],
+        'logprobs': json['logprobs'] == null ? undefined : json['logprobs'],
         'maxCompletionTokens': json['max_completion_tokens'] == null ? undefined : json['max_completion_tokens'],
         'maxTokens': json['max_tokens'] == null ? undefined : json['max_tokens'],
         'maxToolIterations': json['max_tool_iterations'] == null ? undefined : json['max_tool_iterations'],
@@ -179,13 +273,20 @@ export function ChatCompletionRequestFromJSONTyped(json: any, ignoreDiscriminato
         'mcpServers': json['mcp_servers'] == null ? undefined : ((json['mcp_servers'] as Array<any>).map(McpServerConfigFromJSON)),
         'messages': ((json['messages'] as Array<any>).map(ChatMessageInputFromJSON)),
         'model': json['model'],
+        'n': json['n'] == null ? undefined : json['n'],
+        'parallelToolCalls': json['parallel_tool_calls'] == null ? undefined : json['parallel_tool_calls'],
+        'presencePenalty': json['presence_penalty'] == null ? undefined : json['presence_penalty'],
+        'reasoningEffort': json['reasoning_effort'] == null ? undefined : json['reasoning_effort'],
         'responseFormat': json['response_format'] == null ? undefined : json['response_format'],
+        'seed': json['seed'] == null ? undefined : json['seed'],
+        'stop': json['stop'] == null ? undefined : StopFromJSON(json['stop']),
         'stream': json['stream'] == null ? undefined : json['stream'],
         'streamOptions': json['stream_options'] == null ? undefined : json['stream_options'],
         'temperature': json['temperature'] == null ? undefined : json['temperature'],
         'toolChoice': json['tool_choice'] == null ? undefined : ToolChoiceFromJSON(json['tool_choice']),
         'tools': json['tools'] == null ? undefined : json['tools'],
         'toolsHeader': json['tools_header'] == null ? undefined : json['tools_header'],
+        'topLogprobs': json['top_logprobs'] == null ? undefined : json['top_logprobs'],
         'topP': json['top_p'] == null ? undefined : json['top_p'],
         'user': json['user'] == null ? undefined : json['user'],
     };
@@ -202,7 +303,10 @@ export function ChatCompletionRequestToJSONTyped(value?: ChatCompletionRequest |
 
     return {
         
+        'frequency_penalty': value['frequencyPenalty'],
         'guardrails': value['guardrails'] == null ? undefined : ((value['guardrails'] as Array<any>).map(GuardrailConfigToJSON)),
+        'logit_bias': value['logitBias'],
+        'logprobs': value['logprobs'],
         'max_completion_tokens': value['maxCompletionTokens'],
         'max_tokens': value['maxTokens'],
         'max_tool_iterations': value['maxToolIterations'],
@@ -210,13 +314,20 @@ export function ChatCompletionRequestToJSONTyped(value?: ChatCompletionRequest |
         'mcp_servers': value['mcpServers'] == null ? undefined : ((value['mcpServers'] as Array<any>).map(McpServerConfigToJSON)),
         'messages': ((value['messages'] as Array<any>).map(ChatMessageInputToJSON)),
         'model': value['model'],
+        'n': value['n'],
+        'parallel_tool_calls': value['parallelToolCalls'],
+        'presence_penalty': value['presencePenalty'],
+        'reasoning_effort': value['reasoningEffort'],
         'response_format': value['responseFormat'],
+        'seed': value['seed'],
+        'stop': StopToJSON(value['stop']),
         'stream': value['stream'],
         'stream_options': value['streamOptions'],
         'temperature': value['temperature'],
         'tool_choice': ToolChoiceToJSON(value['toolChoice']),
         'tools': value['tools'],
         'tools_header': value['toolsHeader'],
+        'top_logprobs': value['topLogprobs'],
         'top_p': value['topP'],
         'user': value['user'],
     };
