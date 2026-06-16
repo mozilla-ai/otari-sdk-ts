@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * otari-gateway
- * A clean FastAPI gateway for otari with API key management
+ * otari
+ * Otari, an OpenAI-compatible LLM gateway with API key management
  *
  * The version of the OpenAPI document: 0.0.0-dev
  * 
@@ -27,11 +27,27 @@ import {
     GuardrailConfigToJSON,
     GuardrailConfigToJSONTyped,
 } from './GuardrailConfig';
+import type { Conversation } from './Conversation';
+import {
+    ConversationFromJSON,
+    ConversationFromJSONTyped,
+    ConversationToJSON,
+    ConversationToJSONTyped,
+} from './Conversation';
+import type { ToolChoice1 } from './ToolChoice1';
+import {
+    ToolChoice1FromJSON,
+    ToolChoice1FromJSONTyped,
+    ToolChoice1ToJSON,
+    ToolChoice1ToJSONTyped,
+} from './ToolChoice1';
 
 /**
  * OpenAI Responses API-compatible request.
  * 
- * Gateway-internal fields (``mcp_servers``, ``mcp_server_ids``,
+ * The wire fields are derived from any-llm's ``ResponsesParams`` (see
+ * ``_schema_derive``) so the schema cannot silently drop a param any-llm
+ * forwards. Gateway-internal fields (``mcp_servers``, ``mcp_server_ids``,
  * ``guardrails``, ``tools_header``, ``max_tool_iterations``) opt the request
  * into gateway-managed MCP / sandbox / web_search / guardrails without
  * changing the upstream wire shape. They're stripped before the request is
@@ -43,16 +59,58 @@ export interface ResponsesRequest {
     [key: string]: any | any;
     /**
      * 
+     * @type {boolean}
+     * @memberof ResponsesRequest
+     */
+    background?: boolean | null;
+    /**
+     * 
+     * @type {Conversation}
+     * @memberof ResponsesRequest
+     */
+    conversation?: Conversation | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResponsesRequest
+     */
+    frequencyPenalty?: number | null;
+    /**
+     * 
      * @type {Array<GuardrailConfig>}
      * @memberof ResponsesRequest
      */
     guardrails?: Array<GuardrailConfig> | null;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof ResponsesRequest
+     */
+    include?: Array<string> | null;
+    /**
+     * 
      * @type {any}
      * @memberof ResponsesRequest
      */
     input: any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResponsesRequest
+     */
+    instructions?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResponsesRequest
+     */
+    maxOutputTokens?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResponsesRequest
+     */
+    maxToolCalls?: number | null;
     /**
      * 
      * @type {number}
@@ -73,6 +131,12 @@ export interface ResponsesRequest {
     mcpServers?: Array<McpServerConfig> | null;
     /**
      * 
+     * @type {{ [key: string]: string; }}
+     * @memberof ResponsesRequest
+     */
+    metadata?: { [key: string]: string; } | null;
+    /**
+     * 
      * @type {string}
      * @memberof ResponsesRequest
      */
@@ -82,7 +146,91 @@ export interface ResponsesRequest {
      * @type {boolean}
      * @memberof ResponsesRequest
      */
+    parallelToolCalls?: boolean | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResponsesRequest
+     */
+    presencePenalty?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResponsesRequest
+     */
+    previousResponseId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResponsesRequest
+     */
+    promptCacheKey?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResponsesRequest
+     */
+    promptCacheRetention?: string | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof ResponsesRequest
+     */
+    reasoning?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof ResponsesRequest
+     */
+    responseFormat?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResponsesRequest
+     */
+    safetyIdentifier?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResponsesRequest
+     */
+    serviceTier?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResponsesRequest
+     */
+    store?: boolean | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResponsesRequest
+     */
     stream?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof ResponsesRequest
+     */
+    streamOptions?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResponsesRequest
+     */
+    temperature?: number | null;
+    /**
+     * 
+     * @type {}
+     * @memberof ResponsesRequest
+     */
+    text?: any | null;
+    /**
+     * 
+     * @type {ToolChoice1}
+     * @memberof ResponsesRequest
+     */
+    toolChoice?: ToolChoice1 | null;
     /**
      * 
      * @type {Array<{ [key: string]: any; }>}
@@ -95,6 +243,24 @@ export interface ResponsesRequest {
      * @memberof ResponsesRequest
      */
     toolsHeader?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResponsesRequest
+     */
+    topLogprobs?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ResponsesRequest
+     */
+    topP?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResponsesRequest
+     */
+    truncation?: string | null;
     /**
      * 
      * @type {string}
@@ -123,15 +289,40 @@ export function ResponsesRequestFromJSONTyped(json: any, ignoreDiscriminator: bo
     return {
         
             ...json,
+        'background': json['background'] == null ? undefined : json['background'],
+        'conversation': json['conversation'] == null ? undefined : ConversationFromJSON(json['conversation']),
+        'frequencyPenalty': json['frequency_penalty'] == null ? undefined : json['frequency_penalty'],
         'guardrails': json['guardrails'] == null ? undefined : ((json['guardrails'] as Array<any>).map(GuardrailConfigFromJSON)),
+        'include': json['include'] == null ? undefined : json['include'],
         'input': json['input'],
+        'instructions': json['instructions'] == null ? undefined : json['instructions'],
+        'maxOutputTokens': json['max_output_tokens'] == null ? undefined : json['max_output_tokens'],
+        'maxToolCalls': json['max_tool_calls'] == null ? undefined : json['max_tool_calls'],
         'maxToolIterations': json['max_tool_iterations'] == null ? undefined : json['max_tool_iterations'],
         'mcpServerIds': json['mcp_server_ids'] == null ? undefined : json['mcp_server_ids'],
         'mcpServers': json['mcp_servers'] == null ? undefined : ((json['mcp_servers'] as Array<any>).map(McpServerConfigFromJSON)),
+        'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'model': json['model'],
+        'parallelToolCalls': json['parallel_tool_calls'] == null ? undefined : json['parallel_tool_calls'],
+        'presencePenalty': json['presence_penalty'] == null ? undefined : json['presence_penalty'],
+        'previousResponseId': json['previous_response_id'] == null ? undefined : json['previous_response_id'],
+        'promptCacheKey': json['prompt_cache_key'] == null ? undefined : json['prompt_cache_key'],
+        'promptCacheRetention': json['prompt_cache_retention'] == null ? undefined : json['prompt_cache_retention'],
+        'reasoning': json['reasoning'] == null ? undefined : json['reasoning'],
+        'responseFormat': json['response_format'] == null ? undefined : json['response_format'],
+        'safetyIdentifier': json['safety_identifier'] == null ? undefined : json['safety_identifier'],
+        'serviceTier': json['service_tier'] == null ? undefined : json['service_tier'],
+        'store': json['store'] == null ? undefined : json['store'],
         'stream': json['stream'] == null ? undefined : json['stream'],
+        'streamOptions': json['stream_options'] == null ? undefined : json['stream_options'],
+        'temperature': json['temperature'] == null ? undefined : json['temperature'],
+        'text': json['text'] == null ? undefined : json['text'],
+        'toolChoice': json['tool_choice'] == null ? undefined : ToolChoice1FromJSON(json['tool_choice']),
         'tools': json['tools'] == null ? undefined : json['tools'],
         'toolsHeader': json['tools_header'] == null ? undefined : json['tools_header'],
+        'topLogprobs': json['top_logprobs'] == null ? undefined : json['top_logprobs'],
+        'topP': json['top_p'] == null ? undefined : json['top_p'],
+        'truncation': json['truncation'] == null ? undefined : json['truncation'],
         'user': json['user'] == null ? undefined : json['user'],
     };
 }
@@ -148,15 +339,40 @@ export function ResponsesRequestToJSONTyped(value?: ResponsesRequest | null, ign
     return {
         
             ...value,
+        'background': value['background'],
+        'conversation': ConversationToJSON(value['conversation']),
+        'frequency_penalty': value['frequencyPenalty'],
         'guardrails': value['guardrails'] == null ? undefined : ((value['guardrails'] as Array<any>).map(GuardrailConfigToJSON)),
+        'include': value['include'],
         'input': value['input'],
+        'instructions': value['instructions'],
+        'max_output_tokens': value['maxOutputTokens'],
+        'max_tool_calls': value['maxToolCalls'],
         'max_tool_iterations': value['maxToolIterations'],
         'mcp_server_ids': value['mcpServerIds'],
         'mcp_servers': value['mcpServers'] == null ? undefined : ((value['mcpServers'] as Array<any>).map(McpServerConfigToJSON)),
+        'metadata': value['metadata'],
         'model': value['model'],
+        'parallel_tool_calls': value['parallelToolCalls'],
+        'presence_penalty': value['presencePenalty'],
+        'previous_response_id': value['previousResponseId'],
+        'prompt_cache_key': value['promptCacheKey'],
+        'prompt_cache_retention': value['promptCacheRetention'],
+        'reasoning': value['reasoning'],
+        'response_format': value['responseFormat'],
+        'safety_identifier': value['safetyIdentifier'],
+        'service_tier': value['serviceTier'],
+        'store': value['store'],
         'stream': value['stream'],
+        'stream_options': value['streamOptions'],
+        'temperature': value['temperature'],
+        'text': value['text'],
+        'tool_choice': ToolChoice1ToJSON(value['toolChoice']),
         'tools': value['tools'],
         'tools_header': value['toolsHeader'],
+        'top_logprobs': value['topLogprobs'],
+        'top_p': value['topP'],
+        'truncation': value['truncation'],
         'user': value['user'],
     };
 }

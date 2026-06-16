@@ -10,7 +10,7 @@ All URIs are relative to *http://localhost*
 
 ## createImageV1ImagesGenerationsPost
 
-> any createImageV1ImagesGenerationsPost(imageGenerationRequest)
+> ImagesResponse createImageV1ImagesGenerationsPost(imageGenerationRequest)
 
 Create Image
 
@@ -55,7 +55,7 @@ example().catch(console.error);
 
 ### Return type
 
-**any**
+[**ImagesResponse**](ImagesResponse.md)
 
 ### Authorization
 
@@ -70,7 +70,7 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Successful Response |  -  |
+| **200** | Generated images |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

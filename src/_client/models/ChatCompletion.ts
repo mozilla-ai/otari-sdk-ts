@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * otari-gateway
- * A clean FastAPI gateway for otari with API key management
+ * otari
+ * Otari, an OpenAI-compatible LLM gateway with API key management
  *
  * The version of the OpenAPI document: 0.0.0-dev
  * 
@@ -66,7 +66,7 @@ export interface ChatCompletion {
      */
     object: ChatCompletionObjectEnum;
     /**
-     * Filter models by provider name
+     * 
      * @type {string}
      * @memberof ChatCompletion
      */

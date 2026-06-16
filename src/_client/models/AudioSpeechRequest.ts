@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * otari-gateway
- * A clean FastAPI gateway for otari with API key management
+ * otari
+ * Otari, an OpenAI-compatible LLM gateway with API key management
  *
  * The version of the OpenAPI document: 0.0.0-dev
  * 
@@ -15,6 +15,11 @@
 import { mapValues } from '../runtime';
 /**
  * OpenAI-compatible audio speech (TTS) request.
+ * 
+ * The speech fields are derived from any-llm's ``AudioSpeechParams`` (see
+ * ``_schema_derive``) so the schema cannot silently drop a param any-llm
+ * forwards. ``user`` is gateway-only (billing / auth scoping); it is not an
+ * any-llm param and is stripped before the request is forwarded.
  * @export
  * @interface AudioSpeechRequest
  */

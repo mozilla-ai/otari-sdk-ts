@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * otari-gateway
- * A clean FastAPI gateway for otari with API key management
+ * otari
+ * Otari, an OpenAI-compatible LLM gateway with API key management
  *
  * The version of the OpenAPI document: 0.0.0-dev
  * 
@@ -27,18 +27,20 @@ import {
     GuardrailConfigToJSON,
     GuardrailConfigToJSONTyped,
 } from './GuardrailConfig';
-import type { System1 } from './System1';
+import type { System } from './System';
 import {
-    System1FromJSON,
-    System1FromJSONTyped,
-    System1ToJSON,
-    System1ToJSONTyped,
-} from './System1';
+    SystemFromJSON,
+    SystemFromJSONTyped,
+    SystemToJSON,
+    SystemToJSONTyped,
+} from './System';
 
 /**
  * Anthropic Messages API-compatible request.
  * 
- * Gateway-internal fields (``mcp_servers``, ``mcp_server_ids``,
+ * The wire fields are derived from any-llm's ``MessagesParams`` (see
+ * ``_schema_derive``) so the schema cannot silently drop a param any-llm
+ * forwards. Gateway-internal fields (``mcp_servers``, ``mcp_server_ids``,
  * ``guardrails``, ``tools_header``, ``max_tool_iterations``) opt the request
  * into gateway-managed MCP / sandbox / web_search / guardrails without
  * changing the upstream wire shape. They're stripped before the request is
@@ -115,10 +117,10 @@ export interface MessagesRequest {
     stream?: boolean;
     /**
      * 
-     * @type {System1}
+     * @type {System}
      * @memberof MessagesRequest
      */
-    system?: System1 | null;
+    system?: System | null;
     /**
      * 
      * @type {number}
@@ -194,7 +196,7 @@ export function MessagesRequestFromJSONTyped(json: any, ignoreDiscriminator: boo
         'model': json['model'],
         'stopSequences': json['stop_sequences'] == null ? undefined : json['stop_sequences'],
         'stream': json['stream'] == null ? undefined : json['stream'],
-        'system': json['system'] == null ? undefined : System1FromJSON(json['system']),
+        'system': json['system'] == null ? undefined : SystemFromJSON(json['system']),
         'temperature': json['temperature'] == null ? undefined : json['temperature'],
         'thinking': json['thinking'] == null ? undefined : json['thinking'],
         'toolChoice': json['tool_choice'] == null ? undefined : json['tool_choice'],
@@ -227,7 +229,7 @@ export function MessagesRequestToJSONTyped(value?: MessagesRequest | null, ignor
         'model': value['model'],
         'stop_sequences': value['stopSequences'],
         'stream': value['stream'],
-        'system': System1ToJSON(value['system']),
+        'system': SystemToJSON(value['system']),
         'temperature': value['temperature'],
         'thinking': value['thinking'],
         'tool_choice': value['toolChoice'],
