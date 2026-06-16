@@ -38,6 +38,7 @@ import {
   EmbeddingsApi,
   ImageGenerationRequestFromJSON,
   ImagesApi,
+  type ImagesResponse,
   type MessageResponse,
   MessagesApi,
   MessagesRequestFromJSON,
@@ -386,16 +387,17 @@ export class OtariClient {
   /**
    * Generate images from a text prompt.
    *
-   * Returns the gateway's OpenAI-compatible image payload as-is
-   * (`{ created, data: [...] }`). The generated core models this response as an
-   * opaque object, so the parsed JSON is returned unchanged.
+   * Returns the gateway's OpenAI-compatible image payload as the typed
+   * `ImagesResponse` (`created`, `data: IMGImage[]`, optional `usage`). The
+   * regenerated core models this response, so the parsed JSON is returned
+   * typed.
    */
-  async imageGeneration(params: ImageGenerationParams): Promise<Record<string, unknown>> {
+  async imageGeneration(params: ImageGenerationParams): Promise<ImagesResponse> {
     return this.call(() =>
       this.imagesApi.createImageV1ImagesGenerationsPost({
         imageGenerationRequest: ImageGenerationRequestFromJSON(params),
       }),
-    ) as Promise<Record<string, unknown>>;
+    );
   }
 
   // -- Audio ----------------------------------------------------------------

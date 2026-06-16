@@ -56,6 +56,7 @@ export type {
   EmbeddingRequest,
   ImageGenerationParams,
   ImageGenerationRequest,
+  ImagesResponse,
   ListBatchesOptions,
   MessageResponse,
   MessagesRequest,

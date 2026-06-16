@@ -16,6 +16,7 @@ export type {
   CreateEmbeddingResponse,
   EmbeddingRequest,
   ImageGenerationRequest,
+  ImagesResponse,
   MessageResponse,
   MessagesRequest,
   ModelListResponse,

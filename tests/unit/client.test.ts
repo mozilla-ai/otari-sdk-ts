@@ -414,19 +414,20 @@ function rawBodyJsonFetch(status: number, body: unknown): FetchMock {
 }
 
 describe("OtariClient.imageGeneration", () => {
-  it("returns the JSON payload as-is and shapes the request", async () => {
+  it("returns the typed ImagesResponse and shapes the request", async () => {
     const mock = jsonFetch(200, IMAGE_RESPONSE);
     const client = new OtariClient({
       apiBase: "http://localhost:8000",
       apiKey: "vk",
       fetch: mock.fetch,
     });
-    const result = (await client.imageGeneration({
+    const result = await client.imageGeneration({
       model: "openai:dall-e-3",
       prompt: "a cat",
       size: "1024x1024",
-    })) as { data: Array<{ url: string }> };
-    expect(result.data[0].url).toBe("https://example.com/cat.png");
+    });
+    expect(result.created).toBe(1);
+    expect(result.data?.[0].url).toBe("https://example.com/cat.png");
     expect(mock.last.method).toBe("POST");
     expect(mock.last.url).toMatch(/\/v1\/images\/generations$/);
     expect((mock.last.body as Record<string, unknown>).model).toBe("openai:dall-e-3");
