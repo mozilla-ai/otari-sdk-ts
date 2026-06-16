@@ -221,10 +221,10 @@ export interface ResponsesRequest {
     temperature?: number | null;
     /**
      * 
-     * @type {}
+     * @type {{ [key: string]: any; }}
      * @memberof ResponsesRequest
      */
-    text?: any | null;
+    text?: { [key: string]: any; } | null;
     /**
      * 
      * @type {ToolChoice1}

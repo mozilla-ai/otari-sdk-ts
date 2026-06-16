@@ -33,6 +33,7 @@ export * from './Caller';
 export * from './ChatCompletion';
 export * from './ChatCompletionChunk';
 export * from './ChatCompletionRequest';
+export * from './ChatCompletionRequestToolsInner';
 export * from './ChatMessageInput';
 export * from './Content';
 export * from './Content1';
