@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/mozilla-ai/otari-sdk-ts/compare/otari-v0.3.1...otari-v0.4.0) (2026-06-16)
+
+
+### Features
+
+* add image generation and audio (speech/transcription) methods ([#25](https://github.com/mozilla-ai/otari-sdk-ts/issues/25)) ([14b0374](https://github.com/mozilla-ai/otari-sdk-ts/commit/14b03741b1f8dcfcac812cc1c60ccd9f918e3fbe))
+
 ## [0.3.1](https://github.com/mozilla-ai/otari-sdk-ts/compare/otari-v0.3.0...otari-v0.3.1) (2026-06-12)
 
 
