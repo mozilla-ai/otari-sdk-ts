@@ -29,7 +29,7 @@ Name | Type
 `streamOptions` | { [key: string]: any; }
 `temperature` | number
 `toolChoice` | [ToolChoice](ToolChoice.md)
-`tools` | Array&lt;{ [key: string]: any; } | null&gt;
+`tools` | [Array&lt;ChatCompletionRequestToolsInner&gt;](ChatCompletionRequestToolsInner.md)
 `toolsHeader` | string
 `topLogprobs` | number
 `topP` | number

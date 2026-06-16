@@ -48,6 +48,13 @@ import {
     GuardrailConfigToJSON,
     GuardrailConfigToJSONTyped,
 } from './GuardrailConfig';
+import type { ChatCompletionRequestToolsInner } from './ChatCompletionRequestToolsInner';
+import {
+    ChatCompletionRequestToolsInnerFromJSON,
+    ChatCompletionRequestToolsInnerFromJSONTyped,
+    ChatCompletionRequestToolsInnerToJSON,
+    ChatCompletionRequestToolsInnerToJSONTyped,
+} from './ChatCompletionRequestToolsInner';
 
 /**
  * OpenAI-compatible chat completion request.
@@ -196,10 +203,10 @@ export interface ChatCompletionRequest {
     toolChoice?: ToolChoice | null;
     /**
      * 
-     * @type {Array<{ [key: string]: any; } | null>}
+     * @type {Array<ChatCompletionRequestToolsInner>}
      * @memberof ChatCompletionRequest
      */
-    tools?: Array<{ [key: string]: any; } | null> | null;
+    tools?: Array<ChatCompletionRequestToolsInner> | null;
     /**
      * Optional override for the lead-in that the gateway prepends before the per-tool hint block in the system message. Useful for expressing global tool-selection policy (e.g. 'prefer MCP tools over code_execution'). Falls back to OTARI_TOOLS_HEADER env, then to the built-in default.
      * @type {string}
@@ -284,7 +291,7 @@ export function ChatCompletionRequestFromJSONTyped(json: any, ignoreDiscriminato
         'streamOptions': json['stream_options'] == null ? undefined : json['stream_options'],
         'temperature': json['temperature'] == null ? undefined : json['temperature'],
         'toolChoice': json['tool_choice'] == null ? undefined : ToolChoiceFromJSON(json['tool_choice']),
-        'tools': json['tools'] == null ? undefined : json['tools'],
+        'tools': json['tools'] == null ? undefined : ((json['tools'] as Array<any>).map(ChatCompletionRequestToolsInnerFromJSON)),
         'toolsHeader': json['tools_header'] == null ? undefined : json['tools_header'],
         'topLogprobs': json['top_logprobs'] == null ? undefined : json['top_logprobs'],
         'topP': json['top_p'] == null ? undefined : json['top_p'],
@@ -325,7 +332,7 @@ export function ChatCompletionRequestToJSONTyped(value?: ChatCompletionRequest |
         'stream_options': value['streamOptions'],
         'temperature': value['temperature'],
         'tool_choice': ToolChoiceToJSON(value['toolChoice']),
-        'tools': value['tools'],
+        'tools': value['tools'] == null ? undefined : ((value['tools'] as Array<any>).map(ChatCompletionRequestToolsInnerToJSON)),
         'tools_header': value['toolsHeader'],
         'top_logprobs': value['topLogprobs'],
         'top_p': value['topP'],

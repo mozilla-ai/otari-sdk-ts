@@ -34,7 +34,7 @@ Name | Type
 `stream` | boolean
 `streamOptions` | { [key: string]: any; }
 `temperature` | number
-`text` | [](.md)
+`text` | { [key: string]: any; }
 `toolChoice` | [ToolChoice1](ToolChoice1.md)
 `tools` | Array&lt;{ [key: string]: any; }&gt;
 `toolsHeader` | string

@@ -54,6 +54,7 @@ docs/ChatApi.md
 docs/ChatCompletion.md
 docs/ChatCompletionChunk.md
 docs/ChatCompletionRequest.md
+docs/ChatCompletionRequestToolsInner.md
 docs/ChatMessageInput.md
 docs/Content.md
 docs/Content1.md
@@ -237,6 +238,7 @@ models/Caller.ts
 models/ChatCompletion.ts
 models/ChatCompletionChunk.ts
 models/ChatCompletionRequest.ts
+models/ChatCompletionRequestToolsInner.ts
 models/ChatMessageInput.ts
 models/Content.ts
 models/Content1.ts
