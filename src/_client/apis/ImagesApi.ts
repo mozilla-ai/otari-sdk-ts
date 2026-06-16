@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * otari-gateway
- * A clean FastAPI gateway for otari with API key management
+ * otari
+ * Otari, an OpenAI-compatible LLM gateway with API key management
  *
  * The version of the OpenAPI document: 0.0.0-dev
  * 
@@ -23,6 +23,11 @@ import {
     ImageGenerationRequestFromJSON,
     ImageGenerationRequestToJSON,
 } from '../models/ImageGenerationRequest';
+import {
+    type ImagesResponse,
+    ImagesResponseFromJSON,
+    ImagesResponseToJSON,
+} from '../models/ImagesResponse';
 
 export interface CreateImageV1ImagesGenerationsPostRequest {
     imageGenerationRequest: ImageGenerationRequest;
@@ -66,22 +71,18 @@ export class ImagesApi extends runtime.BaseAPI {
      * OpenAI-compatible image generation endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use virtual user created with API key
      * Create Image
      */
-    async createImageV1ImagesGenerationsPostRaw(requestParameters: CreateImageV1ImagesGenerationsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async createImageV1ImagesGenerationsPostRaw(requestParameters: CreateImageV1ImagesGenerationsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ImagesResponse>> {
         const requestOptions = await this.createImageV1ImagesGenerationsPostRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
-        if (this.isJsonMime(response.headers.get('content-type'))) {
-            return new runtime.JSONApiResponse<any>(response);
-        } else {
-            return new runtime.TextApiResponse(response) as any;
-        }
+        return new runtime.JSONApiResponse(response, (jsonValue) => ImagesResponseFromJSON(jsonValue));
     }
 
     /**
      * OpenAI-compatible image generation endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use virtual user created with API key
      * Create Image
      */
-    async createImageV1ImagesGenerationsPost(requestParameters: CreateImageV1ImagesGenerationsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+    async createImageV1ImagesGenerationsPost(requestParameters: CreateImageV1ImagesGenerationsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ImagesResponse> {
         const response = await this.createImageV1ImagesGenerationsPostRaw(requestParameters, initOverrides);
         return await response.value();
     }

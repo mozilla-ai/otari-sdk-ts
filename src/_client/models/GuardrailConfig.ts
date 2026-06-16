@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * otari-gateway
- * A clean FastAPI gateway for otari with API key management
+ * otari
+ * Otari, an OpenAI-compatible LLM gateway with API key management
  *
  * The version of the OpenAPI document: 0.0.0-dev
  * 
@@ -18,9 +18,9 @@ import { mapValues } from '../runtime';
  * 
  * URL safety: when ``url`` is supplied it is validated at parse time with the
  * same SSRF guard used for MCP server URLs (loopback allowed by default for
- * same-host sidecars; gated by ``GATEWAY_MCP_ALLOW_LOOPBACK`` /
- * ``GATEWAY_MCP_ALLOW_PRIVATE_HOSTS``). Most deployments omit ``url`` and rely
- * on the operator-set ``GATEWAY_GUARDRAILS_URL`` instead.
+ * same-host sidecars; gated by ``OTARI_MCP_ALLOW_LOOPBACK`` /
+ * ``OTARI_MCP_ALLOW_PRIVATE_HOSTS``). Most deployments omit ``url`` and rely
+ * on the operator-set ``OTARI_GUARDRAILS_URL`` instead.
  * @export
  * @interface GuardrailConfig
  */

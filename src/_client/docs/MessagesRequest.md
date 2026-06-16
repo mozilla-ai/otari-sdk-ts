@@ -1,7 +1,7 @@
 
 # MessagesRequest
 
-Anthropic Messages API-compatible request.  Gateway-internal fields (``mcp_servers``, ``mcp_server_ids``, ``guardrails``, ``tools_header``, ``max_tool_iterations``) opt the request into gateway-managed MCP / sandbox / web_search / guardrails without changing the upstream wire shape. They\'re stripped before the request is forwarded.
+Anthropic Messages API-compatible request.  The wire fields are derived from any-llm\'s ``MessagesParams`` (see ``_schema_derive``) so the schema cannot silently drop a param any-llm forwards. Gateway-internal fields (``mcp_servers``, ``mcp_server_ids``, ``guardrails``, ``tools_header``, ``max_tool_iterations``) opt the request into gateway-managed MCP / sandbox / web_search / guardrails without changing the upstream wire shape. They\'re stripped before the request is forwarded.
 
 ## Properties
 
@@ -18,7 +18,7 @@ Name | Type
 `model` | string
 `stopSequences` | Array&lt;string&gt;
 `stream` | boolean
-`system` | [System1](System1.md)
+`system` | [System](System.md)
 `temperature` | number
 `thinking` | { [key: string]: any; }
 `toolChoice` | { [key: string]: any; }
