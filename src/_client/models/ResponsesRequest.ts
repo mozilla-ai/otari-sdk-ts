@@ -196,6 +196,12 @@ export interface ResponsesRequest {
      */
     serviceTier?: string | null;
     /**
+     * Optional caller-supplied label for cost attribution (per run, experiment, or conversation). In hybrid mode it is forwarded onto the platform usage report so spend can be sliced by session without standing up OpenTelemetry. Stripped before the request is forwarded upstream to the provider. Has no effect in standalone mode, where there is no platform to report it to.
+     * @type {string}
+     * @memberof ResponsesRequest
+     */
+    sessionLabel?: string | null;
+    /**
      * 
      * @type {boolean}
      * @memberof ResponsesRequest
@@ -312,6 +318,7 @@ export function ResponsesRequestFromJSONTyped(json: any, ignoreDiscriminator: bo
         'responseFormat': json['response_format'] == null ? undefined : json['response_format'],
         'safetyIdentifier': json['safety_identifier'] == null ? undefined : json['safety_identifier'],
         'serviceTier': json['service_tier'] == null ? undefined : json['service_tier'],
+        'sessionLabel': json['session_label'] == null ? undefined : json['session_label'],
         'store': json['store'] == null ? undefined : json['store'],
         'stream': json['stream'] == null ? undefined : json['stream'],
         'streamOptions': json['stream_options'] == null ? undefined : json['stream_options'],
@@ -362,6 +369,7 @@ export function ResponsesRequestToJSONTyped(value?: ResponsesRequest | null, ign
         'response_format': value['responseFormat'],
         'safety_identifier': value['safetyIdentifier'],
         'service_tier': value['serviceTier'],
+        'session_label': value['sessionLabel'],
         'store': value['store'],
         'stream': value['stream'],
         'stream_options': value['streamOptions'],

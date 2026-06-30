@@ -82,7 +82,7 @@ export class MessagesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Anthropic ``/v1/messages/count_tokens``-compatible endpoint.  Returns ``{\"input_tokens\": N}`` without contacting an upstream provider: counting is local, so there is no budget reservation, pricing, or usage logging. Authentication mirrors :func:`create_message` — platform mode resolves the caller\'s token against the platform, standalone mode validates the API key — so the endpoint is not an open token-counting oracle.
+     * Anthropic ``/v1/messages/count_tokens``-compatible endpoint.  Returns ``{\"input_tokens\": N}`` without contacting an upstream provider: counting is local, so there is no budget reservation, pricing, or usage logging. Authentication mirrors :func:`create_message` — hybrid mode resolves the caller\'s token against the platform, standalone mode validates the API key — so the endpoint is not an open token-counting oracle.
      * Count Message Tokens
      */
     async countMessageTokensV1MessagesCountTokensPostRaw(requestParameters: CountMessageTokensV1MessagesCountTokensPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CountTokensResponse>> {
@@ -93,7 +93,7 @@ export class MessagesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Anthropic ``/v1/messages/count_tokens``-compatible endpoint.  Returns ``{\"input_tokens\": N}`` without contacting an upstream provider: counting is local, so there is no budget reservation, pricing, or usage logging. Authentication mirrors :func:`create_message` — platform mode resolves the caller\'s token against the platform, standalone mode validates the API key — so the endpoint is not an open token-counting oracle.
+     * Anthropic ``/v1/messages/count_tokens``-compatible endpoint.  Returns ``{\"input_tokens\": N}`` without contacting an upstream provider: counting is local, so there is no budget reservation, pricing, or usage logging. Authentication mirrors :func:`create_message` — hybrid mode resolves the caller\'s token against the platform, standalone mode validates the API key — so the endpoint is not an open token-counting oracle.
      * Count Message Tokens
      */
     async countMessageTokensV1MessagesCountTokensPost(requestParameters: CountMessageTokensV1MessagesCountTokensPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CountTokensResponse> {
@@ -131,7 +131,7 @@ export class MessagesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Anthropic Messages API-compatible endpoint.  Supports MCP tool-use loops, sandboxed code execution, and SearXNG web_search in both standalone mode and platform mode. Platform-mode requests resolve credentials via the platform service and (for non-tool-loop requests) get multi-attempt fallback across the resolved route. Tool-loop requests collapse to a single attempt — once ``on_first_response`` lock-in plumbing lands across the codebase, a follow-up will enable pre-lock-in fallback for tool-loop requests too.
+     * Anthropic Messages API-compatible endpoint.  Supports MCP tool-use loops, sandboxed code execution, and SearXNG web_search in both standalone mode and hybrid mode. Hybrid-mode requests resolve credentials via the platform service and (for non-tool-loop requests) get multi-attempt fallback across the resolved route. Tool-loop requests collapse to a single attempt — once ``on_first_response`` lock-in plumbing lands across the codebase, a follow-up will enable pre-lock-in fallback for tool-loop requests too.
      * Create Message
      */
     async createMessageV1MessagesPostRaw(requestParameters: CreateMessageV1MessagesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageResponse>> {
@@ -142,7 +142,7 @@ export class MessagesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Anthropic Messages API-compatible endpoint.  Supports MCP tool-use loops, sandboxed code execution, and SearXNG web_search in both standalone mode and platform mode. Platform-mode requests resolve credentials via the platform service and (for non-tool-loop requests) get multi-attempt fallback across the resolved route. Tool-loop requests collapse to a single attempt — once ``on_first_response`` lock-in plumbing lands across the codebase, a follow-up will enable pre-lock-in fallback for tool-loop requests too.
+     * Anthropic Messages API-compatible endpoint.  Supports MCP tool-use loops, sandboxed code execution, and SearXNG web_search in both standalone mode and hybrid mode. Hybrid-mode requests resolve credentials via the platform service and (for non-tool-loop requests) get multi-attempt fallback across the resolved route. Tool-loop requests collapse to a single attempt — once ``on_first_response`` lock-in plumbing lands across the codebase, a follow-up will enable pre-lock-in fallback for tool-loop requests too.
      * Create Message
      */
     async createMessageV1MessagesPost(requestParameters: CreateMessageV1MessagesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageResponse> {
