@@ -30,6 +30,18 @@ export interface UsageEntry {
      * @type {number}
      * @memberof UsageEntry
      */
+    cacheReadTokens: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof UsageEntry
+     */
+    cacheWriteTokens: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof UsageEntry
+     */
     completionTokens: number | null;
     /**
      * 
@@ -104,6 +116,8 @@ export interface UsageEntry {
  */
 export function instanceOfUsageEntry(value: object): value is UsageEntry {
     if (!('apiKeyId' in value) || value['apiKeyId'] === undefined) return false;
+    if (!('cacheReadTokens' in value) || value['cacheReadTokens'] === undefined) return false;
+    if (!('cacheWriteTokens' in value) || value['cacheWriteTokens'] === undefined) return false;
     if (!('completionTokens' in value) || value['completionTokens'] === undefined) return false;
     if (!('cost' in value) || value['cost'] === undefined) return false;
     if (!('endpoint' in value) || value['endpoint'] === undefined) return false;
@@ -130,6 +144,8 @@ export function UsageEntryFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     return {
         
         'apiKeyId': json['api_key_id'],
+        'cacheReadTokens': json['cache_read_tokens'],
+        'cacheWriteTokens': json['cache_write_tokens'],
         'completionTokens': json['completion_tokens'],
         'cost': json['cost'],
         'endpoint': json['endpoint'],
@@ -157,6 +173,8 @@ export function UsageEntryToJSONTyped(value?: UsageEntry | null, ignoreDiscrimin
     return {
         
         'api_key_id': value['apiKeyId'],
+        'cache_read_tokens': value['cacheReadTokens'],
+        'cache_write_tokens': value['cacheWriteTokens'],
         'completion_tokens': value['completionTokens'],
         'cost': value['cost'],
         'endpoint': value['endpoint'],

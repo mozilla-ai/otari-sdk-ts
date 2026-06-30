@@ -104,6 +104,12 @@ export interface MessagesRequest {
      */
     model: string;
     /**
+     * Optional caller-supplied label for cost attribution (per run, experiment, or conversation). In hybrid mode it is forwarded onto the platform usage report so spend can be sliced by session without standing up OpenTelemetry. Stripped before the request is forwarded upstream to the provider. Has no effect in standalone mode, where there is no platform to report it to.
+     * @type {string}
+     * @memberof MessagesRequest
+     */
+    sessionLabel?: string | null;
+    /**
      * 
      * @type {Array<string>}
      * @memberof MessagesRequest
@@ -194,6 +200,7 @@ export function MessagesRequestFromJSONTyped(json: any, ignoreDiscriminator: boo
         'messages': json['messages'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'model': json['model'],
+        'sessionLabel': json['session_label'] == null ? undefined : json['session_label'],
         'stopSequences': json['stop_sequences'] == null ? undefined : json['stop_sequences'],
         'stream': json['stream'] == null ? undefined : json['stream'],
         'system': json['system'] == null ? undefined : SystemFromJSON(json['system']),
@@ -227,6 +234,7 @@ export function MessagesRequestToJSONTyped(value?: MessagesRequest | null, ignor
         'messages': value['messages'],
         'metadata': value['metadata'],
         'model': value['model'],
+        'session_label': value['sessionLabel'],
         'stop_sequences': value['stopSequences'],
         'stream': value['stream'],
         'system': SystemToJSON(value['system']),

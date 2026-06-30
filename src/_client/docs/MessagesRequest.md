@@ -16,6 +16,7 @@ Name | Type
 `messages` | Array&lt;{ [key: string]: any; }&gt;
 `metadata` | { [key: string]: any; }
 `model` | string
+`sessionLabel` | string
 `stopSequences` | Array&lt;string&gt;
 `stream` | boolean
 `system` | [System](System.md)
@@ -43,6 +44,7 @@ const example = {
   "messages": null,
   "metadata": null,
   "model": null,
+  "sessionLabel": null,
   "stopSequences": null,
   "stream": null,
   "system": null,
