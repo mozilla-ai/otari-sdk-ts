@@ -8,6 +8,8 @@ A single usage log entry.
 Name | Type
 ------------ | -------------
 `apiKeyId` | string
+`cacheReadTokens` | number
+`cacheWriteTokens` | number
 `completionTokens` | number
 `cost` | number
 `endpoint` | string
@@ -29,6 +31,8 @@ import type { UsageEntry } from ''
 // TODO: Update the object below with actual values
 const example = {
   "apiKeyId": null,
+  "cacheReadTokens": null,
+  "cacheWriteTokens": null,
   "completionTokens": null,
   "cost": null,
   "endpoint": null,

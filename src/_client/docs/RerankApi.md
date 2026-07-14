@@ -27,7 +27,11 @@ import type { CreateRerankV1RerankPostRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new RerankApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new RerankApi(config);
 
   const body = {
     // RerankRequest
@@ -59,7 +63,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 

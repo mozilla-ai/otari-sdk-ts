@@ -30,6 +30,7 @@ Name | Type
 `responseFormat` | { [key: string]: any; }
 `safetyIdentifier` | string
 `serviceTier` | string
+`sessionLabel` | string
 `store` | boolean
 `stream` | boolean
 `streamOptions` | { [key: string]: any; }
@@ -73,6 +74,7 @@ const example = {
   "responseFormat": null,
   "safetyIdentifier": null,
   "serviceTier": null,
+  "sessionLabel": null,
   "store": null,
   "stream": null,
   "streamOptions": null,

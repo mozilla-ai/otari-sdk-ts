@@ -31,7 +31,11 @@ import type { CancelBatchV1BatchesBatchIdCancelPostRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new BatchesApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new BatchesApi(config);
 
   const body = {
     // string
@@ -66,7 +70,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -102,7 +106,11 @@ import type { CreateBatchV1BatchesPostRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new BatchesApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new BatchesApi(config);
 
   const body = {
     // CreateBatchRequest
@@ -134,7 +142,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -170,7 +178,11 @@ import type { ListBatchesV1BatchesGetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new BatchesApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new BatchesApi(config);
 
   const body = {
     // string
@@ -208,7 +220,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -244,7 +256,11 @@ import type { RetrieveBatchResultsV1BatchesBatchIdResultsGetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new BatchesApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new BatchesApi(config);
 
   const body = {
     // string
@@ -279,7 +295,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -317,7 +333,11 @@ import type { RetrieveBatchV1BatchesBatchIdGetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new BatchesApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new BatchesApi(config);
 
   const body = {
     // string
@@ -352,7 +372,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 

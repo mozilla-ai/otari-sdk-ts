@@ -24,6 +24,7 @@ Name | Type
 `reasoningEffort` | string
 `responseFormat` | { [key: string]: any; }
 `seed` | number
+`sessionLabel` | string
 `stop` | [Stop](Stop.md)
 `stream` | boolean
 `streamOptions` | { [key: string]: any; }
@@ -59,6 +60,7 @@ const example = {
   "reasoningEffort": null,
   "responseFormat": null,
   "seed": null,
+  "sessionLabel": null,
   "stop": null,
   "stream": null,
   "streamOptions": null,

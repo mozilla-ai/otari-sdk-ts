@@ -32,7 +32,11 @@ import type { CreateUserV1UsersPostRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new UsersApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new UsersApi(config);
 
   const body = {
     // CreateUserRequest
@@ -64,7 +68,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -100,7 +104,11 @@ import type { DeleteUserV1UsersUserIdDeleteRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new UsersApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new UsersApi(config);
 
   const body = {
     // string
@@ -132,7 +140,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -168,7 +176,11 @@ import type { GetUserUsageV1UsersUserIdUsageGetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new UsersApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new UsersApi(config);
 
   const body = {
     // string
@@ -206,7 +218,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -242,7 +254,11 @@ import type { GetUserV1UsersUserIdGetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new UsersApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new UsersApi(config);
 
   const body = {
     // string
@@ -274,7 +290,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -310,7 +326,11 @@ import type { ListUsersV1UsersGetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new UsersApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new UsersApi(config);
 
   const body = {
     // number (optional)
@@ -345,7 +365,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -381,7 +401,11 @@ import type { UpdateUserV1UsersUserIdPatchRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new UsersApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new UsersApi(config);
 
   const body = {
     // string
@@ -416,7 +440,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
