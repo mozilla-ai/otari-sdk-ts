@@ -31,7 +31,11 @@ import type { CreateFileV1FilesPostRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new FilesApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new FilesApi(config);
 
   const body = {
     // string
@@ -69,7 +73,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -105,7 +109,11 @@ import type { DeleteFileV1FilesFileIdDeleteRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new FilesApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new FilesApi(config);
 
   const body = {
     // string
@@ -140,7 +148,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -176,7 +184,11 @@ import type { GetFileContentV1FilesFileIdContentGetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new FilesApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new FilesApi(config);
 
   const body = {
     // string
@@ -211,7 +223,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -247,7 +259,11 @@ import type { GetFileV1FilesFileIdGetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new FilesApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new FilesApi(config);
 
   const body = {
     // string
@@ -282,7 +298,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -318,7 +334,11 @@ import type { ListFilesV1FilesGetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new FilesApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new FilesApi(config);
 
   const body = {
     // string (optional)
@@ -353,7 +373,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 

@@ -27,7 +27,11 @@ import type { CreateModerationV1ModerationsPostRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new ModerationsApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new ModerationsApi(config);
 
   const body = {
     // ModerationRequest
@@ -62,7 +66,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 

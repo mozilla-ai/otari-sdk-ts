@@ -31,7 +31,11 @@ import type { CreateKeyV1KeysPostRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new KeysApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new KeysApi(config);
 
   const body = {
     // CreateKeyRequest
@@ -63,7 +67,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -99,7 +103,11 @@ import type { DeleteKeyV1KeysKeyIdDeleteRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new KeysApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new KeysApi(config);
 
   const body = {
     // string
@@ -131,7 +139,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -167,7 +175,11 @@ import type { GetKeyV1KeysKeyIdGetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new KeysApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new KeysApi(config);
 
   const body = {
     // string
@@ -199,7 +211,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -235,7 +247,11 @@ import type { ListKeysV1KeysGetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new KeysApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new KeysApi(config);
 
   const body = {
     // number (optional)
@@ -270,7 +286,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -306,7 +322,11 @@ import type { UpdateKeyV1KeysKeyIdPatchRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new KeysApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new KeysApi(config);
 
   const body = {
     // string
@@ -341,7 +361,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 

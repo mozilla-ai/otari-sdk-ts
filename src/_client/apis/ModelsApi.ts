@@ -57,6 +57,10 @@ export class ModelsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
 
         let urlPath = `/v1/models/{model_id}`;
         urlPath = urlPath.replace('{model_id}', encodeURIComponent(String(requestParameters['modelId'])));
@@ -100,6 +104,10 @@ export class ModelsApi extends runtime.BaseAPI {
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
 
 
         let urlPath = `/v1/models`;

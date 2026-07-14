@@ -28,7 +28,11 @@ import type { GetModelV1ModelsModelIdGetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new ModelsApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new ModelsApi(config);
 
   const body = {
     // string
@@ -60,7 +64,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -96,7 +100,11 @@ import type { ListModelsV1ModelsGetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new ModelsApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new ModelsApi(config);
 
   const body = {
     // string | Filter models by provider name (optional)
@@ -128,7 +136,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 

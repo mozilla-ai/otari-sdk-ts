@@ -28,7 +28,11 @@ import type { CreateSpeechV1AudioSpeechPostRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new AudioApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new AudioApi(config);
 
   const body = {
     // AudioSpeechRequest
@@ -60,7 +64,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -96,7 +100,11 @@ import type { CreateTranscriptionV1AudioTranscriptionsPostRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new AudioApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new AudioApi(config);
 
   const body = {
     // string
@@ -146,7 +154,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 

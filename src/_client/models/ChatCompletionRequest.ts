@@ -172,6 +172,12 @@ export interface ChatCompletionRequest {
      */
     seed?: number | null;
     /**
+     * Optional caller-supplied label for cost attribution (per run, experiment, or conversation). In hybrid mode it is forwarded onto the platform usage report so spend can be sliced by session without standing up OpenTelemetry. Stripped before the request is forwarded upstream to the provider. Has no effect in standalone mode, where there is no platform to report it to.
+     * @type {string}
+     * @memberof ChatCompletionRequest
+     */
+    sessionLabel?: string | null;
+    /**
      * 
      * @type {Stop}
      * @memberof ChatCompletionRequest
@@ -286,6 +292,7 @@ export function ChatCompletionRequestFromJSONTyped(json: any, ignoreDiscriminato
         'reasoningEffort': json['reasoning_effort'] == null ? undefined : json['reasoning_effort'],
         'responseFormat': json['response_format'] == null ? undefined : json['response_format'],
         'seed': json['seed'] == null ? undefined : json['seed'],
+        'sessionLabel': json['session_label'] == null ? undefined : json['session_label'],
         'stop': json['stop'] == null ? undefined : StopFromJSON(json['stop']),
         'stream': json['stream'] == null ? undefined : json['stream'],
         'streamOptions': json['stream_options'] == null ? undefined : json['stream_options'],
@@ -327,6 +334,7 @@ export function ChatCompletionRequestToJSONTyped(value?: ChatCompletionRequest |
         'reasoning_effort': value['reasoningEffort'],
         'response_format': value['responseFormat'],
         'seed': value['seed'],
+        'session_label': value['sessionLabel'],
         'stop': StopToJSON(value['stop']),
         'stream': value['stream'],
         'stream_options': value['streamOptions'],

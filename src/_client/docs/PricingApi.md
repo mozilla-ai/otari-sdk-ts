@@ -31,7 +31,11 @@ import type { DeletePricingV1PricingModelKeyDeleteRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new PricingApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PricingApi(config);
 
   const body = {
     // string
@@ -66,7 +70,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -102,7 +106,11 @@ import type { GetPricingHistoryV1PricingModelKeyHistoryGetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new PricingApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PricingApi(config);
 
   const body = {
     // string
@@ -134,7 +142,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -170,7 +178,11 @@ import type { GetPricingV1PricingModelKeyGetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new PricingApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PricingApi(config);
 
   const body = {
     // string
@@ -205,7 +217,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -241,7 +253,11 @@ import type { ListPricingV1PricingGetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new PricingApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PricingApi(config);
 
   const body = {
     // number (optional)
@@ -276,7 +292,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -312,7 +328,11 @@ import type { SetPricingV1PricingPostRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new PricingApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PricingApi(config);
 
   const body = {
     // SetPricingRequest
@@ -344,7 +364,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 

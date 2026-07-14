@@ -27,7 +27,11 @@ import type { ListUsageV1UsageGetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
-  const api = new UsageApi();
+  const config = new Configuration({ 
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new UsageApi(config);
 
   const body = {
     // Date | Return logs with timestamp >= start_date (ISO 8601 or Unix epoch seconds) (optional)
@@ -71,7 +75,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
