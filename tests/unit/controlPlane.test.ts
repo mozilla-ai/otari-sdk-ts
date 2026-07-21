@@ -11,6 +11,7 @@
 
 import { describe, expect, it, vi } from "vitest";
 import { ControlPlane } from "../../src/controlPlane.js";
+import { AuthenticationError } from "../../src/errors.js";
 
 type Case = {
   resource: "keys" | "users" | "budgets" | "pricing" | "usage";
@@ -176,5 +177,76 @@ describe("ControlPlane ergonomic aliases", () => {
     expect(typeof cp.budgets.raw.getBudgetV1BudgetsBudgetIdGet).toBe("function");
     expect(typeof cp.pricing.raw.setPricingV1PricingPost).toBe("function");
     expect(typeof cp.usage.raw.listUsageV1UsageGet).toBe("function");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Error mapping: the ergonomic aliases route generated `ResponseError`s through
+// the same status -> typed-error table as the inference path, so callers branch
+// on the typed `OtariError` hierarchy instead of the raw generated error.
+// ---------------------------------------------------------------------------
+
+/**
+ * A generated-core `ResponseError` look-alike: an `Error` carrying the raw
+ * failed `fetch` `Response` on its `.response` field, which is what `mapError`
+ * inspects.
+ */
+function responseError(status: number, detail: string): Error {
+  const response = new Response(JSON.stringify({ detail }), {
+    status,
+    headers: { "Content-Type": "application/json" },
+  });
+  return Object.assign(new Error(`Response returned status ${status}`), { response });
+}
+
+describe("ControlPlane error mapping", () => {
+  // One representative alias per resource, covering all five resource classes.
+  const ERROR_CASES: Case[] = [
+    { resource: "keys", alias: "get", generated: "getKeyV1KeysKeyIdGet", args: [{ keyId: "k1" }] },
+    {
+      resource: "users",
+      alias: "get",
+      generated: "getUserV1UsersUserIdGet",
+      args: [{ userId: "u1" }],
+    },
+    {
+      resource: "budgets",
+      alias: "get",
+      generated: "getBudgetV1BudgetsBudgetIdGet",
+      args: [{ budgetId: "b1" }],
+    },
+    {
+      resource: "pricing",
+      alias: "get",
+      generated: "getPricingV1PricingModelKeyGet",
+      args: [{ modelKey: "m1" }],
+    },
+    {
+      resource: "usage",
+      alias: "list",
+      generated: "listUsageV1UsageGet",
+      args: [{ userId: "u1" }],
+    },
+  ];
+
+  for (const { resource, alias, generated, args } of ERROR_CASES) {
+    it(`${resource}.${alias} maps a 401 ResponseError to AuthenticationError`, async () => {
+      const cp = controlPlane();
+      const res = (cp as Record<string, { raw: Record<string, unknown> }>)[resource];
+      res.raw[generated] = vi.fn().mockRejectedValue(responseError(401, "nope"));
+
+      const call = (res as Record<string, (...a: unknown[]) => Promise<unknown>>)[alias](...args);
+
+      await expect(call).rejects.toBeInstanceOf(AuthenticationError);
+      await expect(call).rejects.toMatchObject({ statusCode: 401 });
+    });
+  }
+
+  it("propagates non-ResponseError failures unchanged", async () => {
+    const cp = controlPlane();
+    const boom = new Error("network down");
+    cp.keys.raw.getKeyV1KeysKeyIdGet = vi.fn().mockRejectedValue(boom);
+
+    await expect(cp.keys.get({ keyId: "k1" })).rejects.toBe(boom);
   });
 });

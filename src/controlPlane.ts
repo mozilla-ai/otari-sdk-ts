@@ -23,29 +23,44 @@ import {
   UsageApi,
   UsersApi,
 } from "./_client/index.js";
+import { mapError } from "./mapError.js";
+
+/**
+ * Run a generated-core call, mapping its `ResponseError` to a typed otari
+ * error. Mirrors the inference-path `OtariClient.call` wrapper so control-plane
+ * methods surface the same typed errors. Non-`ResponseError` failures (network,
+ * etc.) propagate unchanged.
+ */
+async function translate<T>(p: Promise<T>): Promise<T> {
+  try {
+    return await p;
+  } catch (error) {
+    throw await mapError(error);
+  }
+}
 
 /** Ergonomic aliases for the API-keys management endpoints. */
 export class KeysResource {
   constructor(readonly raw: KeysApi) {}
 
   create(...args: Parameters<KeysApi["createKeyV1KeysPost"]>) {
-    return this.raw.createKeyV1KeysPost(...args);
+    return translate(this.raw.createKeyV1KeysPost(...args));
   }
 
   get(...args: Parameters<KeysApi["getKeyV1KeysKeyIdGet"]>) {
-    return this.raw.getKeyV1KeysKeyIdGet(...args);
+    return translate(this.raw.getKeyV1KeysKeyIdGet(...args));
   }
 
   list(...args: Parameters<KeysApi["listKeysV1KeysGet"]>) {
-    return this.raw.listKeysV1KeysGet(...args);
+    return translate(this.raw.listKeysV1KeysGet(...args));
   }
 
   update(...args: Parameters<KeysApi["updateKeyV1KeysKeyIdPatch"]>) {
-    return this.raw.updateKeyV1KeysKeyIdPatch(...args);
+    return translate(this.raw.updateKeyV1KeysKeyIdPatch(...args));
   }
 
   delete(...args: Parameters<KeysApi["deleteKeyV1KeysKeyIdDelete"]>) {
-    return this.raw.deleteKeyV1KeysKeyIdDelete(...args);
+    return translate(this.raw.deleteKeyV1KeysKeyIdDelete(...args));
   }
 }
 
@@ -54,27 +69,27 @@ export class UsersResource {
   constructor(readonly raw: UsersApi) {}
 
   create(...args: Parameters<UsersApi["createUserV1UsersPost"]>) {
-    return this.raw.createUserV1UsersPost(...args);
+    return translate(this.raw.createUserV1UsersPost(...args));
   }
 
   get(...args: Parameters<UsersApi["getUserV1UsersUserIdGet"]>) {
-    return this.raw.getUserV1UsersUserIdGet(...args);
+    return translate(this.raw.getUserV1UsersUserIdGet(...args));
   }
 
   list(...args: Parameters<UsersApi["listUsersV1UsersGet"]>) {
-    return this.raw.listUsersV1UsersGet(...args);
+    return translate(this.raw.listUsersV1UsersGet(...args));
   }
 
   update(...args: Parameters<UsersApi["updateUserV1UsersUserIdPatch"]>) {
-    return this.raw.updateUserV1UsersUserIdPatch(...args);
+    return translate(this.raw.updateUserV1UsersUserIdPatch(...args));
   }
 
   delete(...args: Parameters<UsersApi["deleteUserV1UsersUserIdDelete"]>) {
-    return this.raw.deleteUserV1UsersUserIdDelete(...args);
+    return translate(this.raw.deleteUserV1UsersUserIdDelete(...args));
   }
 
   getUsage(...args: Parameters<UsersApi["getUserUsageV1UsersUserIdUsageGet"]>) {
-    return this.raw.getUserUsageV1UsersUserIdUsageGet(...args);
+    return translate(this.raw.getUserUsageV1UsersUserIdUsageGet(...args));
   }
 }
 
@@ -83,23 +98,23 @@ export class BudgetsResource {
   constructor(readonly raw: BudgetsApi) {}
 
   create(...args: Parameters<BudgetsApi["createBudgetV1BudgetsPost"]>) {
-    return this.raw.createBudgetV1BudgetsPost(...args);
+    return translate(this.raw.createBudgetV1BudgetsPost(...args));
   }
 
   get(...args: Parameters<BudgetsApi["getBudgetV1BudgetsBudgetIdGet"]>) {
-    return this.raw.getBudgetV1BudgetsBudgetIdGet(...args);
+    return translate(this.raw.getBudgetV1BudgetsBudgetIdGet(...args));
   }
 
   list(...args: Parameters<BudgetsApi["listBudgetsV1BudgetsGet"]>) {
-    return this.raw.listBudgetsV1BudgetsGet(...args);
+    return translate(this.raw.listBudgetsV1BudgetsGet(...args));
   }
 
   update(...args: Parameters<BudgetsApi["updateBudgetV1BudgetsBudgetIdPatch"]>) {
-    return this.raw.updateBudgetV1BudgetsBudgetIdPatch(...args);
+    return translate(this.raw.updateBudgetV1BudgetsBudgetIdPatch(...args));
   }
 
   delete(...args: Parameters<BudgetsApi["deleteBudgetV1BudgetsBudgetIdDelete"]>) {
-    return this.raw.deleteBudgetV1BudgetsBudgetIdDelete(...args);
+    return translate(this.raw.deleteBudgetV1BudgetsBudgetIdDelete(...args));
   }
 }
 
@@ -108,23 +123,23 @@ export class PricingResource {
   constructor(readonly raw: PricingApi) {}
 
   list(...args: Parameters<PricingApi["listPricingV1PricingGet"]>) {
-    return this.raw.listPricingV1PricingGet(...args);
+    return translate(this.raw.listPricingV1PricingGet(...args));
   }
 
   get(...args: Parameters<PricingApi["getPricingV1PricingModelKeyGet"]>) {
-    return this.raw.getPricingV1PricingModelKeyGet(...args);
+    return translate(this.raw.getPricingV1PricingModelKeyGet(...args));
   }
 
   set(...args: Parameters<PricingApi["setPricingV1PricingPost"]>) {
-    return this.raw.setPricingV1PricingPost(...args);
+    return translate(this.raw.setPricingV1PricingPost(...args));
   }
 
   delete(...args: Parameters<PricingApi["deletePricingV1PricingModelKeyDelete"]>) {
-    return this.raw.deletePricingV1PricingModelKeyDelete(...args);
+    return translate(this.raw.deletePricingV1PricingModelKeyDelete(...args));
   }
 
   getHistory(...args: Parameters<PricingApi["getPricingHistoryV1PricingModelKeyHistoryGet"]>) {
-    return this.raw.getPricingHistoryV1PricingModelKeyHistoryGet(...args);
+    return translate(this.raw.getPricingHistoryV1PricingModelKeyHistoryGet(...args));
   }
 }
 
@@ -133,7 +148,7 @@ export class UsageResource {
   constructor(readonly raw: UsageApi) {}
 
   list(...args: Parameters<UsageApi["listUsageV1UsageGet"]>) {
-    return this.raw.listUsageV1UsageGet(...args);
+    return translate(this.raw.listUsageV1UsageGet(...args));
   }
 }
 
