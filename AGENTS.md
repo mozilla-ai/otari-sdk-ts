@@ -48,18 +48,24 @@ implementation, which is what unit tests mock, no real network in `tests/unit`.
   header. `adminKey` (env `GATEWAY_ADMIN_KEY`) is used for `controlPlane`.
 Typed error mapping applies in both modes.
 
-### Endpoint-coverage drift gate
-`tests/unit/endpointCoverage.test.ts` fetches the canonical gateway spec
-(`https://raw.githubusercontent.com/mozilla-ai/otari/main/docs/public/openapi.json`) and asserts
-every endpoint is accounted for in `sdk-endpoints.txt` (`[covered]` / `[excluded]`). Update that
-manifest when you add or intentionally skip an endpoint.
+### Endpoint-coverage manifest
+`sdk-endpoints.txt` records which gateway endpoints this SDK surfaces (`[covered]`) and which it
+deliberately does not (`[excluded]`, with a reason). **It is a generated artifact.** The gateway's
+codegen workflow pushes it here from the canonical copy at `scripts/sdk_codegen/sdk-endpoints.txt`
+in `mozilla-ai/otari`, so an edit made in this repo is overwritten on the next regeneration. To
+change coverage classification, edit the canonical copy in the gateway.
+
+`tests/unit/endpointCoverage.test.ts` only checks the manifest's structure, offline. The drift gate that compares it
+against the OpenAPI spec runs in the gateway, against the spec from the same commit. It used to run
+here over the network, which made the result depend on when CI ran rather than on the commit; see
+mozilla-ai/otari#438.
 
 ## Setup / Build / Test Commands
 - Install: `npm ci`
 - Build: `npm run build` (`tsc`)
 - Test (all): `npm run test`, unit only: `npm run test:unit`
 - Single test: `npx vitest run tests/unit/client.test.ts`
-- Drift gate (needs network): `npx vitest run tests/unit/endpointCoverage.test.ts`
+- Manifest checks: `npx vitest run tests/unit/endpointCoverage.test.ts`
 - Typecheck: `npm run typecheck` (`tsc --noEmit`)
 - Lint: `npm run lint` (Biome), format: `npm run format`
 - Combined gate: `npm run check` (Biome + `tsc --noEmit`)
@@ -78,7 +84,7 @@ manifest when you add or intentionally skip an endpoint.
   still map errors correctly.
 - Touched streaming → run streaming tests; chat yields `ChatCompletionChunk`, responses/messages
   yield raw JSON.
-- Added/removed an endpoint wrapper → update `sdk-endpoints.txt` and run the drift gate.
+- Added/removed an endpoint wrapper → update the canonical `sdk-endpoints.txt` in `mozilla-ai/otari` (`scripts/sdk_codegen/`); the copy here is regenerated.
 - Always run `npm run check` before opening a PR. A generated-core PR must pass `npm run typecheck`.
 
 ## Writing style
