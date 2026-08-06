@@ -13,20 +13,20 @@
  */
 
 import { mapValues } from '../runtime';
-import type { Caller } from './Caller';
+import type { Content15 } from './Content15';
 import {
-    CallerFromJSON,
-    CallerFromJSONTyped,
-    CallerToJSON,
-    CallerToJSONTyped,
-} from './Caller';
-import type { Content8 } from './Content8';
+    Content15FromJSON,
+    Content15FromJSONTyped,
+    Content15ToJSON,
+    Content15ToJSONTyped,
+} from './Content15';
+import type { Caller1 } from './Caller1';
 import {
-    Content8FromJSON,
-    Content8FromJSONTyped,
-    Content8ToJSON,
-    Content8ToJSONTyped,
-} from './Content8';
+    Caller1FromJSON,
+    Caller1FromJSONTyped,
+    Caller1ToJSON,
+    Caller1ToJSONTyped,
+} from './Caller1';
 
 /**
  * 
@@ -37,16 +37,16 @@ export interface MRWebSearchToolResultBlock {
     [key: string]: any | any;
     /**
      * 
-     * @type {Caller}
+     * @type {Caller1}
      * @memberof MRWebSearchToolResultBlock
      */
-    caller?: Caller | null;
+    caller?: Caller1 | null;
     /**
      * 
-     * @type {Content8}
+     * @type {Content15}
      * @memberof MRWebSearchToolResultBlock
      */
-    content: Content8;
+    content: Content15;
     /**
      * 
      * @type {string}
@@ -92,8 +92,8 @@ export function MRWebSearchToolResultBlockFromJSONTyped(json: any, ignoreDiscrim
     return {
         
             ...json,
-        'caller': json['caller'] == null ? undefined : CallerFromJSON(json['caller']),
-        'content': Content8FromJSON(json['content']),
+        'caller': json['caller'] == null ? undefined : Caller1FromJSON(json['caller']),
+        'content': Content15FromJSON(json['content']),
         'toolUseId': json['tool_use_id'],
         'type': json['type'],
     };
@@ -111,8 +111,8 @@ export function MRWebSearchToolResultBlockToJSONTyped(value?: MRWebSearchToolRes
     return {
         
             ...value,
-        'caller': CallerToJSON(value['caller']),
-        'content': Content8ToJSON(value['content']),
+        'caller': Caller1ToJSON(value['caller']),
+        'content': Content15ToJSON(value['content']),
         'tool_use_id': value['toolUseId'],
         'type': value['type'],
     };

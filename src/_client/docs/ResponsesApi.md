@@ -14,7 +14,7 @@ All URIs are relative to *http://localhost*
 
 Create Response
 
-OpenAI-compatible Responses endpoint.  Supports MCP tool-use loops, sandboxed code execution, and SearXNG web_search in both standalone mode and hybrid mode. Hybrid-mode requests resolve credentials via the platform service and (for non-tool-loop requests) get multi-attempt fallback across the resolved route. Tool-loop requests collapse to a single attempt — once &#x60;&#x60;on_first_response&#x60;&#x60; lock-in plumbing lands across the codebase, a follow-up will enable pre-lock-in fallback for tool-loop requests too.
+OpenAI-compatible Responses endpoint.  Supports MCP tool-use loops, sandboxed code execution, and SearXNG web_search in both standalone mode and hybrid mode. Hybrid-mode requests resolve credentials via the platform service and get multi-attempt fallback across the resolved route, tool-loop requests included (fallback applies up to the pre-lock-in point, same as chat).
 
 ### Example
 
@@ -28,6 +28,8 @@ import type { CreateResponseV1ResponsesPostRequest } from '';
 async function example() {
   console.log("🚀 Testing  SDK...");
   const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
     // To configure API key authorization: ApiKeyAuth
     apiKey: "YOUR API KEY",
   });
@@ -63,7 +65,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 

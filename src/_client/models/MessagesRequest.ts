@@ -51,10 +51,22 @@ import {
 export interface MessagesRequest {
     /**
      * 
+     * @type {Array<string>}
+     * @memberof MessagesRequest
+     */
+    betas?: Array<string> | null;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof MessagesRequest
      */
     cacheControl?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof MessagesRequest
+     */
+    contextManagement?: { [key: string]: any; } | null;
     /**
      * 
      * @type {Array<GuardrailConfig>}
@@ -103,6 +115,12 @@ export interface MessagesRequest {
      * @memberof MessagesRequest
      */
     model: string;
+    /**
+     * An unsaved policy body to explain.
+     * @type {{ [key: string]: any; }}
+     * @memberof MessagesRequest
+     */
+    outputFormat?: { [key: string]: any; } | null;
     /**
      * Optional caller-supplied label for cost attribution (per run, experiment, or conversation). In hybrid mode it is forwarded onto the platform usage report so spend can be sliced by session without standing up OpenTelemetry. Stripped before the request is forwarded upstream to the provider. Has no effect in standalone mode, where there is no platform to report it to.
      * @type {string}
@@ -191,7 +209,9 @@ export function MessagesRequestFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
+        'betas': json['betas'] == null ? undefined : json['betas'],
         'cacheControl': json['cache_control'] == null ? undefined : json['cache_control'],
+        'contextManagement': json['context_management'] == null ? undefined : json['context_management'],
         'guardrails': json['guardrails'] == null ? undefined : ((json['guardrails'] as Array<any>).map(GuardrailConfigFromJSON)),
         'maxTokens': json['max_tokens'],
         'maxToolIterations': json['max_tool_iterations'] == null ? undefined : json['max_tool_iterations'],
@@ -200,6 +220,7 @@ export function MessagesRequestFromJSONTyped(json: any, ignoreDiscriminator: boo
         'messages': json['messages'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'model': json['model'],
+        'outputFormat': json['output_format'] == null ? undefined : json['output_format'],
         'sessionLabel': json['session_label'] == null ? undefined : json['session_label'],
         'stopSequences': json['stop_sequences'] == null ? undefined : json['stop_sequences'],
         'stream': json['stream'] == null ? undefined : json['stream'],
@@ -225,7 +246,9 @@ export function MessagesRequestToJSONTyped(value?: MessagesRequest | null, ignor
 
     return {
         
+        'betas': value['betas'],
         'cache_control': value['cacheControl'],
+        'context_management': value['contextManagement'],
         'guardrails': value['guardrails'] == null ? undefined : ((value['guardrails'] as Array<any>).map(GuardrailConfigToJSON)),
         'max_tokens': value['maxTokens'],
         'max_tool_iterations': value['maxToolIterations'],
@@ -234,6 +257,7 @@ export function MessagesRequestToJSONTyped(value?: MessagesRequest | null, ignor
         'messages': value['messages'],
         'metadata': value['metadata'],
         'model': value['model'],
+        'output_format': value['outputFormat'],
         'session_label': value['sessionLabel'],
         'stop_sequences': value['stopSequences'],
         'stream': value['stream'],

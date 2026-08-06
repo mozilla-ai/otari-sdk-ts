@@ -7,7 +7,9 @@ Anthropic Messages API-compatible request.  The wire fields are derived from any
 
 Name | Type
 ------------ | -------------
+`betas` | Array&lt;string&gt;
 `cacheControl` | { [key: string]: any; }
+`contextManagement` | { [key: string]: any; }
 `guardrails` | [Array&lt;GuardrailConfig&gt;](GuardrailConfig.md)
 `maxTokens` | number
 `maxToolIterations` | number
@@ -16,6 +18,7 @@ Name | Type
 `messages` | Array&lt;{ [key: string]: any; }&gt;
 `metadata` | { [key: string]: any; }
 `model` | string
+`outputFormat` | { [key: string]: any; }
 `sessionLabel` | string
 `stopSequences` | Array&lt;string&gt;
 `stream` | boolean
@@ -35,7 +38,9 @@ import type { MessagesRequest } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "betas": null,
   "cacheControl": null,
+  "contextManagement": null,
   "guardrails": null,
   "maxTokens": null,
   "maxToolIterations": null,
@@ -44,6 +49,7 @@ const example = {
   "messages": null,
   "metadata": null,
   "model": null,
+  "outputFormat": null,
   "sessionLabel": null,
   "stopSequences": null,
   "stream": null,

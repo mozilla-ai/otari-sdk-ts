@@ -44,7 +44,7 @@ export interface ModerationResult {
      */
     flagged: boolean;
     /**
-     * 
+     * An unsaved policy body to explain.
      * @type {{ [key: string]: any; }}
      * @memberof ModerationResult
      */

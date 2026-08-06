@@ -7,10 +7,13 @@ Request model for updating a key.
 
 Name | Type
 ------------ | -------------
+`allowedModels` | Array&lt;string&gt;
+`excludeFromBudget` | boolean
 `expiresAt` | Date
 `isActive` | boolean
 `keyName` | string
 `metadata` | { [key: string]: any; }
+`rejectUserMismatch` | boolean
 
 ## Example
 
@@ -19,10 +22,13 @@ import type { UpdateKeyRequest } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "allowedModels": null,
+  "excludeFromBudget": null,
   "expiresAt": null,
   "isActive": null,
   "keyName": null,
   "metadata": null,
+  "rejectUserMismatch": null,
 } satisfies UpdateKeyRequest
 
 console.log(example)

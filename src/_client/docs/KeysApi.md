@@ -8,6 +8,7 @@ All URIs are relative to *http://localhost*
 | [**deleteKeyV1KeysKeyIdDelete**](KeysApi.md#deletekeyv1keyskeyiddelete) | **DELETE** /v1/keys/{key_id} | Delete Key |
 | [**getKeyV1KeysKeyIdGet**](KeysApi.md#getkeyv1keyskeyidget) | **GET** /v1/keys/{key_id} | Get Key |
 | [**listKeysV1KeysGet**](KeysApi.md#listkeysv1keysget) | **GET** /v1/keys | List Keys |
+| [**rotateKeyV1KeysKeyIdRotatePost**](KeysApi.md#rotatekeyv1keyskeyidrotatepost) | **POST** /v1/keys/{key_id}/rotate | Rotate Key |
 | [**updateKeyV1KeysKeyIdPatch**](KeysApi.md#updatekeyv1keyskeyidpatch) | **PATCH** /v1/keys/{key_id} | Update Key |
 
 
@@ -18,7 +19,7 @@ All URIs are relative to *http://localhost*
 
 Create Key
 
-Create a new API key.  Requires master key authentication.  If user_id is provided, the key will be associated with that user (creates user if it doesn\&#39;t exist). If user_id is not provided, a new user will be created automatically and the key will be associated with it.
+Create a new API key.  Requires master key authentication.  If user_id is provided, the key will be associated with that user (creates user if it doesn\&#39;t exist). If user_id is not provided, the key is associated with the shared \&quot;default\&quot; user, which is created on first use. Keys without an explicit owner therefore share one identity, and so share budget, usage, and files.
 
 ### Example
 
@@ -32,6 +33,8 @@ import type { CreateKeyV1KeysPostRequest } from '';
 async function example() {
   console.log("🚀 Testing  SDK...");
   const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
     // To configure API key authorization: ApiKeyAuth
     apiKey: "YOUR API KEY",
   });
@@ -67,7 +70,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -104,6 +107,8 @@ import type { DeleteKeyV1KeysKeyIdDeleteRequest } from '';
 async function example() {
   console.log("🚀 Testing  SDK...");
   const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
     // To configure API key authorization: ApiKeyAuth
     apiKey: "YOUR API KEY",
   });
@@ -139,7 +144,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -176,6 +181,8 @@ import type { GetKeyV1KeysKeyIdGetRequest } from '';
 async function example() {
   console.log("🚀 Testing  SDK...");
   const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
     // To configure API key authorization: ApiKeyAuth
     apiKey: "YOUR API KEY",
   });
@@ -211,7 +218,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -248,6 +255,8 @@ import type { ListKeysV1KeysGetRequest } from '';
 async function example() {
   console.log("🚀 Testing  SDK...");
   const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
     // To configure API key authorization: ApiKeyAuth
     apiKey: "YOUR API KEY",
   });
@@ -286,7 +295,81 @@ example().catch(console.error);
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## rotateKeyV1KeysKeyIdRotatePost
+
+> CreateKeyResponse rotateKeyV1KeysKeyIdRotatePost(keyId)
+
+Rotate Key
+
+Rotate an API key\&#39;s secret in place.  Requires master key authentication.  Generates a new secret for the same key row (id, user, name, expiry, and metadata are preserved) and returns the new raw key once, using the same response shape as key creation. The previous secret stops authenticating immediately; there is no grace window.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  KeysApi,
+} from '';
+import type { RotateKeyV1KeysKeyIdRotatePostRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new KeysApi(config);
+
+  const body = {
+    // string
+    keyId: keyId_example,
+  } satisfies RotateKeyV1KeysKeyIdRotatePostRequest;
+
+  try {
+    const data = await api.rotateKeyV1KeysKeyIdRotatePost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **keyId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**CreateKeyResponse**](CreateKeyResponse.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -323,6 +406,8 @@ import type { UpdateKeyV1KeysKeyIdPatchRequest } from '';
 async function example() {
   console.log("🚀 Testing  SDK...");
   const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
     // To configure API key authorization: ApiKeyAuth
     apiKey: "YOUR API KEY",
   });
@@ -361,7 +446,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 

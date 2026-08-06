@@ -13,12 +13,38 @@
  */
 
 import { mapValues } from '../runtime';
+import type { PricingTier } from './PricingTier';
+import {
+    PricingTierFromJSON,
+    PricingTierFromJSONTyped,
+    PricingTierToJSON,
+    PricingTierToJSONTyped,
+} from './PricingTier';
+
 /**
  * Response model for model pricing.
  * @export
  * @interface PricingResponse
  */
 export interface PricingResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof PricingResponse
+     */
+    cacheReadPricePerMillion: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PricingResponse
+     */
+    cacheWrite1hPricePerMillion: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PricingResponse
+     */
+    cacheWritePricePerMillion: number | null;
     /**
      * 
      * @type {string}
@@ -51,6 +77,12 @@ export interface PricingResponse {
     outputPricePerMillion: number;
     /**
      * 
+     * @type {Array<PricingTier>}
+     * @memberof PricingResponse
+     */
+    pricingTiers: Array<PricingTier>;
+    /**
+     * 
      * @type {string}
      * @memberof PricingResponse
      */
@@ -61,11 +93,15 @@ export interface PricingResponse {
  * Check if a given object implements the PricingResponse interface.
  */
 export function instanceOfPricingResponse(value: object): value is PricingResponse {
+    if (!('cacheReadPricePerMillion' in value) || value['cacheReadPricePerMillion'] === undefined) return false;
+    if (!('cacheWrite1hPricePerMillion' in value) || value['cacheWrite1hPricePerMillion'] === undefined) return false;
+    if (!('cacheWritePricePerMillion' in value) || value['cacheWritePricePerMillion'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
     if (!('effectiveAt' in value) || value['effectiveAt'] === undefined) return false;
     if (!('inputPricePerMillion' in value) || value['inputPricePerMillion'] === undefined) return false;
     if (!('modelKey' in value) || value['modelKey'] === undefined) return false;
     if (!('outputPricePerMillion' in value) || value['outputPricePerMillion'] === undefined) return false;
+    if (!('pricingTiers' in value) || value['pricingTiers'] === undefined) return false;
     if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
     return true;
 }
@@ -80,11 +116,15 @@ export function PricingResponseFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
+        'cacheReadPricePerMillion': json['cache_read_price_per_million'],
+        'cacheWrite1hPricePerMillion': json['cache_write_1h_price_per_million'],
+        'cacheWritePricePerMillion': json['cache_write_price_per_million'],
         'createdAt': json['created_at'],
         'effectiveAt': json['effective_at'],
         'inputPricePerMillion': json['input_price_per_million'],
         'modelKey': json['model_key'],
         'outputPricePerMillion': json['output_price_per_million'],
+        'pricingTiers': ((json['pricing_tiers'] as Array<any>).map(PricingTierFromJSON)),
         'updatedAt': json['updated_at'],
     };
 }
@@ -100,11 +140,15 @@ export function PricingResponseToJSONTyped(value?: PricingResponse | null, ignor
 
     return {
         
+        'cache_read_price_per_million': value['cacheReadPricePerMillion'],
+        'cache_write_1h_price_per_million': value['cacheWrite1hPricePerMillion'],
+        'cache_write_price_per_million': value['cacheWritePricePerMillion'],
         'created_at': value['createdAt'],
         'effective_at': value['effectiveAt'],
         'input_price_per_million': value['inputPricePerMillion'],
         'model_key': value['modelKey'],
         'output_price_per_million': value['outputPricePerMillion'],
+        'pricing_tiers': ((value['pricingTiers'] as Array<any>).map(PricingTierToJSON)),
         'updated_at': value['updatedAt'],
     };
 }

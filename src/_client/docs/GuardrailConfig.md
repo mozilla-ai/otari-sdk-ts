@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `mode` | string
 `on` | Array&lt;string&gt;
+`onUnavailable` | string
 `profile` | string
 `url` | string
 `validateKwargs` | { [key: string]: any; }
@@ -22,6 +23,7 @@ import type { GuardrailConfig } from ''
 const example = {
   "mode": null,
   "on": null,
+  "onUnavailable": null,
   "profile": null,
   "url": null,
   "validateKwargs": null,

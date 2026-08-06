@@ -42,7 +42,7 @@ import {
  */
 export interface RerankResponse {
     /**
-     * Filter models by provider name
+     * Delete the alias scoped to this user. Omit to delete the global alias of that name.
      * @type {string}
      * @memberof RerankResponse
      */

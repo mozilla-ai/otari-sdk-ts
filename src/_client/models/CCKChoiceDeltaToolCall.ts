@@ -22,7 +22,11 @@ import {
 } from './CCKChoiceDeltaToolCallFunction';
 
 /**
+ * Streaming counterpart of ``ChatCompletionMessageFunctionToolCall``.
  * 
+ * Adds the same ``extra_content`` field so provider-specific tool-call metadata (e.g.
+ * Gemini's ``thought_signature``) can be carried on streaming deltas, not just on the
+ * final non-streaming tool call.
  * @export
  * @interface CCKChoiceDeltaToolCall
  */
@@ -52,6 +56,12 @@ export interface CCKChoiceDeltaToolCall {
      * @memberof CCKChoiceDeltaToolCall
      */
     type?: CCKChoiceDeltaToolCallTypeEnum | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof CCKChoiceDeltaToolCall
+     */
+    extraContent?: { [key: string]: any; } | null;
 }
 
 
@@ -87,6 +97,7 @@ export function CCKChoiceDeltaToolCallFromJSONTyped(json: any, ignoreDiscriminat
         'id': json['id'] == null ? undefined : json['id'],
         '_function': json['function'] == null ? undefined : CCKChoiceDeltaToolCallFunctionFromJSON(json['function']),
         'type': json['type'] == null ? undefined : json['type'],
+        'extraContent': json['extra_content'] == null ? undefined : json['extra_content'],
     };
 }
 
@@ -106,6 +117,7 @@ export function CCKChoiceDeltaToolCallToJSONTyped(value?: CCKChoiceDeltaToolCall
         'id': value['id'],
         'function': CCKChoiceDeltaToolCallFunctionToJSON(value['_function']),
         'type': value['type'],
+        'extra_content': value['extraContent'],
     };
 }
 

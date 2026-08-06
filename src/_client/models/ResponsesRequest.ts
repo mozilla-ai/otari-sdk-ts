@@ -65,6 +65,12 @@ export interface ResponsesRequest {
     background?: boolean | null;
     /**
      * 
+     * @type {Array<{ [key: string]: any; }>}
+     * @memberof ResponsesRequest
+     */
+    contextManagement?: Array<{ [key: string]: any; }> | null;
+    /**
+     * 
      * @type {Conversation}
      * @memberof ResponsesRequest
      */
@@ -172,7 +178,7 @@ export interface ResponsesRequest {
      */
     promptCacheRetention?: string | null;
     /**
-     * 
+     * An unsaved policy body to explain.
      * @type {{ [key: string]: any; }}
      * @memberof ResponsesRequest
      */
@@ -296,6 +302,7 @@ export function ResponsesRequestFromJSONTyped(json: any, ignoreDiscriminator: bo
         
             ...json,
         'background': json['background'] == null ? undefined : json['background'],
+        'contextManagement': json['context_management'] == null ? undefined : json['context_management'],
         'conversation': json['conversation'] == null ? undefined : ConversationFromJSON(json['conversation']),
         'frequencyPenalty': json['frequency_penalty'] == null ? undefined : json['frequency_penalty'],
         'guardrails': json['guardrails'] == null ? undefined : ((json['guardrails'] as Array<any>).map(GuardrailConfigFromJSON)),
@@ -347,6 +354,7 @@ export function ResponsesRequestToJSONTyped(value?: ResponsesRequest | null, ign
         
             ...value,
         'background': value['background'],
+        'context_management': value['contextManagement'],
         'conversation': ConversationToJSON(value['conversation']),
         'frequency_penalty': value['frequencyPenalty'],
         'guardrails': value['guardrails'] == null ? undefined : ((value['guardrails'] as Array<any>).map(GuardrailConfigToJSON)),

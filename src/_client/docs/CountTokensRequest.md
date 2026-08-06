@@ -1,13 +1,15 @@
 
 # CountTokensRequest
 
-Anthropic ``/v1/messages/count_tokens`` request.  A subset of :class:`MessagesRequest`: the input fields that affect the token count, minus ``max_tokens`` and the streaming/sampling controls, since the endpoint only counts input tokens. Clients such as Claude Code call this on every turn to keep their prompt within the model\'s context window.
+Anthropic ``/v1/messages/count_tokens`` request.  A subset of :class:`MessagesRequest`: the input fields that affect the token count, minus ``max_tokens`` and the streaming/sampling controls, since the endpoint only counts input tokens. ``context_management`` and ``betas`` are accepted for wire compatibility, but the local estimate does not apply provider-side context edits. Clients such as Claude Code call this on every turn to keep their prompt within the model\'s context window.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
+`betas` | Array&lt;string&gt;
 `cacheControl` | { [key: string]: any; }
+`contextManagement` | { [key: string]: any; }
 `messages` | Array&lt;{ [key: string]: any; } | null&gt;
 `metadata` | { [key: string]: any; }
 `model` | string
@@ -23,7 +25,9 @@ import type { CountTokensRequest } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "betas": null,
   "cacheControl": null,
+  "contextManagement": null,
   "messages": null,
   "metadata": null,
   "model": null,

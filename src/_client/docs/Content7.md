@@ -7,10 +7,19 @@
 Name | Type
 ------------ | -------------
 `errorCode` | string
+`errorMessage` | string
 `type` | string
-`content` | [MRDocumentBlock](MRDocumentBlock.md)
-`retrievedAt` | string
-`url` | string
+`content` | string
+`fileType` | string
+`numLines` | number
+`startLine` | number
+`totalLines` | number
+`isFileUpdate` | boolean
+`lines` | Array&lt;string&gt;
+`newLines` | number
+`newStart` | number
+`oldLines` | number
+`oldStart` | number
 
 ## Example
 
@@ -20,10 +29,19 @@ import type { Content7 } from ''
 // TODO: Update the object below with actual values
 const example = {
   "errorCode": null,
+  "errorMessage": null,
   "type": null,
   "content": null,
-  "retrievedAt": null,
-  "url": null,
+  "fileType": null,
+  "numLines": null,
+  "startLine": null,
+  "totalLines": null,
+  "isFileUpdate": null,
+  "lines": null,
+  "newLines": null,
+  "newStart": null,
+  "oldLines": null,
+  "oldStart": null,
 } satisfies Content7
 
 console.log(example)

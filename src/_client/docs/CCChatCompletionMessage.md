@@ -14,6 +14,7 @@ Name | Type
 `functionCall` | [CCFunctionCall](CCFunctionCall.md)
 `toolCalls` | [Array&lt;CCChatCompletionMessageToolCallsInner&gt;](CCChatCompletionMessageToolCallsInner.md)
 `reasoning` | string
+`extraContent` | { [key: string]: any; }
 
 ## Example
 
@@ -30,6 +31,7 @@ const example = {
   "functionCall": null,
   "toolCalls": null,
   "reasoning": null,
+  "extraContent": null,
 } satisfies CCChatCompletionMessage
 
 console.log(example)

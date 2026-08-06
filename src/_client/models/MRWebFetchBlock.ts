@@ -35,7 +35,7 @@ export interface MRWebFetchBlock {
      */
     content: MRDocumentBlock;
     /**
-     * Filter models by provider name
+     * 
      * @type {string}
      * @memberof MRWebFetchBlock
      */

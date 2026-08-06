@@ -51,6 +51,10 @@ export class ResponsesApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
         }
 
@@ -67,7 +71,7 @@ export class ResponsesApi extends runtime.BaseAPI {
     }
 
     /**
-     * OpenAI-compatible Responses endpoint.  Supports MCP tool-use loops, sandboxed code execution, and SearXNG web_search in both standalone mode and hybrid mode. Hybrid-mode requests resolve credentials via the platform service and (for non-tool-loop requests) get multi-attempt fallback across the resolved route. Tool-loop requests collapse to a single attempt — once ``on_first_response`` lock-in plumbing lands across the codebase, a follow-up will enable pre-lock-in fallback for tool-loop requests too.
+     * OpenAI-compatible Responses endpoint.  Supports MCP tool-use loops, sandboxed code execution, and SearXNG web_search in both standalone mode and hybrid mode. Hybrid-mode requests resolve credentials via the platform service and get multi-attempt fallback across the resolved route, tool-loop requests included (fallback applies up to the pre-lock-in point, same as chat).
      * Create Response
      */
     async createResponseV1ResponsesPostRaw(requestParameters: CreateResponseV1ResponsesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
@@ -82,7 +86,7 @@ export class ResponsesApi extends runtime.BaseAPI {
     }
 
     /**
-     * OpenAI-compatible Responses endpoint.  Supports MCP tool-use loops, sandboxed code execution, and SearXNG web_search in both standalone mode and hybrid mode. Hybrid-mode requests resolve credentials via the platform service and (for non-tool-loop requests) get multi-attempt fallback across the resolved route. Tool-loop requests collapse to a single attempt — once ``on_first_response`` lock-in plumbing lands across the codebase, a follow-up will enable pre-lock-in fallback for tool-loop requests too.
+     * OpenAI-compatible Responses endpoint.  Supports MCP tool-use loops, sandboxed code execution, and SearXNG web_search in both standalone mode and hybrid mode. Hybrid-mode requests resolve credentials via the platform service and get multi-attempt fallback across the resolved route, tool-loop requests included (fallback applies up to the pre-lock-in point, same as chat).
      * Create Response
      */
     async createResponseV1ResponsesPost(requestParameters: CreateResponseV1ResponsesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {

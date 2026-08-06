@@ -66,6 +66,10 @@ export class FilesApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
         }
 
@@ -147,6 +151,10 @@ export class FilesApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
         }
 
@@ -202,6 +210,10 @@ export class FilesApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
         }
 
@@ -218,7 +230,7 @@ export class FilesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Download the raw bytes of a file.
+     * Download the raw bytes of a file, streamed rather than buffered whole.
      * Get File Content
      */
     async getFileContentV1FilesFileIdContentGetRaw(requestParameters: GetFileContentV1FilesFileIdContentGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
@@ -233,7 +245,7 @@ export class FilesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Download the raw bytes of a file.
+     * Download the raw bytes of a file, streamed rather than buffered whole.
      * Get File Content
      */
     async getFileContentV1FilesFileIdContentGet(requestParameters: GetFileContentV1FilesFileIdContentGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
@@ -259,6 +271,10 @@ export class FilesApi extends runtime.BaseAPI {
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
@@ -311,6 +327,10 @@ export class FilesApi extends runtime.BaseAPI {
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication

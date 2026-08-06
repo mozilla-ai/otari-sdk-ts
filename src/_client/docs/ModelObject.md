@@ -7,11 +7,13 @@ OpenAI-compatible model object.
 
 Name | Type
 ------------ | -------------
+`contextWindow` | number
 `created` | number
 `id` | string
 `object` | string
 `ownedBy` | string
 `pricing` | [ModelPricingInfo](ModelPricingInfo.md)
+`pricingSource` | string
 
 ## Example
 
@@ -20,11 +22,13 @@ import type { ModelObject } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "contextWindow": null,
   "created": null,
   "id": null,
   "object": null,
   "ownedBy": null,
   "pricing": null,
+  "pricingSource": null,
 } satisfies ModelObject
 
 console.log(example)

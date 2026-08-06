@@ -57,6 +57,12 @@ export interface UsageLogResponse {
     id: string;
     /**
      * 
+     * @type {number}
+     * @memberof UsageLogResponse
+     */
+    latencyMs: number | null;
+    /**
+     * 
      * @type {string}
      * @memberof UsageLogResponse
      */
@@ -109,6 +115,7 @@ export function instanceOfUsageLogResponse(value: object): value is UsageLogResp
     if (!('endpoint' in value) || value['endpoint'] === undefined) return false;
     if (!('errorMessage' in value) || value['errorMessage'] === undefined) return false;
     if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('latencyMs' in value) || value['latencyMs'] === undefined) return false;
     if (!('model' in value) || value['model'] === undefined) return false;
     if (!('promptTokens' in value) || value['promptTokens'] === undefined) return false;
     if (!('provider' in value) || value['provider'] === undefined) return false;
@@ -135,6 +142,7 @@ export function UsageLogResponseFromJSONTyped(json: any, ignoreDiscriminator: bo
         'endpoint': json['endpoint'],
         'errorMessage': json['error_message'],
         'id': json['id'],
+        'latencyMs': json['latency_ms'],
         'model': json['model'],
         'promptTokens': json['prompt_tokens'],
         'provider': json['provider'],
@@ -162,6 +170,7 @@ export function UsageLogResponseToJSONTyped(value?: UsageLogResponse | null, ign
         'endpoint': value['endpoint'],
         'error_message': value['errorMessage'],
         'id': value['id'],
+        'latency_ms': value['latencyMs'],
         'model': value['model'],
         'prompt_tokens': value['promptTokens'],
         'provider': value['provider'],

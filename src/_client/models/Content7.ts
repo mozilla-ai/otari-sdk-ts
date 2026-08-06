@@ -13,27 +13,34 @@
  */
 
 import { mapValues } from '../runtime';
-import type { MRDocumentBlock } from './MRDocumentBlock';
+import type { MRBetaTextEditorCodeExecutionStrReplaceResultBlock } from './MRBetaTextEditorCodeExecutionStrReplaceResultBlock';
 import {
-    MRDocumentBlockFromJSON,
-    MRDocumentBlockFromJSONTyped,
-    MRDocumentBlockToJSON,
-    MRDocumentBlockToJSONTyped,
-} from './MRDocumentBlock';
-import type { MRWebFetchToolResultErrorBlock } from './MRWebFetchToolResultErrorBlock';
+    MRBetaTextEditorCodeExecutionStrReplaceResultBlockFromJSON,
+    MRBetaTextEditorCodeExecutionStrReplaceResultBlockFromJSONTyped,
+    MRBetaTextEditorCodeExecutionStrReplaceResultBlockToJSON,
+    MRBetaTextEditorCodeExecutionStrReplaceResultBlockToJSONTyped,
+} from './MRBetaTextEditorCodeExecutionStrReplaceResultBlock';
+import type { MRBetaTextEditorCodeExecutionCreateResultBlock } from './MRBetaTextEditorCodeExecutionCreateResultBlock';
 import {
-    MRWebFetchToolResultErrorBlockFromJSON,
-    MRWebFetchToolResultErrorBlockFromJSONTyped,
-    MRWebFetchToolResultErrorBlockToJSON,
-    MRWebFetchToolResultErrorBlockToJSONTyped,
-} from './MRWebFetchToolResultErrorBlock';
-import type { MRWebFetchBlock } from './MRWebFetchBlock';
+    MRBetaTextEditorCodeExecutionCreateResultBlockFromJSON,
+    MRBetaTextEditorCodeExecutionCreateResultBlockFromJSONTyped,
+    MRBetaTextEditorCodeExecutionCreateResultBlockToJSON,
+    MRBetaTextEditorCodeExecutionCreateResultBlockToJSONTyped,
+} from './MRBetaTextEditorCodeExecutionCreateResultBlock';
+import type { MRBetaTextEditorCodeExecutionViewResultBlock } from './MRBetaTextEditorCodeExecutionViewResultBlock';
 import {
-    MRWebFetchBlockFromJSON,
-    MRWebFetchBlockFromJSONTyped,
-    MRWebFetchBlockToJSON,
-    MRWebFetchBlockToJSONTyped,
-} from './MRWebFetchBlock';
+    MRBetaTextEditorCodeExecutionViewResultBlockFromJSON,
+    MRBetaTextEditorCodeExecutionViewResultBlockFromJSONTyped,
+    MRBetaTextEditorCodeExecutionViewResultBlockToJSON,
+    MRBetaTextEditorCodeExecutionViewResultBlockToJSONTyped,
+} from './MRBetaTextEditorCodeExecutionViewResultBlock';
+import type { MRBetaTextEditorCodeExecutionToolResultError } from './MRBetaTextEditorCodeExecutionToolResultError';
+import {
+    MRBetaTextEditorCodeExecutionToolResultErrorFromJSON,
+    MRBetaTextEditorCodeExecutionToolResultErrorFromJSONTyped,
+    MRBetaTextEditorCodeExecutionToolResultErrorToJSON,
+    MRBetaTextEditorCodeExecutionToolResultErrorToJSONTyped,
+} from './MRBetaTextEditorCodeExecutionToolResultError';
 
 /**
  * 
@@ -49,28 +56,82 @@ export interface Content7 {
     errorCode: Content7ErrorCodeEnum;
     /**
      * 
+     * @type {string}
+     * @memberof Content7
+     */
+    errorMessage?: string;
+    /**
+     * 
      * @type {Content7TypeEnum}
      * @memberof Content7
      */
     type: Content7TypeEnum;
     /**
      * 
-     * @type {MRDocumentBlock}
-     * @memberof Content7
-     */
-    content: MRDocumentBlock;
-    /**
-     * Filter models by provider name
      * @type {string}
      * @memberof Content7
      */
-    retrievedAt?: string;
+    content: string;
     /**
      * 
-     * @type {string}
+     * @type {Content7FileTypeEnum}
      * @memberof Content7
      */
-    url: string;
+    fileType: Content7FileTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content7
+     */
+    numLines?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content7
+     */
+    startLine?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content7
+     */
+    totalLines?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Content7
+     */
+    isFileUpdate: boolean;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Content7
+     */
+    lines?: Array<string>;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content7
+     */
+    newLines?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content7
+     */
+    newStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content7
+     */
+    oldLines?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content7
+     */
+    oldStart?: number;
 }
 
 
@@ -79,13 +140,10 @@ export interface Content7 {
  */
 export const Content7ErrorCodeEnum = {
     InvalidToolInput: 'invalid_tool_input',
-    UrlTooLong: 'url_too_long',
-    UrlNotAllowed: 'url_not_allowed',
-    UrlNotAccessible: 'url_not_accessible',
-    UnsupportedContentType: 'unsupported_content_type',
+    Unavailable: 'unavailable',
     TooManyRequests: 'too_many_requests',
-    MaxUsesExceeded: 'max_uses_exceeded',
-    Unavailable: 'unavailable'
+    ExecutionTimeExceeded: 'execution_time_exceeded',
+    FileNotFound: 'file_not_found'
 } as const;
 export type Content7ErrorCodeEnum = typeof Content7ErrorCodeEnum[keyof typeof Content7ErrorCodeEnum];
 
@@ -93,10 +151,22 @@ export type Content7ErrorCodeEnum = typeof Content7ErrorCodeEnum[keyof typeof Co
  * @export
  */
 export const Content7TypeEnum = {
-    WebFetchToolResultError: 'web_fetch_tool_result_error',
-    WebFetchResult: 'web_fetch_result'
+    TextEditorCodeExecutionToolResultError: 'text_editor_code_execution_tool_result_error',
+    TextEditorCodeExecutionViewResult: 'text_editor_code_execution_view_result',
+    TextEditorCodeExecutionCreateResult: 'text_editor_code_execution_create_result',
+    TextEditorCodeExecutionStrReplaceResult: 'text_editor_code_execution_str_replace_result'
 } as const;
 export type Content7TypeEnum = typeof Content7TypeEnum[keyof typeof Content7TypeEnum];
+
+/**
+ * @export
+ */
+export const Content7FileTypeEnum = {
+    Text: 'text',
+    Image: 'image',
+    Pdf: 'pdf'
+} as const;
+export type Content7FileTypeEnum = typeof Content7FileTypeEnum[keyof typeof Content7FileTypeEnum];
 
 
 /**
@@ -106,7 +176,8 @@ export function instanceOfContent7(value: object): value is Content7 {
     if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     if (!('content' in value) || value['content'] === undefined) return false;
-    if (!('url' in value) || value['url'] === undefined) return false;
+    if (!('fileType' in value) || value['fileType'] === undefined) return false;
+    if (!('isFileUpdate' in value) || value['isFileUpdate'] === undefined) return false;
     return true;
 }
 
@@ -121,10 +192,19 @@ export function Content7FromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     return {
         
         'errorCode': json['error_code'],
+        'errorMessage': json['error_message'] == null ? undefined : json['error_message'],
         'type': json['type'],
-        'content': MRDocumentBlockFromJSON(json['content']),
-        'retrievedAt': json['retrieved_at'] == null ? undefined : json['retrieved_at'],
-        'url': json['url'],
+        'content': json['content'],
+        'fileType': json['file_type'],
+        'numLines': json['num_lines'] == null ? undefined : json['num_lines'],
+        'startLine': json['start_line'] == null ? undefined : json['start_line'],
+        'totalLines': json['total_lines'] == null ? undefined : json['total_lines'],
+        'isFileUpdate': json['is_file_update'],
+        'lines': json['lines'] == null ? undefined : json['lines'],
+        'newLines': json['new_lines'] == null ? undefined : json['new_lines'],
+        'newStart': json['new_start'] == null ? undefined : json['new_start'],
+        'oldLines': json['old_lines'] == null ? undefined : json['old_lines'],
+        'oldStart': json['old_start'] == null ? undefined : json['old_start'],
     };
 }
 
@@ -140,10 +220,19 @@ export function Content7ToJSONTyped(value?: Content7 | null, ignoreDiscriminator
     return {
         
         'error_code': value['errorCode'],
+        'error_message': value['errorMessage'],
         'type': value['type'],
-        'content': MRDocumentBlockToJSON(value['content']),
-        'retrieved_at': value['retrievedAt'],
-        'url': value['url'],
+        'content': value['content'],
+        'file_type': value['fileType'],
+        'num_lines': value['numLines'],
+        'start_line': value['startLine'],
+        'total_lines': value['totalLines'],
+        'is_file_update': value['isFileUpdate'],
+        'lines': value['lines'],
+        'new_lines': value['newLines'],
+        'new_start': value['newStart'],
+        'old_lines': value['oldLines'],
+        'old_start': value['oldStart'],
     };
 }
 

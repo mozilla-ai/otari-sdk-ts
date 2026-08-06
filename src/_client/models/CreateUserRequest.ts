@@ -26,6 +26,12 @@ export interface CreateUserRequest {
      */
     alias?: string | null;
     /**
+     * Default model access-list this user's keys inherit; null = unrestricted, [] = deny all
+     * @type {Array<string>}
+     * @memberof CreateUserRequest
+     */
+    allowedModels?: Array<string> | null;
+    /**
      * Whether user is blocked
      * @type {boolean}
      * @memberof CreateUserRequest
@@ -70,6 +76,7 @@ export function CreateUserRequestFromJSONTyped(json: any, ignoreDiscriminator: b
     return {
         
         'alias': json['alias'] == null ? undefined : json['alias'],
+        'allowedModels': json['allowed_models'] == null ? undefined : json['allowed_models'],
         'blocked': json['blocked'] == null ? undefined : json['blocked'],
         'budgetId': json['budget_id'] == null ? undefined : json['budget_id'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
@@ -89,6 +96,7 @@ export function CreateUserRequestToJSONTyped(value?: CreateUserRequest | null, i
     return {
         
         'alias': value['alias'],
+        'allowed_models': value['allowedModels'],
         'blocked': value['blocked'],
         'budget_id': value['budgetId'],
         'metadata': value['metadata'],

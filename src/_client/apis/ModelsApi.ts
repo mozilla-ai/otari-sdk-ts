@@ -14,6 +14,11 @@
 
 import * as runtime from '../runtime';
 import {
+    type DiscoverableModelsResponse,
+    DiscoverableModelsResponseFromJSON,
+    DiscoverableModelsResponseToJSON,
+} from '../models/DiscoverableModelsResponse';
+import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
@@ -23,6 +28,11 @@ import {
     ModelListResponseFromJSON,
     ModelListResponseToJSON,
 } from '../models/ModelListResponse';
+import {
+    type ModelMetadataResponse,
+    ModelMetadataResponseFromJSON,
+    ModelMetadataResponseToJSON,
+} from '../models/ModelMetadataResponse';
 import {
     type ModelObject,
     ModelObjectFromJSON,
@@ -56,6 +66,10 @@ export class ModelsApi extends runtime.BaseAPI {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
@@ -94,6 +108,100 @@ export class ModelsApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for listDiscoverableModelsV1ModelsDiscoverableGet without sending the request
+     */
+    async listDiscoverableModelsV1ModelsDiscoverableGetRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/models/discoverable`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * List every model the configured provider credentials can reach.  Operator-facing counterpart to GET /v1/models, which serves a curated catalog to API callers. This reports each provider separately and keeps its error, so a provider with a bad key is distinguishable from one with no models. It is master-key gated because a provider error message describes the gateway\'s own configuration.
+     * List Discoverable Models
+     */
+    async listDiscoverableModelsV1ModelsDiscoverableGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DiscoverableModelsResponse>> {
+        const requestOptions = await this.listDiscoverableModelsV1ModelsDiscoverableGetRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DiscoverableModelsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * List every model the configured provider credentials can reach.  Operator-facing counterpart to GET /v1/models, which serves a curated catalog to API callers. This reports each provider separately and keeps its error, so a provider with a bad key is distinguishable from one with no models. It is master-key gated because a provider error message describes the gateway\'s own configuration.
+     * List Discoverable Models
+     */
+    async listDiscoverableModelsV1ModelsDiscoverableGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DiscoverableModelsResponse> {
+        const response = await this.listDiscoverableModelsV1ModelsDiscoverableGetRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for listModelMetadataV1ModelsMetadataGet without sending the request
+     */
+    async listModelMetadataV1ModelsMetadataGetRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/models/metadata`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Per-model metadata for the dashboard\'s detail view, from models.dev.  Covers every model models.dev lists under a configured provider, keyed by the ``instance:model`` selector the dashboard uses. ``available`` is false when enrichment is disabled (``models_dev_metadata``) or models.dev could not be reached; the response is then empty and the UI falls back to bundled data. Master-key gated: it describes the gateway\'s configured providers.
+     * List Model Metadata
+     */
+    async listModelMetadataV1ModelsMetadataGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModelMetadataResponse>> {
+        const requestOptions = await this.listModelMetadataV1ModelsMetadataGetRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ModelMetadataResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Per-model metadata for the dashboard\'s detail view, from models.dev.  Covers every model models.dev lists under a configured provider, keyed by the ``instance:model`` selector the dashboard uses. ``available`` is false when enrichment is disabled (``models_dev_metadata``) or models.dev could not be reached; the response is then empty and the UI falls back to bundled data. Master-key gated: it describes the gateway\'s configured providers.
+     * List Model Metadata
+     */
+    async listModelMetadataV1ModelsMetadataGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ModelMetadataResponse> {
+        const response = await this.listModelMetadataV1ModelsMetadataGetRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for listModelsV1ModelsGet without sending the request
      */
     async listModelsV1ModelsGetRequestOpts(requestParameters: ListModelsV1ModelsGetRequest): Promise<runtime.RequestOpts> {
@@ -104,6 +212,10 @@ export class ModelsApi extends runtime.BaseAPI {
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication

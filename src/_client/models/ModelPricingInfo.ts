@@ -13,12 +13,38 @@
  */
 
 import { mapValues } from '../runtime';
+import type { PricingTiersInnerValue } from './PricingTiersInnerValue';
+import {
+    PricingTiersInnerValueFromJSON,
+    PricingTiersInnerValueFromJSONTyped,
+    PricingTiersInnerValueToJSON,
+    PricingTiersInnerValueToJSONTyped,
+} from './PricingTiersInnerValue';
+
 /**
  * Pricing information for a model.
  * @export
  * @interface ModelPricingInfo
  */
 export interface ModelPricingInfo {
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelPricingInfo
+     */
+    cacheReadPricePerMillion?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelPricingInfo
+     */
+    cacheWrite1hPricePerMillion?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelPricingInfo
+     */
+    cacheWritePricePerMillion?: number | null;
     /**
      * 
      * @type {number}
@@ -31,6 +57,12 @@ export interface ModelPricingInfo {
      * @memberof ModelPricingInfo
      */
     outputPricePerMillion: number;
+    /**
+     * 
+     * @type {Array<{ [key: string]: PricingTiersInnerValue; }>}
+     * @memberof ModelPricingInfo
+     */
+    pricingTiers?: Array<{ [key: string]: PricingTiersInnerValue; }>;
 }
 
 /**
@@ -52,8 +84,12 @@ export function ModelPricingInfoFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
+        'cacheReadPricePerMillion': json['cache_read_price_per_million'] == null ? undefined : json['cache_read_price_per_million'],
+        'cacheWrite1hPricePerMillion': json['cache_write_1h_price_per_million'] == null ? undefined : json['cache_write_1h_price_per_million'],
+        'cacheWritePricePerMillion': json['cache_write_price_per_million'] == null ? undefined : json['cache_write_price_per_million'],
         'inputPricePerMillion': json['input_price_per_million'],
         'outputPricePerMillion': json['output_price_per_million'],
+        'pricingTiers': json['pricing_tiers'] == null ? undefined : json['pricing_tiers'],
     };
 }
 
@@ -68,8 +104,12 @@ export function ModelPricingInfoToJSONTyped(value?: ModelPricingInfo | null, ign
 
     return {
         
+        'cache_read_price_per_million': value['cacheReadPricePerMillion'],
+        'cache_write_1h_price_per_million': value['cacheWrite1hPricePerMillion'],
+        'cache_write_price_per_million': value['cacheWritePricePerMillion'],
         'input_price_per_million': value['inputPricePerMillion'],
         'output_price_per_million': value['outputPricePerMillion'],
+        'pricing_tiers': value['pricingTiers'],
     };
 }
 

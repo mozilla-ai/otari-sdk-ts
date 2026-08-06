@@ -8,6 +8,7 @@ Response model for user information.
 Name | Type
 ------------ | -------------
 `alias` | string
+`allowedModels` | Array&lt;string&gt;
 `blocked` | boolean
 `budgetId` | string
 `budgetStartedAt` | string
@@ -27,6 +28,7 @@ import type { UserResponse } from ''
 // TODO: Update the object below with actual values
 const example = {
   "alias": null,
+  "allowedModels": null,
   "blocked": null,
   "budgetId": null,
   "budgetStartedAt": null,

@@ -13,20 +13,20 @@
  */
 
 import { mapValues } from '../runtime';
-import type { MRPlainTextSource } from './MRPlainTextSource';
+import type { MRBetaPlainTextSource } from './MRBetaPlainTextSource';
 import {
-    MRPlainTextSourceFromJSON,
-    MRPlainTextSourceFromJSONTyped,
-    MRPlainTextSourceToJSON,
-    MRPlainTextSourceToJSONTyped,
-} from './MRPlainTextSource';
-import type { MRBase64PDFSource } from './MRBase64PDFSource';
+    MRBetaPlainTextSourceFromJSON,
+    MRBetaPlainTextSourceFromJSONTyped,
+    MRBetaPlainTextSourceToJSON,
+    MRBetaPlainTextSourceToJSONTyped,
+} from './MRBetaPlainTextSource';
+import type { MRBetaBase64PDFSource } from './MRBetaBase64PDFSource';
 import {
-    MRBase64PDFSourceFromJSON,
-    MRBase64PDFSourceFromJSONTyped,
-    MRBase64PDFSourceToJSON,
-    MRBase64PDFSourceToJSONTyped,
-} from './MRBase64PDFSource';
+    MRBetaBase64PDFSourceFromJSON,
+    MRBetaBase64PDFSourceFromJSONTyped,
+    MRBetaBase64PDFSourceToJSON,
+    MRBetaBase64PDFSourceToJSONTyped,
+} from './MRBetaBase64PDFSource';
 
 /**
  * 

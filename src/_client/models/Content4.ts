@@ -13,34 +13,27 @@
  */
 
 import { mapValues } from '../runtime';
-import type { MRCodeExecutionResultBlock } from './MRCodeExecutionResultBlock';
+import type { MRBetaBashCodeExecutionToolResultError } from './MRBetaBashCodeExecutionToolResultError';
 import {
-    MRCodeExecutionResultBlockFromJSON,
-    MRCodeExecutionResultBlockFromJSONTyped,
-    MRCodeExecutionResultBlockToJSON,
-    MRCodeExecutionResultBlockToJSONTyped,
-} from './MRCodeExecutionResultBlock';
-import type { MRCodeExecutionOutputBlock } from './MRCodeExecutionOutputBlock';
+    MRBetaBashCodeExecutionToolResultErrorFromJSON,
+    MRBetaBashCodeExecutionToolResultErrorFromJSONTyped,
+    MRBetaBashCodeExecutionToolResultErrorToJSON,
+    MRBetaBashCodeExecutionToolResultErrorToJSONTyped,
+} from './MRBetaBashCodeExecutionToolResultError';
+import type { MRBetaBashCodeExecutionResultBlock } from './MRBetaBashCodeExecutionResultBlock';
 import {
-    MRCodeExecutionOutputBlockFromJSON,
-    MRCodeExecutionOutputBlockFromJSONTyped,
-    MRCodeExecutionOutputBlockToJSON,
-    MRCodeExecutionOutputBlockToJSONTyped,
-} from './MRCodeExecutionOutputBlock';
-import type { MREncryptedCodeExecutionResultBlock } from './MREncryptedCodeExecutionResultBlock';
+    MRBetaBashCodeExecutionResultBlockFromJSON,
+    MRBetaBashCodeExecutionResultBlockFromJSONTyped,
+    MRBetaBashCodeExecutionResultBlockToJSON,
+    MRBetaBashCodeExecutionResultBlockToJSONTyped,
+} from './MRBetaBashCodeExecutionResultBlock';
+import type { MRBetaBashCodeExecutionOutputBlock } from './MRBetaBashCodeExecutionOutputBlock';
 import {
-    MREncryptedCodeExecutionResultBlockFromJSON,
-    MREncryptedCodeExecutionResultBlockFromJSONTyped,
-    MREncryptedCodeExecutionResultBlockToJSON,
-    MREncryptedCodeExecutionResultBlockToJSONTyped,
-} from './MREncryptedCodeExecutionResultBlock';
-import type { MRCodeExecutionToolResultError } from './MRCodeExecutionToolResultError';
-import {
-    MRCodeExecutionToolResultErrorFromJSON,
-    MRCodeExecutionToolResultErrorFromJSONTyped,
-    MRCodeExecutionToolResultErrorToJSON,
-    MRCodeExecutionToolResultErrorToJSONTyped,
-} from './MRCodeExecutionToolResultError';
+    MRBetaBashCodeExecutionOutputBlockFromJSON,
+    MRBetaBashCodeExecutionOutputBlockFromJSONTyped,
+    MRBetaBashCodeExecutionOutputBlockToJSON,
+    MRBetaBashCodeExecutionOutputBlockToJSONTyped,
+} from './MRBetaBashCodeExecutionOutputBlock';
 
 /**
  * 
@@ -62,10 +55,10 @@ export interface Content4 {
     type: Content4TypeEnum;
     /**
      * 
-     * @type {Array<MRCodeExecutionOutputBlock>}
+     * @type {Array<MRBetaBashCodeExecutionOutputBlock>}
      * @memberof Content4
      */
-    content: Array<MRCodeExecutionOutputBlock>;
+    content: Array<MRBetaBashCodeExecutionOutputBlock>;
     /**
      * 
      * @type {number}
@@ -84,12 +77,6 @@ export interface Content4 {
      * @memberof Content4
      */
     stdout: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Content4
-     */
-    encryptedStdout: string;
 }
 
 
@@ -100,7 +87,8 @@ export const Content4ErrorCodeEnum = {
     InvalidToolInput: 'invalid_tool_input',
     Unavailable: 'unavailable',
     TooManyRequests: 'too_many_requests',
-    ExecutionTimeExceeded: 'execution_time_exceeded'
+    ExecutionTimeExceeded: 'execution_time_exceeded',
+    OutputFileTooLarge: 'output_file_too_large'
 } as const;
 export type Content4ErrorCodeEnum = typeof Content4ErrorCodeEnum[keyof typeof Content4ErrorCodeEnum];
 
@@ -108,9 +96,8 @@ export type Content4ErrorCodeEnum = typeof Content4ErrorCodeEnum[keyof typeof Co
  * @export
  */
 export const Content4TypeEnum = {
-    CodeExecutionToolResultError: 'code_execution_tool_result_error',
-    CodeExecutionResult: 'code_execution_result',
-    EncryptedCodeExecutionResult: 'encrypted_code_execution_result'
+    BashCodeExecutionToolResultError: 'bash_code_execution_tool_result_error',
+    BashCodeExecutionResult: 'bash_code_execution_result'
 } as const;
 export type Content4TypeEnum = typeof Content4TypeEnum[keyof typeof Content4TypeEnum];
 
@@ -125,7 +112,6 @@ export function instanceOfContent4(value: object): value is Content4 {
     if (!('returnCode' in value) || value['returnCode'] === undefined) return false;
     if (!('stderr' in value) || value['stderr'] === undefined) return false;
     if (!('stdout' in value) || value['stdout'] === undefined) return false;
-    if (!('encryptedStdout' in value) || value['encryptedStdout'] === undefined) return false;
     return true;
 }
 
@@ -141,11 +127,10 @@ export function Content4FromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         
         'errorCode': json['error_code'],
         'type': json['type'],
-        'content': ((json['content'] as Array<any>).map(MRCodeExecutionOutputBlockFromJSON)),
+        'content': ((json['content'] as Array<any>).map(MRBetaBashCodeExecutionOutputBlockFromJSON)),
         'returnCode': json['return_code'],
         'stderr': json['stderr'],
         'stdout': json['stdout'],
-        'encryptedStdout': json['encrypted_stdout'],
     };
 }
 
@@ -162,11 +147,10 @@ export function Content4ToJSONTyped(value?: Content4 | null, ignoreDiscriminator
         
         'error_code': value['errorCode'],
         'type': value['type'],
-        'content': ((value['content'] as Array<any>).map(MRCodeExecutionOutputBlockToJSON)),
+        'content': ((value['content'] as Array<any>).map(MRBetaBashCodeExecutionOutputBlockToJSON)),
         'return_code': value['returnCode'],
         'stderr': value['stderr'],
         'stdout': value['stdout'],
-        'encrypted_stdout': value['encryptedStdout'],
     };
 }
 

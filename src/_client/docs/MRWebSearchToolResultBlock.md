@@ -6,8 +6,8 @@
 
 Name | Type
 ------------ | -------------
-`caller` | [Caller](Caller.md)
-`content` | [Content8](Content8.md)
+`caller` | [Caller1](Caller1.md)
+`content` | [Content15](Content15.md)
 `toolUseId` | string
 `type` | string
 

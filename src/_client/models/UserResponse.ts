@@ -27,6 +27,12 @@ export interface UserResponse {
     alias: string | null;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof UserResponse
+     */
+    allowedModels: Array<string> | null;
+    /**
+     * 
      * @type {boolean}
      * @memberof UserResponse
      */
@@ -92,6 +98,7 @@ export interface UserResponse {
  */
 export function instanceOfUserResponse(value: object): value is UserResponse {
     if (!('alias' in value) || value['alias'] === undefined) return false;
+    if (!('allowedModels' in value) || value['allowedModels'] === undefined) return false;
     if (!('blocked' in value) || value['blocked'] === undefined) return false;
     if (!('budgetId' in value) || value['budgetId'] === undefined) return false;
     if (!('budgetStartedAt' in value) || value['budgetStartedAt'] === undefined) return false;
@@ -116,6 +123,7 @@ export function UserResponseFromJSONTyped(json: any, ignoreDiscriminator: boolea
     return {
         
         'alias': json['alias'],
+        'allowedModels': json['allowed_models'] == null ? null : json['allowed_models'],
         'blocked': json['blocked'],
         'budgetId': json['budget_id'],
         'budgetStartedAt': json['budget_started_at'],
@@ -141,6 +149,7 @@ export function UserResponseToJSONTyped(value?: UserResponse | null, ignoreDiscr
     return {
         
         'alias': value['alias'],
+        'allowed_models': value['allowedModels'],
         'blocked': value['blocked'],
         'budget_id': value['budgetId'],
         'budget_started_at': value['budgetStartedAt'],

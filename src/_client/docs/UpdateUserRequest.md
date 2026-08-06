@@ -8,6 +8,7 @@ Request model for updating a user.
 Name | Type
 ------------ | -------------
 `alias` | string
+`allowedModels` | Array&lt;string&gt;
 `blocked` | boolean
 `budgetId` | string
 `metadata` | { [key: string]: any; }
@@ -20,6 +21,7 @@ import type { UpdateUserRequest } from ''
 // TODO: Update the object below with actual values
 const example = {
   "alias": null,
+  "allowedModels": null,
   "blocked": null,
   "budgetId": null,
   "metadata": null,

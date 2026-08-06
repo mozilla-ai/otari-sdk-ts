@@ -27,6 +27,12 @@ export interface UpdateUserRequest {
     alias?: string | null;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof UpdateUserRequest
+     */
+    allowedModels?: Array<string> | null;
+    /**
+     * 
      * @type {boolean}
      * @memberof UpdateUserRequest
      */
@@ -63,6 +69,7 @@ export function UpdateUserRequestFromJSONTyped(json: any, ignoreDiscriminator: b
     return {
         
         'alias': json['alias'] == null ? undefined : json['alias'],
+        'allowedModels': json['allowed_models'] == null ? undefined : json['allowed_models'],
         'blocked': json['blocked'] == null ? undefined : json['blocked'],
         'budgetId': json['budget_id'] == null ? undefined : json['budget_id'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
@@ -81,6 +88,7 @@ export function UpdateUserRequestToJSONTyped(value?: UpdateUserRequest | null, i
     return {
         
         'alias': value['alias'],
+        'allowed_models': value['allowedModels'],
         'blocked': value['blocked'],
         'budget_id': value['budgetId'],
         'metadata': value['metadata'],

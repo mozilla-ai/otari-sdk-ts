@@ -32,6 +32,8 @@ import type { CreateFileV1FilesPostRequest } from '';
 async function example() {
   console.log("🚀 Testing  SDK...");
   const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
     // To configure API key authorization: ApiKeyAuth
     apiKey: "YOUR API KEY",
   });
@@ -73,7 +75,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -110,6 +112,8 @@ import type { DeleteFileV1FilesFileIdDeleteRequest } from '';
 async function example() {
   console.log("🚀 Testing  SDK...");
   const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
     // To configure API key authorization: ApiKeyAuth
     apiKey: "YOUR API KEY",
   });
@@ -148,7 +152,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -171,7 +175,7 @@ example().catch(console.error);
 
 Get File Content
 
-Download the raw bytes of a file.
+Download the raw bytes of a file, streamed rather than buffered whole.
 
 ### Example
 
@@ -185,6 +189,8 @@ import type { GetFileContentV1FilesFileIdContentGetRequest } from '';
 async function example() {
   console.log("🚀 Testing  SDK...");
   const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
     // To configure API key authorization: ApiKeyAuth
     apiKey: "YOUR API KEY",
   });
@@ -223,7 +229,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -260,6 +266,8 @@ import type { GetFileV1FilesFileIdGetRequest } from '';
 async function example() {
   console.log("🚀 Testing  SDK...");
   const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
     // To configure API key authorization: ApiKeyAuth
     apiKey: "YOUR API KEY",
   });
@@ -298,7 +306,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -335,6 +343,8 @@ import type { ListFilesV1FilesGetRequest } from '';
 async function example() {
   console.log("🚀 Testing  SDK...");
   const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
     // To configure API key authorization: ApiKeyAuth
     apiKey: "YOUR API KEY",
   });
@@ -373,7 +383,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 

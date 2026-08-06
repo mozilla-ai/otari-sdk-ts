@@ -14,7 +14,7 @@ All URIs are relative to *http://localhost*
 
 Chat Completions
 
-OpenAI-compatible chat completions endpoint.  Supports both streaming and non-streaming responses. Handles reasoning content from otari providers.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use virtual user created with API key
+OpenAI-compatible chat completions endpoint.  Supports both streaming and non-streaming responses. Handles reasoning content from otari providers.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \&quot;default\&quot; user
 
 ### Example
 
@@ -28,6 +28,8 @@ import type { ChatCompletionsV1ChatCompletionsPostRequest } from '';
 async function example() {
   console.log("🚀 Testing  SDK...");
   const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
     // To configure API key authorization: ApiKeyAuth
     apiKey: "YOUR API KEY",
   });
@@ -63,7 +65,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 

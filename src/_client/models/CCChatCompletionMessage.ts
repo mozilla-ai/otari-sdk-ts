@@ -85,11 +85,17 @@ export interface CCChatCompletionMessage {
      */
     toolCalls?: Array<CCChatCompletionMessageToolCallsInner> | null;
     /**
-     * Filter models by provider name
+     * Delete the alias scoped to this user. Omit to delete the global alias of that name.
      * @type {string}
      * @memberof CCChatCompletionMessage
      */
     reasoning?: string | null;
+    /**
+     * An unsaved policy body to explain.
+     * @type {{ [key: string]: any; }}
+     * @memberof CCChatCompletionMessage
+     */
+    extraContent?: { [key: string]: any; } | null;
 }
 
 
@@ -129,6 +135,7 @@ export function CCChatCompletionMessageFromJSONTyped(json: any, ignoreDiscrimina
         'functionCall': json['function_call'] == null ? undefined : CCFunctionCallFromJSON(json['function_call']),
         'toolCalls': json['tool_calls'] == null ? undefined : ((json['tool_calls'] as Array<any>).map(CCChatCompletionMessageToolCallsInnerFromJSON)),
         'reasoning': json['reasoning'] == null ? undefined : json['reasoning'],
+        'extraContent': json['extra_content'] == null ? undefined : json['extra_content'],
     };
 }
 
@@ -152,6 +159,7 @@ export function CCChatCompletionMessageToJSONTyped(value?: CCChatCompletionMessa
         'function_call': CCFunctionCallToJSON(value['functionCall']),
         'tool_calls': value['toolCalls'] == null ? undefined : ((value['toolCalls'] as Array<any>).map(CCChatCompletionMessageToolCallsInnerToJSON)),
         'reasoning': value['reasoning'],
+        'extra_content': value['extraContent'],
     };
 }
 

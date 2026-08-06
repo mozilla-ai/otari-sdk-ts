@@ -56,6 +56,10 @@ export interface ListKeysV1KeysGetRequest {
     limit?: number;
 }
 
+export interface RotateKeyV1KeysKeyIdRotatePostRequest {
+    keyId: string;
+}
+
 export interface UpdateKeyV1KeysKeyIdPatchRequest {
     keyId: string;
     updateKeyRequest: UpdateKeyRequest;
@@ -84,6 +88,10 @@ export class KeysApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
         }
 
@@ -100,7 +108,7 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new API key.  Requires master key authentication.  If user_id is provided, the key will be associated with that user (creates user if it doesn\'t exist). If user_id is not provided, a new user will be created automatically and the key will be associated with it.
+     * Create a new API key.  Requires master key authentication.  If user_id is provided, the key will be associated with that user (creates user if it doesn\'t exist). If user_id is not provided, the key is associated with the shared \"default\" user, which is created on first use. Keys without an explicit owner therefore share one identity, and so share budget, usage, and files.
      * Create Key
      */
     async createKeyV1KeysPostRaw(requestParameters: CreateKeyV1KeysPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateKeyResponse>> {
@@ -111,7 +119,7 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new API key.  Requires master key authentication.  If user_id is provided, the key will be associated with that user (creates user if it doesn\'t exist). If user_id is not provided, a new user will be created automatically and the key will be associated with it.
+     * Create a new API key.  Requires master key authentication.  If user_id is provided, the key will be associated with that user (creates user if it doesn\'t exist). If user_id is not provided, the key is associated with the shared \"default\" user, which is created on first use. Keys without an explicit owner therefore share one identity, and so share budget, usage, and files.
      * Create Key
      */
     async createKeyV1KeysPost(requestParameters: CreateKeyV1KeysPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateKeyResponse> {
@@ -133,6 +141,10 @@ export class KeysApi extends runtime.BaseAPI {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
@@ -183,6 +195,10 @@ export class KeysApi extends runtime.BaseAPI {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
@@ -237,6 +253,10 @@ export class KeysApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
         }
 
@@ -272,6 +292,61 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for rotateKeyV1KeysKeyIdRotatePost without sending the request
+     */
+    async rotateKeyV1KeysKeyIdRotatePostRequestOpts(requestParameters: RotateKeyV1KeysKeyIdRotatePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['keyId'] == null) {
+            throw new runtime.RequiredError(
+                'keyId',
+                'Required parameter "keyId" was null or undefined when calling rotateKeyV1KeysKeyIdRotatePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/keys/{key_id}/rotate`;
+        urlPath = urlPath.replace('{key_id}', encodeURIComponent(String(requestParameters['keyId'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Rotate an API key\'s secret in place.  Requires master key authentication.  Generates a new secret for the same key row (id, user, name, expiry, and metadata are preserved) and returns the new raw key once, using the same response shape as key creation. The previous secret stops authenticating immediately; there is no grace window.
+     * Rotate Key
+     */
+    async rotateKeyV1KeysKeyIdRotatePostRaw(requestParameters: RotateKeyV1KeysKeyIdRotatePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateKeyResponse>> {
+        const requestOptions = await this.rotateKeyV1KeysKeyIdRotatePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateKeyResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Rotate an API key\'s secret in place.  Requires master key authentication.  Generates a new secret for the same key row (id, user, name, expiry, and metadata are preserved) and returns the new raw key once, using the same response shape as key creation. The previous secret stops authenticating immediately; there is no grace window.
+     * Rotate Key
+     */
+    async rotateKeyV1KeysKeyIdRotatePost(requestParameters: RotateKeyV1KeysKeyIdRotatePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateKeyResponse> {
+        const response = await this.rotateKeyV1KeysKeyIdRotatePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for updateKeyV1KeysKeyIdPatch without sending the request
      */
     async updateKeyV1KeysKeyIdPatchRequestOpts(requestParameters: UpdateKeyV1KeysKeyIdPatchRequest): Promise<runtime.RequestOpts> {
@@ -294,6 +369,10 @@ export class KeysApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication

@@ -56,6 +56,10 @@ export class ChatApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
         }
 
@@ -72,7 +76,7 @@ export class ChatApi extends runtime.BaseAPI {
     }
 
     /**
-     * OpenAI-compatible chat completions endpoint.  Supports both streaming and non-streaming responses. Handles reasoning content from otari providers.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use virtual user created with API key
+     * OpenAI-compatible chat completions endpoint.  Supports both streaming and non-streaming responses. Handles reasoning content from otari providers.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Chat Completions
      */
     async chatCompletionsV1ChatCompletionsPostRaw(requestParameters: ChatCompletionsV1ChatCompletionsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ChatCompletion>> {
@@ -83,7 +87,7 @@ export class ChatApi extends runtime.BaseAPI {
     }
 
     /**
-     * OpenAI-compatible chat completions endpoint.  Supports both streaming and non-streaming responses. Handles reasoning content from otari providers.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use virtual user created with API key
+     * OpenAI-compatible chat completions endpoint.  Supports both streaming and non-streaming responses. Handles reasoning content from otari providers.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Chat Completions
      */
     async chatCompletionsV1ChatCompletionsPost(requestParameters: ChatCompletionsV1ChatCompletionsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ChatCompletion> {

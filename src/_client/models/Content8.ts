@@ -13,20 +13,27 @@
  */
 
 import { mapValues } from '../runtime';
-import type { MRWebSearchToolResultError } from './MRWebSearchToolResultError';
+import type { MRBetaToolSearchToolSearchResultBlock } from './MRBetaToolSearchToolSearchResultBlock';
 import {
-    MRWebSearchToolResultErrorFromJSON,
-    MRWebSearchToolResultErrorFromJSONTyped,
-    MRWebSearchToolResultErrorToJSON,
-    MRWebSearchToolResultErrorToJSONTyped,
-} from './MRWebSearchToolResultError';
-import type { MRWebSearchResultBlock } from './MRWebSearchResultBlock';
+    MRBetaToolSearchToolSearchResultBlockFromJSON,
+    MRBetaToolSearchToolSearchResultBlockFromJSONTyped,
+    MRBetaToolSearchToolSearchResultBlockToJSON,
+    MRBetaToolSearchToolSearchResultBlockToJSONTyped,
+} from './MRBetaToolSearchToolSearchResultBlock';
+import type { MRBetaToolSearchToolResultError } from './MRBetaToolSearchToolResultError';
 import {
-    MRWebSearchResultBlockFromJSON,
-    MRWebSearchResultBlockFromJSONTyped,
-    MRWebSearchResultBlockToJSON,
-    MRWebSearchResultBlockToJSONTyped,
-} from './MRWebSearchResultBlock';
+    MRBetaToolSearchToolResultErrorFromJSON,
+    MRBetaToolSearchToolResultErrorFromJSONTyped,
+    MRBetaToolSearchToolResultErrorToJSON,
+    MRBetaToolSearchToolResultErrorToJSONTyped,
+} from './MRBetaToolSearchToolResultError';
+import type { MRBetaToolReferenceBlock } from './MRBetaToolReferenceBlock';
+import {
+    MRBetaToolReferenceBlockFromJSON,
+    MRBetaToolReferenceBlockFromJSONTyped,
+    MRBetaToolReferenceBlockToJSON,
+    MRBetaToolReferenceBlockToJSONTyped,
+} from './MRBetaToolReferenceBlock';
 
 /**
  * 
@@ -42,10 +49,22 @@ export interface Content8 {
     errorCode: Content8ErrorCodeEnum;
     /**
      * 
+     * @type {string}
+     * @memberof Content8
+     */
+    errorMessage?: string;
+    /**
+     * 
      * @type {Content8TypeEnum}
      * @memberof Content8
      */
     type: Content8TypeEnum;
+    /**
+     * 
+     * @type {Array<MRBetaToolReferenceBlock>}
+     * @memberof Content8
+     */
+    toolReferences: Array<MRBetaToolReferenceBlock>;
 }
 
 
@@ -55,10 +74,8 @@ export interface Content8 {
 export const Content8ErrorCodeEnum = {
     InvalidToolInput: 'invalid_tool_input',
     Unavailable: 'unavailable',
-    MaxUsesExceeded: 'max_uses_exceeded',
     TooManyRequests: 'too_many_requests',
-    QueryTooLong: 'query_too_long',
-    RequestTooLarge: 'request_too_large'
+    ExecutionTimeExceeded: 'execution_time_exceeded'
 } as const;
 export type Content8ErrorCodeEnum = typeof Content8ErrorCodeEnum[keyof typeof Content8ErrorCodeEnum];
 
@@ -66,7 +83,8 @@ export type Content8ErrorCodeEnum = typeof Content8ErrorCodeEnum[keyof typeof Co
  * @export
  */
 export const Content8TypeEnum = {
-    WebSearchToolResultError: 'web_search_tool_result_error'
+    ToolSearchToolResultError: 'tool_search_tool_result_error',
+    ToolSearchToolSearchResult: 'tool_search_tool_search_result'
 } as const;
 export type Content8TypeEnum = typeof Content8TypeEnum[keyof typeof Content8TypeEnum];
 
@@ -77,6 +95,7 @@ export type Content8TypeEnum = typeof Content8TypeEnum[keyof typeof Content8Type
 export function instanceOfContent8(value: object): value is Content8 {
     if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('toolReferences' in value) || value['toolReferences'] === undefined) return false;
     return true;
 }
 
@@ -91,7 +110,9 @@ export function Content8FromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     return {
         
         'errorCode': json['error_code'],
+        'errorMessage': json['error_message'] == null ? undefined : json['error_message'],
         'type': json['type'],
+        'toolReferences': ((json['tool_references'] as Array<any>).map(MRBetaToolReferenceBlockFromJSON)),
     };
 }
 
@@ -107,7 +128,9 @@ export function Content8ToJSONTyped(value?: Content8 | null, ignoreDiscriminator
     return {
         
         'error_code': value['errorCode'],
+        'error_message': value['errorMessage'],
         'type': value['type'],
+        'tool_references': ((value['toolReferences'] as Array<any>).map(MRBetaToolReferenceBlockToJSON)),
     };
 }
 

@@ -27,7 +27,7 @@ export interface CCPromptTokensDetails {
      */
     audioTokens?: number | null;
     /**
-     * 
+     * Filter to a single failure status code (e.g. 429 for provider rate limits, 402 for missing-pricing rejections). Only error rows carry one, so this filter also restricts to status='error' unless 'status' is given explicitly
      * @type {number}
      * @memberof CCPromptTokensDetails
      */

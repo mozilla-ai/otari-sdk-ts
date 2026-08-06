@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { UsageEntryPricingBreakdownInnerValue } from './UsageEntryPricingBreakdownInnerValue';
+import {
+    UsageEntryPricingBreakdownInnerValueFromJSON,
+    UsageEntryPricingBreakdownInnerValueFromJSONTyped,
+    UsageEntryPricingBreakdownInnerValueToJSON,
+    UsageEntryPricingBreakdownInnerValueToJSONTyped,
+} from './UsageEntryPricingBreakdownInnerValue';
+
 /**
  * A single usage log entry.
  * @export
@@ -30,7 +38,31 @@ export interface UsageEntry {
      * @type {number}
      * @memberof UsageEntry
      */
+    attemptCount?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof UsageEntry
+     */
+    attemptPosition?: number | null;
+    /**
+     * An unsaved policy body to explain.
+     * @type {{ [key: string]: any; }}
+     * @memberof UsageEntry
+     */
+    billingMeters: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof UsageEntry
+     */
     cacheReadTokens: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof UsageEntry
+     */
+    cacheWrite1hTokens: number | null;
     /**
      * 
      * @type {number}
@@ -51,6 +83,12 @@ export interface UsageEntry {
     cost: number | null;
     /**
      * 
+     * @type {boolean}
+     * @memberof UsageEntry
+     */
+    countsTowardBudget: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof UsageEntry
      */
@@ -69,10 +107,28 @@ export interface UsageEntry {
     id: string;
     /**
      * 
+     * @type {number}
+     * @memberof UsageEntry
+     */
+    latencyMs: number | null;
+    /**
+     * 
      * @type {string}
      * @memberof UsageEntry
      */
     model: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UsageEntry
+     */
+    policyName?: string | null;
+    /**
+     * 
+     * @type {Array<{ [key: string]: UsageEntryPricingBreakdownInnerValue; }>}
+     * @memberof UsageEntry
+     */
+    pricingBreakdown: Array<{ [key: string]: UsageEntryPricingBreakdownInnerValue; }> | null;
     /**
      * 
      * @type {number}
@@ -90,7 +146,37 @@ export interface UsageEntry {
      * @type {string}
      * @memberof UsageEntry
      */
+    requestGroupId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UsageEntry
+     */
+    selectionReason?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UsageEntry
+     */
+    source: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UsageEntry
+     */
+    sourceLabel: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UsageEntry
+     */
     status: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UsageEntry
+     */
+    statusCode: number | null;
     /**
      * 
      * @type {string}
@@ -116,17 +202,25 @@ export interface UsageEntry {
  */
 export function instanceOfUsageEntry(value: object): value is UsageEntry {
     if (!('apiKeyId' in value) || value['apiKeyId'] === undefined) return false;
+    if (!('billingMeters' in value) || value['billingMeters'] === undefined) return false;
     if (!('cacheReadTokens' in value) || value['cacheReadTokens'] === undefined) return false;
+    if (!('cacheWrite1hTokens' in value) || value['cacheWrite1hTokens'] === undefined) return false;
     if (!('cacheWriteTokens' in value) || value['cacheWriteTokens'] === undefined) return false;
     if (!('completionTokens' in value) || value['completionTokens'] === undefined) return false;
     if (!('cost' in value) || value['cost'] === undefined) return false;
+    if (!('countsTowardBudget' in value) || value['countsTowardBudget'] === undefined) return false;
     if (!('endpoint' in value) || value['endpoint'] === undefined) return false;
     if (!('errorMessage' in value) || value['errorMessage'] === undefined) return false;
     if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('latencyMs' in value) || value['latencyMs'] === undefined) return false;
     if (!('model' in value) || value['model'] === undefined) return false;
+    if (!('pricingBreakdown' in value) || value['pricingBreakdown'] === undefined) return false;
     if (!('promptTokens' in value) || value['promptTokens'] === undefined) return false;
     if (!('provider' in value) || value['provider'] === undefined) return false;
+    if (!('source' in value) || value['source'] === undefined) return false;
+    if (!('sourceLabel' in value) || value['sourceLabel'] === undefined) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
+    if (!('statusCode' in value) || value['statusCode'] === undefined) return false;
     if (!('timestamp' in value) || value['timestamp'] === undefined) return false;
     if (!('totalTokens' in value) || value['totalTokens'] === undefined) return false;
     if (!('userId' in value) || value['userId'] === undefined) return false;
@@ -144,17 +238,30 @@ export function UsageEntryFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     return {
         
         'apiKeyId': json['api_key_id'],
+        'attemptCount': json['attempt_count'] == null ? undefined : json['attempt_count'],
+        'attemptPosition': json['attempt_position'] == null ? undefined : json['attempt_position'],
+        'billingMeters': json['billing_meters'],
         'cacheReadTokens': json['cache_read_tokens'],
+        'cacheWrite1hTokens': json['cache_write_1h_tokens'],
         'cacheWriteTokens': json['cache_write_tokens'],
         'completionTokens': json['completion_tokens'],
         'cost': json['cost'],
+        'countsTowardBudget': json['counts_toward_budget'],
         'endpoint': json['endpoint'],
         'errorMessage': json['error_message'],
         'id': json['id'],
+        'latencyMs': json['latency_ms'],
         'model': json['model'],
+        'policyName': json['policy_name'] == null ? undefined : json['policy_name'],
+        'pricingBreakdown': json['pricing_breakdown'] == null ? null : json['pricing_breakdown'],
         'promptTokens': json['prompt_tokens'],
         'provider': json['provider'],
+        'requestGroupId': json['request_group_id'] == null ? undefined : json['request_group_id'],
+        'selectionReason': json['selection_reason'] == null ? undefined : json['selection_reason'],
+        'source': json['source'],
+        'sourceLabel': json['source_label'],
         'status': json['status'],
+        'statusCode': json['status_code'],
         'timestamp': json['timestamp'],
         'totalTokens': json['total_tokens'],
         'userId': json['user_id'],
@@ -173,17 +280,30 @@ export function UsageEntryToJSONTyped(value?: UsageEntry | null, ignoreDiscrimin
     return {
         
         'api_key_id': value['apiKeyId'],
+        'attempt_count': value['attemptCount'],
+        'attempt_position': value['attemptPosition'],
+        'billing_meters': value['billingMeters'],
         'cache_read_tokens': value['cacheReadTokens'],
+        'cache_write_1h_tokens': value['cacheWrite1hTokens'],
         'cache_write_tokens': value['cacheWriteTokens'],
         'completion_tokens': value['completionTokens'],
         'cost': value['cost'],
+        'counts_toward_budget': value['countsTowardBudget'],
         'endpoint': value['endpoint'],
         'error_message': value['errorMessage'],
         'id': value['id'],
+        'latency_ms': value['latencyMs'],
         'model': value['model'],
+        'policy_name': value['policyName'],
+        'pricing_breakdown': value['pricingBreakdown'],
         'prompt_tokens': value['promptTokens'],
         'provider': value['provider'],
+        'request_group_id': value['requestGroupId'],
+        'selection_reason': value['selectionReason'],
+        'source': value['source'],
+        'source_label': value['sourceLabel'],
         'status': value['status'],
+        'status_code': value['statusCode'],
         'timestamp': value['timestamp'],
         'total_tokens': value['totalTokens'],
         'user_id': value['userId'],

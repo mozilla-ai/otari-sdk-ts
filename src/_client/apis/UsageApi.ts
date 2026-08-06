@@ -14,28 +14,391 @@
 
 import * as runtime from '../runtime';
 import {
+    type ExternalEventsRequest,
+    ExternalEventsRequestFromJSON,
+    ExternalEventsRequestToJSON,
+} from '../models/ExternalEventsRequest';
+import {
+    type ExternalIngestResult,
+    ExternalIngestResultFromJSON,
+    ExternalIngestResultToJSON,
+} from '../models/ExternalIngestResult';
+import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
 } from '../models/HTTPValidationError';
 import {
+    type UsageCount,
+    UsageCountFromJSON,
+    UsageCountToJSON,
+} from '../models/UsageCount';
+import {
+    type UsageDeleteRequest,
+    UsageDeleteRequestFromJSON,
+    UsageDeleteRequestToJSON,
+} from '../models/UsageDeleteRequest';
+import {
+    type UsageDeleteResult,
+    UsageDeleteResultFromJSON,
+    UsageDeleteResultToJSON,
+} from '../models/UsageDeleteResult';
+import {
     type UsageEntry,
     UsageEntryFromJSON,
     UsageEntryToJSON,
 } from '../models/UsageEntry';
+import {
+    type UsageGroupedSeries,
+    UsageGroupedSeriesFromJSON,
+    UsageGroupedSeriesToJSON,
+} from '../models/UsageGroupedSeries';
+import {
+    type UsageSetPriceRequest,
+    UsageSetPriceRequestFromJSON,
+    UsageSetPriceRequestToJSON,
+} from '../models/UsageSetPriceRequest';
+import {
+    type UsageSetPriceResult,
+    UsageSetPriceResultFromJSON,
+    UsageSetPriceResultToJSON,
+} from '../models/UsageSetPriceResult';
+import {
+    type UsageSummary,
+    UsageSummaryFromJSON,
+    UsageSummaryToJSON,
+} from '../models/UsageSummary';
+
+export interface CountUsageV1UsageCountGetRequest {
+    startDate?: Date | null;
+    endDate?: Date | null;
+    userId?: string | null;
+    status?: string | null;
+    statusCode?: number | null;
+    model?: string | null;
+    endpoint?: string | null;
+    provider?: string | null;
+    source?: string | null;
+    sourceLabel?: string | null;
+    apiKeyId?: string | null;
+    priced?: boolean | null;
+    tool?: CountUsageV1UsageCountGetToolEnum;
+    countsTowardBudget?: boolean | null;
+    requestGroupId?: Array<string> | null;
+}
+
+export interface DeleteUsageRowsV1UsageDeleteRequest {
+    usageDeleteRequest: UsageDeleteRequest;
+}
+
+export interface IngestExternalUsageV1UsageExternalEventsPostRequest {
+    externalEventsRequest: ExternalEventsRequest;
+}
 
 export interface ListUsageV1UsageGetRequest {
     startDate?: Date | null;
     endDate?: Date | null;
     userId?: string | null;
+    status?: string | null;
+    statusCode?: number | null;
+    model?: string | null;
+    endpoint?: string | null;
+    provider?: string | null;
+    source?: string | null;
+    sourceLabel?: string | null;
+    apiKeyId?: string | null;
+    priced?: boolean | null;
+    tool?: ListUsageV1UsageGetToolEnum;
+    countsTowardBudget?: boolean | null;
+    requestGroupId?: Array<string> | null;
     skip?: number;
     limit?: number;
+}
+
+export interface SetUsagePriceRowsV1UsageSetPricePostRequest {
+    usageSetPriceRequest: UsageSetPriceRequest;
+}
+
+export interface UsageSeriesV1UsageSeriesGetRequest {
+    groupBy: UsageSeriesV1UsageSeriesGetGroupByEnum;
+    startDate?: Date | null;
+    endDate?: Date | null;
+    userId?: string | null;
+    status?: string | null;
+    statusCode?: number | null;
+    model?: string | null;
+    endpoint?: string | null;
+    provider?: string | null;
+    source?: string | null;
+    sourceLabel?: string | null;
+    apiKeyId?: string | null;
+    priced?: boolean | null;
+    tool?: UsageSeriesV1UsageSeriesGetToolEnum;
+    countsTowardBudget?: boolean | null;
+    bucket?: UsageSeriesV1UsageSeriesGetBucketEnum;
+}
+
+export interface UsageSummaryCsvV1UsageSummaryCsvGetRequest {
+    startDate?: Date | null;
+    endDate?: Date | null;
+    userId?: string | null;
+    status?: string | null;
+    statusCode?: number | null;
+    model?: string | null;
+    endpoint?: string | null;
+    provider?: string | null;
+    source?: string | null;
+    sourceLabel?: string | null;
+    apiKeyId?: string | null;
+    priced?: boolean | null;
+    tool?: UsageSummaryCsvV1UsageSummaryCsvGetToolEnum;
+    countsTowardBudget?: boolean | null;
+}
+
+export interface UsageSummaryV1UsageSummaryGetRequest {
+    startDate?: Date | null;
+    endDate?: Date | null;
+    userId?: string | null;
+    status?: string | null;
+    statusCode?: number | null;
+    model?: string | null;
+    endpoint?: string | null;
+    provider?: string | null;
+    source?: string | null;
+    sourceLabel?: string | null;
+    apiKeyId?: string | null;
+    priced?: boolean | null;
+    tool?: UsageSummaryV1UsageSummaryGetToolEnum;
+    countsTowardBudget?: boolean | null;
+    bucket?: UsageSummaryV1UsageSummaryGetBucketEnum;
+    dimensions?: Array<UsageSummaryV1UsageSummaryGetDimensionsEnum>;
 }
 
 /**
  * 
  */
 export class UsageApi extends runtime.BaseAPI {
+
+    /**
+     * Creates request options for countUsageV1UsageCountGet without sending the request
+     */
+    async countUsageV1UsageCountGetRequestOpts(requestParameters: CountUsageV1UsageCountGetRequest): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        if (requestParameters['startDate'] != null) {
+            queryParameters['start_date'] = (requestParameters['startDate'] as any).toISOString();
+        }
+
+        if (requestParameters['endDate'] != null) {
+            queryParameters['end_date'] = (requestParameters['endDate'] as any).toISOString();
+        }
+
+        if (requestParameters['userId'] != null) {
+            queryParameters['user_id'] = requestParameters['userId'];
+        }
+
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
+        }
+
+        if (requestParameters['statusCode'] != null) {
+            queryParameters['status_code'] = requestParameters['statusCode'];
+        }
+
+        if (requestParameters['model'] != null) {
+            queryParameters['model'] = requestParameters['model'];
+        }
+
+        if (requestParameters['endpoint'] != null) {
+            queryParameters['endpoint'] = requestParameters['endpoint'];
+        }
+
+        if (requestParameters['provider'] != null) {
+            queryParameters['provider'] = requestParameters['provider'];
+        }
+
+        if (requestParameters['source'] != null) {
+            queryParameters['source'] = requestParameters['source'];
+        }
+
+        if (requestParameters['sourceLabel'] != null) {
+            queryParameters['source_label'] = requestParameters['sourceLabel'];
+        }
+
+        if (requestParameters['apiKeyId'] != null) {
+            queryParameters['api_key_id'] = requestParameters['apiKeyId'];
+        }
+
+        if (requestParameters['priced'] != null) {
+            queryParameters['priced'] = requestParameters['priced'];
+        }
+
+        if (requestParameters['tool'] != null) {
+            queryParameters['tool'] = requestParameters['tool'];
+        }
+
+        if (requestParameters['countsTowardBudget'] != null) {
+            queryParameters['counts_toward_budget'] = requestParameters['countsTowardBudget'];
+        }
+
+        if (requestParameters['requestGroupId'] != null) {
+            queryParameters['request_group_id'] = requestParameters['requestGroupId'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/usage/count`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Total number of usage logs matching the given filters.  Serves the dashboard paginator\'s \"N of M\" total without changing the bare array contract of ``GET /v1/usage``. Runs only when the client asks (a separate request), so the ``COUNT(*)`` is not paid on every page load. With ``counts_toward_budget=false`` it also backs the \"select all N matching this filter\" affordance for bulk delete / set-price, which touch imported rows only.
+     * Count Usage
+     */
+    async countUsageV1UsageCountGetRaw(requestParameters: CountUsageV1UsageCountGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UsageCount>> {
+        const requestOptions = await this.countUsageV1UsageCountGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => UsageCountFromJSON(jsonValue));
+    }
+
+    /**
+     * Total number of usage logs matching the given filters.  Serves the dashboard paginator\'s \"N of M\" total without changing the bare array contract of ``GET /v1/usage``. Runs only when the client asks (a separate request), so the ``COUNT(*)`` is not paid on every page load. With ``counts_toward_budget=false`` it also backs the \"select all N matching this filter\" affordance for bulk delete / set-price, which touch imported rows only.
+     * Count Usage
+     */
+    async countUsageV1UsageCountGet(requestParameters: CountUsageV1UsageCountGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UsageCount> {
+        const response = await this.countUsageV1UsageCountGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for deleteUsageRowsV1UsageDelete without sending the request
+     */
+    async deleteUsageRowsV1UsageDeleteRequestOpts(requestParameters: DeleteUsageRowsV1UsageDeleteRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['usageDeleteRequest'] == null) {
+            throw new runtime.RequiredError(
+                'usageDeleteRequest',
+                'Required parameter "usageDeleteRequest" was null or undefined when calling deleteUsageRowsV1UsageDelete().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/usage`;
+
+        return {
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UsageDeleteRequestToJSON(requestParameters['usageDeleteRequest']),
+        };
+    }
+
+    /**
+     * Delete imported usage rows by explicit ids or by filter (standalone).  Target either the current selection (``ids``) or everything matching a filter (``by_filter: true`` plus optional ``source`` / ``model`` / ``user_id`` / ``status`` / date range / ``priced``). Only imported rows (``counts_toward_budget = false``) are ever removed: enforced gateway rows and the spend ledger (``users.spend``) are untouched, so a delete can never desync a budget. Master-key only.
+     * Delete Usage Rows
+     */
+    async deleteUsageRowsV1UsageDeleteRaw(requestParameters: DeleteUsageRowsV1UsageDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UsageDeleteResult>> {
+        const requestOptions = await this.deleteUsageRowsV1UsageDeleteRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => UsageDeleteResultFromJSON(jsonValue));
+    }
+
+    /**
+     * Delete imported usage rows by explicit ids or by filter (standalone).  Target either the current selection (``ids``) or everything matching a filter (``by_filter: true`` plus optional ``source`` / ``model`` / ``user_id`` / ``status`` / date range / ``priced``). Only imported rows (``counts_toward_budget = false``) are ever removed: enforced gateway rows and the spend ledger (``users.spend``) are untouched, so a delete can never desync a budget. Master-key only.
+     * Delete Usage Rows
+     */
+    async deleteUsageRowsV1UsageDelete(requestParameters: DeleteUsageRowsV1UsageDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UsageDeleteResult> {
+        const response = await this.deleteUsageRowsV1UsageDeleteRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for ingestExternalUsageV1UsageExternalEventsPost without sending the request
+     */
+    async ingestExternalUsageV1UsageExternalEventsPostRequestOpts(requestParameters: IngestExternalUsageV1UsageExternalEventsPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['externalEventsRequest'] == null) {
+            throw new runtime.RequiredError(
+                'externalEventsRequest',
+                'Required parameter "externalEventsRequest" was null or undefined when calling ingestExternalUsageV1UsageExternalEventsPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/usage/external-events`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ExternalEventsRequestToJSON(requestParameters['externalEventsRequest']),
+        };
+    }
+
+    /**
+     * Ingest a batch of externally-observed usage events (standalone).  Authenticated with either an API key or the master key. Usage binds to the authenticated principal: an API key attributes to its own user (and stamps its id on the rows); the master key may name any user via ``user_id``. Records subscription-backed usage (e.g. Claude Code) as usage-log rows tagged with their ``source``, priced at the effective API rate for each event\'s timestamp. Imported usage is real cost, but never counts toward budgets or mutates ``users.spend`` (it is retrospective, so it cannot be reserved). Idempotent by ``(source, source_event_id)``. The payload is content-free; any prompt/completion/tool field is rejected (422), not stored.
+     * Ingest External Usage
+     */
+    async ingestExternalUsageV1UsageExternalEventsPostRaw(requestParameters: IngestExternalUsageV1UsageExternalEventsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExternalIngestResult>> {
+        const requestOptions = await this.ingestExternalUsageV1UsageExternalEventsPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ExternalIngestResultFromJSON(jsonValue));
+    }
+
+    /**
+     * Ingest a batch of externally-observed usage events (standalone).  Authenticated with either an API key or the master key. Usage binds to the authenticated principal: an API key attributes to its own user (and stamps its id on the rows); the master key may name any user via ``user_id``. Records subscription-backed usage (e.g. Claude Code) as usage-log rows tagged with their ``source``, priced at the effective API rate for each event\'s timestamp. Imported usage is real cost, but never counts toward budgets or mutates ``users.spend`` (it is retrospective, so it cannot be reserved). Idempotent by ``(source, source_event_id)``. The payload is content-free; any prompt/completion/tool field is rejected (422), not stored.
+     * Ingest External Usage
+     */
+    async ingestExternalUsageV1UsageExternalEventsPost(requestParameters: IngestExternalUsageV1UsageExternalEventsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ExternalIngestResult> {
+        const response = await this.ingestExternalUsageV1UsageExternalEventsPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Creates request options for listUsageV1UsageGet without sending the request
@@ -55,6 +418,54 @@ export class UsageApi extends runtime.BaseAPI {
             queryParameters['user_id'] = requestParameters['userId'];
         }
 
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
+        }
+
+        if (requestParameters['statusCode'] != null) {
+            queryParameters['status_code'] = requestParameters['statusCode'];
+        }
+
+        if (requestParameters['model'] != null) {
+            queryParameters['model'] = requestParameters['model'];
+        }
+
+        if (requestParameters['endpoint'] != null) {
+            queryParameters['endpoint'] = requestParameters['endpoint'];
+        }
+
+        if (requestParameters['provider'] != null) {
+            queryParameters['provider'] = requestParameters['provider'];
+        }
+
+        if (requestParameters['source'] != null) {
+            queryParameters['source'] = requestParameters['source'];
+        }
+
+        if (requestParameters['sourceLabel'] != null) {
+            queryParameters['source_label'] = requestParameters['sourceLabel'];
+        }
+
+        if (requestParameters['apiKeyId'] != null) {
+            queryParameters['api_key_id'] = requestParameters['apiKeyId'];
+        }
+
+        if (requestParameters['priced'] != null) {
+            queryParameters['priced'] = requestParameters['priced'];
+        }
+
+        if (requestParameters['tool'] != null) {
+            queryParameters['tool'] = requestParameters['tool'];
+        }
+
+        if (requestParameters['countsTowardBudget'] != null) {
+            queryParameters['counts_toward_budget'] = requestParameters['countsTowardBudget'];
+        }
+
+        if (requestParameters['requestGroupId'] != null) {
+            queryParameters['request_group_id'] = requestParameters['requestGroupId'];
+        }
+
         if (requestParameters['skip'] != null) {
             queryParameters['skip'] = requestParameters['skip'];
         }
@@ -64,6 +475,10 @@ export class UsageApi extends runtime.BaseAPI {
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
@@ -81,7 +496,7 @@ export class UsageApi extends runtime.BaseAPI {
     }
 
     /**
-     * List usage logs ordered by timestamp (most recent first).  Supports optional filters for time range and user. Paginated via skip/limit. Timestamps accept either ISO 8601 strings or Unix epoch seconds (numeric).
+     * List usage logs ordered by timestamp (most recent first).  Supports optional filters for time range, user, status, failure status code, model, endpoint, provider, source, session (``source_label``), and request group (``request_group_id``, repeatable, which returns a routed request\'s whole attempt plan). Paginated via skip/limit. The return shape is a bare JSON array; external billing/analytics consumers depend on this, so the total row count for a paginated UI is served separately by ``GET /v1/usage/count`` rather than wrapped in an envelope here. Timestamps accept either ISO 8601 strings or Unix epoch seconds (numeric).
      * List Usage
      */
     async listUsageV1UsageGetRaw(requestParameters: ListUsageV1UsageGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<UsageEntry>>> {
@@ -92,7 +507,7 @@ export class UsageApi extends runtime.BaseAPI {
     }
 
     /**
-     * List usage logs ordered by timestamp (most recent first).  Supports optional filters for time range and user. Paginated via skip/limit. Timestamps accept either ISO 8601 strings or Unix epoch seconds (numeric).
+     * List usage logs ordered by timestamp (most recent first).  Supports optional filters for time range, user, status, failure status code, model, endpoint, provider, source, session (``source_label``), and request group (``request_group_id``, repeatable, which returns a routed request\'s whole attempt plan). Paginated via skip/limit. The return shape is a bare JSON array; external billing/analytics consumers depend on this, so the total row count for a paginated UI is served separately by ``GET /v1/usage/count`` rather than wrapped in an envelope here. Timestamps accept either ISO 8601 strings or Unix epoch seconds (numeric).
      * List Usage
      */
     async listUsageV1UsageGet(requestParameters: ListUsageV1UsageGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<UsageEntry>> {
@@ -100,4 +515,485 @@ export class UsageApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+    /**
+     * Creates request options for setUsagePriceRowsV1UsageSetPricePost without sending the request
+     */
+    async setUsagePriceRowsV1UsageSetPricePostRequestOpts(requestParameters: SetUsagePriceRowsV1UsageSetPricePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['usageSetPriceRequest'] == null) {
+            throw new runtime.RequiredError(
+                'usageSetPriceRequest',
+                'Required parameter "usageSetPriceRequest" was null or undefined when calling setUsagePriceRowsV1UsageSetPricePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/usage/set-price`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UsageSetPriceRequestToJSON(requestParameters['usageSetPriceRequest']),
+        };
+    }
+
+    /**
+     * Set the cost of imported usage rows from manual per-1M rates (standalone).  Target either the current selection (``ids``) or everything matching a filter (``by_filter: true``). Cost / billing meters / pricing breakdown are recomputed from each row\'s own token counts at the supplied ``input`` / ``output`` / ``cache_read`` / ``cache_write`` per-1M rates (manual rates, not a recompute from configured pricing). Only imported rows (``counts_toward_budget = false``) are touched, so ``users.spend`` is never affected. Master-key only.
+     * Set Usage Price Rows
+     */
+    async setUsagePriceRowsV1UsageSetPricePostRaw(requestParameters: SetUsagePriceRowsV1UsageSetPricePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UsageSetPriceResult>> {
+        const requestOptions = await this.setUsagePriceRowsV1UsageSetPricePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => UsageSetPriceResultFromJSON(jsonValue));
+    }
+
+    /**
+     * Set the cost of imported usage rows from manual per-1M rates (standalone).  Target either the current selection (``ids``) or everything matching a filter (``by_filter: true``). Cost / billing meters / pricing breakdown are recomputed from each row\'s own token counts at the supplied ``input`` / ``output`` / ``cache_read`` / ``cache_write`` per-1M rates (manual rates, not a recompute from configured pricing). Only imported rows (``counts_toward_budget = false``) are touched, so ``users.spend`` is never affected. Master-key only.
+     * Set Usage Price Rows
+     */
+    async setUsagePriceRowsV1UsageSetPricePost(requestParameters: SetUsagePriceRowsV1UsageSetPricePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UsageSetPriceResult> {
+        const response = await this.setUsagePriceRowsV1UsageSetPricePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for usageSeriesV1UsageSeriesGet without sending the request
+     */
+    async usageSeriesV1UsageSeriesGetRequestOpts(requestParameters: UsageSeriesV1UsageSeriesGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['groupBy'] == null) {
+            throw new runtime.RequiredError(
+                'groupBy',
+                'Required parameter "groupBy" was null or undefined when calling usageSeriesV1UsageSeriesGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['groupBy'] != null) {
+            queryParameters['group_by'] = requestParameters['groupBy'];
+        }
+
+        if (requestParameters['startDate'] != null) {
+            queryParameters['start_date'] = (requestParameters['startDate'] as any).toISOString();
+        }
+
+        if (requestParameters['endDate'] != null) {
+            queryParameters['end_date'] = (requestParameters['endDate'] as any).toISOString();
+        }
+
+        if (requestParameters['userId'] != null) {
+            queryParameters['user_id'] = requestParameters['userId'];
+        }
+
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
+        }
+
+        if (requestParameters['statusCode'] != null) {
+            queryParameters['status_code'] = requestParameters['statusCode'];
+        }
+
+        if (requestParameters['model'] != null) {
+            queryParameters['model'] = requestParameters['model'];
+        }
+
+        if (requestParameters['endpoint'] != null) {
+            queryParameters['endpoint'] = requestParameters['endpoint'];
+        }
+
+        if (requestParameters['provider'] != null) {
+            queryParameters['provider'] = requestParameters['provider'];
+        }
+
+        if (requestParameters['source'] != null) {
+            queryParameters['source'] = requestParameters['source'];
+        }
+
+        if (requestParameters['sourceLabel'] != null) {
+            queryParameters['source_label'] = requestParameters['sourceLabel'];
+        }
+
+        if (requestParameters['apiKeyId'] != null) {
+            queryParameters['api_key_id'] = requestParameters['apiKeyId'];
+        }
+
+        if (requestParameters['priced'] != null) {
+            queryParameters['priced'] = requestParameters['priced'];
+        }
+
+        if (requestParameters['tool'] != null) {
+            queryParameters['tool'] = requestParameters['tool'];
+        }
+
+        if (requestParameters['countsTowardBudget'] != null) {
+            queryParameters['counts_toward_budget'] = requestParameters['countsTowardBudget'];
+        }
+
+        if (requestParameters['bucket'] != null) {
+            queryParameters['bucket'] = requestParameters['bucket'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/usage/series`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Time series split by one dimension, for the dashboard\'s stacked charts.  Same filters and window bounds as ``/summary`` (kept in lockstep: the dashboard serializes one filter object for both, and a filter this endpoint silently ignored would make the stacked chart disagree with the tiles beside it). The window\'s top groups by spend are returned as their own series; everything past the top eight folds into a single ``other`` series per bucket, so the stack always reconciles with the summary totals. Points are sparse (populated cells only); the bucket grid is bounded like ``/summary``\'s series, so an hourly bucket over a too-wide window is rejected rather than ballooning the payload.
+     * Usage Series
+     */
+    async usageSeriesV1UsageSeriesGetRaw(requestParameters: UsageSeriesV1UsageSeriesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UsageGroupedSeries>> {
+        const requestOptions = await this.usageSeriesV1UsageSeriesGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => UsageGroupedSeriesFromJSON(jsonValue));
+    }
+
+    /**
+     * Time series split by one dimension, for the dashboard\'s stacked charts.  Same filters and window bounds as ``/summary`` (kept in lockstep: the dashboard serializes one filter object for both, and a filter this endpoint silently ignored would make the stacked chart disagree with the tiles beside it). The window\'s top groups by spend are returned as their own series; everything past the top eight folds into a single ``other`` series per bucket, so the stack always reconciles with the summary totals. Points are sparse (populated cells only); the bucket grid is bounded like ``/summary``\'s series, so an hourly bucket over a too-wide window is rejected rather than ballooning the payload.
+     * Usage Series
+     */
+    async usageSeriesV1UsageSeriesGet(requestParameters: UsageSeriesV1UsageSeriesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UsageGroupedSeries> {
+        const response = await this.usageSeriesV1UsageSeriesGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for usageSummaryCsvV1UsageSummaryCsvGet without sending the request
+     */
+    async usageSummaryCsvV1UsageSummaryCsvGetRequestOpts(requestParameters: UsageSummaryCsvV1UsageSummaryCsvGetRequest): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        if (requestParameters['startDate'] != null) {
+            queryParameters['start_date'] = (requestParameters['startDate'] as any).toISOString();
+        }
+
+        if (requestParameters['endDate'] != null) {
+            queryParameters['end_date'] = (requestParameters['endDate'] as any).toISOString();
+        }
+
+        if (requestParameters['userId'] != null) {
+            queryParameters['user_id'] = requestParameters['userId'];
+        }
+
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
+        }
+
+        if (requestParameters['statusCode'] != null) {
+            queryParameters['status_code'] = requestParameters['statusCode'];
+        }
+
+        if (requestParameters['model'] != null) {
+            queryParameters['model'] = requestParameters['model'];
+        }
+
+        if (requestParameters['endpoint'] != null) {
+            queryParameters['endpoint'] = requestParameters['endpoint'];
+        }
+
+        if (requestParameters['provider'] != null) {
+            queryParameters['provider'] = requestParameters['provider'];
+        }
+
+        if (requestParameters['source'] != null) {
+            queryParameters['source'] = requestParameters['source'];
+        }
+
+        if (requestParameters['sourceLabel'] != null) {
+            queryParameters['source_label'] = requestParameters['sourceLabel'];
+        }
+
+        if (requestParameters['apiKeyId'] != null) {
+            queryParameters['api_key_id'] = requestParameters['apiKeyId'];
+        }
+
+        if (requestParameters['priced'] != null) {
+            queryParameters['priced'] = requestParameters['priced'];
+        }
+
+        if (requestParameters['tool'] != null) {
+            queryParameters['tool'] = requestParameters['tool'];
+        }
+
+        if (requestParameters['countsTowardBudget'] != null) {
+            queryParameters['counts_toward_budget'] = requestParameters['countsTowardBudget'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/usage/summary.csv`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Download every breakdown the summary reports, as one CSV.  One row per (dimension, key): model, user, API key, source, session (``source_label``), endpoint, and provider. A dedicated route rather than a ``format=csv`` flag on ``/summary`` so that endpoint keeps a single JSON response model and a clean OpenAPI schema. The export is **uncapped** (no top-N fold): finance wants every row. ``tokens`` is the billed total (fresh input, both cache buckets, and output), matching the dashboard\'s analytics. Kept separate from the bare-array ``/v1/usage`` contract, which is untouched.
+     * Usage Summary Csv
+     */
+    async usageSummaryCsvV1UsageSummaryCsvGetRaw(requestParameters: UsageSummaryCsvV1UsageSummaryCsvGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.usageSummaryCsvV1UsageSummaryCsvGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Download every breakdown the summary reports, as one CSV.  One row per (dimension, key): model, user, API key, source, session (``source_label``), endpoint, and provider. A dedicated route rather than a ``format=csv`` flag on ``/summary`` so that endpoint keeps a single JSON response model and a clean OpenAPI schema. The export is **uncapped** (no top-N fold): finance wants every row. ``tokens`` is the billed total (fresh input, both cache buckets, and output), matching the dashboard\'s analytics. Kept separate from the bare-array ``/v1/usage`` contract, which is untouched.
+     * Usage Summary Csv
+     */
+    async usageSummaryCsvV1UsageSummaryCsvGet(requestParameters: UsageSummaryCsvV1UsageSummaryCsvGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.usageSummaryCsvV1UsageSummaryCsvGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for usageSummaryV1UsageSummaryGet without sending the request
+     */
+    async usageSummaryV1UsageSummaryGetRequestOpts(requestParameters: UsageSummaryV1UsageSummaryGetRequest): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        if (requestParameters['startDate'] != null) {
+            queryParameters['start_date'] = (requestParameters['startDate'] as any).toISOString();
+        }
+
+        if (requestParameters['endDate'] != null) {
+            queryParameters['end_date'] = (requestParameters['endDate'] as any).toISOString();
+        }
+
+        if (requestParameters['userId'] != null) {
+            queryParameters['user_id'] = requestParameters['userId'];
+        }
+
+        if (requestParameters['status'] != null) {
+            queryParameters['status'] = requestParameters['status'];
+        }
+
+        if (requestParameters['statusCode'] != null) {
+            queryParameters['status_code'] = requestParameters['statusCode'];
+        }
+
+        if (requestParameters['model'] != null) {
+            queryParameters['model'] = requestParameters['model'];
+        }
+
+        if (requestParameters['endpoint'] != null) {
+            queryParameters['endpoint'] = requestParameters['endpoint'];
+        }
+
+        if (requestParameters['provider'] != null) {
+            queryParameters['provider'] = requestParameters['provider'];
+        }
+
+        if (requestParameters['source'] != null) {
+            queryParameters['source'] = requestParameters['source'];
+        }
+
+        if (requestParameters['sourceLabel'] != null) {
+            queryParameters['source_label'] = requestParameters['sourceLabel'];
+        }
+
+        if (requestParameters['apiKeyId'] != null) {
+            queryParameters['api_key_id'] = requestParameters['apiKeyId'];
+        }
+
+        if (requestParameters['priced'] != null) {
+            queryParameters['priced'] = requestParameters['priced'];
+        }
+
+        if (requestParameters['tool'] != null) {
+            queryParameters['tool'] = requestParameters['tool'];
+        }
+
+        if (requestParameters['countsTowardBudget'] != null) {
+            queryParameters['counts_toward_budget'] = requestParameters['countsTowardBudget'];
+        }
+
+        if (requestParameters['bucket'] != null) {
+            queryParameters['bucket'] = requestParameters['bucket'];
+        }
+
+        if (requestParameters['dimensions'] != null) {
+            queryParameters['dimensions'] = requestParameters['dimensions'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/usage/summary`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Aggregate spend, tokens, and request volume for the dashboard Usage page.  Range-bounded (default last 30 days, hard-capped): unlike the raw ``/v1/usage`` list, every aggregate is scoped to a bounded window so it stays served by the timestamp index. Returns grand totals, breakdowns by model / user / API key / source / session (``source_label``) / endpoint / provider (top rows plus a reconciling ``other`` fold, billed token counts), the error taxonomy grouped by failure status code, and a UTC-bucketed time series carrying each bucket\'s error count and billed token composition (input incl. cache, cache read/write, output).  Each breakdown is its own ``GROUP BY`` pass, so a caller that reads only the totals or the series should narrow ``dimensions`` rather than pay for all eight (the dashboard\'s tiles, timeline context, and model typeahead all do). Omitting the parameter keeps the full set.
+     * Usage Summary
+     */
+    async usageSummaryV1UsageSummaryGetRaw(requestParameters: UsageSummaryV1UsageSummaryGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UsageSummary>> {
+        const requestOptions = await this.usageSummaryV1UsageSummaryGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => UsageSummaryFromJSON(jsonValue));
+    }
+
+    /**
+     * Aggregate spend, tokens, and request volume for the dashboard Usage page.  Range-bounded (default last 30 days, hard-capped): unlike the raw ``/v1/usage`` list, every aggregate is scoped to a bounded window so it stays served by the timestamp index. Returns grand totals, breakdowns by model / user / API key / source / session (``source_label``) / endpoint / provider (top rows plus a reconciling ``other`` fold, billed token counts), the error taxonomy grouped by failure status code, and a UTC-bucketed time series carrying each bucket\'s error count and billed token composition (input incl. cache, cache read/write, output).  Each breakdown is its own ``GROUP BY`` pass, so a caller that reads only the totals or the series should narrow ``dimensions`` rather than pay for all eight (the dashboard\'s tiles, timeline context, and model typeahead all do). Omitting the parameter keeps the full set.
+     * Usage Summary
+     */
+    async usageSummaryV1UsageSummaryGet(requestParameters: UsageSummaryV1UsageSummaryGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UsageSummary> {
+        const response = await this.usageSummaryV1UsageSummaryGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
 }
+
+/**
+ * @export
+ */
+export const CountUsageV1UsageCountGetToolEnum = {
+    Any: 'any',
+    WebSearch: 'web_search',
+    CodeExecution: 'code_execution'
+} as const;
+export type CountUsageV1UsageCountGetToolEnum = typeof CountUsageV1UsageCountGetToolEnum[keyof typeof CountUsageV1UsageCountGetToolEnum];
+/**
+ * @export
+ */
+export const ListUsageV1UsageGetToolEnum = {
+    Any: 'any',
+    WebSearch: 'web_search',
+    CodeExecution: 'code_execution'
+} as const;
+export type ListUsageV1UsageGetToolEnum = typeof ListUsageV1UsageGetToolEnum[keyof typeof ListUsageV1UsageGetToolEnum];
+/**
+ * @export
+ */
+export const UsageSeriesV1UsageSeriesGetGroupByEnum = {
+    Model: 'model',
+    UserId: 'user_id',
+    ApiKeyId: 'api_key_id',
+    Source: 'source'
+} as const;
+export type UsageSeriesV1UsageSeriesGetGroupByEnum = typeof UsageSeriesV1UsageSeriesGetGroupByEnum[keyof typeof UsageSeriesV1UsageSeriesGetGroupByEnum];
+/**
+ * @export
+ */
+export const UsageSeriesV1UsageSeriesGetToolEnum = {
+    Any: 'any',
+    WebSearch: 'web_search',
+    CodeExecution: 'code_execution'
+} as const;
+export type UsageSeriesV1UsageSeriesGetToolEnum = typeof UsageSeriesV1UsageSeriesGetToolEnum[keyof typeof UsageSeriesV1UsageSeriesGetToolEnum];
+/**
+ * @export
+ */
+export const UsageSeriesV1UsageSeriesGetBucketEnum = {
+    Hour: 'hour',
+    Day: 'day'
+} as const;
+export type UsageSeriesV1UsageSeriesGetBucketEnum = typeof UsageSeriesV1UsageSeriesGetBucketEnum[keyof typeof UsageSeriesV1UsageSeriesGetBucketEnum];
+/**
+ * @export
+ */
+export const UsageSummaryCsvV1UsageSummaryCsvGetToolEnum = {
+    Any: 'any',
+    WebSearch: 'web_search',
+    CodeExecution: 'code_execution'
+} as const;
+export type UsageSummaryCsvV1UsageSummaryCsvGetToolEnum = typeof UsageSummaryCsvV1UsageSummaryCsvGetToolEnum[keyof typeof UsageSummaryCsvV1UsageSummaryCsvGetToolEnum];
+/**
+ * @export
+ */
+export const UsageSummaryV1UsageSummaryGetToolEnum = {
+    Any: 'any',
+    WebSearch: 'web_search',
+    CodeExecution: 'code_execution'
+} as const;
+export type UsageSummaryV1UsageSummaryGetToolEnum = typeof UsageSummaryV1UsageSummaryGetToolEnum[keyof typeof UsageSummaryV1UsageSummaryGetToolEnum];
+/**
+ * @export
+ */
+export const UsageSummaryV1UsageSummaryGetBucketEnum = {
+    Hour: 'hour',
+    Day: 'day'
+} as const;
+export type UsageSummaryV1UsageSummaryGetBucketEnum = typeof UsageSummaryV1UsageSummaryGetBucketEnum[keyof typeof UsageSummaryV1UsageSummaryGetBucketEnum];
+/**
+ * @export
+ */
+export const UsageSummaryV1UsageSummaryGetDimensionsEnum = {
+    Model: 'model',
+    User: 'user',
+    ApiKey: 'api_key',
+    Source: 'source',
+    SourceLabel: 'source_label',
+    Endpoint: 'endpoint',
+    Provider: 'provider',
+    StatusCode: 'status_code',
+    Tool: 'tool',
+    None: 'none'
+} as const;
+export type UsageSummaryV1UsageSummaryGetDimensionsEnum = typeof UsageSummaryV1UsageSummaryGetDimensionsEnum[keyof typeof UsageSummaryV1UsageSummaryGetDimensionsEnum];

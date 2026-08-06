@@ -27,7 +27,7 @@ export interface MRWebSearchResultBlock {
      */
     encryptedContent: string;
     /**
-     * Filter models by provider name
+     * 
      * @type {string}
      * @memberof MRWebSearchResultBlock
      */

@@ -7,11 +7,15 @@ Response model for model pricing.
 
 Name | Type
 ------------ | -------------
+`cacheReadPricePerMillion` | number
+`cacheWrite1hPricePerMillion` | number
+`cacheWritePricePerMillion` | number
 `createdAt` | string
 `effectiveAt` | string
 `inputPricePerMillion` | number
 `modelKey` | string
 `outputPricePerMillion` | number
+`pricingTiers` | [Array&lt;PricingTier&gt;](PricingTier.md)
 `updatedAt` | string
 
 ## Example
@@ -21,11 +25,15 @@ import type { PricingResponse } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "cacheReadPricePerMillion": null,
+  "cacheWrite1hPricePerMillion": null,
+  "cacheWritePricePerMillion": null,
   "createdAt": null,
   "effectiveAt": null,
   "inputPricePerMillion": null,
   "modelKey": null,
   "outputPricePerMillion": null,
+  "pricingTiers": null,
   "updatedAt": null,
 } satisfies PricingResponse
 

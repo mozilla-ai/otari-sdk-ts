@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Source1 } from './Source1';
+import {
+    Source1FromJSON,
+    Source1FromJSONTyped,
+    Source1ToJSON,
+    Source1ToJSONTyped,
+} from './Source1';
 import type { MRCitationsConfig } from './MRCitationsConfig';
 import {
     MRCitationsConfigFromJSON,
@@ -20,13 +27,6 @@ import {
     MRCitationsConfigToJSON,
     MRCitationsConfigToJSONTyped,
 } from './MRCitationsConfig';
-import type { Source } from './Source';
-import {
-    SourceFromJSON,
-    SourceFromJSONTyped,
-    SourceToJSON,
-    SourceToJSONTyped,
-} from './Source';
 
 /**
  * 
@@ -43,10 +43,10 @@ export interface MRDocumentBlock {
     citations?: MRCitationsConfig | null;
     /**
      * 
-     * @type {Source}
+     * @type {Source1}
      * @memberof MRDocumentBlock
      */
-    source: Source;
+    source: Source1;
     /**
      * 
      * @type {string}
@@ -92,7 +92,7 @@ export function MRDocumentBlockFromJSONTyped(json: any, ignoreDiscriminator: boo
         
             ...json,
         'citations': json['citations'] == null ? undefined : MRCitationsConfigFromJSON(json['citations']),
-        'source': SourceFromJSON(json['source']),
+        'source': Source1FromJSON(json['source']),
         'title': json['title'] == null ? undefined : json['title'],
         'type': json['type'],
     };
@@ -111,7 +111,7 @@ export function MRDocumentBlockToJSONTyped(value?: MRDocumentBlock | null, ignor
         
             ...value,
         'citations': MRCitationsConfigToJSON(value['citations']),
-        'source': SourceToJSON(value['source']),
+        'source': Source1ToJSON(value['source']),
         'title': value['title'],
         'type': value['type'],
     };

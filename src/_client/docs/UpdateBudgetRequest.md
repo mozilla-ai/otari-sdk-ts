@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `budgetDurationSec` | number
 `maxBudget` | number
+`name` | string
 
 ## Example
 
@@ -19,6 +20,7 @@ import type { UpdateBudgetRequest } from ''
 const example = {
   "budgetDurationSec": null,
   "maxBudget": null,
+  "name": null,
 } satisfies UpdateBudgetRequest
 
 console.log(example)

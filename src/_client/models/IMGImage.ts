@@ -21,19 +21,19 @@ import { mapValues } from '../runtime';
 export interface IMGImage {
     [key: string]: any | any;
     /**
-     * Filter models by provider name
+     * Delete the alias scoped to this user. Omit to delete the global alias of that name.
      * @type {string}
      * @memberof IMGImage
      */
     b64Json?: string | null;
     /**
-     * Filter models by provider name
+     * Delete the alias scoped to this user. Omit to delete the global alias of that name.
      * @type {string}
      * @memberof IMGImage
      */
     revisedPrompt?: string | null;
     /**
-     * Filter models by provider name
+     * Delete the alias scoped to this user. Omit to delete the global alias of that name.
      * @type {string}
      * @memberof IMGImage
      */

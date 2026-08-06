@@ -26,18 +26,32 @@ import {
  * 
  * A subset of :class:`MessagesRequest`: the input fields that affect the token
  * count, minus ``max_tokens`` and the streaming/sampling controls, since the
- * endpoint only counts input tokens. Clients such as Claude Code call this on
- * every turn to keep their prompt within the model's context window.
+ * endpoint only counts input tokens. ``context_management`` and ``betas`` are
+ * accepted for wire compatibility, but the local estimate does not apply
+ * provider-side context edits. Clients such as Claude Code call this on every
+ * turn to keep their prompt within the model's context window.
  * @export
  * @interface CountTokensRequest
  */
 export interface CountTokensRequest {
     /**
      * 
+     * @type {Array<string>}
+     * @memberof CountTokensRequest
+     */
+    betas?: Array<string> | null;
+    /**
+     * An unsaved policy body to explain.
      * @type {{ [key: string]: any; }}
      * @memberof CountTokensRequest
      */
     cacheControl?: { [key: string]: any; } | null;
+    /**
+     * An unsaved policy body to explain.
+     * @type {{ [key: string]: any; }}
+     * @memberof CountTokensRequest
+     */
+    contextManagement?: { [key: string]: any; } | null;
     /**
      * 
      * @type {Array<{ [key: string]: any; } | null>}
@@ -45,7 +59,7 @@ export interface CountTokensRequest {
      */
     messages: Array<{ [key: string]: any; } | null>;
     /**
-     * 
+     * An unsaved policy body to explain.
      * @type {{ [key: string]: any; }}
      * @memberof CountTokensRequest
      */
@@ -63,13 +77,13 @@ export interface CountTokensRequest {
      */
     system?: System | null;
     /**
-     * 
+     * An unsaved policy body to explain.
      * @type {{ [key: string]: any; }}
      * @memberof CountTokensRequest
      */
     thinking?: { [key: string]: any; } | null;
     /**
-     * 
+     * An unsaved policy body to explain.
      * @type {{ [key: string]: any; }}
      * @memberof CountTokensRequest
      */
@@ -101,7 +115,9 @@ export function CountTokensRequestFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
+        'betas': json['betas'] == null ? undefined : json['betas'],
         'cacheControl': json['cache_control'] == null ? undefined : json['cache_control'],
+        'contextManagement': json['context_management'] == null ? undefined : json['context_management'],
         'messages': json['messages'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'model': json['model'],
@@ -123,7 +139,9 @@ export function CountTokensRequestToJSONTyped(value?: CountTokensRequest | null,
 
     return {
         
+        'betas': value['betas'],
         'cache_control': value['cacheControl'],
+        'context_management': value['contextManagement'],
         'messages': value['messages'],
         'metadata': value['metadata'],
         'model': value['model'],

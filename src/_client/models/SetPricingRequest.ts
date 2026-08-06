@@ -13,12 +13,38 @@
  */
 
 import { mapValues } from '../runtime';
+import type { PricingTier } from './PricingTier';
+import {
+    PricingTierFromJSON,
+    PricingTierFromJSONTyped,
+    PricingTierToJSON,
+    PricingTierToJSONTyped,
+} from './PricingTier';
+
 /**
- * Request model for setting model pricing.
+ * Create a versioned per-model price, with optional cache and context tiers.
  * @export
  * @interface SetPricingRequest
  */
 export interface SetPricingRequest {
+    /**
+     * Price per 1M cached-input tokens
+     * @type {number}
+     * @memberof SetPricingRequest
+     */
+    cacheReadPricePerMillion?: number | null;
+    /**
+     * Price per 1M Anthropic 1-hour cache-write tokens
+     * @type {number}
+     * @memberof SetPricingRequest
+     */
+    cacheWrite1hPricePerMillion?: number | null;
+    /**
+     * Price per 1M cache-write (creation) tokens
+     * @type {number}
+     * @memberof SetPricingRequest
+     */
+    cacheWritePricePerMillion?: number | null;
     /**
      * ISO 8601 datetime from which this price applies. Defaults to now if omitted.
      * @type {Date}
@@ -43,6 +69,12 @@ export interface SetPricingRequest {
      * @memberof SetPricingRequest
      */
     outputPricePerMillion: number;
+    /**
+     * Whole-request context thresholds. Fields omitted by a tier inherit the base rate.
+     * @type {Array<PricingTier>}
+     * @memberof SetPricingRequest
+     */
+    pricingTiers?: Array<PricingTier> | null;
 }
 
 /**
@@ -65,10 +97,14 @@ export function SetPricingRequestFromJSONTyped(json: any, ignoreDiscriminator: b
     }
     return {
         
+        'cacheReadPricePerMillion': json['cache_read_price_per_million'] == null ? undefined : json['cache_read_price_per_million'],
+        'cacheWrite1hPricePerMillion': json['cache_write_1h_price_per_million'] == null ? undefined : json['cache_write_1h_price_per_million'],
+        'cacheWritePricePerMillion': json['cache_write_price_per_million'] == null ? undefined : json['cache_write_price_per_million'],
         'effectiveAt': json['effective_at'] == null ? undefined : (new Date(json['effective_at'])),
         'inputPricePerMillion': json['input_price_per_million'],
         'modelKey': json['model_key'],
         'outputPricePerMillion': json['output_price_per_million'],
+        'pricingTiers': json['pricing_tiers'] == null ? undefined : ((json['pricing_tiers'] as Array<any>).map(PricingTierFromJSON)),
     };
 }
 
@@ -83,10 +119,14 @@ export function SetPricingRequestToJSONTyped(value?: SetPricingRequest | null, i
 
     return {
         
+        'cache_read_price_per_million': value['cacheReadPricePerMillion'],
+        'cache_write_1h_price_per_million': value['cacheWrite1hPricePerMillion'],
+        'cache_write_price_per_million': value['cacheWritePricePerMillion'],
         'effective_at': value['effectiveAt'] == null ? value['effectiveAt'] : value['effectiveAt'].toISOString(),
         'input_price_per_million': value['inputPricePerMillion'],
         'model_key': value['modelKey'],
         'output_price_per_million': value['outputPricePerMillion'],
+        'pricing_tiers': value['pricingTiers'] == null ? undefined : ((value['pricingTiers'] as Array<any>).map(PricingTierToJSON)),
     };
 }
 

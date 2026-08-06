@@ -23,13 +23,13 @@ import { mapValues } from '../runtime';
 export interface CCKChoiceDeltaFunctionCall {
     [key: string]: any | any;
     /**
-     * Filter models by provider name
+     * Delete the alias scoped to this user. Omit to delete the global alias of that name.
      * @type {string}
      * @memberof CCKChoiceDeltaFunctionCall
      */
     arguments?: string | null;
     /**
-     * Filter models by provider name
+     * 
      * @type {string}
      * @memberof CCKChoiceDeltaFunctionCall
      */

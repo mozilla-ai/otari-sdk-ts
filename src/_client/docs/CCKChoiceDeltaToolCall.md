@@ -1,6 +1,7 @@
 
 # CCKChoiceDeltaToolCall
 
+Streaming counterpart of ``ChatCompletionMessageFunctionToolCall``.  Adds the same ``extra_content`` field so provider-specific tool-call metadata (e.g. Gemini\'s ``thought_signature``) can be carried on streaming deltas, not just on the final non-streaming tool call.
 
 ## Properties
 
@@ -10,6 +11,7 @@ Name | Type
 `id` | string
 `_function` | [CCKChoiceDeltaToolCallFunction](CCKChoiceDeltaToolCallFunction.md)
 `type` | string
+`extraContent` | { [key: string]: any; }
 
 ## Example
 
@@ -22,6 +24,7 @@ const example = {
   "id": null,
   "_function": null,
   "type": null,
+  "extraContent": null,
 } satisfies CCKChoiceDeltaToolCall
 
 console.log(example)

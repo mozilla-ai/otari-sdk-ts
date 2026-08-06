@@ -4,12 +4,80 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**confirmPricingRefreshV1PricingRefreshConfirmPost**](PricingApi.md#confirmpricingrefreshv1pricingrefreshconfirmpost) | **POST** /v1/pricing/refresh/confirm | Confirm Pricing Refresh |
 | [**deletePricingV1PricingModelKeyDelete**](PricingApi.md#deletepricingv1pricingmodelkeydelete) | **DELETE** /v1/pricing/{model_key} | Delete Pricing |
 | [**getPricingHistoryV1PricingModelKeyHistoryGet**](PricingApi.md#getpricinghistoryv1pricingmodelkeyhistoryget) | **GET** /v1/pricing/{model_key}/history | Get Pricing History |
 | [**getPricingV1PricingModelKeyGet**](PricingApi.md#getpricingv1pricingmodelkeyget) | **GET** /v1/pricing/{model_key} | Get Pricing |
 | [**listPricingV1PricingGet**](PricingApi.md#listpricingv1pricingget) | **GET** /v1/pricing | List Pricing |
+| [**previewPricingRefreshV1PricingRefreshPost**](PricingApi.md#previewpricingrefreshv1pricingrefreshpost) | **POST** /v1/pricing/refresh | Preview Pricing Refresh |
+| [**rejectPricingRefreshV1PricingRefreshRejectPost**](PricingApi.md#rejectpricingrefreshv1pricingrefreshrejectpost) | **POST** /v1/pricing/refresh/reject | Reject Pricing Refresh |
 | [**setPricingV1PricingPost**](PricingApi.md#setpricingv1pricingpost) | **POST** /v1/pricing | Set Pricing |
 
+
+
+## confirmPricingRefreshV1PricingRefreshConfirmPost
+
+> PricingRefreshConfirmationResponse confirmPricingRefreshV1PricingRefreshConfirmPost()
+
+Confirm Pricing Refresh
+
+Activate the latest reviewed default-price snapshot.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PricingApi,
+} from '';
+import type { ConfirmPricingRefreshV1PricingRefreshConfirmPostRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PricingApi(config);
+
+  try {
+    const data = await api.confirmPricingRefreshV1PricingRefreshConfirmPost();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**PricingRefreshConfirmationResponse**](PricingRefreshConfirmationResponse.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
 ## deletePricingV1PricingModelKeyDelete
@@ -32,6 +100,8 @@ import type { DeletePricingV1PricingModelKeyDeleteRequest } from '';
 async function example() {
   console.log("🚀 Testing  SDK...");
   const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
     // To configure API key authorization: ApiKeyAuth
     apiKey: "YOUR API KEY",
   });
@@ -70,7 +140,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -107,6 +177,8 @@ import type { GetPricingHistoryV1PricingModelKeyHistoryGetRequest } from '';
 async function example() {
   console.log("🚀 Testing  SDK...");
   const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
     // To configure API key authorization: ApiKeyAuth
     apiKey: "YOUR API KEY",
   });
@@ -142,7 +214,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -179,6 +251,8 @@ import type { GetPricingV1PricingModelKeyGetRequest } from '';
 async function example() {
   console.log("🚀 Testing  SDK...");
   const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
     // To configure API key authorization: ApiKeyAuth
     apiKey: "YOUR API KEY",
   });
@@ -217,7 +291,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -254,6 +328,8 @@ import type { ListPricingV1PricingGetRequest } from '';
 async function example() {
   console.log("🚀 Testing  SDK...");
   const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
     // To configure API key authorization: ApiKeyAuth
     apiKey: "YOUR API KEY",
   });
@@ -292,7 +368,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 
@@ -309,13 +385,143 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## previewPricingRefreshV1PricingRefreshPost
+
+> PricingRefreshPreviewResponse previewPricingRefreshV1PricingRefreshPost()
+
+Preview Pricing Refresh
+
+Fetch the latest defaults and hold them for operator review.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PricingApi,
+} from '';
+import type { PreviewPricingRefreshV1PricingRefreshPostRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PricingApi(config);
+
+  try {
+    const data = await api.previewPricingRefreshV1PricingRefreshPost();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**PricingRefreshPreviewResponse**](PricingRefreshPreviewResponse.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## rejectPricingRefreshV1PricingRefreshRejectPost
+
+> rejectPricingRefreshV1PricingRefreshRejectPost()
+
+Reject Pricing Refresh
+
+Discard a reviewed default-price snapshot without applying it.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PricingApi,
+} from '';
+import type { RejectPricingRefreshV1PricingRefreshRejectPostRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PricingApi(config);
+
+  try {
+    const data = await api.rejectPricingRefreshV1PricingRefreshRejectPost();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Successful Response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## setPricingV1PricingPost
 
 > PricingResponse setPricingV1PricingPost(setPricingRequest)
 
 Set Pricing
 
-Set or update pricing for a model.
+Set or update pricing for a model.  Rejects an alias: pricing, budgets, and usage all key on the resolved target, so a row stored under an alias name would never be read.
 
 ### Example
 
@@ -329,6 +535,8 @@ import type { SetPricingV1PricingPostRequest } from '';
 async function example() {
   console.log("🚀 Testing  SDK...");
   const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
     // To configure API key authorization: ApiKeyAuth
     apiKey: "YOUR API KEY",
   });
@@ -364,7 +572,7 @@ example().catch(console.error);
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
 
 ### HTTP request headers
 

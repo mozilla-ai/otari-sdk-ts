@@ -7,7 +7,7 @@
 Name | Type
 ------------ | -------------
 `citations` | [MRCitationsConfig](MRCitationsConfig.md)
-`source` | [Source](Source.md)
+`source` | [Source1](Source1.md)
 `title` | string
 `type` | string
 

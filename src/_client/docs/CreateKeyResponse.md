@@ -7,13 +7,17 @@ Response model for creating a new API key.
 
 Name | Type
 ------------ | -------------
+`allowedModels` | Array&lt;string&gt;
 `createdAt` | string
+`excludeFromBudget` | boolean
 `expiresAt` | string
 `id` | string
 `isActive` | boolean
 `key` | string
 `keyName` | string
+`keyPrefix` | string
 `metadata` | { [key: string]: any; }
+`rejectUserMismatch` | boolean
 `userId` | string
 
 ## Example
@@ -23,13 +27,17 @@ import type { CreateKeyResponse } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "allowedModels": null,
   "createdAt": null,
+  "excludeFromBudget": null,
   "expiresAt": null,
   "id": null,
   "isActive": null,
   "key": null,
   "keyName": null,
+  "keyPrefix": null,
   "metadata": null,
+  "rejectUserMismatch": null,
   "userId": null,
 } satisfies CreateKeyResponse
 
