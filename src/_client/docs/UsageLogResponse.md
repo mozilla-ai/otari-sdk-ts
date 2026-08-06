@@ -13,6 +13,7 @@ Name | Type
 `endpoint` | string
 `errorMessage` | string
 `id` | string
+`latencyMs` | number
 `model` | string
 `promptTokens` | number
 `provider` | string
@@ -34,6 +35,7 @@ const example = {
   "endpoint": null,
   "errorMessage": null,
   "id": null,
+  "latencyMs": null,
   "model": null,
   "promptTokens": null,
   "provider": null,

@@ -13,6 +13,20 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Content16Inner } from './Content16Inner';
+import {
+    Content16InnerFromJSON,
+    Content16InnerFromJSONTyped,
+    Content16InnerToJSON,
+    Content16InnerToJSONTyped,
+} from './Content16Inner';
+import type { MRBetaContainer } from './MRBetaContainer';
+import {
+    MRBetaContainerFromJSON,
+    MRBetaContainerFromJSONTyped,
+    MRBetaContainerToJSON,
+    MRBetaContainerToJSONTyped,
+} from './MRBetaContainer';
 import type { MRRefusalStopDetails } from './MRRefusalStopDetails';
 import {
     MRRefusalStopDetailsFromJSON,
@@ -27,27 +41,27 @@ import {
     ModelToJSON,
     ModelToJSONTyped,
 } from './Model';
-import type { Content9Inner } from './Content9Inner';
+import type { MRBetaContextManagementResponse } from './MRBetaContextManagementResponse';
 import {
-    Content9InnerFromJSON,
-    Content9InnerFromJSONTyped,
-    Content9InnerToJSON,
-    Content9InnerToJSONTyped,
-} from './Content9Inner';
-import type { MRUsage } from './MRUsage';
+    MRBetaContextManagementResponseFromJSON,
+    MRBetaContextManagementResponseFromJSONTyped,
+    MRBetaContextManagementResponseToJSON,
+    MRBetaContextManagementResponseToJSONTyped,
+} from './MRBetaContextManagementResponse';
+import type { MRBetaDiagnosticsFallback } from './MRBetaDiagnosticsFallback';
 import {
-    MRUsageFromJSON,
-    MRUsageFromJSONTyped,
-    MRUsageToJSON,
-    MRUsageToJSONTyped,
-} from './MRUsage';
-import type { MRContainer } from './MRContainer';
+    MRBetaDiagnosticsFallbackFromJSON,
+    MRBetaDiagnosticsFallbackFromJSONTyped,
+    MRBetaDiagnosticsFallbackToJSON,
+    MRBetaDiagnosticsFallbackToJSONTyped,
+} from './MRBetaDiagnosticsFallback';
+import type { MRMessageUsage } from './MRMessageUsage';
 import {
-    MRContainerFromJSON,
-    MRContainerFromJSONTyped,
-    MRContainerToJSON,
-    MRContainerToJSONTyped,
-} from './MRContainer';
+    MRMessageUsageFromJSON,
+    MRMessageUsageFromJSONTyped,
+    MRMessageUsageToJSON,
+    MRMessageUsageToJSONTyped,
+} from './MRMessageUsage';
 
 /**
  * 
@@ -64,16 +78,16 @@ export interface MessageResponse {
     id: string;
     /**
      * 
-     * @type {MRContainer}
+     * @type {MRBetaContainer}
      * @memberof MessageResponse
      */
-    container?: MRContainer | null;
+    container?: MRBetaContainer | null;
     /**
      * 
-     * @type {Array<Content9Inner>}
+     * @type {Array<Content16Inner>}
      * @memberof MessageResponse
      */
-    content: Array<Content9Inner>;
+    content: Array<Content16Inner>;
     /**
      * 
      * @type {Model}
@@ -99,7 +113,7 @@ export interface MessageResponse {
      */
     stopReason?: MessageResponseStopReasonEnum | null;
     /**
-     * Filter models by provider name
+     * Delete the alias scoped to this user. Omit to delete the global alias of that name.
      * @type {string}
      * @memberof MessageResponse
      */
@@ -112,10 +126,22 @@ export interface MessageResponse {
     type: MessageResponseTypeEnum;
     /**
      * 
-     * @type {MRUsage}
+     * @type {MRMessageUsage}
      * @memberof MessageResponse
      */
-    usage: MRUsage;
+    usage: MRMessageUsage;
+    /**
+     * 
+     * @type {MRBetaContextManagementResponse}
+     * @memberof MessageResponse
+     */
+    contextManagement?: MRBetaContextManagementResponse | null;
+    /**
+     * 
+     * @type {MRBetaDiagnosticsFallback}
+     * @memberof MessageResponse
+     */
+    diagnostics?: MRBetaDiagnosticsFallback | null;
 }
 
 
@@ -136,7 +162,9 @@ export const MessageResponseStopReasonEnum = {
     StopSequence: 'stop_sequence',
     ToolUse: 'tool_use',
     PauseTurn: 'pause_turn',
-    Refusal: 'refusal'
+    Compaction: 'compaction',
+    Refusal: 'refusal',
+    ModelContextWindowExceeded: 'model_context_window_exceeded'
 } as const;
 export type MessageResponseStopReasonEnum = typeof MessageResponseStopReasonEnum[keyof typeof MessageResponseStopReasonEnum];
 
@@ -174,15 +202,17 @@ export function MessageResponseFromJSONTyped(json: any, ignoreDiscriminator: boo
         
             ...json,
         'id': json['id'],
-        'container': json['container'] == null ? undefined : MRContainerFromJSON(json['container']),
-        'content': ((json['content'] as Array<any>).map(Content9InnerFromJSON)),
+        'container': json['container'] == null ? undefined : MRBetaContainerFromJSON(json['container']),
+        'content': ((json['content'] as Array<any>).map(Content16InnerFromJSON)),
         'model': ModelFromJSON(json['model']),
         'role': json['role'],
         'stopDetails': json['stop_details'] == null ? undefined : MRRefusalStopDetailsFromJSON(json['stop_details']),
         'stopReason': json['stop_reason'] == null ? undefined : json['stop_reason'],
         'stopSequence': json['stop_sequence'] == null ? undefined : json['stop_sequence'],
         'type': json['type'],
-        'usage': MRUsageFromJSON(json['usage']),
+        'usage': MRMessageUsageFromJSON(json['usage']),
+        'contextManagement': json['context_management'] == null ? undefined : MRBetaContextManagementResponseFromJSON(json['context_management']),
+        'diagnostics': json['diagnostics'] == null ? undefined : MRBetaDiagnosticsFallbackFromJSON(json['diagnostics']),
     };
 }
 
@@ -199,15 +229,17 @@ export function MessageResponseToJSONTyped(value?: MessageResponse | null, ignor
         
             ...value,
         'id': value['id'],
-        'container': MRContainerToJSON(value['container']),
-        'content': ((value['content'] as Array<any>).map(Content9InnerToJSON)),
+        'container': MRBetaContainerToJSON(value['container']),
+        'content': ((value['content'] as Array<any>).map(Content16InnerToJSON)),
         'model': ModelToJSON(value['model']),
         'role': value['role'],
         'stop_details': MRRefusalStopDetailsToJSON(value['stopDetails']),
         'stop_reason': value['stopReason'],
         'stop_sequence': value['stopSequence'],
         'type': value['type'],
-        'usage': MRUsageToJSON(value['usage']),
+        'usage': MRMessageUsageToJSON(value['usage']),
+        'context_management': MRBetaContextManagementResponseToJSON(value['contextManagement']),
+        'diagnostics': MRBetaDiagnosticsFallbackToJSON(value['diagnostics']),
     };
 }
 

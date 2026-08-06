@@ -13,34 +13,34 @@
  */
 
 import { mapValues } from '../runtime';
-import type { MRTextEditorCodeExecutionViewResultBlock } from './MRTextEditorCodeExecutionViewResultBlock';
+import type { MRBetaCodeExecutionToolResultError } from './MRBetaCodeExecutionToolResultError';
 import {
-    MRTextEditorCodeExecutionViewResultBlockFromJSON,
-    MRTextEditorCodeExecutionViewResultBlockFromJSONTyped,
-    MRTextEditorCodeExecutionViewResultBlockToJSON,
-    MRTextEditorCodeExecutionViewResultBlockToJSONTyped,
-} from './MRTextEditorCodeExecutionViewResultBlock';
-import type { MRTextEditorCodeExecutionToolResultError } from './MRTextEditorCodeExecutionToolResultError';
+    MRBetaCodeExecutionToolResultErrorFromJSON,
+    MRBetaCodeExecutionToolResultErrorFromJSONTyped,
+    MRBetaCodeExecutionToolResultErrorToJSON,
+    MRBetaCodeExecutionToolResultErrorToJSONTyped,
+} from './MRBetaCodeExecutionToolResultError';
+import type { MRBetaCodeExecutionOutputBlock } from './MRBetaCodeExecutionOutputBlock';
 import {
-    MRTextEditorCodeExecutionToolResultErrorFromJSON,
-    MRTextEditorCodeExecutionToolResultErrorFromJSONTyped,
-    MRTextEditorCodeExecutionToolResultErrorToJSON,
-    MRTextEditorCodeExecutionToolResultErrorToJSONTyped,
-} from './MRTextEditorCodeExecutionToolResultError';
-import type { MRTextEditorCodeExecutionStrReplaceResultBlock } from './MRTextEditorCodeExecutionStrReplaceResultBlock';
+    MRBetaCodeExecutionOutputBlockFromJSON,
+    MRBetaCodeExecutionOutputBlockFromJSONTyped,
+    MRBetaCodeExecutionOutputBlockToJSON,
+    MRBetaCodeExecutionOutputBlockToJSONTyped,
+} from './MRBetaCodeExecutionOutputBlock';
+import type { MRBetaEncryptedCodeExecutionResultBlock } from './MRBetaEncryptedCodeExecutionResultBlock';
 import {
-    MRTextEditorCodeExecutionStrReplaceResultBlockFromJSON,
-    MRTextEditorCodeExecutionStrReplaceResultBlockFromJSONTyped,
-    MRTextEditorCodeExecutionStrReplaceResultBlockToJSON,
-    MRTextEditorCodeExecutionStrReplaceResultBlockToJSONTyped,
-} from './MRTextEditorCodeExecutionStrReplaceResultBlock';
-import type { MRTextEditorCodeExecutionCreateResultBlock } from './MRTextEditorCodeExecutionCreateResultBlock';
+    MRBetaEncryptedCodeExecutionResultBlockFromJSON,
+    MRBetaEncryptedCodeExecutionResultBlockFromJSONTyped,
+    MRBetaEncryptedCodeExecutionResultBlockToJSON,
+    MRBetaEncryptedCodeExecutionResultBlockToJSONTyped,
+} from './MRBetaEncryptedCodeExecutionResultBlock';
+import type { MRBetaCodeExecutionResultBlock } from './MRBetaCodeExecutionResultBlock';
 import {
-    MRTextEditorCodeExecutionCreateResultBlockFromJSON,
-    MRTextEditorCodeExecutionCreateResultBlockFromJSONTyped,
-    MRTextEditorCodeExecutionCreateResultBlockToJSON,
-    MRTextEditorCodeExecutionCreateResultBlockToJSONTyped,
-} from './MRTextEditorCodeExecutionCreateResultBlock';
+    MRBetaCodeExecutionResultBlockFromJSON,
+    MRBetaCodeExecutionResultBlockFromJSONTyped,
+    MRBetaCodeExecutionResultBlockToJSON,
+    MRBetaCodeExecutionResultBlockToJSONTyped,
+} from './MRBetaCodeExecutionResultBlock';
 
 /**
  * 
@@ -56,82 +56,40 @@ export interface Content5 {
     errorCode: Content5ErrorCodeEnum;
     /**
      * 
-     * @type {string}
-     * @memberof Content5
-     */
-    errorMessage?: string;
-    /**
-     * 
      * @type {Content5TypeEnum}
      * @memberof Content5
      */
     type: Content5TypeEnum;
     /**
      * 
+     * @type {Array<MRBetaCodeExecutionOutputBlock>}
+     * @memberof Content5
+     */
+    content: Array<MRBetaCodeExecutionOutputBlock>;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content5
+     */
+    returnCode: number;
+    /**
+     * 
      * @type {string}
      * @memberof Content5
      */
-    content: string;
+    stderr: string;
     /**
      * 
-     * @type {Content5FileTypeEnum}
+     * @type {string}
      * @memberof Content5
      */
-    fileType: Content5FileTypeEnum;
+    stdout: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof Content5
      */
-    numLines?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content5
-     */
-    startLine?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content5
-     */
-    totalLines?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Content5
-     */
-    isFileUpdate: boolean;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof Content5
-     */
-    lines?: Array<string>;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content5
-     */
-    newLines?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content5
-     */
-    newStart?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content5
-     */
-    oldLines?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content5
-     */
-    oldStart?: number;
+    encryptedStdout: string;
 }
 
 
@@ -142,8 +100,7 @@ export const Content5ErrorCodeEnum = {
     InvalidToolInput: 'invalid_tool_input',
     Unavailable: 'unavailable',
     TooManyRequests: 'too_many_requests',
-    ExecutionTimeExceeded: 'execution_time_exceeded',
-    FileNotFound: 'file_not_found'
+    ExecutionTimeExceeded: 'execution_time_exceeded'
 } as const;
 export type Content5ErrorCodeEnum = typeof Content5ErrorCodeEnum[keyof typeof Content5ErrorCodeEnum];
 
@@ -151,22 +108,11 @@ export type Content5ErrorCodeEnum = typeof Content5ErrorCodeEnum[keyof typeof Co
  * @export
  */
 export const Content5TypeEnum = {
-    TextEditorCodeExecutionToolResultError: 'text_editor_code_execution_tool_result_error',
-    TextEditorCodeExecutionViewResult: 'text_editor_code_execution_view_result',
-    TextEditorCodeExecutionCreateResult: 'text_editor_code_execution_create_result',
-    TextEditorCodeExecutionStrReplaceResult: 'text_editor_code_execution_str_replace_result'
+    CodeExecutionToolResultError: 'code_execution_tool_result_error',
+    CodeExecutionResult: 'code_execution_result',
+    EncryptedCodeExecutionResult: 'encrypted_code_execution_result'
 } as const;
 export type Content5TypeEnum = typeof Content5TypeEnum[keyof typeof Content5TypeEnum];
-
-/**
- * @export
- */
-export const Content5FileTypeEnum = {
-    Text: 'text',
-    Image: 'image',
-    Pdf: 'pdf'
-} as const;
-export type Content5FileTypeEnum = typeof Content5FileTypeEnum[keyof typeof Content5FileTypeEnum];
 
 
 /**
@@ -176,8 +122,10 @@ export function instanceOfContent5(value: object): value is Content5 {
     if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     if (!('content' in value) || value['content'] === undefined) return false;
-    if (!('fileType' in value) || value['fileType'] === undefined) return false;
-    if (!('isFileUpdate' in value) || value['isFileUpdate'] === undefined) return false;
+    if (!('returnCode' in value) || value['returnCode'] === undefined) return false;
+    if (!('stderr' in value) || value['stderr'] === undefined) return false;
+    if (!('stdout' in value) || value['stdout'] === undefined) return false;
+    if (!('encryptedStdout' in value) || value['encryptedStdout'] === undefined) return false;
     return true;
 }
 
@@ -192,19 +140,12 @@ export function Content5FromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     return {
         
         'errorCode': json['error_code'],
-        'errorMessage': json['error_message'] == null ? undefined : json['error_message'],
         'type': json['type'],
-        'content': json['content'],
-        'fileType': json['file_type'],
-        'numLines': json['num_lines'] == null ? undefined : json['num_lines'],
-        'startLine': json['start_line'] == null ? undefined : json['start_line'],
-        'totalLines': json['total_lines'] == null ? undefined : json['total_lines'],
-        'isFileUpdate': json['is_file_update'],
-        'lines': json['lines'] == null ? undefined : json['lines'],
-        'newLines': json['new_lines'] == null ? undefined : json['new_lines'],
-        'newStart': json['new_start'] == null ? undefined : json['new_start'],
-        'oldLines': json['old_lines'] == null ? undefined : json['old_lines'],
-        'oldStart': json['old_start'] == null ? undefined : json['old_start'],
+        'content': ((json['content'] as Array<any>).map(MRBetaCodeExecutionOutputBlockFromJSON)),
+        'returnCode': json['return_code'],
+        'stderr': json['stderr'],
+        'stdout': json['stdout'],
+        'encryptedStdout': json['encrypted_stdout'],
     };
 }
 
@@ -220,19 +161,12 @@ export function Content5ToJSONTyped(value?: Content5 | null, ignoreDiscriminator
     return {
         
         'error_code': value['errorCode'],
-        'error_message': value['errorMessage'],
         'type': value['type'],
-        'content': value['content'],
-        'file_type': value['fileType'],
-        'num_lines': value['numLines'],
-        'start_line': value['startLine'],
-        'total_lines': value['totalLines'],
-        'is_file_update': value['isFileUpdate'],
-        'lines': value['lines'],
-        'new_lines': value['newLines'],
-        'new_start': value['newStart'],
-        'old_lines': value['oldLines'],
-        'old_start': value['oldStart'],
+        'content': ((value['content'] as Array<any>).map(MRBetaCodeExecutionOutputBlockToJSON)),
+        'return_code': value['returnCode'],
+        'stderr': value['stderr'],
+        'stdout': value['stdout'],
+        'encrypted_stdout': value['encryptedStdout'],
     };
 }
 

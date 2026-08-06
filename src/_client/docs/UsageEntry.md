@@ -8,17 +8,30 @@ A single usage log entry.
 Name | Type
 ------------ | -------------
 `apiKeyId` | string
+`attemptCount` | number
+`attemptPosition` | number
+`billingMeters` | { [key: string]: any; }
 `cacheReadTokens` | number
+`cacheWrite1hTokens` | number
 `cacheWriteTokens` | number
 `completionTokens` | number
 `cost` | number
+`countsTowardBudget` | boolean
 `endpoint` | string
 `errorMessage` | string
 `id` | string
+`latencyMs` | number
 `model` | string
+`policyName` | string
+`pricingBreakdown` | Array&lt;{ [key: string]: UsageEntryPricingBreakdownInnerValue; }&gt;
 `promptTokens` | number
 `provider` | string
+`requestGroupId` | string
+`selectionReason` | string
+`source` | string
+`sourceLabel` | string
 `status` | string
+`statusCode` | number
 `timestamp` | string
 `totalTokens` | number
 `userId` | string
@@ -31,17 +44,30 @@ import type { UsageEntry } from ''
 // TODO: Update the object below with actual values
 const example = {
   "apiKeyId": null,
+  "attemptCount": null,
+  "attemptPosition": null,
+  "billingMeters": null,
   "cacheReadTokens": null,
+  "cacheWrite1hTokens": null,
   "cacheWriteTokens": null,
   "completionTokens": null,
   "cost": null,
+  "countsTowardBudget": null,
   "endpoint": null,
   "errorMessage": null,
   "id": null,
+  "latencyMs": null,
   "model": null,
+  "policyName": null,
+  "pricingBreakdown": null,
   "promptTokens": null,
   "provider": null,
+  "requestGroupId": null,
+  "selectionReason": null,
+  "source": null,
+  "sourceLabel": null,
   "status": null,
+  "statusCode": null,
   "timestamp": null,
   "totalTokens": null,
   "userId": null,

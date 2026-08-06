@@ -20,6 +20,18 @@ import { mapValues } from '../runtime';
  */
 export interface CreateKeyRequest {
     /**
+     * Model allow-list: null = any model, [] = deny all, or canonical instance:model entries (with instance:* / instance:prefix* wildcards).
+     * @type {Array<string>}
+     * @memberof CreateKeyRequest
+     */
+    allowedModels?: Array<string> | null;
+    /**
+     * When true, requests on this key are logged with cost but never reserved, reconciled into the user's spend, or gated by budget.
+     * @type {boolean}
+     * @memberof CreateKeyRequest
+     */
+    excludeFromBudget?: boolean;
+    /**
      * Optional expiration timestamp
      * @type {Date}
      * @memberof CreateKeyRequest
@@ -37,6 +49,12 @@ export interface CreateKeyRequest {
      * @memberof CreateKeyRequest
      */
     metadata?: { [key: string]: any; };
+    /**
+     * Per-key override of the deployment-wide reject_user_mismatch setting: null (default) inherits it, true always rejects a request naming a different 'user', false always accepts it. Spend binds to this key's own user either way.
+     * @type {boolean}
+     * @memberof CreateKeyRequest
+     */
+    rejectUserMismatch?: boolean | null;
     /**
      * Optional user ID to associate with this key
      * @type {string}
@@ -62,9 +80,12 @@ export function CreateKeyRequestFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
+        'allowedModels': json['allowed_models'] == null ? undefined : json['allowed_models'],
+        'excludeFromBudget': json['exclude_from_budget'] == null ? undefined : json['exclude_from_budget'],
         'expiresAt': json['expires_at'] == null ? undefined : (new Date(json['expires_at'])),
         'keyName': json['key_name'] == null ? undefined : json['key_name'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'rejectUserMismatch': json['reject_user_mismatch'] == null ? undefined : json['reject_user_mismatch'],
         'userId': json['user_id'] == null ? undefined : json['user_id'],
     };
 }
@@ -80,9 +101,12 @@ export function CreateKeyRequestToJSONTyped(value?: CreateKeyRequest | null, ign
 
     return {
         
+        'allowed_models': value['allowedModels'],
+        'exclude_from_budget': value['excludeFromBudget'],
         'expires_at': value['expiresAt'] == null ? value['expiresAt'] : value['expiresAt'].toISOString(),
         'key_name': value['keyName'],
         'metadata': value['metadata'],
+        'reject_user_mismatch': value['rejectUserMismatch'],
         'user_id': value['userId'],
     };
 }

@@ -21,7 +21,7 @@ import { mapValues } from '../runtime';
 export interface CCCompletionTokensDetails {
     [key: string]: any | any;
     /**
-     * 
+     * Filter to a single failure status code (e.g. 429 for provider rate limits, 402 for missing-pricing rejections). Only error rows carry one, so this filter also restricts to status='error' unless 'status' is given explicitly
      * @type {number}
      * @memberof CCCompletionTokensDetails
      */
@@ -33,13 +33,13 @@ export interface CCCompletionTokensDetails {
      */
     audioTokens?: number | null;
     /**
-     * 
+     * Filter to a single failure status code (e.g. 429 for provider rate limits, 402 for missing-pricing rejections). Only error rows carry one, so this filter also restricts to status='error' unless 'status' is given explicitly
      * @type {number}
      * @memberof CCCompletionTokensDetails
      */
     reasoningTokens?: number | null;
     /**
-     * 
+     * Filter to a single failure status code (e.g. 429 for provider rate limits, 402 for missing-pricing rejections). Only error rows carry one, so this filter also restricts to status='error' unless 'status' is given explicitly
      * @type {number}
      * @memberof CCCompletionTokensDetails
      */

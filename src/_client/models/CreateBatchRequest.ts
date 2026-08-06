@@ -51,6 +51,12 @@ export interface CreateBatchRequest {
      * @memberof CreateBatchRequest
      */
     requests: Array<BatchRequestItem>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateBatchRequest
+     */
+    user?: string | null;
 }
 
 /**
@@ -76,6 +82,7 @@ export function CreateBatchRequestFromJSONTyped(json: any, ignoreDiscriminator: 
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'model': json['model'],
         'requests': ((json['requests'] as Array<any>).map(BatchRequestItemFromJSON)),
+        'user': json['user'] == null ? undefined : json['user'],
     };
 }
 
@@ -94,6 +101,7 @@ export function CreateBatchRequestToJSONTyped(value?: CreateBatchRequest | null,
         'metadata': value['metadata'],
         'model': value['model'],
         'requests': ((value['requests'] as Array<any>).map(BatchRequestItemToJSON)),
+        'user': value['user'],
     };
 }
 

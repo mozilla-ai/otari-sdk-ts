@@ -13,27 +13,27 @@
  */
 
 import { mapValues } from '../runtime';
-import type { MRServerToolCaller20260120 } from './MRServerToolCaller20260120';
+import type { MRBetaServerToolCaller } from './MRBetaServerToolCaller';
 import {
-    MRServerToolCaller20260120FromJSON,
-    MRServerToolCaller20260120FromJSONTyped,
-    MRServerToolCaller20260120ToJSON,
-    MRServerToolCaller20260120ToJSONTyped,
-} from './MRServerToolCaller20260120';
-import type { MRServerToolCaller } from './MRServerToolCaller';
+    MRBetaServerToolCallerFromJSON,
+    MRBetaServerToolCallerFromJSONTyped,
+    MRBetaServerToolCallerToJSON,
+    MRBetaServerToolCallerToJSONTyped,
+} from './MRBetaServerToolCaller';
+import type { MRBetaServerToolCaller20260120 } from './MRBetaServerToolCaller20260120';
 import {
-    MRServerToolCallerFromJSON,
-    MRServerToolCallerFromJSONTyped,
-    MRServerToolCallerToJSON,
-    MRServerToolCallerToJSONTyped,
-} from './MRServerToolCaller';
-import type { MRDirectCaller } from './MRDirectCaller';
+    MRBetaServerToolCaller20260120FromJSON,
+    MRBetaServerToolCaller20260120FromJSONTyped,
+    MRBetaServerToolCaller20260120ToJSON,
+    MRBetaServerToolCaller20260120ToJSONTyped,
+} from './MRBetaServerToolCaller20260120';
+import type { MRBetaDirectCaller } from './MRBetaDirectCaller';
 import {
-    MRDirectCallerFromJSON,
-    MRDirectCallerFromJSONTyped,
-    MRDirectCallerToJSON,
-    MRDirectCallerToJSONTyped,
-} from './MRDirectCaller';
+    MRBetaDirectCallerFromJSON,
+    MRBetaDirectCallerFromJSONTyped,
+    MRBetaDirectCallerToJSON,
+    MRBetaDirectCallerToJSONTyped,
+} from './MRBetaDirectCaller';
 
 /**
  * 

@@ -31,6 +31,12 @@ export interface UpdateBudgetRequest {
      * @memberof UpdateBudgetRequest
      */
     maxBudget?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateBudgetRequest
+     */
+    name?: string | null;
 }
 
 /**
@@ -52,6 +58,7 @@ export function UpdateBudgetRequestFromJSONTyped(json: any, ignoreDiscriminator:
         
         'budgetDurationSec': json['budget_duration_sec'] == null ? undefined : json['budget_duration_sec'],
         'maxBudget': json['max_budget'] == null ? undefined : json['max_budget'],
+        'name': json['name'] == null ? undefined : json['name'],
     };
 }
 
@@ -68,6 +75,7 @@ export function UpdateBudgetRequestToJSONTyped(value?: UpdateBudgetRequest | nul
         
         'budget_duration_sec': value['budgetDurationSec'],
         'max_budget': value['maxBudget'],
+        'name': value['name'],
     };
 }
 

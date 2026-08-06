@@ -14,6 +14,11 @@
 
 import * as runtime from '../runtime';
 import {
+    type BudgetResetLogResponse,
+    BudgetResetLogResponseFromJSON,
+    BudgetResetLogResponseToJSON,
+} from '../models/BudgetResetLogResponse';
+import {
     type BudgetResponse,
     BudgetResponseFromJSON,
     BudgetResponseToJSON,
@@ -44,6 +49,12 @@ export interface DeleteBudgetV1BudgetsBudgetIdDeleteRequest {
 
 export interface GetBudgetV1BudgetsBudgetIdGetRequest {
     budgetId: string;
+}
+
+export interface ListBudgetResetLogsV1BudgetsBudgetIdResetLogsGetRequest {
+    budgetId: string;
+    skip?: number;
+    limit?: number;
 }
 
 export interface ListBudgetsV1BudgetsGetRequest {
@@ -77,6 +88,10 @@ export class BudgetsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
@@ -130,6 +145,10 @@ export class BudgetsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
         }
 
@@ -180,6 +199,10 @@ export class BudgetsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
         }
 
@@ -216,6 +239,69 @@ export class BudgetsApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for listBudgetResetLogsV1BudgetsBudgetIdResetLogsGet without sending the request
+     */
+    async listBudgetResetLogsV1BudgetsBudgetIdResetLogsGetRequestOpts(requestParameters: ListBudgetResetLogsV1BudgetsBudgetIdResetLogsGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['budgetId'] == null) {
+            throw new runtime.RequiredError(
+                'budgetId',
+                'Required parameter "budgetId" was null or undefined when calling listBudgetResetLogsV1BudgetsBudgetIdResetLogsGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['skip'] != null) {
+            queryParameters['skip'] = requestParameters['skip'];
+        }
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/budgets/{budget_id}/reset-logs`;
+        urlPath = urlPath.replace('{budget_id}', encodeURIComponent(String(requestParameters['budgetId'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * List per-user reset events for a budget, newest first.
+     * List Budget Reset Logs
+     */
+    async listBudgetResetLogsV1BudgetsBudgetIdResetLogsGetRaw(requestParameters: ListBudgetResetLogsV1BudgetsBudgetIdResetLogsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<BudgetResetLogResponse>>> {
+        const requestOptions = await this.listBudgetResetLogsV1BudgetsBudgetIdResetLogsGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(BudgetResetLogResponseFromJSON));
+    }
+
+    /**
+     * List per-user reset events for a budget, newest first.
+     * List Budget Reset Logs
+     */
+    async listBudgetResetLogsV1BudgetsBudgetIdResetLogsGet(requestParameters: ListBudgetResetLogsV1BudgetsBudgetIdResetLogsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<BudgetResetLogResponse>> {
+        const response = await this.listBudgetResetLogsV1BudgetsBudgetIdResetLogsGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for listBudgetsV1BudgetsGet without sending the request
      */
     async listBudgetsV1BudgetsGetRequestOpts(requestParameters: ListBudgetsV1BudgetsGetRequest): Promise<runtime.RequestOpts> {
@@ -230,6 +316,10 @@ export class BudgetsApi extends runtime.BaseAPI {
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
@@ -289,6 +379,10 @@ export class BudgetsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication

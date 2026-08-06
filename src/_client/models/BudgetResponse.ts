@@ -15,6 +15,12 @@
 import { mapValues } from '../runtime';
 /**
  * Response model for budget information.
+ * 
+ * ``max_budget`` is the per-user spending limit, and multiple users can share
+ * one budget, so the usage rollup is an aggregate over the users assigned to
+ * this budget: how many there are and their combined ``spend`` / ``reserved``.
+ * Assigning users to a budget is done through the users API (dashboard support
+ * lands with user management), so a fresh gateway reports zeros here.
  * @export
  * @interface BudgetResponse
  */
@@ -48,7 +54,31 @@ export interface BudgetResponse {
      * @type {string}
      * @memberof BudgetResponse
      */
+    name: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof BudgetResponse
+     */
+    totalReserved?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BudgetResponse
+     */
+    totalSpend?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BudgetResponse
+     */
     updatedAt: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BudgetResponse
+     */
+    userCount?: number;
 }
 
 /**
@@ -59,6 +89,7 @@ export function instanceOfBudgetResponse(value: object): value is BudgetResponse
     if (!('budgetId' in value) || value['budgetId'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
     if (!('maxBudget' in value) || value['maxBudget'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
     if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
     return true;
 }
@@ -77,7 +108,11 @@ export function BudgetResponseFromJSONTyped(json: any, ignoreDiscriminator: bool
         'budgetId': json['budget_id'],
         'createdAt': json['created_at'],
         'maxBudget': json['max_budget'],
+        'name': json['name'],
+        'totalReserved': json['total_reserved'] == null ? undefined : json['total_reserved'],
+        'totalSpend': json['total_spend'] == null ? undefined : json['total_spend'],
         'updatedAt': json['updated_at'],
+        'userCount': json['user_count'] == null ? undefined : json['user_count'],
     };
 }
 
@@ -96,7 +131,11 @@ export function BudgetResponseToJSONTyped(value?: BudgetResponse | null, ignoreD
         'budget_id': value['budgetId'],
         'created_at': value['createdAt'],
         'max_budget': value['maxBudget'],
+        'name': value['name'],
+        'total_reserved': value['totalReserved'],
+        'total_spend': value['totalSpend'],
         'updated_at': value['updatedAt'],
+        'user_count': value['userCount'],
     };
 }
 

@@ -10,6 +10,7 @@ Name | Type
 `metadata` | { [key: string]: string; }
 `model` | string
 `requests` | [Array&lt;BatchRequestItem&gt;](BatchRequestItem.md)
+`user` | string
 
 ## Example
 
@@ -22,6 +23,7 @@ const example = {
   "metadata": null,
   "model": null,
   "requests": null,
+  "user": null,
 } satisfies CreateBatchRequest
 
 console.log(example)

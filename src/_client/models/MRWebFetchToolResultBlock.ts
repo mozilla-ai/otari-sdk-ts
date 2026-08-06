@@ -13,20 +13,20 @@
  */
 
 import { mapValues } from '../runtime';
-import type { Caller } from './Caller';
+import type { Content14 } from './Content14';
 import {
-    CallerFromJSON,
-    CallerFromJSONTyped,
-    CallerToJSON,
-    CallerToJSONTyped,
-} from './Caller';
-import type { Content7 } from './Content7';
+    Content14FromJSON,
+    Content14FromJSONTyped,
+    Content14ToJSON,
+    Content14ToJSONTyped,
+} from './Content14';
+import type { Caller1 } from './Caller1';
 import {
-    Content7FromJSON,
-    Content7FromJSONTyped,
-    Content7ToJSON,
-    Content7ToJSONTyped,
-} from './Content7';
+    Caller1FromJSON,
+    Caller1FromJSONTyped,
+    Caller1ToJSON,
+    Caller1ToJSONTyped,
+} from './Caller1';
 
 /**
  * 
@@ -37,16 +37,16 @@ export interface MRWebFetchToolResultBlock {
     [key: string]: any | any;
     /**
      * 
-     * @type {Caller}
+     * @type {Caller1}
      * @memberof MRWebFetchToolResultBlock
      */
-    caller?: Caller | null;
+    caller?: Caller1 | null;
     /**
      * 
-     * @type {Content7}
+     * @type {Content14}
      * @memberof MRWebFetchToolResultBlock
      */
-    content: Content7;
+    content: Content14;
     /**
      * 
      * @type {string}
@@ -92,8 +92,8 @@ export function MRWebFetchToolResultBlockFromJSONTyped(json: any, ignoreDiscrimi
     return {
         
             ...json,
-        'caller': json['caller'] == null ? undefined : CallerFromJSON(json['caller']),
-        'content': Content7FromJSON(json['content']),
+        'caller': json['caller'] == null ? undefined : Caller1FromJSON(json['caller']),
+        'content': Content14FromJSON(json['content']),
         'toolUseId': json['tool_use_id'],
         'type': json['type'],
     };
@@ -111,8 +111,8 @@ export function MRWebFetchToolResultBlockToJSONTyped(value?: MRWebFetchToolResul
     return {
         
             ...value,
-        'caller': CallerToJSON(value['caller']),
-        'content': Content7ToJSON(value['content']),
+        'caller': Caller1ToJSON(value['caller']),
+        'content': Content14ToJSON(value['content']),
         'tool_use_id': value['toolUseId'],
         'type': value['type'],
     };

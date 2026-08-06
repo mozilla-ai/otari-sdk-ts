@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
-import type { Caller } from './Caller';
+import type { Caller1 } from './Caller1';
 import {
-    CallerFromJSON,
-    CallerFromJSONTyped,
-    CallerToJSON,
-    CallerToJSONTyped,
-} from './Caller';
+    Caller1FromJSON,
+    Caller1FromJSONTyped,
+    Caller1ToJSON,
+    Caller1ToJSONTyped,
+} from './Caller1';
 
 /**
  * 
@@ -36,10 +36,10 @@ export interface MRServerToolUseBlock {
     id: string;
     /**
      * 
-     * @type {Caller}
+     * @type {Caller1}
      * @memberof MRServerToolUseBlock
      */
-    caller?: Caller | null;
+    caller?: Caller1 | null;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -107,7 +107,7 @@ export function MRServerToolUseBlockFromJSONTyped(json: any, ignoreDiscriminator
         
             ...json,
         'id': json['id'],
-        'caller': json['caller'] == null ? undefined : CallerFromJSON(json['caller']),
+        'caller': json['caller'] == null ? undefined : Caller1FromJSON(json['caller']),
         'input': json['input'],
         'name': json['name'],
         'type': json['type'],
@@ -127,7 +127,7 @@ export function MRServerToolUseBlockToJSONTyped(value?: MRServerToolUseBlock | n
         
             ...value,
         'id': value['id'],
-        'caller': CallerToJSON(value['caller']),
+        'caller': Caller1ToJSON(value['caller']),
         'input': value['input'],
         'name': value['name'],
         'type': value['type'],

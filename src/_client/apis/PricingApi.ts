@@ -19,6 +19,16 @@ import {
     HTTPValidationErrorToJSON,
 } from '../models/HTTPValidationError';
 import {
+    type PricingRefreshConfirmationResponse,
+    PricingRefreshConfirmationResponseFromJSON,
+    PricingRefreshConfirmationResponseToJSON,
+} from '../models/PricingRefreshConfirmationResponse';
+import {
+    type PricingRefreshPreviewResponse,
+    PricingRefreshPreviewResponseFromJSON,
+    PricingRefreshPreviewResponseToJSON,
+} from '../models/PricingRefreshPreviewResponse';
+import {
     type PricingResponse,
     PricingResponseFromJSON,
     PricingResponseToJSON,
@@ -58,6 +68,53 @@ export interface SetPricingV1PricingPostRequest {
 export class PricingApi extends runtime.BaseAPI {
 
     /**
+     * Creates request options for confirmPricingRefreshV1PricingRefreshConfirmPost without sending the request
+     */
+    async confirmPricingRefreshV1PricingRefreshConfirmPostRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/pricing/refresh/confirm`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Activate the latest reviewed default-price snapshot.
+     * Confirm Pricing Refresh
+     */
+    async confirmPricingRefreshV1PricingRefreshConfirmPostRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PricingRefreshConfirmationResponse>> {
+        const requestOptions = await this.confirmPricingRefreshV1PricingRefreshConfirmPostRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PricingRefreshConfirmationResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Activate the latest reviewed default-price snapshot.
+     * Confirm Pricing Refresh
+     */
+    async confirmPricingRefreshV1PricingRefreshConfirmPost(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PricingRefreshConfirmationResponse> {
+        const response = await this.confirmPricingRefreshV1PricingRefreshConfirmPostRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for deletePricingV1PricingModelKeyDelete without sending the request
      */
     async deletePricingV1PricingModelKeyDeleteRequestOpts(requestParameters: DeletePricingV1PricingModelKeyDeleteRequest): Promise<runtime.RequestOpts> {
@@ -75,6 +132,10 @@ export class PricingApi extends runtime.BaseAPI {
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
@@ -125,6 +186,10 @@ export class PricingApi extends runtime.BaseAPI {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
@@ -182,6 +247,10 @@ export class PricingApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
         }
 
@@ -234,6 +303,10 @@ export class PricingApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
         }
 
@@ -269,6 +342,99 @@ export class PricingApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for previewPricingRefreshV1PricingRefreshPost without sending the request
+     */
+    async previewPricingRefreshV1PricingRefreshPostRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/pricing/refresh`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Fetch the latest defaults and hold them for operator review.
+     * Preview Pricing Refresh
+     */
+    async previewPricingRefreshV1PricingRefreshPostRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PricingRefreshPreviewResponse>> {
+        const requestOptions = await this.previewPricingRefreshV1PricingRefreshPostRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PricingRefreshPreviewResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Fetch the latest defaults and hold them for operator review.
+     * Preview Pricing Refresh
+     */
+    async previewPricingRefreshV1PricingRefreshPost(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PricingRefreshPreviewResponse> {
+        const response = await this.previewPricingRefreshV1PricingRefreshPostRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for rejectPricingRefreshV1PricingRefreshRejectPost without sending the request
+     */
+    async rejectPricingRefreshV1PricingRefreshRejectPostRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/pricing/refresh/reject`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Discard a reviewed default-price snapshot without applying it.
+     * Reject Pricing Refresh
+     */
+    async rejectPricingRefreshV1PricingRefreshRejectPostRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.rejectPricingRefreshV1PricingRefreshRejectPostRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Discard a reviewed default-price snapshot without applying it.
+     * Reject Pricing Refresh
+     */
+    async rejectPricingRefreshV1PricingRefreshRejectPost(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.rejectPricingRefreshV1PricingRefreshRejectPostRaw(initOverrides);
+    }
+
+    /**
      * Creates request options for setPricingV1PricingPost without sending the request
      */
     async setPricingV1PricingPostRequestOpts(requestParameters: SetPricingV1PricingPostRequest): Promise<runtime.RequestOpts> {
@@ -284,6 +450,10 @@ export class PricingApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
@@ -302,7 +472,7 @@ export class PricingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Set or update pricing for a model.
+     * Set or update pricing for a model.  Rejects an alias: pricing, budgets, and usage all key on the resolved target, so a row stored under an alias name would never be read.
      * Set Pricing
      */
     async setPricingV1PricingPostRaw(requestParameters: SetPricingV1PricingPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PricingResponse>> {
@@ -313,7 +483,7 @@ export class PricingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Set or update pricing for a model.
+     * Set or update pricing for a model.  Rejects an alias: pricing, budgets, and usage all key on the resolved target, so a row stored under an alias name would never be read.
      * Set Pricing
      */
     async setPricingV1PricingPost(requestParameters: SetPricingV1PricingPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PricingResponse> {

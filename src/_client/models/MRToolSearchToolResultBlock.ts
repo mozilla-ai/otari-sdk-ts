@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
-import type { Content6 } from './Content6';
+import type { Content13 } from './Content13';
 import {
-    Content6FromJSON,
-    Content6FromJSONTyped,
-    Content6ToJSON,
-    Content6ToJSONTyped,
-} from './Content6';
+    Content13FromJSON,
+    Content13FromJSONTyped,
+    Content13ToJSON,
+    Content13ToJSONTyped,
+} from './Content13';
 
 /**
  * 
@@ -30,10 +30,10 @@ export interface MRToolSearchToolResultBlock {
     [key: string]: any | any;
     /**
      * 
-     * @type {Content6}
+     * @type {Content13}
      * @memberof MRToolSearchToolResultBlock
      */
-    content: Content6;
+    content: Content13;
     /**
      * 
      * @type {string}
@@ -79,7 +79,7 @@ export function MRToolSearchToolResultBlockFromJSONTyped(json: any, ignoreDiscri
     return {
         
             ...json,
-        'content': Content6FromJSON(json['content']),
+        'content': Content13FromJSON(json['content']),
         'toolUseId': json['tool_use_id'],
         'type': json['type'],
     };
@@ -97,7 +97,7 @@ export function MRToolSearchToolResultBlockToJSONTyped(value?: MRToolSearchToolR
     return {
         
             ...value,
-        'content': Content6ToJSON(value['content']),
+        'content': Content13ToJSON(value['content']),
         'tool_use_id': value['toolUseId'],
         'type': value['type'],
     };

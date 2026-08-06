@@ -7,9 +7,12 @@ Request model for creating a new API key.
 
 Name | Type
 ------------ | -------------
+`allowedModels` | Array&lt;string&gt;
+`excludeFromBudget` | boolean
 `expiresAt` | Date
 `keyName` | string
 `metadata` | { [key: string]: any; }
+`rejectUserMismatch` | boolean
 `userId` | string
 
 ## Example
@@ -19,9 +22,12 @@ import type { CreateKeyRequest } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "allowedModels": null,
+  "excludeFromBudget": null,
   "expiresAt": null,
   "keyName": null,
   "metadata": null,
+  "rejectUserMismatch": null,
   "userId": null,
 } satisfies CreateKeyRequest
 

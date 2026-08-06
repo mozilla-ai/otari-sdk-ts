@@ -7,7 +7,9 @@
 Name | Type
 ------------ | -------------
 `errorCode` | string
+`errorMessage` | string
 `type` | string
+`toolReferences` | [Array&lt;MRBetaToolReferenceBlock&gt;](MRBetaToolReferenceBlock.md)
 
 ## Example
 
@@ -17,7 +19,9 @@ import type { Content8 } from ''
 // TODO: Update the object below with actual values
 const example = {
   "errorCode": null,
+  "errorMessage": null,
   "type": null,
+  "toolReferences": null,
 } satisfies Content8
 
 console.log(example)

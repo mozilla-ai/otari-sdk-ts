@@ -32,6 +32,12 @@ export interface ModelObject {
      * @type {number}
      * @memberof ModelObject
      */
+    contextWindow?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelObject
+     */
     created: number;
     /**
      * 
@@ -57,6 +63,12 @@ export interface ModelObject {
      * @memberof ModelObject
      */
     pricing?: ModelPricingInfo | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelObject
+     */
+    pricingSource?: string;
 }
 
 /**
@@ -79,11 +91,13 @@ export function ModelObjectFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
         
+        'contextWindow': json['context_window'] == null ? undefined : json['context_window'],
         'created': json['created'],
         'id': json['id'],
         'object': json['object'] == null ? undefined : json['object'],
         'ownedBy': json['owned_by'],
         'pricing': json['pricing'] == null ? undefined : ModelPricingInfoFromJSON(json['pricing']),
+        'pricingSource': json['pricing_source'] == null ? undefined : json['pricing_source'],
     };
 }
 
@@ -98,11 +112,13 @@ export function ModelObjectToJSONTyped(value?: ModelObject | null, ignoreDiscrim
 
     return {
         
+        'context_window': value['contextWindow'],
         'created': value['created'],
         'id': value['id'],
         'object': value['object'],
         'owned_by': value['ownedBy'],
         'pricing': ModelPricingInfoToJSON(value['pricing']),
+        'pricing_source': value['pricingSource'],
     };
 }
 

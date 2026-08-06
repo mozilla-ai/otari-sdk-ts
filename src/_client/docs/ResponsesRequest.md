@@ -8,6 +8,7 @@ OpenAI Responses API-compatible request.  The wire fields are derived from any-l
 Name | Type
 ------------ | -------------
 `background` | boolean
+`contextManagement` | Array&lt;{ [key: string]: any; }&gt;
 `conversation` | [Conversation](Conversation.md)
 `frequencyPenalty` | number
 `guardrails` | [Array&lt;GuardrailConfig&gt;](GuardrailConfig.md)
@@ -52,6 +53,7 @@ import type { ResponsesRequest } from ''
 // TODO: Update the object below with actual values
 const example = {
   "background": null,
+  "contextManagement": null,
   "conversation": null,
   "frequencyPenalty": null,
   "guardrails": null,

@@ -7,13 +7,17 @@ Response model for key information.
 
 Name | Type
 ------------ | -------------
+`allowedModels` | Array&lt;string&gt;
 `createdAt` | string
+`excludeFromBudget` | boolean
 `expiresAt` | string
 `id` | string
 `isActive` | boolean
 `keyName` | string
+`keyPrefix` | string
 `lastUsedAt` | string
 `metadata` | { [key: string]: any; }
+`rejectUserMismatch` | boolean
 `userId` | string
 
 ## Example
@@ -23,13 +27,17 @@ import type { KeyInfo } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "allowedModels": null,
   "createdAt": null,
+  "excludeFromBudget": null,
   "expiresAt": null,
   "id": null,
   "isActive": null,
   "keyName": null,
+  "keyPrefix": null,
   "lastUsedAt": null,
   "metadata": null,
+  "rejectUserMismatch": null,
   "userId": null,
 } satisfies KeyInfo
 

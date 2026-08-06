@@ -190,7 +190,7 @@ export interface ChatCompletionRequest {
      */
     stream?: boolean;
     /**
-     * 
+     * An unsaved policy body to explain.
      * @type {{ [key: string]: any; }}
      * @memberof ChatCompletionRequest
      */

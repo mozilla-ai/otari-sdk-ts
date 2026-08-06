@@ -41,6 +41,12 @@ export interface GuardrailConfig {
     on?: Array<GuardrailConfigOnEnum>;
     /**
      * 
+     * @type {GuardrailConfigOnUnavailableEnum}
+     * @memberof GuardrailConfig
+     */
+    onUnavailable?: GuardrailConfigOnUnavailableEnum;
+    /**
+     * 
      * @type {string}
      * @memberof GuardrailConfig
      */
@@ -78,6 +84,15 @@ export const GuardrailConfigOnEnum = {
 } as const;
 export type GuardrailConfigOnEnum = typeof GuardrailConfigOnEnum[keyof typeof GuardrailConfigOnEnum];
 
+/**
+ * @export
+ */
+export const GuardrailConfigOnUnavailableEnum = {
+    Block: 'block',
+    Monitor: 'monitor'
+} as const;
+export type GuardrailConfigOnUnavailableEnum = typeof GuardrailConfigOnUnavailableEnum[keyof typeof GuardrailConfigOnUnavailableEnum];
+
 
 /**
  * Check if a given object implements the GuardrailConfig interface.
@@ -99,6 +114,7 @@ export function GuardrailConfigFromJSONTyped(json: any, ignoreDiscriminator: boo
         
         'mode': json['mode'] == null ? undefined : json['mode'],
         'on': json['on'] == null ? undefined : json['on'],
+        'onUnavailable': json['on_unavailable'] == null ? undefined : json['on_unavailable'],
         'profile': json['profile'],
         'url': json['url'] == null ? undefined : json['url'],
         'validateKwargs': json['validate_kwargs'] == null ? undefined : json['validate_kwargs'],
@@ -118,6 +134,7 @@ export function GuardrailConfigToJSONTyped(value?: GuardrailConfig | null, ignor
         
         'mode': value['mode'],
         'on': value['on'],
+        'on_unavailable': value['onUnavailable'],
         'profile': value['profile'],
         'url': value['url'],
         'validate_kwargs': value['validateKwargs'],

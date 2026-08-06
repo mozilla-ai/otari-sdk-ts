@@ -81,6 +81,10 @@ export class BatchesApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
         }
 
@@ -138,6 +142,10 @@ export class BatchesApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
         }
 
@@ -154,7 +162,7 @@ export class BatchesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a batch of LLM requests for asynchronous processing.
+     * Create a batch of LLM requests for asynchronous processing.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Create Batch
      */
     async createBatchV1BatchesPostRaw(requestParameters: CreateBatchV1BatchesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
@@ -169,7 +177,7 @@ export class BatchesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a batch of LLM requests for asynchronous processing.
+     * Create a batch of LLM requests for asynchronous processing.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Create Batch
      */
     async createBatchV1BatchesPost(requestParameters: CreateBatchV1BatchesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
@@ -205,6 +213,10 @@ export class BatchesApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
         }
 
@@ -220,7 +232,7 @@ export class BatchesApi extends runtime.BaseAPI {
     }
 
     /**
-     * List batches for a provider.
+     * List batches for a provider.  Non-master keys only see batches they own (plus legacy batches without an ownership marker); the page is filtered after the provider call, so a page may contain fewer than ``limit`` items.
      * List Batches
      */
     async listBatchesV1BatchesGetRaw(requestParameters: ListBatchesV1BatchesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
@@ -235,7 +247,7 @@ export class BatchesApi extends runtime.BaseAPI {
     }
 
     /**
-     * List batches for a provider.
+     * List batches for a provider.  Non-master keys only see batches they own (plus legacy batches without an ownership marker); the page is filtered after the provider call, so a page may contain fewer than ``limit`` items.
      * List Batches
      */
     async listBatchesV1BatchesGet(requestParameters: ListBatchesV1BatchesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
@@ -268,6 +280,10 @@ export class BatchesApi extends runtime.BaseAPI {
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
@@ -334,6 +350,10 @@ export class BatchesApi extends runtime.BaseAPI {
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication

@@ -66,11 +66,17 @@ export interface CCKChoiceDelta {
      */
     toolCalls?: Array<CCKChoiceDeltaToolCall> | null;
     /**
-     * Filter models by provider name
+     * Delete the alias scoped to this user. Omit to delete the global alias of that name.
      * @type {string}
      * @memberof CCKChoiceDelta
      */
     reasoning?: string | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof CCKChoiceDelta
+     */
+    extraContent?: { [key: string]: any; } | null;
 }
 
 
@@ -111,6 +117,7 @@ export function CCKChoiceDeltaFromJSONTyped(json: any, ignoreDiscriminator: bool
         'role': json['role'] == null ? undefined : json['role'],
         'toolCalls': json['tool_calls'] == null ? undefined : ((json['tool_calls'] as Array<any>).map(CCKChoiceDeltaToolCallFromJSON)),
         'reasoning': json['reasoning'] == null ? undefined : json['reasoning'],
+        'extraContent': json['extra_content'] == null ? undefined : json['extra_content'],
     };
 }
 
@@ -132,6 +139,7 @@ export function CCKChoiceDeltaToJSONTyped(value?: CCKChoiceDelta | null, ignoreD
         'role': value['role'],
         'tool_calls': value['toolCalls'] == null ? undefined : ((value['toolCalls'] as Array<any>).map(CCKChoiceDeltaToolCallToJSON)),
         'reasoning': value['reasoning'],
+        'extra_content': value['extraContent'],
     };
 }
 

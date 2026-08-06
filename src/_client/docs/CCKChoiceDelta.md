@@ -12,6 +12,7 @@ Name | Type
 `role` | string
 `toolCalls` | [Array&lt;CCKChoiceDeltaToolCall&gt;](CCKChoiceDeltaToolCall.md)
 `reasoning` | string
+`extraContent` | { [key: string]: any; }
 
 ## Example
 
@@ -26,6 +27,7 @@ const example = {
   "role": null,
   "toolCalls": null,
   "reasoning": null,
+  "extraContent": null,
 } satisfies CCKChoiceDelta
 
 console.log(example)

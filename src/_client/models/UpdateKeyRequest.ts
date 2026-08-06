@@ -21,6 +21,18 @@ import { mapValues } from '../runtime';
 export interface UpdateKeyRequest {
     /**
      * 
+     * @type {Array<string>}
+     * @memberof UpdateKeyRequest
+     */
+    allowedModels?: Array<string> | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateKeyRequest
+     */
+    excludeFromBudget?: boolean | null;
+    /**
+     * 
      * @type {Date}
      * @memberof UpdateKeyRequest
      */
@@ -43,6 +55,12 @@ export interface UpdateKeyRequest {
      * @memberof UpdateKeyRequest
      */
     metadata?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateKeyRequest
+     */
+    rejectUserMismatch?: boolean | null;
 }
 
 /**
@@ -62,10 +80,13 @@ export function UpdateKeyRequestFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
+        'allowedModels': json['allowed_models'] == null ? undefined : json['allowed_models'],
+        'excludeFromBudget': json['exclude_from_budget'] == null ? undefined : json['exclude_from_budget'],
         'expiresAt': json['expires_at'] == null ? undefined : (new Date(json['expires_at'])),
         'isActive': json['is_active'] == null ? undefined : json['is_active'],
         'keyName': json['key_name'] == null ? undefined : json['key_name'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'rejectUserMismatch': json['reject_user_mismatch'] == null ? undefined : json['reject_user_mismatch'],
     };
 }
 
@@ -80,10 +101,13 @@ export function UpdateKeyRequestToJSONTyped(value?: UpdateKeyRequest | null, ign
 
     return {
         
+        'allowed_models': value['allowedModels'],
+        'exclude_from_budget': value['excludeFromBudget'],
         'expires_at': value['expiresAt'] == null ? value['expiresAt'] : value['expiresAt'].toISOString(),
         'is_active': value['isActive'],
         'key_name': value['keyName'],
         'metadata': value['metadata'],
+        'reject_user_mismatch': value['rejectUserMismatch'],
     };
 }
 

@@ -56,6 +56,10 @@ export class RerankApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
         }
 
@@ -72,7 +76,7 @@ export class RerankApi extends runtime.BaseAPI {
     }
 
     /**
-     * Rerank documents by relevance to a query.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use virtual user created with API key
+     * Rerank documents by relevance to a query.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Create Rerank
      */
     async createRerankV1RerankPostRaw(requestParameters: CreateRerankV1RerankPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RerankResponse>> {
@@ -83,7 +87,7 @@ export class RerankApi extends runtime.BaseAPI {
     }
 
     /**
-     * Rerank documents by relevance to a query.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use virtual user created with API key
+     * Rerank documents by relevance to a query.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Create Rerank
      */
     async createRerankV1RerankPost(requestParameters: CreateRerankV1RerankPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RerankResponse> {

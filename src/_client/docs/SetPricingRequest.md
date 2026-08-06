@@ -1,16 +1,20 @@
 
 # SetPricingRequest
 
-Request model for setting model pricing.
+Create a versioned per-model price, with optional cache and context tiers.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
+`cacheReadPricePerMillion` | number
+`cacheWrite1hPricePerMillion` | number
+`cacheWritePricePerMillion` | number
 `effectiveAt` | Date
 `inputPricePerMillion` | number
 `modelKey` | string
 `outputPricePerMillion` | number
+`pricingTiers` | [Array&lt;PricingTier&gt;](PricingTier.md)
 
 ## Example
 
@@ -19,10 +23,14 @@ import type { SetPricingRequest } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "cacheReadPricePerMillion": null,
+  "cacheWrite1hPricePerMillion": null,
+  "cacheWritePricePerMillion": null,
   "effectiveAt": null,
   "inputPricePerMillion": null,
   "modelKey": null,
   "outputPricePerMillion": null,
+  "pricingTiers": null,
 } satisfies SetPricingRequest
 
 console.log(example)

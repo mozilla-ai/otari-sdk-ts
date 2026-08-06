@@ -72,7 +72,7 @@ export interface ChatCompletion {
      */
     serviceTier?: string | null;
     /**
-     * Filter models by provider name
+     * Delete the alias scoped to this user. Omit to delete the global alias of that name.
      * @type {string}
      * @memberof ChatCompletion
      */

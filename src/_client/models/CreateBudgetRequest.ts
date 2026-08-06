@@ -31,6 +31,12 @@ export interface CreateBudgetRequest {
      * @memberof CreateBudgetRequest
      */
     maxBudget?: number | null;
+    /**
+     * Admin-facing label for the budget
+     * @type {string}
+     * @memberof CreateBudgetRequest
+     */
+    name?: string | null;
 }
 
 /**
@@ -52,6 +58,7 @@ export function CreateBudgetRequestFromJSONTyped(json: any, ignoreDiscriminator:
         
         'budgetDurationSec': json['budget_duration_sec'] == null ? undefined : json['budget_duration_sec'],
         'maxBudget': json['max_budget'] == null ? undefined : json['max_budget'],
+        'name': json['name'] == null ? undefined : json['name'],
     };
 }
 
@@ -68,6 +75,7 @@ export function CreateBudgetRequestToJSONTyped(value?: CreateBudgetRequest | nul
         
         'budget_duration_sec': value['budgetDurationSec'],
         'max_budget': value['maxBudget'],
+        'name': value['name'],
     };
 }
 

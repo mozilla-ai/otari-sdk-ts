@@ -61,6 +61,10 @@ export class AudioApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
         }
 
@@ -77,7 +81,7 @@ export class AudioApi extends runtime.BaseAPI {
     }
 
     /**
-     * OpenAI-compatible audio speech (TTS) endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use virtual user created with API key
+     * OpenAI-compatible audio speech (TTS) endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Create Speech
      */
     async createSpeechV1AudioSpeechPostRaw(requestParameters: CreateSpeechV1AudioSpeechPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
@@ -92,7 +96,7 @@ export class AudioApi extends runtime.BaseAPI {
     }
 
     /**
-     * OpenAI-compatible audio speech (TTS) endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use virtual user created with API key
+     * OpenAI-compatible audio speech (TTS) endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Create Speech
      */
     async createSpeechV1AudioSpeechPost(requestParameters: CreateSpeechV1AudioSpeechPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
@@ -121,6 +125,10 @@ export class AudioApi extends runtime.BaseAPI {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
@@ -181,7 +189,7 @@ export class AudioApi extends runtime.BaseAPI {
     }
 
     /**
-     * OpenAI-compatible audio transcription endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use virtual user created with API key
+     * OpenAI-compatible audio transcription endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Create Transcription
      */
     async createTranscriptionV1AudioTranscriptionsPostRaw(requestParameters: CreateTranscriptionV1AudioTranscriptionsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
@@ -196,7 +204,7 @@ export class AudioApi extends runtime.BaseAPI {
     }
 
     /**
-     * OpenAI-compatible audio transcription endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use virtual user created with API key
+     * OpenAI-compatible audio transcription endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Create Transcription
      */
     async createTranscriptionV1AudioTranscriptionsPost(requestParameters: CreateTranscriptionV1AudioTranscriptionsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {

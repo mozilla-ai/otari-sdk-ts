@@ -21,10 +21,22 @@ import { mapValues } from '../runtime';
 export interface KeyInfo {
     /**
      * 
+     * @type {Array<string>}
+     * @memberof KeyInfo
+     */
+    allowedModels: Array<string> | null;
+    /**
+     * 
      * @type {string}
      * @memberof KeyInfo
      */
     createdAt: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof KeyInfo
+     */
+    excludeFromBudget: boolean;
     /**
      * 
      * @type {string}
@@ -54,6 +66,12 @@ export interface KeyInfo {
      * @type {string}
      * @memberof KeyInfo
      */
+    keyPrefix: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof KeyInfo
+     */
     lastUsedAt: string | null;
     /**
      * 
@@ -61,6 +79,12 @@ export interface KeyInfo {
      * @memberof KeyInfo
      */
     metadata: { [key: string]: any; };
+    /**
+     * 
+     * @type {boolean}
+     * @memberof KeyInfo
+     */
+    rejectUserMismatch: boolean | null;
     /**
      * 
      * @type {string}
@@ -73,13 +97,17 @@ export interface KeyInfo {
  * Check if a given object implements the KeyInfo interface.
  */
 export function instanceOfKeyInfo(value: object): value is KeyInfo {
+    if (!('allowedModels' in value) || value['allowedModels'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('excludeFromBudget' in value) || value['excludeFromBudget'] === undefined) return false;
     if (!('expiresAt' in value) || value['expiresAt'] === undefined) return false;
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('isActive' in value) || value['isActive'] === undefined) return false;
     if (!('keyName' in value) || value['keyName'] === undefined) return false;
+    if (!('keyPrefix' in value) || value['keyPrefix'] === undefined) return false;
     if (!('lastUsedAt' in value) || value['lastUsedAt'] === undefined) return false;
     if (!('metadata' in value) || value['metadata'] === undefined) return false;
+    if (!('rejectUserMismatch' in value) || value['rejectUserMismatch'] === undefined) return false;
     if (!('userId' in value) || value['userId'] === undefined) return false;
     return true;
 }
@@ -94,13 +122,17 @@ export function KeyInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): K
     }
     return {
         
+        'allowedModels': json['allowed_models'] == null ? null : json['allowed_models'],
         'createdAt': json['created_at'],
+        'excludeFromBudget': json['exclude_from_budget'],
         'expiresAt': json['expires_at'],
         'id': json['id'],
         'isActive': json['is_active'],
         'keyName': json['key_name'],
+        'keyPrefix': json['key_prefix'],
         'lastUsedAt': json['last_used_at'],
         'metadata': json['metadata'],
+        'rejectUserMismatch': json['reject_user_mismatch'],
         'userId': json['user_id'],
     };
 }
@@ -116,13 +148,17 @@ export function KeyInfoToJSONTyped(value?: KeyInfo | null, ignoreDiscriminator: 
 
     return {
         
+        'allowed_models': value['allowedModels'],
         'created_at': value['createdAt'],
+        'exclude_from_budget': value['excludeFromBudget'],
         'expires_at': value['expiresAt'],
         'id': value['id'],
         'is_active': value['isActive'],
         'key_name': value['keyName'],
+        'key_prefix': value['keyPrefix'],
         'last_used_at': value['lastUsedAt'],
         'metadata': value['metadata'],
+        'reject_user_mismatch': value['rejectUserMismatch'],
         'user_id': value['userId'],
     };
 }
