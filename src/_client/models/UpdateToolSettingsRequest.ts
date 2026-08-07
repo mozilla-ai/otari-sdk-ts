@@ -52,6 +52,12 @@ export interface UpdateToolSettingsRequest {
     webSearchExtract?: boolean | null;
     /**
      * 
+     * @type {boolean}
+     * @memberof UpdateToolSettingsRequest
+     */
+    webSearchIntercept?: boolean | null;
+    /**
+     * 
      * @type {number}
      * @memberof UpdateToolSettingsRequest
      */
@@ -92,6 +98,7 @@ export function UpdateToolSettingsRequestFromJSONTyped(json: any, ignoreDiscrimi
         'sandboxUrl': json['sandbox_url'] == null ? undefined : json['sandbox_url'],
         'webSearchEngines': json['web_search_engines'] == null ? undefined : json['web_search_engines'],
         'webSearchExtract': json['web_search_extract'] == null ? undefined : json['web_search_extract'],
+        'webSearchIntercept': json['web_search_intercept'] == null ? undefined : json['web_search_intercept'],
         'webSearchMaxResults': json['web_search_max_results'] == null ? undefined : json['web_search_max_results'],
         'webSearchPurposeHint': json['web_search_purpose_hint'] == null ? undefined : json['web_search_purpose_hint'],
         'webSearchUrl': json['web_search_url'] == null ? undefined : json['web_search_url'],
@@ -114,6 +121,7 @@ export function UpdateToolSettingsRequestToJSONTyped(value?: UpdateToolSettingsR
         'sandbox_url': value['sandboxUrl'],
         'web_search_engines': value['webSearchEngines'],
         'web_search_extract': value['webSearchExtract'],
+        'web_search_intercept': value['webSearchIntercept'],
         'web_search_max_results': value['webSearchMaxResults'],
         'web_search_purpose_hint': value['webSearchPurposeHint'],
         'web_search_url': value['webSearchUrl'],

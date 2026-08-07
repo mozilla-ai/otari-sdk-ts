@@ -47,14 +47,14 @@ async function example() {
     startDate: 2013-10-20T19:20:30+01:00,
     // Date | Return logs with timestamp < end_date (ISO 8601 or Unix epoch seconds) (optional)
     endDate: 2013-10-20T19:20:30+01:00,
-    // string | Filter to a single user (optional)
-    userId: userId_example,
+    // Array<string> | Filter to one or more users; repeatable (user_id=a&user_id=b). Several values match any of them. At most 50 per call. (optional)
+    userId: ...,
     // string | Filter to a single status: \'success\', \'error\', or \'absorbed\' (an attempt a routing policy recovered from, excluded from error_count and request_count) (optional)
     status: status_example,
     // number | Filter to a single failure status code (e.g. 429 for provider rate limits, 402 for missing-pricing rejections). Only error rows carry one, so this filter also restricts to status=\'error\' unless \'status\' is given explicitly (optional)
     statusCode: 56,
-    // string | Filter to a single model (optional)
-    model: model_example,
+    // Array<string> | Filter to one or more models; repeatable (model=a&model=b). Several values match any of them. At most 50 per call. (optional)
+    model: ...,
     // string | Filter to a single endpoint (e.g. \'/v1/chat/completions\') (optional)
     endpoint: endpoint_example,
     // string | Filter to a single provider (e.g. \'openai\') (optional)
@@ -63,8 +63,8 @@ async function example() {
     source: source_example,
     // string | Filter to a single session/project label (the source_label carried by imported usage) (optional)
     sourceLabel: sourceLabel_example,
-    // string | Filter to a single API key id (optional)
-    apiKeyId: apiKeyId_example,
+    // Array<string> | Filter to one or more API key ids; repeatable (api_key_id=a&api_key_id=b). Several values match any of them. At most 50 per call. (optional)
+    apiKeyId: ...,
     // boolean | Filter by token-pricing state: true = only rows whose model tokens were priced, false = only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. (optional)
     priced: true,
     // 'any' | 'web_search' | 'code_execution' | Filter to requests that ran a gateway-run tool. \'any\' matches any tool; a tool name (web_search, code_execution) matches that tool specifically. (optional)
@@ -94,15 +94,15 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **startDate** | `Date` | Return logs with timestamp &gt;&#x3D; start_date (ISO 8601 or Unix epoch seconds) | [Optional] [Defaults to `undefined`] |
 | **endDate** | `Date` | Return logs with timestamp &lt; end_date (ISO 8601 or Unix epoch seconds) | [Optional] [Defaults to `undefined`] |
-| **userId** | `string` | Filter to a single user | [Optional] [Defaults to `undefined`] |
+| **userId** | `Array<string>` | Filter to one or more users; repeatable (user_id&#x3D;a&amp;user_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **status** | `string` | Filter to a single status: \&#39;success\&#39;, \&#39;error\&#39;, or \&#39;absorbed\&#39; (an attempt a routing policy recovered from, excluded from error_count and request_count) | [Optional] [Defaults to `undefined`] |
 | **statusCode** | `number` | Filter to a single failure status code (e.g. 429 for provider rate limits, 402 for missing-pricing rejections). Only error rows carry one, so this filter also restricts to status&#x3D;\&#39;error\&#39; unless \&#39;status\&#39; is given explicitly | [Optional] [Defaults to `undefined`] |
-| **model** | `string` | Filter to a single model | [Optional] [Defaults to `undefined`] |
+| **model** | `Array<string>` | Filter to one or more models; repeatable (model&#x3D;a&amp;model&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **endpoint** | `string` | Filter to a single endpoint (e.g. \&#39;/v1/chat/completions\&#39;) | [Optional] [Defaults to `undefined`] |
 | **provider** | `string` | Filter to a single provider (e.g. \&#39;openai\&#39;) | [Optional] [Defaults to `undefined`] |
 | **source** | `string` | Filter to a single provenance source (e.g. \&#39;gateway\&#39; or \&#39;claude_code\&#39;) | [Optional] [Defaults to `undefined`] |
 | **sourceLabel** | `string` | Filter to a single session/project label (the source_label carried by imported usage) | [Optional] [Defaults to `undefined`] |
-| **apiKeyId** | `string` | Filter to a single API key id | [Optional] [Defaults to `undefined`] |
+| **apiKeyId** | `Array<string>` | Filter to one or more API key ids; repeatable (api_key_id&#x3D;a&amp;api_key_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **priced** | `boolean` | Filter by token-pricing state: true &#x3D; only rows whose model tokens were priced, false &#x3D; only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. | [Optional] [Defaults to `undefined`] |
 | **tool** | `any`, `web_search`, `code_execution` | Filter to requests that ran a gateway-run tool. \&#39;any\&#39; matches any tool; a tool name (web_search, code_execution) matches that tool specifically. | [Optional] [Defaults to `undefined`] [Enum: any, web_search, code_execution] |
 | **countsTowardBudget** | `boolean` | Filter by budget participation: true &#x3D; only enforced gateway rows, false &#x3D; only imported rows that never touch a budget | [Optional] [Defaults to `undefined`] |
@@ -311,14 +311,14 @@ async function example() {
     startDate: 2013-10-20T19:20:30+01:00,
     // Date | Return logs with timestamp < end_date (ISO 8601 or Unix epoch seconds) (optional)
     endDate: 2013-10-20T19:20:30+01:00,
-    // string | Filter to a single user (optional)
-    userId: userId_example,
+    // Array<string> | Filter to one or more users; repeatable (user_id=a&user_id=b). Several values match any of them. At most 50 per call. (optional)
+    userId: ...,
     // string | Filter to a single status: \'success\', \'error\', or \'absorbed\' (an attempt a routing policy recovered from, excluded from error_count and request_count) (optional)
     status: status_example,
     // number | Filter to a single failure status code (e.g. 429 for provider rate limits, 402 for missing-pricing rejections). Only error rows carry one, so this filter also restricts to status=\'error\' unless \'status\' is given explicitly (optional)
     statusCode: 56,
-    // string | Filter to a single model (optional)
-    model: model_example,
+    // Array<string> | Filter to one or more models; repeatable (model=a&model=b). Several values match any of them. At most 50 per call. (optional)
+    model: ...,
     // string | Filter to a single endpoint (e.g. \'/v1/chat/completions\') (optional)
     endpoint: endpoint_example,
     // string | Filter to a single provider (e.g. \'openai\') (optional)
@@ -327,8 +327,8 @@ async function example() {
     source: source_example,
     // string | Filter to a single session/project label (the source_label carried by imported usage) (optional)
     sourceLabel: sourceLabel_example,
-    // string | Filter to a single API key id (optional)
-    apiKeyId: apiKeyId_example,
+    // Array<string> | Filter to one or more API key ids; repeatable (api_key_id=a&api_key_id=b). Several values match any of them. At most 50 per call. (optional)
+    apiKeyId: ...,
     // boolean | Filter by token-pricing state: true = only rows whose model tokens were priced, false = only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. (optional)
     priced: true,
     // 'any' | 'web_search' | 'code_execution' | Filter to requests that ran a gateway-run tool. \'any\' matches any tool; a tool name (web_search, code_execution) matches that tool specifically. (optional)
@@ -362,15 +362,15 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **startDate** | `Date` | Return logs with timestamp &gt;&#x3D; start_date (ISO 8601 or Unix epoch seconds) | [Optional] [Defaults to `undefined`] |
 | **endDate** | `Date` | Return logs with timestamp &lt; end_date (ISO 8601 or Unix epoch seconds) | [Optional] [Defaults to `undefined`] |
-| **userId** | `string` | Filter to a single user | [Optional] [Defaults to `undefined`] |
+| **userId** | `Array<string>` | Filter to one or more users; repeatable (user_id&#x3D;a&amp;user_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **status** | `string` | Filter to a single status: \&#39;success\&#39;, \&#39;error\&#39;, or \&#39;absorbed\&#39; (an attempt a routing policy recovered from, excluded from error_count and request_count) | [Optional] [Defaults to `undefined`] |
 | **statusCode** | `number` | Filter to a single failure status code (e.g. 429 for provider rate limits, 402 for missing-pricing rejections). Only error rows carry one, so this filter also restricts to status&#x3D;\&#39;error\&#39; unless \&#39;status\&#39; is given explicitly | [Optional] [Defaults to `undefined`] |
-| **model** | `string` | Filter to a single model | [Optional] [Defaults to `undefined`] |
+| **model** | `Array<string>` | Filter to one or more models; repeatable (model&#x3D;a&amp;model&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **endpoint** | `string` | Filter to a single endpoint (e.g. \&#39;/v1/chat/completions\&#39;) | [Optional] [Defaults to `undefined`] |
 | **provider** | `string` | Filter to a single provider (e.g. \&#39;openai\&#39;) | [Optional] [Defaults to `undefined`] |
 | **source** | `string` | Filter to a single provenance source (e.g. \&#39;gateway\&#39; or \&#39;claude_code\&#39;) | [Optional] [Defaults to `undefined`] |
 | **sourceLabel** | `string` | Filter to a single session/project label (the source_label carried by imported usage) | [Optional] [Defaults to `undefined`] |
-| **apiKeyId** | `string` | Filter to a single API key id | [Optional] [Defaults to `undefined`] |
+| **apiKeyId** | `Array<string>` | Filter to one or more API key ids; repeatable (api_key_id&#x3D;a&amp;api_key_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **priced** | `boolean` | Filter by token-pricing state: true &#x3D; only rows whose model tokens were priced, false &#x3D; only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. | [Optional] [Defaults to `undefined`] |
 | **tool** | `any`, `web_search`, `code_execution` | Filter to requests that ran a gateway-run tool. \&#39;any\&#39; matches any tool; a tool name (web_search, code_execution) matches that tool specifically. | [Optional] [Defaults to `undefined`] [Enum: any, web_search, code_execution] |
 | **countsTowardBudget** | `boolean` | Filter by budget participation: true &#x3D; only enforced gateway rows, false &#x3D; only imported rows that never touch a budget | [Optional] [Defaults to `undefined`] |
@@ -509,14 +509,14 @@ async function example() {
     startDate: 2013-10-20T19:20:30+01:00,
     // Date | Return logs with timestamp < end_date (ISO 8601 or Unix epoch seconds) (optional)
     endDate: 2013-10-20T19:20:30+01:00,
-    // string | Filter to a single user (optional)
-    userId: userId_example,
+    // Array<string> | Filter to one or more users; repeatable (user_id=a&user_id=b). Several values match any of them. At most 50 per call. (optional)
+    userId: ...,
     // string | Filter to a single status: \'success\', \'error\', or \'absorbed\' (an attempt a routing policy recovered from, excluded from error_count and request_count) (optional)
     status: status_example,
     // number | Filter to a single failure status code (e.g. 429 for provider rate limits, 402 for missing-pricing rejections). Only error rows carry one, so this filter also restricts to status=\'error\' unless \'status\' is given explicitly (optional)
     statusCode: 56,
-    // string | Filter to a single model (optional)
-    model: model_example,
+    // Array<string> | Filter to one or more models; repeatable (model=a&model=b). Several values match any of them. At most 50 per call. (optional)
+    model: ...,
     // string | Filter to a single endpoint (e.g. \'/v1/chat/completions\') (optional)
     endpoint: endpoint_example,
     // string | Filter to a single provider (e.g. \'openai\') (optional)
@@ -525,8 +525,8 @@ async function example() {
     source: source_example,
     // string | Filter to a single session/project label (the source_label carried by imported usage) (optional)
     sourceLabel: sourceLabel_example,
-    // string | Filter to a single API key id (optional)
-    apiKeyId: apiKeyId_example,
+    // Array<string> | Filter to one or more API key ids; repeatable (api_key_id=a&api_key_id=b). Several values match any of them. At most 50 per call. (optional)
+    apiKeyId: ...,
     // boolean | Filter by token-pricing state: true = only rows whose model tokens were priced, false = only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. (optional)
     priced: true,
     // 'any' | 'web_search' | 'code_execution' | Filter to requests that ran a gateway-run tool. \'any\' matches any tool; a tool name (web_search, code_execution) matches that tool specifically. (optional)
@@ -557,15 +557,15 @@ example().catch(console.error);
 | **groupBy** | `model`, `user_id`, `api_key_id`, `source` | Dimension to split the series by | [Defaults to `undefined`] [Enum: model, user_id, api_key_id, source] |
 | **startDate** | `Date` | Return logs with timestamp &gt;&#x3D; start_date (ISO 8601 or Unix epoch seconds) | [Optional] [Defaults to `undefined`] |
 | **endDate** | `Date` | Return logs with timestamp &lt; end_date (ISO 8601 or Unix epoch seconds) | [Optional] [Defaults to `undefined`] |
-| **userId** | `string` | Filter to a single user | [Optional] [Defaults to `undefined`] |
+| **userId** | `Array<string>` | Filter to one or more users; repeatable (user_id&#x3D;a&amp;user_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **status** | `string` | Filter to a single status: \&#39;success\&#39;, \&#39;error\&#39;, or \&#39;absorbed\&#39; (an attempt a routing policy recovered from, excluded from error_count and request_count) | [Optional] [Defaults to `undefined`] |
 | **statusCode** | `number` | Filter to a single failure status code (e.g. 429 for provider rate limits, 402 for missing-pricing rejections). Only error rows carry one, so this filter also restricts to status&#x3D;\&#39;error\&#39; unless \&#39;status\&#39; is given explicitly | [Optional] [Defaults to `undefined`] |
-| **model** | `string` | Filter to a single model | [Optional] [Defaults to `undefined`] |
+| **model** | `Array<string>` | Filter to one or more models; repeatable (model&#x3D;a&amp;model&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **endpoint** | `string` | Filter to a single endpoint (e.g. \&#39;/v1/chat/completions\&#39;) | [Optional] [Defaults to `undefined`] |
 | **provider** | `string` | Filter to a single provider (e.g. \&#39;openai\&#39;) | [Optional] [Defaults to `undefined`] |
 | **source** | `string` | Filter to a single provenance source (e.g. \&#39;gateway\&#39; or \&#39;claude_code\&#39;) | [Optional] [Defaults to `undefined`] |
 | **sourceLabel** | `string` | Filter to a single session/project label (the source_label carried by imported usage) | [Optional] [Defaults to `undefined`] |
-| **apiKeyId** | `string` | Filter to a single API key id | [Optional] [Defaults to `undefined`] |
+| **apiKeyId** | `Array<string>` | Filter to one or more API key ids; repeatable (api_key_id&#x3D;a&amp;api_key_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **priced** | `boolean` | Filter by token-pricing state: true &#x3D; only rows whose model tokens were priced, false &#x3D; only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. | [Optional] [Defaults to `undefined`] |
 | **tool** | `any`, `web_search`, `code_execution` | Filter to requests that ran a gateway-run tool. \&#39;any\&#39; matches any tool; a tool name (web_search, code_execution) matches that tool specifically. | [Optional] [Defaults to `undefined`] [Enum: any, web_search, code_execution] |
 | **countsTowardBudget** | `boolean` | Filter by budget participation: true &#x3D; only enforced gateway rows, false &#x3D; only imported rows that never touch a budget | [Optional] [Defaults to `undefined`] |
@@ -626,14 +626,14 @@ async function example() {
     startDate: 2013-10-20T19:20:30+01:00,
     // Date | Return logs with timestamp < end_date (ISO 8601 or Unix epoch seconds) (optional)
     endDate: 2013-10-20T19:20:30+01:00,
-    // string | Filter to a single user (optional)
-    userId: userId_example,
+    // Array<string> | Filter to one or more users; repeatable (user_id=a&user_id=b). Several values match any of them. At most 50 per call. (optional)
+    userId: ...,
     // string | Filter to a single status: \'success\', \'error\', or \'absorbed\' (an attempt a routing policy recovered from, excluded from error_count and request_count) (optional)
     status: status_example,
     // number | Filter to a single failure status code (e.g. 429 for provider rate limits, 402 for missing-pricing rejections). Only error rows carry one, so this filter also restricts to status=\'error\' unless \'status\' is given explicitly (optional)
     statusCode: 56,
-    // string | Filter to a single model (optional)
-    model: model_example,
+    // Array<string> | Filter to one or more models; repeatable (model=a&model=b). Several values match any of them. At most 50 per call. (optional)
+    model: ...,
     // string | Filter to a single endpoint (e.g. \'/v1/chat/completions\') (optional)
     endpoint: endpoint_example,
     // string | Filter to a single provider (e.g. \'openai\') (optional)
@@ -642,8 +642,8 @@ async function example() {
     source: source_example,
     // string | Filter to a single session/project label (the source_label carried by imported usage) (optional)
     sourceLabel: sourceLabel_example,
-    // string | Filter to a single API key id (optional)
-    apiKeyId: apiKeyId_example,
+    // Array<string> | Filter to one or more API key ids; repeatable (api_key_id=a&api_key_id=b). Several values match any of them. At most 50 per call. (optional)
+    apiKeyId: ...,
     // boolean | Filter by token-pricing state: true = only rows whose model tokens were priced, false = only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. (optional)
     priced: true,
     // 'any' | 'web_search' | 'code_execution' | Filter to requests that ran a gateway-run tool. \'any\' matches any tool; a tool name (web_search, code_execution) matches that tool specifically. (optional)
@@ -671,15 +671,15 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **startDate** | `Date` | Return logs with timestamp &gt;&#x3D; start_date (ISO 8601 or Unix epoch seconds) | [Optional] [Defaults to `undefined`] |
 | **endDate** | `Date` | Return logs with timestamp &lt; end_date (ISO 8601 or Unix epoch seconds) | [Optional] [Defaults to `undefined`] |
-| **userId** | `string` | Filter to a single user | [Optional] [Defaults to `undefined`] |
+| **userId** | `Array<string>` | Filter to one or more users; repeatable (user_id&#x3D;a&amp;user_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **status** | `string` | Filter to a single status: \&#39;success\&#39;, \&#39;error\&#39;, or \&#39;absorbed\&#39; (an attempt a routing policy recovered from, excluded from error_count and request_count) | [Optional] [Defaults to `undefined`] |
 | **statusCode** | `number` | Filter to a single failure status code (e.g. 429 for provider rate limits, 402 for missing-pricing rejections). Only error rows carry one, so this filter also restricts to status&#x3D;\&#39;error\&#39; unless \&#39;status\&#39; is given explicitly | [Optional] [Defaults to `undefined`] |
-| **model** | `string` | Filter to a single model | [Optional] [Defaults to `undefined`] |
+| **model** | `Array<string>` | Filter to one or more models; repeatable (model&#x3D;a&amp;model&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **endpoint** | `string` | Filter to a single endpoint (e.g. \&#39;/v1/chat/completions\&#39;) | [Optional] [Defaults to `undefined`] |
 | **provider** | `string` | Filter to a single provider (e.g. \&#39;openai\&#39;) | [Optional] [Defaults to `undefined`] |
 | **source** | `string` | Filter to a single provenance source (e.g. \&#39;gateway\&#39; or \&#39;claude_code\&#39;) | [Optional] [Defaults to `undefined`] |
 | **sourceLabel** | `string` | Filter to a single session/project label (the source_label carried by imported usage) | [Optional] [Defaults to `undefined`] |
-| **apiKeyId** | `string` | Filter to a single API key id | [Optional] [Defaults to `undefined`] |
+| **apiKeyId** | `Array<string>` | Filter to one or more API key ids; repeatable (api_key_id&#x3D;a&amp;api_key_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **priced** | `boolean` | Filter by token-pricing state: true &#x3D; only rows whose model tokens were priced, false &#x3D; only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. | [Optional] [Defaults to `undefined`] |
 | **tool** | `any`, `web_search`, `code_execution` | Filter to requests that ran a gateway-run tool. \&#39;any\&#39; matches any tool; a tool name (web_search, code_execution) matches that tool specifically. | [Optional] [Defaults to `undefined`] [Enum: any, web_search, code_execution] |
 | **countsTowardBudget** | `boolean` | Filter by budget participation: true &#x3D; only enforced gateway rows, false &#x3D; only imported rows that never touch a budget | [Optional] [Defaults to `undefined`] |
@@ -713,7 +713,7 @@ example().catch(console.error);
 
 Usage Summary
 
-Aggregate spend, tokens, and request volume for the dashboard Usage page.  Range-bounded (default last 30 days, hard-capped): unlike the raw &#x60;&#x60;/v1/usage&#x60;&#x60; list, every aggregate is scoped to a bounded window so it stays served by the timestamp index. Returns grand totals, breakdowns by model / user / API key / source / session (&#x60;&#x60;source_label&#x60;&#x60;) / endpoint / provider (top rows plus a reconciling &#x60;&#x60;other&#x60;&#x60; fold, billed token counts), the error taxonomy grouped by failure status code, and a UTC-bucketed time series carrying each bucket\&#39;s error count and billed token composition (input incl. cache, cache read/write, output).  Each breakdown is its own &#x60;&#x60;GROUP BY&#x60;&#x60; pass, so a caller that reads only the totals or the series should narrow &#x60;&#x60;dimensions&#x60;&#x60; rather than pay for all eight (the dashboard\&#39;s tiles, timeline context, and model typeahead all do). Omitting the parameter keeps the full set.
+Aggregate spend, tokens, and request volume for the dashboard Usage page.  Range-bounded (default last 30 days, hard-capped): unlike the raw &#x60;&#x60;/v1/usage&#x60;&#x60; list, every aggregate is scoped to a bounded window so it stays served by the timestamp index. Returns grand totals, breakdowns by model / user / API key / source / session (&#x60;&#x60;source_label&#x60;&#x60;) / endpoint / provider (top rows plus a reconciling &#x60;&#x60;other&#x60;&#x60; fold, billed token counts), the error taxonomy grouped by failure status code, and a UTC-bucketed time series carrying each bucket\&#39;s error count and billed token composition (input incl. cache, cache read/write, output).  Each breakdown is its own &#x60;&#x60;GROUP BY&#x60;&#x60; pass, so a caller that reads only the totals or the series should narrow &#x60;&#x60;dimensions&#x60;&#x60; rather than pay for all eight (the dashboard\&#39;s tiles, timeline context, and model typeahead all do). Omitting the parameter keeps the full set.  &#x60;&#x60;model&#x60;&#x60;, &#x60;&#x60;user_id&#x60;&#x60;, and &#x60;&#x60;api_key_id&#x60;&#x60; are repeatable: several values match any of them, so one chart can compare a handful of models, users, or keys.
 
 ### Example
 
@@ -739,14 +739,14 @@ async function example() {
     startDate: 2013-10-20T19:20:30+01:00,
     // Date | Return logs with timestamp < end_date (ISO 8601 or Unix epoch seconds) (optional)
     endDate: 2013-10-20T19:20:30+01:00,
-    // string | Filter to a single user (optional)
-    userId: userId_example,
+    // Array<string> | Filter to one or more users; repeatable (user_id=a&user_id=b). Several values match any of them. At most 50 per call. (optional)
+    userId: ...,
     // string | Filter to a single status: \'success\', \'error\', or \'absorbed\' (an attempt a routing policy recovered from, excluded from error_count and request_count) (optional)
     status: status_example,
     // number | Filter to a single failure status code (e.g. 429 for provider rate limits, 402 for missing-pricing rejections). Only error rows carry one, so this filter also restricts to status=\'error\' unless \'status\' is given explicitly (optional)
     statusCode: 56,
-    // string | Filter to a single model (optional)
-    model: model_example,
+    // Array<string> | Filter to one or more models; repeatable (model=a&model=b). Several values match any of them. At most 50 per call. (optional)
+    model: ...,
     // string | Filter to a single endpoint (e.g. \'/v1/chat/completions\') (optional)
     endpoint: endpoint_example,
     // string | Filter to a single provider (e.g. \'openai\') (optional)
@@ -755,8 +755,8 @@ async function example() {
     source: source_example,
     // string | Filter to a single session/project label (the source_label carried by imported usage) (optional)
     sourceLabel: sourceLabel_example,
-    // string | Filter to a single API key id (optional)
-    apiKeyId: apiKeyId_example,
+    // Array<string> | Filter to one or more API key ids; repeatable (api_key_id=a&api_key_id=b). Several values match any of them. At most 50 per call. (optional)
+    apiKeyId: ...,
     // boolean | Filter by token-pricing state: true = only rows whose model tokens were priced, false = only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. (optional)
     priced: true,
     // 'any' | 'web_search' | 'code_execution' | Filter to requests that ran a gateway-run tool. \'any\' matches any tool; a tool name (web_search, code_execution) matches that tool specifically. (optional)
@@ -788,15 +788,15 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **startDate** | `Date` | Return logs with timestamp &gt;&#x3D; start_date (ISO 8601 or Unix epoch seconds) | [Optional] [Defaults to `undefined`] |
 | **endDate** | `Date` | Return logs with timestamp &lt; end_date (ISO 8601 or Unix epoch seconds) | [Optional] [Defaults to `undefined`] |
-| **userId** | `string` | Filter to a single user | [Optional] [Defaults to `undefined`] |
+| **userId** | `Array<string>` | Filter to one or more users; repeatable (user_id&#x3D;a&amp;user_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **status** | `string` | Filter to a single status: \&#39;success\&#39;, \&#39;error\&#39;, or \&#39;absorbed\&#39; (an attempt a routing policy recovered from, excluded from error_count and request_count) | [Optional] [Defaults to `undefined`] |
 | **statusCode** | `number` | Filter to a single failure status code (e.g. 429 for provider rate limits, 402 for missing-pricing rejections). Only error rows carry one, so this filter also restricts to status&#x3D;\&#39;error\&#39; unless \&#39;status\&#39; is given explicitly | [Optional] [Defaults to `undefined`] |
-| **model** | `string` | Filter to a single model | [Optional] [Defaults to `undefined`] |
+| **model** | `Array<string>` | Filter to one or more models; repeatable (model&#x3D;a&amp;model&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **endpoint** | `string` | Filter to a single endpoint (e.g. \&#39;/v1/chat/completions\&#39;) | [Optional] [Defaults to `undefined`] |
 | **provider** | `string` | Filter to a single provider (e.g. \&#39;openai\&#39;) | [Optional] [Defaults to `undefined`] |
 | **source** | `string` | Filter to a single provenance source (e.g. \&#39;gateway\&#39; or \&#39;claude_code\&#39;) | [Optional] [Defaults to `undefined`] |
 | **sourceLabel** | `string` | Filter to a single session/project label (the source_label carried by imported usage) | [Optional] [Defaults to `undefined`] |
-| **apiKeyId** | `string` | Filter to a single API key id | [Optional] [Defaults to `undefined`] |
+| **apiKeyId** | `Array<string>` | Filter to one or more API key ids; repeatable (api_key_id&#x3D;a&amp;api_key_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **priced** | `boolean` | Filter by token-pricing state: true &#x3D; only rows whose model tokens were priced, false &#x3D; only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. | [Optional] [Defaults to `undefined`] |
 | **tool** | `any`, `web_search`, `code_execution` | Filter to requests that ran a gateway-run tool. \&#39;any\&#39; matches any tool; a tool name (web_search, code_execution) matches that tool specifically. | [Optional] [Defaults to `undefined`] [Enum: any, web_search, code_execution] |
 | **countsTowardBudget** | `boolean` | Filter by budget participation: true &#x3D; only enforced gateway rows, false &#x3D; only imported rows that never touch a budget | [Optional] [Defaults to `undefined`] |

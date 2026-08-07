@@ -13,6 +13,28 @@
  */
 
 import { mapValues } from '../runtime';
+import type { ApiKeyId } from './ApiKeyId';
+import {
+    ApiKeyIdFromJSON,
+    ApiKeyIdFromJSONTyped,
+    ApiKeyIdToJSON,
+    ApiKeyIdToJSONTyped,
+} from './ApiKeyId';
+import type { UserId } from './UserId';
+import {
+    UserIdFromJSON,
+    UserIdFromJSONTyped,
+    UserIdToJSON,
+    UserIdToJSONTyped,
+} from './UserId';
+import type { Model } from './Model';
+import {
+    ModelFromJSON,
+    ModelFromJSONTyped,
+    ModelToJSON,
+    ModelToJSONTyped,
+} from './Model';
+
 /**
  * Selection of imported usage rows to delete.
  * @export
@@ -21,10 +43,10 @@ import { mapValues } from '../runtime';
 export interface UsageDeleteRequest {
     /**
      * 
-     * @type {string}
+     * @type {ApiKeyId}
      * @memberof UsageDeleteRequest
      */
-    apiKeyId?: string | null;
+    apiKeyId?: ApiKeyId | null;
     /**
      * 
      * @type {boolean}
@@ -51,10 +73,10 @@ export interface UsageDeleteRequest {
     ids?: Array<string> | null;
     /**
      * 
-     * @type {string}
+     * @type {Model}
      * @memberof UsageDeleteRequest
      */
-    model?: string | null;
+    model?: Model | null;
     /**
      * 
      * @type {boolean}
@@ -99,10 +121,10 @@ export interface UsageDeleteRequest {
     tool?: string | null;
     /**
      * 
-     * @type {string}
+     * @type {UserId}
      * @memberof UsageDeleteRequest
      */
-    userId?: string | null;
+    userId?: UserId | null;
 }
 
 /**
@@ -122,12 +144,12 @@ export function UsageDeleteRequestFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
-        'apiKeyId': json['api_key_id'] == null ? undefined : json['api_key_id'],
+        'apiKeyId': json['api_key_id'] == null ? undefined : ApiKeyIdFromJSON(json['api_key_id']),
         'byFilter': json['by_filter'] == null ? undefined : json['by_filter'],
         'endDate': json['end_date'] == null ? undefined : (new Date(json['end_date'])),
         'endpoint': json['endpoint'] == null ? undefined : json['endpoint'],
         'ids': json['ids'] == null ? undefined : json['ids'],
-        'model': json['model'] == null ? undefined : json['model'],
+        'model': json['model'] == null ? undefined : ModelFromJSON(json['model']),
         'priced': json['priced'] == null ? undefined : json['priced'],
         'provider': json['provider'] == null ? undefined : json['provider'],
         'source': json['source'] == null ? undefined : json['source'],
@@ -135,7 +157,7 @@ export function UsageDeleteRequestFromJSONTyped(json: any, ignoreDiscriminator: 
         'startDate': json['start_date'] == null ? undefined : (new Date(json['start_date'])),
         'status': json['status'] == null ? undefined : json['status'],
         'tool': json['tool'] == null ? undefined : json['tool'],
-        'userId': json['user_id'] == null ? undefined : json['user_id'],
+        'userId': json['user_id'] == null ? undefined : UserIdFromJSON(json['user_id']),
     };
 }
 
@@ -150,12 +172,12 @@ export function UsageDeleteRequestToJSONTyped(value?: UsageDeleteRequest | null,
 
     return {
         
-        'api_key_id': value['apiKeyId'],
+        'api_key_id': ApiKeyIdToJSON(value['apiKeyId']),
         'by_filter': value['byFilter'],
         'end_date': value['endDate'] == null ? value['endDate'] : value['endDate'].toISOString(),
         'endpoint': value['endpoint'],
         'ids': value['ids'],
-        'model': value['model'],
+        'model': ModelToJSON(value['model']),
         'priced': value['priced'],
         'provider': value['provider'],
         'source': value['source'],
@@ -163,7 +185,7 @@ export function UsageDeleteRequestToJSONTyped(value?: UsageDeleteRequest | null,
         'start_date': value['startDate'] == null ? value['startDate'] : value['startDate'].toISOString(),
         'status': value['status'],
         'tool': value['tool'],
-        'user_id': value['userId'],
+        'user_id': UserIdToJSON(value['userId']),
     };
 }
 

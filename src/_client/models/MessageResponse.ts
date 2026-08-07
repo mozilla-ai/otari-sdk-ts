@@ -34,13 +34,13 @@ import {
     MRRefusalStopDetailsToJSON,
     MRRefusalStopDetailsToJSONTyped,
 } from './MRRefusalStopDetails';
-import type { Model } from './Model';
+import type { Model1 } from './Model1';
 import {
-    ModelFromJSON,
-    ModelFromJSONTyped,
-    ModelToJSON,
-    ModelToJSONTyped,
-} from './Model';
+    Model1FromJSON,
+    Model1FromJSONTyped,
+    Model1ToJSON,
+    Model1ToJSONTyped,
+} from './Model1';
 import type { MRBetaContextManagementResponse } from './MRBetaContextManagementResponse';
 import {
     MRBetaContextManagementResponseFromJSON,
@@ -90,10 +90,10 @@ export interface MessageResponse {
     content: Array<Content16Inner>;
     /**
      * 
-     * @type {Model}
+     * @type {Model1}
      * @memberof MessageResponse
      */
-    model: Model;
+    model: Model1;
     /**
      * 
      * @type {MessageResponseRoleEnum}
@@ -204,7 +204,7 @@ export function MessageResponseFromJSONTyped(json: any, ignoreDiscriminator: boo
         'id': json['id'],
         'container': json['container'] == null ? undefined : MRBetaContainerFromJSON(json['container']),
         'content': ((json['content'] as Array<any>).map(Content16InnerFromJSON)),
-        'model': ModelFromJSON(json['model']),
+        'model': Model1FromJSON(json['model']),
         'role': json['role'],
         'stopDetails': json['stop_details'] == null ? undefined : MRRefusalStopDetailsFromJSON(json['stop_details']),
         'stopReason': json['stop_reason'] == null ? undefined : json['stop_reason'],
@@ -231,7 +231,7 @@ export function MessageResponseToJSONTyped(value?: MessageResponse | null, ignor
         'id': value['id'],
         'container': MRBetaContainerToJSON(value['container']),
         'content': ((value['content'] as Array<any>).map(Content16InnerToJSON)),
-        'model': ModelToJSON(value['model']),
+        'model': Model1ToJSON(value['model']),
         'role': value['role'],
         'stop_details': MRRefusalStopDetailsToJSON(value['stopDetails']),
         'stop_reason': value['stopReason'],

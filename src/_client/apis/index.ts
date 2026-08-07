@@ -23,5 +23,6 @@ export * from './RoutingApi';
 export * from './SearchApi';
 export * from './SettingsApi';
 export * from './ToolSettingsApi';
+export * from './ToolsApi';
 export * from './UsageApi';
 export * from './UsersApi';

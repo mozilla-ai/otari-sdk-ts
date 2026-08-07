@@ -22,12 +22,14 @@ apis/RoutingApi.ts
 apis/SearchApi.ts
 apis/SettingsApi.ts
 apis/ToolSettingsApi.ts
+apis/ToolsApi.ts
 apis/UsageApi.ts
 apis/UsersApi.ts
 apis/index.ts
 docs/AliasRequest.md
 docs/AliasResponse.md
 docs/AliasesApi.md
+docs/ApiKeyId.md
 docs/AppliedEditsInner.md
 docs/AudioApi.md
 docs/AudioSpeechRequest.md
@@ -260,11 +262,13 @@ docs/MSGFunction.md
 docs/MSGFunctionCall.md
 docs/MSGImageURL.md
 docs/MSGInputAudio.md
+docs/ManagedTool.md
 docs/McpServerConfig.md
 docs/MessageResponse.md
 docs/MessagesApi.md
 docs/MessagesRequest.md
 docs/Model.md
+docs/Model1.md
 docs/ModelListResponse.md
 docs/ModelMetadata.md
 docs/ModelMetadataResponse.md
@@ -324,6 +328,8 @@ docs/ToolChoice1.md
 docs/ToolSettingField.md
 docs/ToolSettingsApi.md
 docs/ToolSettingsResponse.md
+docs/ToolsApi.md
+docs/ToolsResponse.md
 docs/UpdateBudgetRequest.md
 docs/UpdateKeyRequest.md
 docs/UpdateSettingsRequest.md
@@ -347,6 +353,7 @@ docs/UsageSetPriceResult.md
 docs/UsageSummary.md
 docs/UsageToolRow.md
 docs/UsageTotals.md
+docs/UserId.md
 docs/UserResponse.md
 docs/UsersApi.md
 docs/ValidationError.md
@@ -355,6 +362,7 @@ docs/Value1.md
 index.ts
 models/AliasRequest.ts
 models/AliasResponse.ts
+models/ApiKeyId.ts
 models/AppliedEditsInner.ts
 models/AudioSpeechRequest.ts
 models/BatchRequestItem.ts
@@ -577,10 +585,12 @@ models/MSGFunction.ts
 models/MSGFunctionCall.ts
 models/MSGImageURL.ts
 models/MSGInputAudio.ts
+models/ManagedTool.ts
 models/McpServerConfig.ts
 models/MessageResponse.ts
 models/MessagesRequest.ts
 models/Model.ts
+models/Model1.ts
 models/ModelListResponse.ts
 models/ModelMetadata.ts
 models/ModelMetadataResponse.ts
@@ -629,6 +639,7 @@ models/ToolChoice.ts
 models/ToolChoice1.ts
 models/ToolSettingField.ts
 models/ToolSettingsResponse.ts
+models/ToolsResponse.ts
 models/UpdateBudgetRequest.ts
 models/UpdateKeyRequest.ts
 models/UpdateSettingsRequest.ts
@@ -651,6 +662,7 @@ models/UsageSetPriceResult.ts
 models/UsageSummary.ts
 models/UsageToolRow.ts
 models/UsageTotals.ts
+models/UserId.ts
 models/UserResponse.ts
 models/ValidationError.ts
 models/Value.ts
