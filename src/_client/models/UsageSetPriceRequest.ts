@@ -13,6 +13,28 @@
  */
 
 import { mapValues } from '../runtime';
+import type { ApiKeyId } from './ApiKeyId';
+import {
+    ApiKeyIdFromJSON,
+    ApiKeyIdFromJSONTyped,
+    ApiKeyIdToJSON,
+    ApiKeyIdToJSONTyped,
+} from './ApiKeyId';
+import type { UserId } from './UserId';
+import {
+    UserIdFromJSON,
+    UserIdFromJSONTyped,
+    UserIdToJSON,
+    UserIdToJSONTyped,
+} from './UserId';
+import type { Model } from './Model';
+import {
+    ModelFromJSON,
+    ModelFromJSONTyped,
+    ModelToJSON,
+    ModelToJSONTyped,
+} from './Model';
+
 /**
  * Selection of imported usage rows plus the manual per-1M rates to price them at.
  * 
@@ -25,10 +47,10 @@ import { mapValues } from '../runtime';
 export interface UsageSetPriceRequest {
     /**
      * 
-     * @type {string}
+     * @type {ApiKeyId}
      * @memberof UsageSetPriceRequest
      */
-    apiKeyId?: string | null;
+    apiKeyId?: ApiKeyId | null;
     /**
      * 
      * @type {boolean}
@@ -73,10 +95,10 @@ export interface UsageSetPriceRequest {
     inputPricePerMillion: number;
     /**
      * 
-     * @type {string}
+     * @type {Model}
      * @memberof UsageSetPriceRequest
      */
-    model?: string | null;
+    model?: Model | null;
     /**
      * 
      * @type {number}
@@ -127,10 +149,10 @@ export interface UsageSetPriceRequest {
     tool?: string | null;
     /**
      * 
-     * @type {string}
+     * @type {UserId}
      * @memberof UsageSetPriceRequest
      */
-    userId?: string | null;
+    userId?: UserId | null;
 }
 
 /**
@@ -152,7 +174,7 @@ export function UsageSetPriceRequestFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
-        'apiKeyId': json['api_key_id'] == null ? undefined : json['api_key_id'],
+        'apiKeyId': json['api_key_id'] == null ? undefined : ApiKeyIdFromJSON(json['api_key_id']),
         'byFilter': json['by_filter'] == null ? undefined : json['by_filter'],
         'cacheReadPricePerMillion': json['cache_read_price_per_million'] == null ? undefined : json['cache_read_price_per_million'],
         'cacheWritePricePerMillion': json['cache_write_price_per_million'] == null ? undefined : json['cache_write_price_per_million'],
@@ -160,7 +182,7 @@ export function UsageSetPriceRequestFromJSONTyped(json: any, ignoreDiscriminator
         'endpoint': json['endpoint'] == null ? undefined : json['endpoint'],
         'ids': json['ids'] == null ? undefined : json['ids'],
         'inputPricePerMillion': json['input_price_per_million'],
-        'model': json['model'] == null ? undefined : json['model'],
+        'model': json['model'] == null ? undefined : ModelFromJSON(json['model']),
         'outputPricePerMillion': json['output_price_per_million'],
         'priced': json['priced'] == null ? undefined : json['priced'],
         'provider': json['provider'] == null ? undefined : json['provider'],
@@ -169,7 +191,7 @@ export function UsageSetPriceRequestFromJSONTyped(json: any, ignoreDiscriminator
         'startDate': json['start_date'] == null ? undefined : (new Date(json['start_date'])),
         'status': json['status'] == null ? undefined : json['status'],
         'tool': json['tool'] == null ? undefined : json['tool'],
-        'userId': json['user_id'] == null ? undefined : json['user_id'],
+        'userId': json['user_id'] == null ? undefined : UserIdFromJSON(json['user_id']),
     };
 }
 
@@ -184,7 +206,7 @@ export function UsageSetPriceRequestToJSONTyped(value?: UsageSetPriceRequest | n
 
     return {
         
-        'api_key_id': value['apiKeyId'],
+        'api_key_id': ApiKeyIdToJSON(value['apiKeyId']),
         'by_filter': value['byFilter'],
         'cache_read_price_per_million': value['cacheReadPricePerMillion'],
         'cache_write_price_per_million': value['cacheWritePricePerMillion'],
@@ -192,7 +214,7 @@ export function UsageSetPriceRequestToJSONTyped(value?: UsageSetPriceRequest | n
         'endpoint': value['endpoint'],
         'ids': value['ids'],
         'input_price_per_million': value['inputPricePerMillion'],
-        'model': value['model'],
+        'model': ModelToJSON(value['model']),
         'output_price_per_million': value['outputPricePerMillion'],
         'priced': value['priced'],
         'provider': value['provider'],
@@ -201,7 +223,7 @@ export function UsageSetPriceRequestToJSONTyped(value?: UsageSetPriceRequest | n
         'start_date': value['startDate'] == null ? value['startDate'] : value['startDate'].toISOString(),
         'status': value['status'],
         'tool': value['tool'],
-        'user_id': value['userId'],
+        'user_id': UserIdToJSON(value['userId']),
     };
 }
 

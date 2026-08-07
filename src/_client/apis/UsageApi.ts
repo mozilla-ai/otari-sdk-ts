@@ -72,15 +72,15 @@ import {
 export interface CountUsageV1UsageCountGetRequest {
     startDate?: Date | null;
     endDate?: Date | null;
-    userId?: string | null;
+    userId?: Array<string> | null;
     status?: string | null;
     statusCode?: number | null;
-    model?: string | null;
+    model?: Array<string> | null;
     endpoint?: string | null;
     provider?: string | null;
     source?: string | null;
     sourceLabel?: string | null;
-    apiKeyId?: string | null;
+    apiKeyId?: Array<string> | null;
     priced?: boolean | null;
     tool?: CountUsageV1UsageCountGetToolEnum;
     countsTowardBudget?: boolean | null;
@@ -98,15 +98,15 @@ export interface IngestExternalUsageV1UsageExternalEventsPostRequest {
 export interface ListUsageV1UsageGetRequest {
     startDate?: Date | null;
     endDate?: Date | null;
-    userId?: string | null;
+    userId?: Array<string> | null;
     status?: string | null;
     statusCode?: number | null;
-    model?: string | null;
+    model?: Array<string> | null;
     endpoint?: string | null;
     provider?: string | null;
     source?: string | null;
     sourceLabel?: string | null;
-    apiKeyId?: string | null;
+    apiKeyId?: Array<string> | null;
     priced?: boolean | null;
     tool?: ListUsageV1UsageGetToolEnum;
     countsTowardBudget?: boolean | null;
@@ -123,15 +123,15 @@ export interface UsageSeriesV1UsageSeriesGetRequest {
     groupBy: UsageSeriesV1UsageSeriesGetGroupByEnum;
     startDate?: Date | null;
     endDate?: Date | null;
-    userId?: string | null;
+    userId?: Array<string> | null;
     status?: string | null;
     statusCode?: number | null;
-    model?: string | null;
+    model?: Array<string> | null;
     endpoint?: string | null;
     provider?: string | null;
     source?: string | null;
     sourceLabel?: string | null;
-    apiKeyId?: string | null;
+    apiKeyId?: Array<string> | null;
     priced?: boolean | null;
     tool?: UsageSeriesV1UsageSeriesGetToolEnum;
     countsTowardBudget?: boolean | null;
@@ -141,15 +141,15 @@ export interface UsageSeriesV1UsageSeriesGetRequest {
 export interface UsageSummaryCsvV1UsageSummaryCsvGetRequest {
     startDate?: Date | null;
     endDate?: Date | null;
-    userId?: string | null;
+    userId?: Array<string> | null;
     status?: string | null;
     statusCode?: number | null;
-    model?: string | null;
+    model?: Array<string> | null;
     endpoint?: string | null;
     provider?: string | null;
     source?: string | null;
     sourceLabel?: string | null;
-    apiKeyId?: string | null;
+    apiKeyId?: Array<string> | null;
     priced?: boolean | null;
     tool?: UsageSummaryCsvV1UsageSummaryCsvGetToolEnum;
     countsTowardBudget?: boolean | null;
@@ -158,15 +158,15 @@ export interface UsageSummaryCsvV1UsageSummaryCsvGetRequest {
 export interface UsageSummaryV1UsageSummaryGetRequest {
     startDate?: Date | null;
     endDate?: Date | null;
-    userId?: string | null;
+    userId?: Array<string> | null;
     status?: string | null;
     statusCode?: number | null;
-    model?: string | null;
+    model?: Array<string> | null;
     endpoint?: string | null;
     provider?: string | null;
     source?: string | null;
     sourceLabel?: string | null;
-    apiKeyId?: string | null;
+    apiKeyId?: Array<string> | null;
     priced?: boolean | null;
     tool?: UsageSummaryV1UsageSummaryGetToolEnum;
     countsTowardBudget?: boolean | null;
@@ -889,7 +889,7 @@ export class UsageApi extends runtime.BaseAPI {
     }
 
     /**
-     * Aggregate spend, tokens, and request volume for the dashboard Usage page.  Range-bounded (default last 30 days, hard-capped): unlike the raw ``/v1/usage`` list, every aggregate is scoped to a bounded window so it stays served by the timestamp index. Returns grand totals, breakdowns by model / user / API key / source / session (``source_label``) / endpoint / provider (top rows plus a reconciling ``other`` fold, billed token counts), the error taxonomy grouped by failure status code, and a UTC-bucketed time series carrying each bucket\'s error count and billed token composition (input incl. cache, cache read/write, output).  Each breakdown is its own ``GROUP BY`` pass, so a caller that reads only the totals or the series should narrow ``dimensions`` rather than pay for all eight (the dashboard\'s tiles, timeline context, and model typeahead all do). Omitting the parameter keeps the full set.
+     * Aggregate spend, tokens, and request volume for the dashboard Usage page.  Range-bounded (default last 30 days, hard-capped): unlike the raw ``/v1/usage`` list, every aggregate is scoped to a bounded window so it stays served by the timestamp index. Returns grand totals, breakdowns by model / user / API key / source / session (``source_label``) / endpoint / provider (top rows plus a reconciling ``other`` fold, billed token counts), the error taxonomy grouped by failure status code, and a UTC-bucketed time series carrying each bucket\'s error count and billed token composition (input incl. cache, cache read/write, output).  Each breakdown is its own ``GROUP BY`` pass, so a caller that reads only the totals or the series should narrow ``dimensions`` rather than pay for all eight (the dashboard\'s tiles, timeline context, and model typeahead all do). Omitting the parameter keeps the full set.  ``model``, ``user_id``, and ``api_key_id`` are repeatable: several values match any of them, so one chart can compare a handful of models, users, or keys.
      * Usage Summary
      */
     async usageSummaryV1UsageSummaryGetRaw(requestParameters: UsageSummaryV1UsageSummaryGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UsageSummary>> {
@@ -900,7 +900,7 @@ export class UsageApi extends runtime.BaseAPI {
     }
 
     /**
-     * Aggregate spend, tokens, and request volume for the dashboard Usage page.  Range-bounded (default last 30 days, hard-capped): unlike the raw ``/v1/usage`` list, every aggregate is scoped to a bounded window so it stays served by the timestamp index. Returns grand totals, breakdowns by model / user / API key / source / session (``source_label``) / endpoint / provider (top rows plus a reconciling ``other`` fold, billed token counts), the error taxonomy grouped by failure status code, and a UTC-bucketed time series carrying each bucket\'s error count and billed token composition (input incl. cache, cache read/write, output).  Each breakdown is its own ``GROUP BY`` pass, so a caller that reads only the totals or the series should narrow ``dimensions`` rather than pay for all eight (the dashboard\'s tiles, timeline context, and model typeahead all do). Omitting the parameter keeps the full set.
+     * Aggregate spend, tokens, and request volume for the dashboard Usage page.  Range-bounded (default last 30 days, hard-capped): unlike the raw ``/v1/usage`` list, every aggregate is scoped to a bounded window so it stays served by the timestamp index. Returns grand totals, breakdowns by model / user / API key / source / session (``source_label``) / endpoint / provider (top rows plus a reconciling ``other`` fold, billed token counts), the error taxonomy grouped by failure status code, and a UTC-bucketed time series carrying each bucket\'s error count and billed token composition (input incl. cache, cache read/write, output).  Each breakdown is its own ``GROUP BY`` pass, so a caller that reads only the totals or the series should narrow ``dimensions`` rather than pay for all eight (the dashboard\'s tiles, timeline context, and model typeahead all do). Omitting the parameter keeps the full set.  ``model``, ``user_id``, and ``api_key_id`` are repeatable: several values match any of them, so one chart can compare a handful of models, users, or keys.
      * Usage Summary
      */
     async usageSummaryV1UsageSummaryGet(requestParameters: UsageSummaryV1UsageSummaryGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UsageSummary> {

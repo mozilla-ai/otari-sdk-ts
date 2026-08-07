@@ -9,7 +9,7 @@ Name | Type
 `id` | string
 `container` | [MRBetaContainer](MRBetaContainer.md)
 `content` | [Array&lt;Content16Inner&gt;](Content16Inner.md)
-`model` | [Model](Model.md)
+`model` | [Model1](Model1.md)
 `role` | string
 `stopDetails` | [MRRefusalStopDetails](MRRefusalStopDetails.md)
 `stopReason` | string

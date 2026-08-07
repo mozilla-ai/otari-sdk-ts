@@ -12,6 +12,7 @@ Name | Type
 `sandboxUrl` | string
 `webSearchEngines` | string
 `webSearchExtract` | boolean
+`webSearchIntercept` | boolean
 `webSearchMaxResults` | number
 `webSearchPurposeHint` | string
 `webSearchUrl` | string
@@ -28,6 +29,7 @@ const example = {
   "sandboxUrl": null,
   "webSearchEngines": null,
   "webSearchExtract": null,
+  "webSearchIntercept": null,
   "webSearchMaxResults": null,
   "webSearchPurposeHint": null,
   "webSearchUrl": null,

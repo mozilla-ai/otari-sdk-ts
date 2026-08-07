@@ -7,12 +7,12 @@ Selection of imported usage rows to delete.
 
 Name | Type
 ------------ | -------------
-`apiKeyId` | string
+`apiKeyId` | [ApiKeyId](ApiKeyId.md)
 `byFilter` | boolean
 `endDate` | Date
 `endpoint` | string
 `ids` | Array&lt;string&gt;
-`model` | string
+`model` | [Model](Model.md)
 `priced` | boolean
 `provider` | string
 `source` | string
@@ -20,7 +20,7 @@ Name | Type
 `startDate` | Date
 `status` | string
 `tool` | string
-`userId` | string
+`userId` | [UserId](UserId.md)
 
 ## Example
 

@@ -7,7 +7,7 @@ Selection of imported usage rows plus the manual per-1M rates to price them at. 
 
 Name | Type
 ------------ | -------------
-`apiKeyId` | string
+`apiKeyId` | [ApiKeyId](ApiKeyId.md)
 `byFilter` | boolean
 `cacheReadPricePerMillion` | number
 `cacheWritePricePerMillion` | number
@@ -15,7 +15,7 @@ Name | Type
 `endpoint` | string
 `ids` | Array&lt;string&gt;
 `inputPricePerMillion` | number
-`model` | string
+`model` | [Model](Model.md)
 `outputPricePerMillion` | number
 `priced` | boolean
 `provider` | string
@@ -24,7 +24,7 @@ Name | Type
 `startDate` | Date
 `status` | string
 `tool` | string
-`userId` | string
+`userId` | [UserId](UserId.md)
 
 ## Example
 
