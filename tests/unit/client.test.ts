@@ -294,9 +294,7 @@ describe("OtariClient.response", () => {
     await client.response(params);
 
     expect(mock.last.body).toEqual(params);
-    expect(Object.keys(mock.last.body as Record<string, unknown>)).not.toContain(
-      "promptCacheKey",
-    );
+    expect(Object.keys(mock.last.body as Record<string, unknown>)).not.toContain("promptCacheKey");
   });
 });
 
