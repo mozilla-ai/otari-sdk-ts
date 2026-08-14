@@ -12,35 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRTextEditorCodeExecutionViewResultBlock } from './MRTextEditorCodeExecutionViewResultBlock';
+import { mapValues } from '../runtime.js';
+import type { MRTextEditorCodeExecutionViewResultBlock } from './MRTextEditorCodeExecutionViewResultBlock.js';
 import {
     MRTextEditorCodeExecutionViewResultBlockFromJSON,
     MRTextEditorCodeExecutionViewResultBlockFromJSONTyped,
     MRTextEditorCodeExecutionViewResultBlockToJSON,
     MRTextEditorCodeExecutionViewResultBlockToJSONTyped,
-} from './MRTextEditorCodeExecutionViewResultBlock';
-import type { MRTextEditorCodeExecutionToolResultError } from './MRTextEditorCodeExecutionToolResultError';
+} from './MRTextEditorCodeExecutionViewResultBlock.js';
+import type { MRTextEditorCodeExecutionToolResultError } from './MRTextEditorCodeExecutionToolResultError.js';
 import {
     MRTextEditorCodeExecutionToolResultErrorFromJSON,
     MRTextEditorCodeExecutionToolResultErrorFromJSONTyped,
     MRTextEditorCodeExecutionToolResultErrorToJSON,
     MRTextEditorCodeExecutionToolResultErrorToJSONTyped,
-} from './MRTextEditorCodeExecutionToolResultError';
-import type { MRTextEditorCodeExecutionStrReplaceResultBlock } from './MRTextEditorCodeExecutionStrReplaceResultBlock';
+} from './MRTextEditorCodeExecutionToolResultError.js';
+import type { MRTextEditorCodeExecutionStrReplaceResultBlock } from './MRTextEditorCodeExecutionStrReplaceResultBlock.js';
 import {
     MRTextEditorCodeExecutionStrReplaceResultBlockFromJSON,
     MRTextEditorCodeExecutionStrReplaceResultBlockFromJSONTyped,
     MRTextEditorCodeExecutionStrReplaceResultBlockToJSON,
     MRTextEditorCodeExecutionStrReplaceResultBlockToJSONTyped,
-} from './MRTextEditorCodeExecutionStrReplaceResultBlock';
-import type { MRTextEditorCodeExecutionCreateResultBlock } from './MRTextEditorCodeExecutionCreateResultBlock';
+} from './MRTextEditorCodeExecutionStrReplaceResultBlock.js';
+import type { MRTextEditorCodeExecutionCreateResultBlock } from './MRTextEditorCodeExecutionCreateResultBlock.js';
 import {
     MRTextEditorCodeExecutionCreateResultBlockFromJSON,
     MRTextEditorCodeExecutionCreateResultBlockFromJSONTyped,
     MRTextEditorCodeExecutionCreateResultBlockToJSON,
     MRTextEditorCodeExecutionCreateResultBlockToJSONTyped,
-} from './MRTextEditorCodeExecutionCreateResultBlock';
+} from './MRTextEditorCodeExecutionCreateResultBlock.js';
 
 /**
  * 

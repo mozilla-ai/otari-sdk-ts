@@ -12,35 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { McpServerConfig } from './McpServerConfig';
+import { mapValues } from '../runtime.js';
+import type { McpServerConfig } from './McpServerConfig.js';
 import {
     McpServerConfigFromJSON,
     McpServerConfigFromJSONTyped,
     McpServerConfigToJSON,
     McpServerConfigToJSONTyped,
-} from './McpServerConfig';
-import type { GuardrailConfig } from './GuardrailConfig';
+} from './McpServerConfig.js';
+import type { GuardrailConfig } from './GuardrailConfig.js';
 import {
     GuardrailConfigFromJSON,
     GuardrailConfigFromJSONTyped,
     GuardrailConfigToJSON,
     GuardrailConfigToJSONTyped,
-} from './GuardrailConfig';
-import type { Conversation } from './Conversation';
+} from './GuardrailConfig.js';
+import type { Conversation } from './Conversation.js';
 import {
     ConversationFromJSON,
     ConversationFromJSONTyped,
     ConversationToJSON,
     ConversationToJSONTyped,
-} from './Conversation';
-import type { ToolChoice1 } from './ToolChoice1';
+} from './Conversation.js';
+import type { ToolChoice1 } from './ToolChoice1.js';
 import {
     ToolChoice1FromJSON,
     ToolChoice1FromJSONTyped,
     ToolChoice1ToJSON,
     ToolChoice1ToJSONTyped,
-} from './ToolChoice1';
+} from './ToolChoice1.js';
 
 /**
  * OpenAI Responses API-compatible request.

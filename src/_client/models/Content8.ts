@@ -12,28 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRBetaToolSearchToolSearchResultBlock } from './MRBetaToolSearchToolSearchResultBlock';
+import { mapValues } from '../runtime.js';
+import type { MRBetaToolSearchToolSearchResultBlock } from './MRBetaToolSearchToolSearchResultBlock.js';
 import {
     MRBetaToolSearchToolSearchResultBlockFromJSON,
     MRBetaToolSearchToolSearchResultBlockFromJSONTyped,
     MRBetaToolSearchToolSearchResultBlockToJSON,
     MRBetaToolSearchToolSearchResultBlockToJSONTyped,
-} from './MRBetaToolSearchToolSearchResultBlock';
-import type { MRBetaToolSearchToolResultError } from './MRBetaToolSearchToolResultError';
+} from './MRBetaToolSearchToolSearchResultBlock.js';
+import type { MRBetaToolSearchToolResultError } from './MRBetaToolSearchToolResultError.js';
 import {
     MRBetaToolSearchToolResultErrorFromJSON,
     MRBetaToolSearchToolResultErrorFromJSONTyped,
     MRBetaToolSearchToolResultErrorToJSON,
     MRBetaToolSearchToolResultErrorToJSONTyped,
-} from './MRBetaToolSearchToolResultError';
-import type { MRBetaToolReferenceBlock } from './MRBetaToolReferenceBlock';
+} from './MRBetaToolSearchToolResultError.js';
+import type { MRBetaToolReferenceBlock } from './MRBetaToolReferenceBlock.js';
 import {
     MRBetaToolReferenceBlockFromJSON,
     MRBetaToolReferenceBlockFromJSONTyped,
     MRBetaToolReferenceBlockToJSON,
     MRBetaToolReferenceBlockToJSONTyped,
-} from './MRBetaToolReferenceBlock';
+} from './MRBetaToolReferenceBlock.js';
 
 /**
  * 

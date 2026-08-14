@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { ManagedTool } from './ManagedTool';
+import { mapValues } from '../runtime.js';
+import type { ManagedTool } from './ManagedTool.js';
 import {
     ManagedToolFromJSON,
     ManagedToolFromJSONTyped,
     ManagedToolToJSON,
     ManagedToolToJSONTyped,
-} from './ManagedTool';
+} from './ManagedTool.js';
 
 /**
  * The gateway-run tools this deployment exposes.

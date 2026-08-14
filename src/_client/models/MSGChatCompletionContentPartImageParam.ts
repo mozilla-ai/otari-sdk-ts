@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MSGImageURL } from './MSGImageURL';
+import { mapValues } from '../runtime.js';
+import type { MSGImageURL } from './MSGImageURL.js';
 import {
     MSGImageURLFromJSON,
     MSGImageURLFromJSONTyped,
     MSGImageURLToJSON,
     MSGImageURLToJSONTyped,
-} from './MSGImageURL';
+} from './MSGImageURL.js';
 
 /**
  * Learn about [image inputs](https://platform.openai.com/docs/guides/vision).

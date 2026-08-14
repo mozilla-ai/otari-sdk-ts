@@ -12,21 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRWebSearchToolResultError } from './MRWebSearchToolResultError';
+import { mapValues } from '../runtime.js';
+import type { MRWebSearchToolResultError } from './MRWebSearchToolResultError.js';
 import {
     MRWebSearchToolResultErrorFromJSON,
     MRWebSearchToolResultErrorFromJSONTyped,
     MRWebSearchToolResultErrorToJSON,
     MRWebSearchToolResultErrorToJSONTyped,
-} from './MRWebSearchToolResultError';
-import type { MRWebSearchResultBlock } from './MRWebSearchResultBlock';
+} from './MRWebSearchToolResultError.js';
+import type { MRWebSearchResultBlock } from './MRWebSearchResultBlock.js';
 import {
     MRWebSearchResultBlockFromJSON,
     MRWebSearchResultBlockFromJSONTyped,
     MRWebSearchResultBlockToJSON,
     MRWebSearchResultBlockToJSONTyped,
-} from './MRWebSearchResultBlock';
+} from './MRWebSearchResultBlock.js';
 
 /**
  * 

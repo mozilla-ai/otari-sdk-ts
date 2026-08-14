@@ -12,35 +12,39 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type DiscoverableModelsResponse,
     DiscoverableModelsResponseFromJSON,
     DiscoverableModelsResponseToJSON,
-} from '../models/DiscoverableModelsResponse';
+} from '../models/DiscoverableModelsResponse.js';
 import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
-} from '../models/HTTPValidationError';
+} from '../models/HTTPValidationError.js';
 import {
     type ModelListResponse,
     ModelListResponseFromJSON,
     ModelListResponseToJSON,
-} from '../models/ModelListResponse';
+} from '../models/ModelListResponse.js';
 import {
     type ModelMetadataResponse,
     ModelMetadataResponseFromJSON,
     ModelMetadataResponseToJSON,
-} from '../models/ModelMetadataResponse';
+} from '../models/ModelMetadataResponse.js';
 import {
     type ModelObject,
     ModelObjectFromJSON,
     ModelObjectToJSON,
-} from '../models/ModelObject';
+} from '../models/ModelObject.js';
 
 export interface GetModelV1ModelsModelIdGetRequest {
     modelId: string;
+}
+
+export interface ListDiscoverableModelsV1ModelsDiscoverableGetRequest {
+    refresh?: boolean;
 }
 
 export interface ListModelsV1ModelsGetRequest {
@@ -110,8 +114,12 @@ export class ModelsApi extends runtime.BaseAPI {
     /**
      * Creates request options for listDiscoverableModelsV1ModelsDiscoverableGet without sending the request
      */
-    async listDiscoverableModelsV1ModelsDiscoverableGetRequestOpts(): Promise<runtime.RequestOpts> {
+    async listDiscoverableModelsV1ModelsDiscoverableGetRequestOpts(requestParameters: ListDiscoverableModelsV1ModelsDiscoverableGetRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
+
+        if (requestParameters['refresh'] != null) {
+            queryParameters['refresh'] = requestParameters['refresh'];
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -135,22 +143,22 @@ export class ModelsApi extends runtime.BaseAPI {
     }
 
     /**
-     * List every model the configured provider credentials can reach.  Operator-facing counterpart to GET /v1/models, which serves a curated catalog to API callers. This reports each provider separately and keeps its error, so a provider with a bad key is distinguishable from one with no models. It is master-key gated because a provider error message describes the gateway\'s own configuration.
+     * List every model the configured provider credentials can reach.  Operator-facing counterpart to GET /v1/models, which serves a curated catalog to API callers. This reports each provider separately and keeps its error, so a provider with a bad key is distinguishable from one with no models. It is master-key gated because a provider error message describes the gateway\'s own configuration.  Answers from the discovery cache, which a background refresher keeps warm, so the call does not wait on a slow or unreachable provider. Each provider carries the ``checked_at`` its result was produced at; a null one has not been dialed yet. Pass ``refresh=true`` to force a live re-dial of every provider.
      * List Discoverable Models
      */
-    async listDiscoverableModelsV1ModelsDiscoverableGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DiscoverableModelsResponse>> {
-        const requestOptions = await this.listDiscoverableModelsV1ModelsDiscoverableGetRequestOpts();
+    async listDiscoverableModelsV1ModelsDiscoverableGetRaw(requestParameters: ListDiscoverableModelsV1ModelsDiscoverableGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DiscoverableModelsResponse>> {
+        const requestOptions = await this.listDiscoverableModelsV1ModelsDiscoverableGetRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => DiscoverableModelsResponseFromJSON(jsonValue));
     }
 
     /**
-     * List every model the configured provider credentials can reach.  Operator-facing counterpart to GET /v1/models, which serves a curated catalog to API callers. This reports each provider separately and keeps its error, so a provider with a bad key is distinguishable from one with no models. It is master-key gated because a provider error message describes the gateway\'s own configuration.
+     * List every model the configured provider credentials can reach.  Operator-facing counterpart to GET /v1/models, which serves a curated catalog to API callers. This reports each provider separately and keeps its error, so a provider with a bad key is distinguishable from one with no models. It is master-key gated because a provider error message describes the gateway\'s own configuration.  Answers from the discovery cache, which a background refresher keeps warm, so the call does not wait on a slow or unreachable provider. Each provider carries the ``checked_at`` its result was produced at; a null one has not been dialed yet. Pass ``refresh=true`` to force a live re-dial of every provider.
      * List Discoverable Models
      */
-    async listDiscoverableModelsV1ModelsDiscoverableGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DiscoverableModelsResponse> {
-        const response = await this.listDiscoverableModelsV1ModelsDiscoverableGetRaw(initOverrides);
+    async listDiscoverableModelsV1ModelsDiscoverableGet(requestParameters: ListDiscoverableModelsV1ModelsDiscoverableGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DiscoverableModelsResponse> {
+        const response = await this.listDiscoverableModelsV1ModelsDiscoverableGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -182,7 +190,7 @@ export class ModelsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Per-model metadata for the dashboard\'s detail view, from models.dev.  Covers every model models.dev lists under a configured provider, keyed by the ``instance:model`` selector the dashboard uses. ``available`` is false when enrichment is disabled (``models_dev_metadata``) or models.dev could not be reached; the response is then empty and the UI falls back to bundled data. Master-key gated: it describes the gateway\'s configured providers.
+     * Per-model metadata for the dashboard\'s detail view, from models.dev.  Covers every model models.dev lists under a configured provider, keyed by the ``instance:model`` selector the dashboard uses. ``available`` is false when enrichment is disabled (``models_dev_metadata``) or models.dev could not be reached; the response is then empty and the UI falls back to bundled data. Master-key gated: it describes the gateway\'s configured providers.  Answers from the cached catalog, kept warm by a background refresher, so the dashboard never waits on the models.dev fetch timeout.
      * List Model Metadata
      */
     async listModelMetadataV1ModelsMetadataGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModelMetadataResponse>> {
@@ -193,7 +201,7 @@ export class ModelsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Per-model metadata for the dashboard\'s detail view, from models.dev.  Covers every model models.dev lists under a configured provider, keyed by the ``instance:model`` selector the dashboard uses. ``available`` is false when enrichment is disabled (``models_dev_metadata``) or models.dev could not be reached; the response is then empty and the UI falls back to bundled data. Master-key gated: it describes the gateway\'s configured providers.
+     * Per-model metadata for the dashboard\'s detail view, from models.dev.  Covers every model models.dev lists under a configured provider, keyed by the ``instance:model`` selector the dashboard uses. ``available`` is false when enrichment is disabled (``models_dev_metadata``) or models.dev could not be reached; the response is then empty and the UI falls back to bundled data. Master-key gated: it describes the gateway\'s configured providers.  Answers from the cached catalog, kept warm by a background refresher, so the dashboard never waits on the models.dev fetch timeout.
      * List Model Metadata
      */
     async listModelMetadataV1ModelsMetadataGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ModelMetadataResponse> {

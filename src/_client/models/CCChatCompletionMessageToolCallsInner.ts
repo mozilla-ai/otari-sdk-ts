@@ -12,35 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { CCFunction } from './CCFunction';
+import { mapValues } from '../runtime.js';
+import type { CCFunction } from './CCFunction.js';
 import {
     CCFunctionFromJSON,
     CCFunctionFromJSONTyped,
     CCFunctionToJSON,
     CCFunctionToJSONTyped,
-} from './CCFunction';
-import type { CCChatCompletionMessageCustomToolCall } from './CCChatCompletionMessageCustomToolCall';
+} from './CCFunction.js';
+import type { CCChatCompletionMessageCustomToolCall } from './CCChatCompletionMessageCustomToolCall.js';
 import {
     CCChatCompletionMessageCustomToolCallFromJSON,
     CCChatCompletionMessageCustomToolCallFromJSONTyped,
     CCChatCompletionMessageCustomToolCallToJSON,
     CCChatCompletionMessageCustomToolCallToJSONTyped,
-} from './CCChatCompletionMessageCustomToolCall';
-import type { CCCustom } from './CCCustom';
+} from './CCChatCompletionMessageCustomToolCall.js';
+import type { CCCustom } from './CCCustom.js';
 import {
     CCCustomFromJSON,
     CCCustomFromJSONTyped,
     CCCustomToJSON,
     CCCustomToJSONTyped,
-} from './CCCustom';
-import type { CCChatCompletionMessageFunctionToolCall } from './CCChatCompletionMessageFunctionToolCall';
+} from './CCCustom.js';
+import type { CCChatCompletionMessageFunctionToolCall } from './CCChatCompletionMessageFunctionToolCall.js';
 import {
     CCChatCompletionMessageFunctionToolCallFromJSON,
     CCChatCompletionMessageFunctionToolCallFromJSONTyped,
     CCChatCompletionMessageFunctionToolCallToJSON,
     CCChatCompletionMessageFunctionToolCallToJSONTyped,
-} from './CCChatCompletionMessageFunctionToolCall';
+} from './CCChatCompletionMessageFunctionToolCall.js';
 
 /**
  * 

@@ -12,28 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRMessageUsageIterationsInner } from './MRMessageUsageIterationsInner';
+import { mapValues } from '../runtime.js';
+import type { MRMessageUsageIterationsInner } from './MRMessageUsageIterationsInner.js';
 import {
     MRMessageUsageIterationsInnerFromJSON,
     MRMessageUsageIterationsInnerFromJSONTyped,
     MRMessageUsageIterationsInnerToJSON,
     MRMessageUsageIterationsInnerToJSONTyped,
-} from './MRMessageUsageIterationsInner';
-import type { MRServerToolUsage } from './MRServerToolUsage';
+} from './MRMessageUsageIterationsInner.js';
+import type { MRServerToolUsage } from './MRServerToolUsage.js';
 import {
     MRServerToolUsageFromJSON,
     MRServerToolUsageFromJSONTyped,
     MRServerToolUsageToJSON,
     MRServerToolUsageToJSONTyped,
-} from './MRServerToolUsage';
-import type { MRCacheCreation } from './MRCacheCreation';
+} from './MRServerToolUsage.js';
+import type { MRCacheCreation } from './MRCacheCreation.js';
 import {
     MRCacheCreationFromJSON,
     MRCacheCreationFromJSONTyped,
     MRCacheCreationToJSON,
     MRCacheCreationToJSONTyped,
-} from './MRCacheCreation';
+} from './MRCacheCreation.js';
 
 /**
  * 
@@ -61,7 +61,7 @@ export interface MRMessageUsage {
      */
     cacheReadInputTokens?: number | null;
     /**
-     * Delete the alias scoped to this user. Omit to delete the global alias of that name.
+     * Filter to a single event type or metric name (e.g. 'tool_result', 'claude_code.commit.count')
      * @type {string}
      * @memberof MRMessageUsage
      */

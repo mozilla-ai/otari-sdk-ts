@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { PricingRefreshChangeResponse } from './PricingRefreshChangeResponse';
+import { mapValues } from '../runtime.js';
+import type { PricingRefreshChangeResponse } from './PricingRefreshChangeResponse.js';
 import {
     PricingRefreshChangeResponseFromJSON,
     PricingRefreshChangeResponseFromJSONTyped,
     PricingRefreshChangeResponseToJSON,
     PricingRefreshChangeResponseToJSONTyped,
-} from './PricingRefreshChangeResponse';
+} from './PricingRefreshChangeResponse.js';
 
 /**
  * Reviewable summary of a pending genai-prices refresh.

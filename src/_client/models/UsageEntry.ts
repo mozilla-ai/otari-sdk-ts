@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { UsageEntryPricingBreakdownInnerValue } from './UsageEntryPricingBreakdownInnerValue';
+import { mapValues } from '../runtime.js';
+import type { UsageEntryPricingBreakdownInnerValue } from './UsageEntryPricingBreakdownInnerValue.js';
 import {
     UsageEntryPricingBreakdownInnerValueFromJSON,
     UsageEntryPricingBreakdownInnerValueFromJSONTyped,
     UsageEntryPricingBreakdownInnerValueToJSON,
     UsageEntryPricingBreakdownInnerValueToJSONTyped,
-} from './UsageEntryPricingBreakdownInnerValue';
+} from './UsageEntryPricingBreakdownInnerValue.js';
 
 /**
  * A single usage log entry.
@@ -33,6 +33,12 @@ export interface UsageEntry {
      * @memberof UsageEntry
      */
     apiKeyId: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UsageEntry
+     */
+    apiKeyName?: string | null;
     /**
      * 
      * @type {number}
@@ -194,6 +200,12 @@ export interface UsageEntry {
      * @type {string}
      * @memberof UsageEntry
      */
+    userAlias?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UsageEntry
+     */
     userId: string | null;
 }
 
@@ -238,6 +250,7 @@ export function UsageEntryFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     return {
         
         'apiKeyId': json['api_key_id'],
+        'apiKeyName': json['api_key_name'] == null ? undefined : json['api_key_name'],
         'attemptCount': json['attempt_count'] == null ? undefined : json['attempt_count'],
         'attemptPosition': json['attempt_position'] == null ? undefined : json['attempt_position'],
         'billingMeters': json['billing_meters'],
@@ -264,6 +277,7 @@ export function UsageEntryFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'statusCode': json['status_code'],
         'timestamp': json['timestamp'],
         'totalTokens': json['total_tokens'],
+        'userAlias': json['user_alias'] == null ? undefined : json['user_alias'],
         'userId': json['user_id'],
     };
 }
@@ -280,6 +294,7 @@ export function UsageEntryToJSONTyped(value?: UsageEntry | null, ignoreDiscrimin
     return {
         
         'api_key_id': value['apiKeyId'],
+        'api_key_name': value['apiKeyName'],
         'attempt_count': value['attemptCount'],
         'attempt_position': value['attemptPosition'],
         'billing_meters': value['billingMeters'],
@@ -306,6 +321,7 @@ export function UsageEntryToJSONTyped(value?: UsageEntry | null, ignoreDiscrimin
         'status_code': value['statusCode'],
         'timestamp': value['timestamp'],
         'total_tokens': value['totalTokens'],
+        'user_alias': value['userAlias'],
         'user_id': value['userId'],
     };
 }

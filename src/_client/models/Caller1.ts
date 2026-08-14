@@ -12,28 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRServerToolCaller20260120 } from './MRServerToolCaller20260120';
+import { mapValues } from '../runtime.js';
+import type { MRServerToolCaller20260120 } from './MRServerToolCaller20260120.js';
 import {
     MRServerToolCaller20260120FromJSON,
     MRServerToolCaller20260120FromJSONTyped,
     MRServerToolCaller20260120ToJSON,
     MRServerToolCaller20260120ToJSONTyped,
-} from './MRServerToolCaller20260120';
-import type { MRServerToolCaller } from './MRServerToolCaller';
+} from './MRServerToolCaller20260120.js';
+import type { MRServerToolCaller } from './MRServerToolCaller.js';
 import {
     MRServerToolCallerFromJSON,
     MRServerToolCallerFromJSONTyped,
     MRServerToolCallerToJSON,
     MRServerToolCallerToJSONTyped,
-} from './MRServerToolCaller';
-import type { MRDirectCaller } from './MRDirectCaller';
+} from './MRServerToolCaller.js';
+import type { MRDirectCaller } from './MRDirectCaller.js';
 import {
     MRDirectCallerFromJSON,
     MRDirectCallerFromJSONTyped,
     MRDirectCallerToJSON,
     MRDirectCallerToJSONTyped,
-} from './MRDirectCaller';
+} from './MRDirectCaller.js';
 
 /**
  * 

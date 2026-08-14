@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { PricingTier } from './PricingTier';
+import { mapValues } from '../runtime.js';
+import type { PricingTier } from './PricingTier.js';
 import {
     PricingTierFromJSON,
     PricingTierFromJSONTyped,
     PricingTierToJSON,
     PricingTierToJSONTyped,
-} from './PricingTier';
+} from './PricingTier.js';
 
 /**
  * Create a versioned per-model price, with optional cache and context tiers.

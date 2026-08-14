@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MSGInputAudio } from './MSGInputAudio';
+import { mapValues } from '../runtime.js';
+import type { MSGInputAudio } from './MSGInputAudio.js';
 import {
     MSGInputAudioFromJSON,
     MSGInputAudioFromJSONTyped,
     MSGInputAudioToJSON,
     MSGInputAudioToJSONTyped,
-} from './MSGInputAudio';
+} from './MSGInputAudio.js';
 
 /**
  * Learn about [audio inputs](https://platform.openai.com/docs/guides/audio).

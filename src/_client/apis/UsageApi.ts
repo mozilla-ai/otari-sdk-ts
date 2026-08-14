@@ -12,62 +12,67 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type ExternalEventsRequest,
     ExternalEventsRequestFromJSON,
     ExternalEventsRequestToJSON,
-} from '../models/ExternalEventsRequest';
+} from '../models/ExternalEventsRequest.js';
 import {
     type ExternalIngestResult,
     ExternalIngestResultFromJSON,
     ExternalIngestResultToJSON,
-} from '../models/ExternalIngestResult';
+} from '../models/ExternalIngestResult.js';
 import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
-} from '../models/HTTPValidationError';
+} from '../models/HTTPValidationError.js';
+import {
+    type InFlightResponse,
+    InFlightResponseFromJSON,
+    InFlightResponseToJSON,
+} from '../models/InFlightResponse.js';
 import {
     type UsageCount,
     UsageCountFromJSON,
     UsageCountToJSON,
-} from '../models/UsageCount';
+} from '../models/UsageCount.js';
 import {
     type UsageDeleteRequest,
     UsageDeleteRequestFromJSON,
     UsageDeleteRequestToJSON,
-} from '../models/UsageDeleteRequest';
+} from '../models/UsageDeleteRequest.js';
 import {
     type UsageDeleteResult,
     UsageDeleteResultFromJSON,
     UsageDeleteResultToJSON,
-} from '../models/UsageDeleteResult';
+} from '../models/UsageDeleteResult.js';
 import {
     type UsageEntry,
     UsageEntryFromJSON,
     UsageEntryToJSON,
-} from '../models/UsageEntry';
+} from '../models/UsageEntry.js';
 import {
     type UsageGroupedSeries,
     UsageGroupedSeriesFromJSON,
     UsageGroupedSeriesToJSON,
-} from '../models/UsageGroupedSeries';
+} from '../models/UsageGroupedSeries.js';
 import {
     type UsageSetPriceRequest,
     UsageSetPriceRequestFromJSON,
     UsageSetPriceRequestToJSON,
-} from '../models/UsageSetPriceRequest';
+} from '../models/UsageSetPriceRequest.js';
 import {
     type UsageSetPriceResult,
     UsageSetPriceResultFromJSON,
     UsageSetPriceResultToJSON,
-} from '../models/UsageSetPriceResult';
+} from '../models/UsageSetPriceResult.js';
 import {
     type UsageSummary,
     UsageSummaryFromJSON,
     UsageSummaryToJSON,
-} from '../models/UsageSummary';
+} from '../models/UsageSummary.js';
 
 export interface CountUsageV1UsageCountGetRequest {
     startDate?: Date | null;
@@ -397,6 +402,53 @@ export class UsageApi extends runtime.BaseAPI {
      */
     async ingestExternalUsageV1UsageExternalEventsPost(requestParameters: IngestExternalUsageV1UsageExternalEventsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ExternalIngestResult> {
         const response = await this.ingestExternalUsageV1UsageExternalEventsPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for listInFlightV1UsageInFlightGet without sending the request
+     */
+    async listInFlightV1UsageInFlightGetRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/usage/in-flight`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Requests the gateway is currently serving, longest-running first.  A usage row is written when a request settles, so the log alone cannot answer \"is anything happening right now\": on a slow backend, a 30-second local model call is invisible until it finishes. This reports what is in progress.  Read from an in-memory registry, so it describes the process that answers this call and not the deployment: behind a load balancer, consecutive polls reach different otari processes, and there is no deployment-wide total to ask for. ``total`` is the true in-flight count for the answering process even when ``requests`` is capped.
+     * List In Flight
+     */
+    async listInFlightV1UsageInFlightGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<InFlightResponse>> {
+        const requestOptions = await this.listInFlightV1UsageInFlightGetRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => InFlightResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Requests the gateway is currently serving, longest-running first.  A usage row is written when a request settles, so the log alone cannot answer \"is anything happening right now\": on a slow backend, a 30-second local model call is invisible until it finishes. This reports what is in progress.  Read from an in-memory registry, so it describes the process that answers this call and not the deployment: behind a load balancer, consecutive polls reach different otari processes, and there is no deployment-wide total to ask for. ``total`` is the true in-flight count for the answering process even when ``requests`` is capped.
+     * List In Flight
+     */
+    async listInFlightV1UsageInFlightGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<InFlightResponse> {
+        const response = await this.listInFlightV1UsageInFlightGetRaw(initOverrides);
         return await response.value();
     }
 

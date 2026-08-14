@@ -12,21 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { CCPromptTokensDetails } from './CCPromptTokensDetails';
+import { mapValues } from '../runtime.js';
+import type { CCPromptTokensDetails } from './CCPromptTokensDetails.js';
 import {
     CCPromptTokensDetailsFromJSON,
     CCPromptTokensDetailsFromJSONTyped,
     CCPromptTokensDetailsToJSON,
     CCPromptTokensDetailsToJSONTyped,
-} from './CCPromptTokensDetails';
-import type { CCCompletionTokensDetails } from './CCCompletionTokensDetails';
+} from './CCPromptTokensDetails.js';
+import type { CCCompletionTokensDetails } from './CCCompletionTokensDetails.js';
 import {
     CCCompletionTokensDetailsFromJSON,
     CCCompletionTokensDetailsFromJSONTyped,
     CCCompletionTokensDetailsToJSON,
     CCCompletionTokensDetailsToJSONTyped,
-} from './CCCompletionTokensDetails';
+} from './CCCompletionTokensDetails.js';
 
 /**
  * Usage statistics for the completion request.

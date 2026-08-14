@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRBetaToolReferenceBlock } from './MRBetaToolReferenceBlock';
+import { mapValues } from '../runtime.js';
+import type { MRBetaToolReferenceBlock } from './MRBetaToolReferenceBlock.js';
 import {
     MRBetaToolReferenceBlockFromJSON,
     MRBetaToolReferenceBlockFromJSONTyped,
     MRBetaToolReferenceBlockToJSON,
     MRBetaToolReferenceBlockToJSONTyped,
-} from './MRBetaToolReferenceBlock';
+} from './MRBetaToolReferenceBlock.js';
 
 /**
  * 

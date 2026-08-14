@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MSGCustom } from './MSGCustom';
+import { mapValues } from '../runtime.js';
+import type { MSGCustom } from './MSGCustom.js';
 import {
     MSGCustomFromJSON,
     MSGCustomFromJSONTyped,
     MSGCustomToJSON,
     MSGCustomToJSONTyped,
-} from './MSGCustom';
+} from './MSGCustom.js';
 
 /**
  * A call to a custom tool created by the model.

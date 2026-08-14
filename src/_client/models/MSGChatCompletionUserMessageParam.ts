@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { Content2 } from './Content2';
+import { mapValues } from '../runtime.js';
+import type { Content2 } from './Content2.js';
 import {
     Content2FromJSON,
     Content2FromJSONTyped,
     Content2ToJSON,
     Content2ToJSONTyped,
-} from './Content2';
+} from './Content2.js';
 
 /**
  * Messages sent by an end user, containing prompts or additional context

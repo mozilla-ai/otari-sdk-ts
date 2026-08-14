@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues } from '../runtime.js';
 /**
  * One breakdown row (a model, a user, an API key, a session, ...).
  * 
@@ -42,6 +42,12 @@ export interface UsageGroupRow {
      * @memberof UsageGroupRow
      */
     key: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UsageGroupRow
+     */
+    label?: string | null;
     /**
      * 
      * @type {number}
@@ -80,6 +86,7 @@ export function UsageGroupRowFromJSONTyped(json: any, ignoreDiscriminator: boole
         'cost': json['cost'],
         'isOther': json['is_other'] == null ? undefined : json['is_other'],
         'key': json['key'],
+        'label': json['label'] == null ? undefined : json['label'],
         'requests': json['requests'],
         'tokens': json['tokens'],
     };
@@ -99,6 +106,7 @@ export function UsageGroupRowToJSONTyped(value?: UsageGroupRow | null, ignoreDis
         'cost': value['cost'],
         'is_other': value['isOther'],
         'key': value['key'],
+        'label': value['label'],
         'requests': value['requests'],
         'tokens': value['tokens'],
     };

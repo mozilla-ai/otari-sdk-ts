@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { CCCustom } from './CCCustom';
+import { mapValues } from '../runtime.js';
+import type { CCCustom } from './CCCustom.js';
 import {
     CCCustomFromJSON,
     CCCustomFromJSONTyped,
     CCCustomToJSON,
     CCCustomToJSONTyped,
-} from './CCCustom';
+} from './CCCustom.js';
 
 /**
  * A call to a custom tool created by the model.

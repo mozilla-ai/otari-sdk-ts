@@ -12,32 +12,32 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type CreateKeyRequest,
     CreateKeyRequestFromJSON,
     CreateKeyRequestToJSON,
-} from '../models/CreateKeyRequest';
+} from '../models/CreateKeyRequest.js';
 import {
     type CreateKeyResponse,
     CreateKeyResponseFromJSON,
     CreateKeyResponseToJSON,
-} from '../models/CreateKeyResponse';
+} from '../models/CreateKeyResponse.js';
 import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
-} from '../models/HTTPValidationError';
+} from '../models/HTTPValidationError.js';
 import {
     type KeyInfo,
     KeyInfoFromJSON,
     KeyInfoToJSON,
-} from '../models/KeyInfo';
+} from '../models/KeyInfo.js';
 import {
     type UpdateKeyRequest,
     UpdateKeyRequestFromJSON,
     UpdateKeyRequestToJSON,
-} from '../models/UpdateKeyRequest';
+} from '../models/UpdateKeyRequest.js';
 
 export interface CreateKeyV1KeysPostRequest {
     createKeyRequest: CreateKeyRequest;

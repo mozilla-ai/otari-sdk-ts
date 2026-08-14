@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { ToolSettingField } from './ToolSettingField';
+import { mapValues } from '../runtime.js';
+import type { ToolSettingField } from './ToolSettingField.js';
 import {
     ToolSettingFieldFromJSON,
     ToolSettingFieldFromJSONTyped,
     ToolSettingFieldToJSON,
     ToolSettingFieldToJSONTyped,
-} from './ToolSettingField';
+} from './ToolSettingField.js';
 
 /**
  * The effective value of every editable tool/guardrail field.

@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { Value1 } from './Value1';
+import { mapValues } from '../runtime.js';
+import type { Value1 } from './Value1.js';
 import {
     Value1FromJSON,
     Value1FromJSONTyped,
     Value1ToJSON,
     Value1ToJSONTyped,
-} from './Value1';
+} from './Value1.js';
 
 /**
  * One editable tool/guardrail field surfaced to the dashboard.

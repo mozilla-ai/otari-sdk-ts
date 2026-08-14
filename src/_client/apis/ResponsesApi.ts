@@ -12,17 +12,17 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
-} from '../models/HTTPValidationError';
+} from '../models/HTTPValidationError.js';
 import {
     type ResponsesRequest,
     ResponsesRequestFromJSON,
     ResponsesRequestToJSON,
-} from '../models/ResponsesRequest';
+} from '../models/ResponsesRequest.js';
 
 export interface CreateResponseV1ResponsesPostRequest {
     responsesRequest: ResponsesRequest;

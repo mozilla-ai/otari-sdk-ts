@@ -12,28 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { McpServerConfig } from './McpServerConfig';
+import { mapValues } from '../runtime.js';
+import type { McpServerConfig } from './McpServerConfig.js';
 import {
     McpServerConfigFromJSON,
     McpServerConfigFromJSONTyped,
     McpServerConfigToJSON,
     McpServerConfigToJSONTyped,
-} from './McpServerConfig';
-import type { GuardrailConfig } from './GuardrailConfig';
+} from './McpServerConfig.js';
+import type { GuardrailConfig } from './GuardrailConfig.js';
 import {
     GuardrailConfigFromJSON,
     GuardrailConfigFromJSONTyped,
     GuardrailConfigToJSON,
     GuardrailConfigToJSONTyped,
-} from './GuardrailConfig';
-import type { System } from './System';
+} from './GuardrailConfig.js';
+import type { System } from './System.js';
 import {
     SystemFromJSON,
     SystemFromJSONTyped,
     SystemToJSON,
     SystemToJSONTyped,
-} from './System';
+} from './System.js';
 
 /**
  * Anthropic Messages API-compatible request.

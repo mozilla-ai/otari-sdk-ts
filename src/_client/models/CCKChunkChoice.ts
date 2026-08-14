@@ -12,21 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { CCKChoiceDelta } from './CCKChoiceDelta';
+import { mapValues } from '../runtime.js';
+import type { CCKChoiceDelta } from './CCKChoiceDelta.js';
 import {
     CCKChoiceDeltaFromJSON,
     CCKChoiceDeltaFromJSONTyped,
     CCKChoiceDeltaToJSON,
     CCKChoiceDeltaToJSONTyped,
-} from './CCKChoiceDelta';
-import type { CCKChoiceLogprobs } from './CCKChoiceLogprobs';
+} from './CCKChoiceDelta.js';
+import type { CCKChoiceLogprobs } from './CCKChoiceLogprobs.js';
 import {
     CCKChoiceLogprobsFromJSON,
     CCKChoiceLogprobsFromJSONTyped,
     CCKChoiceLogprobsToJSON,
     CCKChoiceLogprobsToJSONTyped,
-} from './CCKChoiceLogprobs';
+} from './CCKChoiceLogprobs.js';
 
 /**
  * 

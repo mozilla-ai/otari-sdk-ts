@@ -12,28 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRBashCodeExecutionOutputBlock } from './MRBashCodeExecutionOutputBlock';
+import { mapValues } from '../runtime.js';
+import type { MRBashCodeExecutionOutputBlock } from './MRBashCodeExecutionOutputBlock.js';
 import {
     MRBashCodeExecutionOutputBlockFromJSON,
     MRBashCodeExecutionOutputBlockFromJSONTyped,
     MRBashCodeExecutionOutputBlockToJSON,
     MRBashCodeExecutionOutputBlockToJSONTyped,
-} from './MRBashCodeExecutionOutputBlock';
-import type { MRBashCodeExecutionResultBlock } from './MRBashCodeExecutionResultBlock';
+} from './MRBashCodeExecutionOutputBlock.js';
+import type { MRBashCodeExecutionResultBlock } from './MRBashCodeExecutionResultBlock.js';
 import {
     MRBashCodeExecutionResultBlockFromJSON,
     MRBashCodeExecutionResultBlockFromJSONTyped,
     MRBashCodeExecutionResultBlockToJSON,
     MRBashCodeExecutionResultBlockToJSONTyped,
-} from './MRBashCodeExecutionResultBlock';
-import type { MRBashCodeExecutionToolResultError } from './MRBashCodeExecutionToolResultError';
+} from './MRBashCodeExecutionResultBlock.js';
+import type { MRBashCodeExecutionToolResultError } from './MRBashCodeExecutionToolResultError.js';
 import {
     MRBashCodeExecutionToolResultErrorFromJSON,
     MRBashCodeExecutionToolResultErrorFromJSONTyped,
     MRBashCodeExecutionToolResultErrorToJSON,
     MRBashCodeExecutionToolResultErrorToJSONTyped,
-} from './MRBashCodeExecutionToolResultError';
+} from './MRBashCodeExecutionToolResultError.js';
 
 /**
  * 

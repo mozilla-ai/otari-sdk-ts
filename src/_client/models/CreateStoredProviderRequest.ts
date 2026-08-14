@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues } from '../runtime.js';
 /**
  * Create a stored provider. ``api_key`` is write-only and requires OTARI_SECRET_KEY.
  * @export

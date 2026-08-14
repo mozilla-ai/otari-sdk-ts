@@ -12,28 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { ApiKeyId } from './ApiKeyId';
+import { mapValues } from '../runtime.js';
+import type { ApiKeyId } from './ApiKeyId.js';
 import {
     ApiKeyIdFromJSON,
     ApiKeyIdFromJSONTyped,
     ApiKeyIdToJSON,
     ApiKeyIdToJSONTyped,
-} from './ApiKeyId';
-import type { UserId } from './UserId';
+} from './ApiKeyId.js';
+import type { UserId } from './UserId.js';
 import {
     UserIdFromJSON,
     UserIdFromJSONTyped,
     UserIdToJSON,
     UserIdToJSONTyped,
-} from './UserId';
-import type { Model } from './Model';
+} from './UserId.js';
+import type { Model } from './Model.js';
 import {
     ModelFromJSON,
     ModelFromJSONTyped,
     ModelToJSON,
     ModelToJSONTyped,
-} from './Model';
+} from './Model.js';
 
 /**
  * Selection of imported usage rows to delete.

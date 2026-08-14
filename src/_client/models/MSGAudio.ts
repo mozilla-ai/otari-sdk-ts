@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues } from '../runtime.js';
 /**
  * Data about a previous audio response from the model.
  * [Learn more](https://platform.openai.com/docs/guides/audio).

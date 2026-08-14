@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues } from '../runtime.js';
 /**
  * One time bucket. ``bucket_start`` is canonical ISO-8601 UTC (``...Z``),
  * identical across SQLite and PostgreSQL for the same underlying instant.

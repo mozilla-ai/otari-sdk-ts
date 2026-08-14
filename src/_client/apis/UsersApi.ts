@@ -12,32 +12,32 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type CreateUserRequest,
     CreateUserRequestFromJSON,
     CreateUserRequestToJSON,
-} from '../models/CreateUserRequest';
+} from '../models/CreateUserRequest.js';
 import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
-} from '../models/HTTPValidationError';
+} from '../models/HTTPValidationError.js';
 import {
     type UpdateUserRequest,
     UpdateUserRequestFromJSON,
     UpdateUserRequestToJSON,
-} from '../models/UpdateUserRequest';
+} from '../models/UpdateUserRequest.js';
 import {
     type UsageLogResponse,
     UsageLogResponseFromJSON,
     UsageLogResponseToJSON,
-} from '../models/UsageLogResponse';
+} from '../models/UsageLogResponse.js';
 import {
     type UserResponse,
     UserResponseFromJSON,
     UserResponseToJSON,
-} from '../models/UserResponse';
+} from '../models/UserResponse.js';
 
 export interface CreateUserV1UsersPostRequest {
     createUserRequest: CreateUserRequest;

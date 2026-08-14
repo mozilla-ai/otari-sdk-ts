@@ -12,35 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MSGChatCompletionMessageCustomToolCallParam } from './MSGChatCompletionMessageCustomToolCallParam';
+import { mapValues } from '../runtime.js';
+import type { MSGChatCompletionMessageCustomToolCallParam } from './MSGChatCompletionMessageCustomToolCallParam.js';
 import {
     MSGChatCompletionMessageCustomToolCallParamFromJSON,
     MSGChatCompletionMessageCustomToolCallParamFromJSONTyped,
     MSGChatCompletionMessageCustomToolCallParamToJSON,
     MSGChatCompletionMessageCustomToolCallParamToJSONTyped,
-} from './MSGChatCompletionMessageCustomToolCallParam';
-import type { MSGFunction } from './MSGFunction';
+} from './MSGChatCompletionMessageCustomToolCallParam.js';
+import type { MSGFunction } from './MSGFunction.js';
 import {
     MSGFunctionFromJSON,
     MSGFunctionFromJSONTyped,
     MSGFunctionToJSON,
     MSGFunctionToJSONTyped,
-} from './MSGFunction';
-import type { MSGChatCompletionMessageFunctionToolCallParam } from './MSGChatCompletionMessageFunctionToolCallParam';
+} from './MSGFunction.js';
+import type { MSGChatCompletionMessageFunctionToolCallParam } from './MSGChatCompletionMessageFunctionToolCallParam.js';
 import {
     MSGChatCompletionMessageFunctionToolCallParamFromJSON,
     MSGChatCompletionMessageFunctionToolCallParamFromJSONTyped,
     MSGChatCompletionMessageFunctionToolCallParamToJSON,
     MSGChatCompletionMessageFunctionToolCallParamToJSONTyped,
-} from './MSGChatCompletionMessageFunctionToolCallParam';
-import type { MSGCustom } from './MSGCustom';
+} from './MSGChatCompletionMessageFunctionToolCallParam.js';
+import type { MSGCustom } from './MSGCustom.js';
 import {
     MSGCustomFromJSON,
     MSGCustomFromJSONTyped,
     MSGCustomToJSON,
     MSGCustomToJSONTyped,
-} from './MSGCustom';
+} from './MSGCustom.js';
 
 /**
  * 

@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { ModelMetadata } from './ModelMetadata';
+import { mapValues } from '../runtime.js';
+import type { ModelMetadata } from './ModelMetadata.js';
 import {
     ModelMetadataFromJSON,
     ModelMetadataFromJSONTyped,
     ModelMetadataToJSON,
     ModelMetadataToJSONTyped,
-} from './ModelMetadata';
+} from './ModelMetadata.js';
 
 /**
  * models.dev metadata keyed by ``provider:model``.

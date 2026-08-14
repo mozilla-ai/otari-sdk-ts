@@ -8,6 +8,7 @@ Response model for creating a new API key.
 Name | Type
 ------------ | -------------
 `allowedModels` | Array&lt;string&gt;
+`captureAgentTelemetry` | boolean
 `createdAt` | string
 `excludeFromBudget` | boolean
 `expiresAt` | string
@@ -28,6 +29,7 @@ import type { CreateKeyResponse } from ''
 // TODO: Update the object below with actual values
 const example = {
   "allowedModels": null,
+  "captureAgentTelemetry": null,
   "createdAt": null,
   "excludeFromBudget": null,
   "expiresAt": null,

@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { ConfigField } from './ConfigField';
+import { mapValues } from '../runtime.js';
+import type { ConfigField } from './ConfigField.js';
 import {
     ConfigFieldFromJSON,
     ConfigFieldFromJSONTyped,
     ConfigFieldToJSON,
     ConfigFieldToJSONTyped,
-} from './ConfigField';
+} from './ConfigField.js';
 
 /**
  * Operator-facing runtime settings surfaced to the dashboard.

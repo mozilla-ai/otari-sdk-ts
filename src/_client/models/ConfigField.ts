@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { Value } from './Value';
+import { mapValues } from '../runtime.js';
+import type { Value } from './Value.js';
 import {
     ValueFromJSON,
     ValueFromJSONTyped,
     ValueToJSON,
     ValueToJSONTyped,
-} from './Value';
+} from './Value.js';
 
 /**
  * One effective config value surfaced to the dashboard's config viewer.

@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRBetaSkill } from './MRBetaSkill';
+import { mapValues } from '../runtime.js';
+import type { MRBetaSkill } from './MRBetaSkill.js';
 import {
     MRBetaSkillFromJSON,
     MRBetaSkillFromJSONTyped,
     MRBetaSkillToJSON,
     MRBetaSkillToJSONTyped,
-} from './MRBetaSkill';
+} from './MRBetaSkill.js';
 
 /**
  * Information about the container used in the request (for the code execution tool)

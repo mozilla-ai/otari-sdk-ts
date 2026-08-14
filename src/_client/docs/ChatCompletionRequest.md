@@ -1,7 +1,7 @@
 
 # ChatCompletionRequest
 
-OpenAI-compatible chat completion request.  The completion-param fields are derived from any-llm\'s ``CompletionParams`` (see ``_schema_derive``) so the schema cannot silently drop a param any-llm forwards. Fields below either tighten a derived field (``messages``, ``response_format``) or add gateway-internal behavior (``mcp_servers``, ``mcp_server_ids``, ``guardrails``, ``tools_header``, ``max_tool_iterations``) that is stripped before the request is forwarded upstream.
+OpenAI-compatible chat completion request.  The completion-param fields are derived from any-llm\'s ``CompletionParams`` (see ``_schema_derive``) so the schema cannot silently drop a param any-llm forwards. Fields below either tighten a derived field (``messages``, ``response_format``), declare an OpenAI wire param ``CompletionParams`` does not model (``service_tier``, forwarded as an any-llm ``**kwargs`` param), or add gateway-internal behavior (``mcp_servers``, ``mcp_server_ids``, ``guardrails``, ``tools_header``, ``max_tool_iterations``) that is stripped before the request is forwarded upstream.
 
 ## Properties
 
@@ -24,6 +24,7 @@ Name | Type
 `reasoningEffort` | string
 `responseFormat` | { [key: string]: any; }
 `seed` | number
+`serviceTier` | string
 `sessionLabel` | string
 `stop` | [Stop](Stop.md)
 `stream` | boolean
@@ -60,6 +61,7 @@ const example = {
   "reasoningEffort": null,
   "responseFormat": null,
   "seed": null,
+  "serviceTier": null,
   "sessionLabel": null,
   "stop": null,
   "stream": null,

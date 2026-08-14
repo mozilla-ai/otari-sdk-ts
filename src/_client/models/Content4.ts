@@ -12,28 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRBetaBashCodeExecutionToolResultError } from './MRBetaBashCodeExecutionToolResultError';
+import { mapValues } from '../runtime.js';
+import type { MRBetaBashCodeExecutionToolResultError } from './MRBetaBashCodeExecutionToolResultError.js';
 import {
     MRBetaBashCodeExecutionToolResultErrorFromJSON,
     MRBetaBashCodeExecutionToolResultErrorFromJSONTyped,
     MRBetaBashCodeExecutionToolResultErrorToJSON,
     MRBetaBashCodeExecutionToolResultErrorToJSONTyped,
-} from './MRBetaBashCodeExecutionToolResultError';
-import type { MRBetaBashCodeExecutionResultBlock } from './MRBetaBashCodeExecutionResultBlock';
+} from './MRBetaBashCodeExecutionToolResultError.js';
+import type { MRBetaBashCodeExecutionResultBlock } from './MRBetaBashCodeExecutionResultBlock.js';
 import {
     MRBetaBashCodeExecutionResultBlockFromJSON,
     MRBetaBashCodeExecutionResultBlockFromJSONTyped,
     MRBetaBashCodeExecutionResultBlockToJSON,
     MRBetaBashCodeExecutionResultBlockToJSONTyped,
-} from './MRBetaBashCodeExecutionResultBlock';
-import type { MRBetaBashCodeExecutionOutputBlock } from './MRBetaBashCodeExecutionOutputBlock';
+} from './MRBetaBashCodeExecutionResultBlock.js';
+import type { MRBetaBashCodeExecutionOutputBlock } from './MRBetaBashCodeExecutionOutputBlock.js';
 import {
     MRBetaBashCodeExecutionOutputBlockFromJSON,
     MRBetaBashCodeExecutionOutputBlockFromJSONTyped,
     MRBetaBashCodeExecutionOutputBlockToJSON,
     MRBetaBashCodeExecutionOutputBlockToJSONTyped,
-} from './MRBetaBashCodeExecutionOutputBlock';
+} from './MRBetaBashCodeExecutionOutputBlock.js';
 
 /**
  * 

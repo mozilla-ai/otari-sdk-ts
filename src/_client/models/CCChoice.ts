@@ -12,21 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { CCChatCompletionMessage } from './CCChatCompletionMessage';
+import { mapValues } from '../runtime.js';
+import type { CCChatCompletionMessage } from './CCChatCompletionMessage.js';
 import {
     CCChatCompletionMessageFromJSON,
     CCChatCompletionMessageFromJSONTyped,
     CCChatCompletionMessageToJSON,
     CCChatCompletionMessageToJSONTyped,
-} from './CCChatCompletionMessage';
-import type { CCChoiceLogprobs } from './CCChoiceLogprobs';
+} from './CCChatCompletionMessage.js';
+import type { CCChoiceLogprobs } from './CCChoiceLogprobs.js';
 import {
     CCChoiceLogprobsFromJSON,
     CCChoiceLogprobsFromJSONTyped,
     CCChoiceLogprobsToJSON,
     CCChoiceLogprobsToJSONTyped,
-} from './CCChoiceLogprobs';
+} from './CCChoiceLogprobs.js';
 
 /**
  * 

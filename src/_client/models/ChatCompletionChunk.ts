@@ -12,21 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { CCKChunkChoice } from './CCKChunkChoice';
+import { mapValues } from '../runtime.js';
+import type { CCKChunkChoice } from './CCKChunkChoice.js';
 import {
     CCKChunkChoiceFromJSON,
     CCKChunkChoiceFromJSONTyped,
     CCKChunkChoiceToJSON,
     CCKChunkChoiceToJSONTyped,
-} from './CCKChunkChoice';
-import type { CCKCompletionUsage } from './CCKCompletionUsage';
+} from './CCKChunkChoice.js';
+import type { CCKCompletionUsage } from './CCKCompletionUsage.js';
 import {
     CCKCompletionUsageFromJSON,
     CCKCompletionUsageFromJSONTyped,
     CCKCompletionUsageToJSON,
     CCKCompletionUsageToJSONTyped,
-} from './CCKCompletionUsage';
+} from './CCKCompletionUsage.js';
 
 /**
  * 

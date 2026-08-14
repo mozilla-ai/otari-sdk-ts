@@ -12,70 +12,70 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MSGChatCompletionUserMessageParam } from './MSGChatCompletionUserMessageParam';
+import { mapValues } from '../runtime.js';
+import type { MSGChatCompletionUserMessageParam } from './MSGChatCompletionUserMessageParam.js';
 import {
     MSGChatCompletionUserMessageParamFromJSON,
     MSGChatCompletionUserMessageParamFromJSONTyped,
     MSGChatCompletionUserMessageParamToJSON,
     MSGChatCompletionUserMessageParamToJSONTyped,
-} from './MSGChatCompletionUserMessageParam';
-import type { MSGAudio } from './MSGAudio';
+} from './MSGChatCompletionUserMessageParam.js';
+import type { MSGAudio } from './MSGAudio.js';
 import {
     MSGAudioFromJSON,
     MSGAudioFromJSONTyped,
     MSGAudioToJSON,
     MSGAudioToJSONTyped,
-} from './MSGAudio';
-import type { MSGChatCompletionDeveloperMessageParam } from './MSGChatCompletionDeveloperMessageParam';
+} from './MSGAudio.js';
+import type { MSGChatCompletionDeveloperMessageParam } from './MSGChatCompletionDeveloperMessageParam.js';
 import {
     MSGChatCompletionDeveloperMessageParamFromJSON,
     MSGChatCompletionDeveloperMessageParamFromJSONTyped,
     MSGChatCompletionDeveloperMessageParamToJSON,
     MSGChatCompletionDeveloperMessageParamToJSONTyped,
-} from './MSGChatCompletionDeveloperMessageParam';
-import type { MSGChatCompletionFunctionMessageParam } from './MSGChatCompletionFunctionMessageParam';
+} from './MSGChatCompletionDeveloperMessageParam.js';
+import type { MSGChatCompletionFunctionMessageParam } from './MSGChatCompletionFunctionMessageParam.js';
 import {
     MSGChatCompletionFunctionMessageParamFromJSON,
     MSGChatCompletionFunctionMessageParamFromJSONTyped,
     MSGChatCompletionFunctionMessageParamToJSON,
     MSGChatCompletionFunctionMessageParamToJSONTyped,
-} from './MSGChatCompletionFunctionMessageParam';
-import type { MSGFunctionCall } from './MSGFunctionCall';
+} from './MSGChatCompletionFunctionMessageParam.js';
+import type { MSGFunctionCall } from './MSGFunctionCall.js';
 import {
     MSGFunctionCallFromJSON,
     MSGFunctionCallFromJSONTyped,
     MSGFunctionCallToJSON,
     MSGFunctionCallToJSONTyped,
-} from './MSGFunctionCall';
-import type { MSGChatCompletionSystemMessageParam } from './MSGChatCompletionSystemMessageParam';
+} from './MSGFunctionCall.js';
+import type { MSGChatCompletionSystemMessageParam } from './MSGChatCompletionSystemMessageParam.js';
 import {
     MSGChatCompletionSystemMessageParamFromJSON,
     MSGChatCompletionSystemMessageParamFromJSONTyped,
     MSGChatCompletionSystemMessageParamToJSON,
     MSGChatCompletionSystemMessageParamToJSONTyped,
-} from './MSGChatCompletionSystemMessageParam';
-import type { ToolCallsInner } from './ToolCallsInner';
+} from './MSGChatCompletionSystemMessageParam.js';
+import type { ToolCallsInner } from './ToolCallsInner.js';
 import {
     ToolCallsInnerFromJSON,
     ToolCallsInnerFromJSONTyped,
     ToolCallsInnerToJSON,
     ToolCallsInnerToJSONTyped,
-} from './ToolCallsInner';
-import type { MSGChatCompletionToolMessageParam } from './MSGChatCompletionToolMessageParam';
+} from './ToolCallsInner.js';
+import type { MSGChatCompletionToolMessageParam } from './MSGChatCompletionToolMessageParam.js';
 import {
     MSGChatCompletionToolMessageParamFromJSON,
     MSGChatCompletionToolMessageParamFromJSONTyped,
     MSGChatCompletionToolMessageParamToJSON,
     MSGChatCompletionToolMessageParamToJSONTyped,
-} from './MSGChatCompletionToolMessageParam';
-import type { MSGChatCompletionAssistantMessageParam } from './MSGChatCompletionAssistantMessageParam';
+} from './MSGChatCompletionToolMessageParam.js';
+import type { MSGChatCompletionAssistantMessageParam } from './MSGChatCompletionAssistantMessageParam.js';
 import {
     MSGChatCompletionAssistantMessageParamFromJSON,
     MSGChatCompletionAssistantMessageParamFromJSONTyped,
     MSGChatCompletionAssistantMessageParamToJSON,
     MSGChatCompletionAssistantMessageParamToJSONTyped,
-} from './MSGChatCompletionAssistantMessageParam';
+} from './MSGChatCompletionAssistantMessageParam.js';
 
 /**
  * 

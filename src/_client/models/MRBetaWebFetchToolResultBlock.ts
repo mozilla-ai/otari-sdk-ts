@@ -12,21 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { Caller } from './Caller';
+import { mapValues } from '../runtime.js';
+import type { Caller } from './Caller.js';
 import {
     CallerFromJSON,
     CallerFromJSONTyped,
     CallerToJSON,
     CallerToJSONTyped,
-} from './Caller';
-import type { Content9 } from './Content9';
+} from './Caller.js';
+import type { Content9 } from './Content9.js';
 import {
     Content9FromJSON,
     Content9FromJSONTyped,
     Content9ToJSON,
     Content9ToJSONTyped,
-} from './Content9';
+} from './Content9.js';
 
 /**
  * 

@@ -10,6 +10,7 @@ Name | Type
 `cost` | number
 `isOther` | boolean
 `key` | string
+`label` | string
 `requests` | number
 `tokens` | number
 
@@ -23,6 +24,7 @@ const example = {
   "cost": null,
   "isOther": null,
   "key": null,
+  "label": null,
   "requests": null,
   "tokens": null,
 } satisfies UsageGroupRow

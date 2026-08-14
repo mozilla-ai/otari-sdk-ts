@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { AppliedEditsInner } from './AppliedEditsInner';
+import { mapValues } from '../runtime.js';
+import type { AppliedEditsInner } from './AppliedEditsInner.js';
 import {
     AppliedEditsInnerFromJSON,
     AppliedEditsInnerFromJSONTyped,
     AppliedEditsInnerToJSON,
     AppliedEditsInnerToJSONTyped,
-} from './AppliedEditsInner';
+} from './AppliedEditsInner.js';
 
 /**
  * 

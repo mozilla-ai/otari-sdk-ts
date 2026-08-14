@@ -12,35 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRBetaCodeExecutionToolResultError } from './MRBetaCodeExecutionToolResultError';
+import { mapValues } from '../runtime.js';
+import type { MRBetaCodeExecutionToolResultError } from './MRBetaCodeExecutionToolResultError.js';
 import {
     MRBetaCodeExecutionToolResultErrorFromJSON,
     MRBetaCodeExecutionToolResultErrorFromJSONTyped,
     MRBetaCodeExecutionToolResultErrorToJSON,
     MRBetaCodeExecutionToolResultErrorToJSONTyped,
-} from './MRBetaCodeExecutionToolResultError';
-import type { MRBetaCodeExecutionOutputBlock } from './MRBetaCodeExecutionOutputBlock';
+} from './MRBetaCodeExecutionToolResultError.js';
+import type { MRBetaCodeExecutionOutputBlock } from './MRBetaCodeExecutionOutputBlock.js';
 import {
     MRBetaCodeExecutionOutputBlockFromJSON,
     MRBetaCodeExecutionOutputBlockFromJSONTyped,
     MRBetaCodeExecutionOutputBlockToJSON,
     MRBetaCodeExecutionOutputBlockToJSONTyped,
-} from './MRBetaCodeExecutionOutputBlock';
-import type { MRBetaEncryptedCodeExecutionResultBlock } from './MRBetaEncryptedCodeExecutionResultBlock';
+} from './MRBetaCodeExecutionOutputBlock.js';
+import type { MRBetaEncryptedCodeExecutionResultBlock } from './MRBetaEncryptedCodeExecutionResultBlock.js';
 import {
     MRBetaEncryptedCodeExecutionResultBlockFromJSON,
     MRBetaEncryptedCodeExecutionResultBlockFromJSONTyped,
     MRBetaEncryptedCodeExecutionResultBlockToJSON,
     MRBetaEncryptedCodeExecutionResultBlockToJSONTyped,
-} from './MRBetaEncryptedCodeExecutionResultBlock';
-import type { MRBetaCodeExecutionResultBlock } from './MRBetaCodeExecutionResultBlock';
+} from './MRBetaEncryptedCodeExecutionResultBlock.js';
+import type { MRBetaCodeExecutionResultBlock } from './MRBetaCodeExecutionResultBlock.js';
 import {
     MRBetaCodeExecutionResultBlockFromJSON,
     MRBetaCodeExecutionResultBlockFromJSONTyped,
     MRBetaCodeExecutionResultBlockToJSON,
     MRBetaCodeExecutionResultBlockToJSONTyped,
-} from './MRBetaCodeExecutionResultBlock';
+} from './MRBetaCodeExecutionResultBlock.js';
 
 /**
  * 

@@ -7,6 +7,7 @@ All URIs are relative to *http://localhost*
 | [**countUsageV1UsageCountGet**](UsageApi.md#countusagev1usagecountget) | **GET** /v1/usage/count | Count Usage |
 | [**deleteUsageRowsV1UsageDelete**](UsageApi.md#deleteusagerowsv1usagedelete) | **DELETE** /v1/usage | Delete Usage Rows |
 | [**ingestExternalUsageV1UsageExternalEventsPost**](UsageApi.md#ingestexternalusagev1usageexternaleventspost) | **POST** /v1/usage/external-events | Ingest External Usage |
+| [**listInFlightV1UsageInFlightGet**](UsageApi.md#listinflightv1usageinflightget) | **GET** /v1/usage/in-flight | List In Flight |
 | [**listUsageV1UsageGet**](UsageApi.md#listusagev1usageget) | **GET** /v1/usage | List Usage |
 | [**setUsagePriceRowsV1UsageSetPricePost**](UsageApi.md#setusagepricerowsv1usagesetpricepost) | **POST** /v1/usage/set-price | Set Usage Price Rows |
 | [**usageSeriesV1UsageSeriesGet**](UsageApi.md#usageseriesv1usageseriesget) | **GET** /v1/usage/series | Usage Series |
@@ -275,6 +276,71 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
 | **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## listInFlightV1UsageInFlightGet
+
+> InFlightResponse listInFlightV1UsageInFlightGet()
+
+List In Flight
+
+Requests the gateway is currently serving, longest-running first.  A usage row is written when a request settles, so the log alone cannot answer \&quot;is anything happening right now\&quot;: on a slow backend, a 30-second local model call is invisible until it finishes. This reports what is in progress.  Read from an in-memory registry, so it describes the process that answers this call and not the deployment: behind a load balancer, consecutive polls reach different otari processes, and there is no deployment-wide total to ask for. &#x60;&#x60;total&#x60;&#x60; is the true in-flight count for the answering process even when &#x60;&#x60;requests&#x60;&#x60; is capped.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  UsageApi,
+} from '';
+import type { ListInFlightV1UsageInFlightGetRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new UsageApi(config);
+
+  try {
+    const data = await api.listInFlightV1UsageInFlightGet();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**InFlightResponse**](InFlightResponse.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

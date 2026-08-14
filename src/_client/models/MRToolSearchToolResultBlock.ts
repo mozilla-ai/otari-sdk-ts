@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { Content13 } from './Content13';
+import { mapValues } from '../runtime.js';
+import type { Content13 } from './Content13.js';
 import {
     Content13FromJSON,
     Content13FromJSONTyped,
     Content13ToJSON,
     Content13ToJSONTyped,
-} from './Content13';
+} from './Content13.js';
 
 /**
  * 

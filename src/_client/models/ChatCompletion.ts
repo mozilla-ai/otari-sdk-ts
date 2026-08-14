@@ -12,21 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { CCChoice } from './CCChoice';
+import { mapValues } from '../runtime.js';
+import type { CCChoice } from './CCChoice.js';
 import {
     CCChoiceFromJSON,
     CCChoiceFromJSONTyped,
     CCChoiceToJSON,
     CCChoiceToJSONTyped,
-} from './CCChoice';
-import type { CCCompletionUsage } from './CCCompletionUsage';
+} from './CCChoice.js';
+import type { CCCompletionUsage } from './CCCompletionUsage.js';
 import {
     CCCompletionUsageFromJSON,
     CCCompletionUsageFromJSONTyped,
     CCCompletionUsageToJSON,
     CCCompletionUsageToJSONTyped,
-} from './CCCompletionUsage';
+} from './CCCompletionUsage.js';
 
 /**
  * 
@@ -72,7 +72,7 @@ export interface ChatCompletion {
      */
     serviceTier?: string | null;
     /**
-     * Delete the alias scoped to this user. Omit to delete the global alias of that name.
+     * Filter to a single event type or metric name (e.g. 'tool_result', 'claude_code.commit.count')
      * @type {string}
      * @memberof ChatCompletion
      */

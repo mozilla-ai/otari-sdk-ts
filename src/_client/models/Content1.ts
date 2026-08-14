@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MSGChatCompletionContentPartTextParam } from './MSGChatCompletionContentPartTextParam';
+import { mapValues } from '../runtime.js';
+import type { MSGChatCompletionContentPartTextParam } from './MSGChatCompletionContentPartTextParam.js';
 import {
     MSGChatCompletionContentPartTextParamFromJSON,
     MSGChatCompletionContentPartTextParamFromJSONTyped,
     MSGChatCompletionContentPartTextParamToJSON,
     MSGChatCompletionContentPartTextParamToJSONTyped,
-} from './MSGChatCompletionContentPartTextParam';
+} from './MSGChatCompletionContentPartTextParam.js';
 
 /**
  * 

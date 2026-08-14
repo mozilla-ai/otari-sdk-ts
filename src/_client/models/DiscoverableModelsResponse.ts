@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { DiscoverableProvider } from './DiscoverableProvider';
+import { mapValues } from '../runtime.js';
+import type { DiscoverableProvider } from './DiscoverableProvider.js';
 import {
     DiscoverableProviderFromJSON,
     DiscoverableProviderFromJSONTyped,
     DiscoverableProviderToJSON,
     DiscoverableProviderToJSONTyped,
-} from './DiscoverableProvider';
+} from './DiscoverableProvider.js';
 
 /**
  * Per-provider discovery results for operator model selection.

@@ -12,21 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { Source1 } from './Source1';
+import { mapValues } from '../runtime.js';
+import type { Source1 } from './Source1.js';
 import {
     Source1FromJSON,
     Source1FromJSONTyped,
     Source1ToJSON,
     Source1ToJSONTyped,
-} from './Source1';
-import type { MRCitationsConfig } from './MRCitationsConfig';
+} from './Source1.js';
+import type { MRCitationsConfig } from './MRCitationsConfig.js';
 import {
     MRCitationsConfigFromJSON,
     MRCitationsConfigFromJSONTyped,
     MRCitationsConfigToJSON,
     MRCitationsConfigToJSONTyped,
-} from './MRCitationsConfig';
+} from './MRCitationsConfig.js';
 
 /**
  * 

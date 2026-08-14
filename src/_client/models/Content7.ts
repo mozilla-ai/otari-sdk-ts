@@ -12,35 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRBetaTextEditorCodeExecutionStrReplaceResultBlock } from './MRBetaTextEditorCodeExecutionStrReplaceResultBlock';
+import { mapValues } from '../runtime.js';
+import type { MRBetaTextEditorCodeExecutionStrReplaceResultBlock } from './MRBetaTextEditorCodeExecutionStrReplaceResultBlock.js';
 import {
     MRBetaTextEditorCodeExecutionStrReplaceResultBlockFromJSON,
     MRBetaTextEditorCodeExecutionStrReplaceResultBlockFromJSONTyped,
     MRBetaTextEditorCodeExecutionStrReplaceResultBlockToJSON,
     MRBetaTextEditorCodeExecutionStrReplaceResultBlockToJSONTyped,
-} from './MRBetaTextEditorCodeExecutionStrReplaceResultBlock';
-import type { MRBetaTextEditorCodeExecutionCreateResultBlock } from './MRBetaTextEditorCodeExecutionCreateResultBlock';
+} from './MRBetaTextEditorCodeExecutionStrReplaceResultBlock.js';
+import type { MRBetaTextEditorCodeExecutionCreateResultBlock } from './MRBetaTextEditorCodeExecutionCreateResultBlock.js';
 import {
     MRBetaTextEditorCodeExecutionCreateResultBlockFromJSON,
     MRBetaTextEditorCodeExecutionCreateResultBlockFromJSONTyped,
     MRBetaTextEditorCodeExecutionCreateResultBlockToJSON,
     MRBetaTextEditorCodeExecutionCreateResultBlockToJSONTyped,
-} from './MRBetaTextEditorCodeExecutionCreateResultBlock';
-import type { MRBetaTextEditorCodeExecutionViewResultBlock } from './MRBetaTextEditorCodeExecutionViewResultBlock';
+} from './MRBetaTextEditorCodeExecutionCreateResultBlock.js';
+import type { MRBetaTextEditorCodeExecutionViewResultBlock } from './MRBetaTextEditorCodeExecutionViewResultBlock.js';
 import {
     MRBetaTextEditorCodeExecutionViewResultBlockFromJSON,
     MRBetaTextEditorCodeExecutionViewResultBlockFromJSONTyped,
     MRBetaTextEditorCodeExecutionViewResultBlockToJSON,
     MRBetaTextEditorCodeExecutionViewResultBlockToJSONTyped,
-} from './MRBetaTextEditorCodeExecutionViewResultBlock';
-import type { MRBetaTextEditorCodeExecutionToolResultError } from './MRBetaTextEditorCodeExecutionToolResultError';
+} from './MRBetaTextEditorCodeExecutionViewResultBlock.js';
+import type { MRBetaTextEditorCodeExecutionToolResultError } from './MRBetaTextEditorCodeExecutionToolResultError.js';
 import {
     MRBetaTextEditorCodeExecutionToolResultErrorFromJSON,
     MRBetaTextEditorCodeExecutionToolResultErrorFromJSONTyped,
     MRBetaTextEditorCodeExecutionToolResultErrorToJSON,
     MRBetaTextEditorCodeExecutionToolResultErrorToJSONTyped,
-} from './MRBetaTextEditorCodeExecutionToolResultError';
+} from './MRBetaTextEditorCodeExecutionToolResultError.js';
 
 /**
  * 

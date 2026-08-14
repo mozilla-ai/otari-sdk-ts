@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { ValidationError } from './ValidationError';
+import { mapValues } from '../runtime.js';
+import type { ValidationError } from './ValidationError.js';
 import {
     ValidationErrorFromJSON,
     ValidationErrorFromJSONTyped,
     ValidationErrorToJSON,
     ValidationErrorToJSONTyped,
-} from './ValidationError';
+} from './ValidationError.js';
 
 /**
  * 

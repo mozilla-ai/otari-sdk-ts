@@ -12,21 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRBetaCitationConfig } from './MRBetaCitationConfig';
+import { mapValues } from '../runtime.js';
+import type { MRBetaCitationConfig } from './MRBetaCitationConfig.js';
 import {
     MRBetaCitationConfigFromJSON,
     MRBetaCitationConfigFromJSONTyped,
     MRBetaCitationConfigToJSON,
     MRBetaCitationConfigToJSONTyped,
-} from './MRBetaCitationConfig';
-import type { Source } from './Source';
+} from './MRBetaCitationConfig.js';
+import type { Source } from './Source.js';
 import {
     SourceFromJSON,
     SourceFromJSONTyped,
     SourceToJSON,
     SourceToJSONTyped,
-} from './Source';
+} from './Source.js';
 
 /**
  * 

@@ -12,12 +12,12 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type ToolsResponse,
     ToolsResponseFromJSON,
     ToolsResponseToJSON,
-} from '../models/ToolsResponse';
+} from '../models/ToolsResponse.js';
 
 /**
  * 

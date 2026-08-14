@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { CCKTopLogprob } from './CCKTopLogprob';
+import { mapValues } from '../runtime.js';
+import type { CCKTopLogprob } from './CCKTopLogprob.js';
 import {
     CCKTopLogprobFromJSON,
     CCKTopLogprobFromJSONTyped,
     CCKTopLogprobToJSON,
     CCKTopLogprobToJSONTyped,
-} from './CCKTopLogprob';
+} from './CCKTopLogprob.js';
 
 /**
  * 

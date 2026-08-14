@@ -12,21 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { CandidateResponse } from './CandidateResponse';
+import { mapValues } from '../runtime.js';
+import type { CandidateResponse } from './CandidateResponse.js';
 import {
     CandidateResponseFromJSON,
     CandidateResponseFromJSONTyped,
     CandidateResponseToJSON,
     CandidateResponseToJSONTyped,
-} from './CandidateResponse';
-import type { DroppedResponse } from './DroppedResponse';
+} from './CandidateResponse.js';
+import type { DroppedResponse } from './DroppedResponse.js';
 import {
     DroppedResponseFromJSON,
     DroppedResponseFromJSONTyped,
     DroppedResponseToJSON,
     DroppedResponseToJSONTyped,
-} from './DroppedResponse';
+} from './DroppedResponse.js';
 
 /**
  * The plan a policy compiles to for the given inputs.
@@ -69,6 +69,24 @@ export interface ExplainResponse {
      * @type {string}
      * @memberof ExplainResponse
      */
+    routerBackend?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ExplainResponse
+     */
+    routerCandidates?: Array<string>;
+    /**
+     * For a weighted policy, the percentage of traffic each candidate receives, normalized over the candidates this caller may use. Empty for every other policy, and for a weighted policy whose whole split this caller may not use: a split over no candidate is not a split, and each filtered candidate is named in `dropped` instead. A weighted split needs no request state, so unlike a learned router's ranking it is knowable here: the plan above is the real ordering by share, not the decline path.
+     * @type {{ [key: string]: number; }}
+     * @memberof ExplainResponse
+     */
+    routerWeights?: { [key: string]: number; };
+    /**
+     * 
+     * @type {string}
+     * @memberof ExplainResponse
+     */
     selectionReason: string;
 }
 
@@ -100,6 +118,9 @@ export function ExplainResponseFromJSONTyped(json: any, ignoreDiscriminator: boo
         'guardrails': json['guardrails'],
         'isDynamic': json['is_dynamic'],
         'name': json['name'],
+        'routerBackend': json['router_backend'] == null ? undefined : json['router_backend'],
+        'routerCandidates': json['router_candidates'] == null ? undefined : json['router_candidates'],
+        'routerWeights': json['router_weights'] == null ? undefined : json['router_weights'],
         'selectionReason': json['selection_reason'],
     };
 }
@@ -120,6 +141,9 @@ export function ExplainResponseToJSONTyped(value?: ExplainResponse | null, ignor
         'guardrails': value['guardrails'],
         'is_dynamic': value['isDynamic'],
         'name': value['name'],
+        'router_backend': value['routerBackend'],
+        'router_candidates': value['routerCandidates'],
+        'router_weights': value['routerWeights'],
         'selection_reason': value['selectionReason'],
     };
 }

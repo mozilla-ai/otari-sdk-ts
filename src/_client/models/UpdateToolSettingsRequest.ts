@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues } from '../runtime.js';
 /**
  * Change one or more tool settings. Omitted fields are left unchanged; an
  * explicit ``null`` clears a field back to the configured env/YAML default.

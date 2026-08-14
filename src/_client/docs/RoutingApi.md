@@ -7,6 +7,8 @@ All URIs are relative to *http://localhost*
 | [**deletePolicyV1RoutingPoliciesNameDelete**](RoutingApi.md#deletepolicyv1routingpoliciesnamedelete) | **DELETE** /v1/routing/policies/{name} | Delete Policy |
 | [**explainPolicyV1RoutingPoliciesExplainPost**](RoutingApi.md#explainpolicyv1routingpoliciesexplainpost) | **POST** /v1/routing/policies/explain | Explain Policy |
 | [**listPoliciesV1RoutingPoliciesGet**](RoutingApi.md#listpoliciesv1routingpoliciesget) | **GET** /v1/routing/policies | List Policies |
+| [**rankCandidatesV1RoutingPreferencesRankPost**](RoutingApi.md#rankcandidatesv1routingpreferencesrankpost) | **POST** /v1/routing/preferences/rank | Rank Candidates |
+| [**routingMemoryStatusV1RoutingStatusGet**](RoutingApi.md#routingmemorystatusv1routingstatusget) | **GET** /v1/routing/status | Routing Memory Status |
 | [**setPolicyV1RoutingPoliciesPost**](RoutingApi.md#setpolicyv1routingpoliciespost) | **POST** /v1/routing/policies | Set Policy |
 
 
@@ -227,13 +229,161 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## rankCandidatesV1RoutingPreferencesRankPost
+
+> RankResponse rankCandidatesV1RoutingPreferencesRankPost(rankRequest)
+
+Rank Candidates
+
+Record scored examples: one routing-memory record each, plus an audit row.  The routing-memory record is written before its audit row for each example, because it is the load-bearing one (the router votes over it) and embedding it can fail; writing the audit row only afterwards means a failed embedding never leaves an orphan audit row.  A failed embedding is a 502 that names the model, not a 500. Every example in the batch is embedded, so this is the call an operator makes most often and the one most likely to meet a misconfigured &#x60;&#x60;router_embedding_model&#x60;&#x60;.  Score keys are stored canonically as &#x60;&#x60;instance:model&#x60;&#x60; (see :func:&#x60;_validated_scores&#x60;), which is the form the router canonicalizes its candidates to, so how a policy spells a candidate cannot decide whether it matches.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  RoutingApi,
+} from '';
+import type { RankCandidatesV1RoutingPreferencesRankPostRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new RoutingApi(config);
+
+  const body = {
+    // RankRequest
+    rankRequest: ...,
+  } satisfies RankCandidatesV1RoutingPreferencesRankPostRequest;
+
+  try {
+    const data = await api.rankCandidatesV1RoutingPreferencesRankPost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **rankRequest** | [RankRequest](RankRequest.md) |  | |
+
+### Return type
+
+[**RankResponse**](RankResponse.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## routingMemoryStatusV1RoutingStatusGet
+
+> RouterStatus routingMemoryStatusV1RoutingStatusGet(userId)
+
+Routing Memory Status
+
+Report how warm one user\&#39;s routing memory is, per pool.  &#x60;&#x60;user_id&#x60;&#x60; is required rather than optional because there is no aggregate answer: warmth is per user, and a total across users would describe a pool that no request ever votes over.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  RoutingApi,
+} from '';
+import type { RoutingMemoryStatusV1RoutingStatusGetRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new RoutingApi(config);
+
+  const body = {
+    // string | Whose routing memory to report on.
+    userId: userId_example,
+  } satisfies RoutingMemoryStatusV1RoutingStatusGetRequest;
+
+  try {
+    const data = await api.routingMemoryStatusV1RoutingStatusGet(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` | Whose routing memory to report on. | [Defaults to `undefined`] |
+
+### Return type
+
+[**RouterStatus**](RouterStatus.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## setPolicyV1RoutingPoliciesPost
 
 > PolicyResponse setPolicyV1RoutingPoliciesPost(policyRequest)
 
 Set Policy
 
-Create or update a stored policy, global or scoped to one user.  The spec is validated here and stored as given, so a row can never contain a body this build would refuse at load. The cache is refreshed twice: once before validating (so the shadowing checks see other writers\&#39; policies) and once after committing (so this worker serves the new policy immediately).
+Create or update a stored policy, global or scoped to one user.  The spec is validated here and stored as given, so a row can never contain a body this build would refuse at load. The cache is refreshed twice: once before validating (so the shadowing checks see other writers\&#39; policies) and once after committing (so this worker serves the new policy immediately).  &#x60;&#x60;rename_from&#x60;&#x60; renames the row instead of keying on &#x60;&#x60;name&#x60;&#x60;. It is part of this write rather than an endpoint of its own so that an edit which both renames a policy and re-targets it cannot land half-applied, leaving the old name serving the new spec. The new name is validated exactly as a fresh one is, because a rename can walk a policy into every collision a create can. Sending the field asserts the named policy is stored, so it never falls back to creating one.
 
 ### Example
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues } from '../runtime.js';
 /**
  * Request model for creating a new API key.
  * @export
@@ -25,6 +25,12 @@ export interface CreateKeyRequest {
      * @memberof CreateKeyRequest
      */
     allowedModels?: Array<string> | null;
+    /**
+     * Per-key override of the deployment-wide capture_agent_telemetry setting: null (default) inherits it, true always stores this key's coding-agent telemetry, false always discards it. Covers both behavioral events (tool_result, tool_decision, user_prompt, api_error) from POST /v1/logs and outcome-metric data points (lines of code, commits, pull requests, active time) from POST /v1/metrics. Usage capture and billing are unaffected either way.
+     * @type {boolean}
+     * @memberof CreateKeyRequest
+     */
+    captureAgentTelemetry?: boolean | null;
     /**
      * When true, requests on this key are logged with cost but never reserved, reconciled into the user's spend, or gated by budget.
      * @type {boolean}
@@ -81,6 +87,7 @@ export function CreateKeyRequestFromJSONTyped(json: any, ignoreDiscriminator: bo
     return {
         
         'allowedModels': json['allowed_models'] == null ? undefined : json['allowed_models'],
+        'captureAgentTelemetry': json['capture_agent_telemetry'] == null ? undefined : json['capture_agent_telemetry'],
         'excludeFromBudget': json['exclude_from_budget'] == null ? undefined : json['exclude_from_budget'],
         'expiresAt': json['expires_at'] == null ? undefined : (new Date(json['expires_at'])),
         'keyName': json['key_name'] == null ? undefined : json['key_name'],
@@ -102,6 +109,7 @@ export function CreateKeyRequestToJSONTyped(value?: CreateKeyRequest | null, ign
     return {
         
         'allowed_models': value['allowedModels'],
+        'capture_agent_telemetry': value['captureAgentTelemetry'],
         'exclude_from_budget': value['excludeFromBudget'],
         'expires_at': value['expiresAt'] == null ? value['expiresAt'] : value['expiresAt'].toISOString(),
         'key_name': value['keyName'],

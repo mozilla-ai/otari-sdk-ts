@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRBetaCodeExecutionOutputBlock } from './MRBetaCodeExecutionOutputBlock';
+import { mapValues } from '../runtime.js';
+import type { MRBetaCodeExecutionOutputBlock } from './MRBetaCodeExecutionOutputBlock.js';
 import {
     MRBetaCodeExecutionOutputBlockFromJSON,
     MRBetaCodeExecutionOutputBlockFromJSONTyped,
     MRBetaCodeExecutionOutputBlockToJSON,
     MRBetaCodeExecutionOutputBlockToJSONTyped,
-} from './MRBetaCodeExecutionOutputBlock';
+} from './MRBetaCodeExecutionOutputBlock.js';
 
 /**
  * 

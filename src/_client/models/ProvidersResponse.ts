@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { ProviderInfoSchema } from './ProviderInfoSchema';
+import { mapValues } from '../runtime.js';
+import type { ProviderInfoSchema } from './ProviderInfoSchema.js';
 import {
     ProviderInfoSchemaFromJSON,
     ProviderInfoSchemaFromJSONTyped,
     ProviderInfoSchemaToJSON,
     ProviderInfoSchemaToJSONTyped,
-} from './ProviderInfoSchema';
+} from './ProviderInfoSchema.js';
 
 /**
  * Metadata for every configured provider.

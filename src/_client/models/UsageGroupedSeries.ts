@@ -12,21 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { UsageGroupRow } from './UsageGroupRow';
+import { mapValues } from '../runtime.js';
+import type { UsageGroupRow } from './UsageGroupRow.js';
 import {
     UsageGroupRowFromJSON,
     UsageGroupRowFromJSONTyped,
     UsageGroupRowToJSON,
     UsageGroupRowToJSONTyped,
-} from './UsageGroupRow';
-import type { UsageGroupedSeriesPoint } from './UsageGroupedSeriesPoint';
+} from './UsageGroupRow.js';
+import type { UsageGroupedSeriesPoint } from './UsageGroupedSeriesPoint.js';
 import {
     UsageGroupedSeriesPointFromJSON,
     UsageGroupedSeriesPointFromJSONTyped,
     UsageGroupedSeriesPointToJSON,
     UsageGroupedSeriesPointToJSONTyped,
-} from './UsageGroupedSeriesPoint';
+} from './UsageGroupedSeriesPoint.js';
 
 /**
  * A per-group time series for the dashboard's stacked charts.

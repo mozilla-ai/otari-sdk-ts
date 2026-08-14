@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { ExternalUsageEvent } from './ExternalUsageEvent';
+import { mapValues } from '../runtime.js';
+import type { ExternalUsageEvent } from './ExternalUsageEvent.js';
 import {
     ExternalUsageEventFromJSON,
     ExternalUsageEventFromJSONTyped,
     ExternalUsageEventToJSON,
     ExternalUsageEventToJSONTyped,
-} from './ExternalUsageEvent';
+} from './ExternalUsageEvent.js';
 
 /**
  * A batch of imported usage events sharing a source and default user.

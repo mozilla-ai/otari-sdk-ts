@@ -12,217 +12,217 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRWebSearchToolResultBlock } from './MRWebSearchToolResultBlock';
+import { mapValues } from '../runtime.js';
+import type { MRWebSearchToolResultBlock } from './MRWebSearchToolResultBlock.js';
 import {
     MRWebSearchToolResultBlockFromJSON,
     MRWebSearchToolResultBlockFromJSONTyped,
     MRWebSearchToolResultBlockToJSON,
     MRWebSearchToolResultBlockToJSONTyped,
-} from './MRWebSearchToolResultBlock';
-import type { MRAnthropicTypesThinkingBlockThinkingBlock } from './MRAnthropicTypesThinkingBlockThinkingBlock';
+} from './MRWebSearchToolResultBlock.js';
+import type { MRAnthropicTypesThinkingBlockThinkingBlock } from './MRAnthropicTypesThinkingBlockThinkingBlock.js';
 import {
     MRAnthropicTypesThinkingBlockThinkingBlockFromJSON,
     MRAnthropicTypesThinkingBlockThinkingBlockFromJSONTyped,
     MRAnthropicTypesThinkingBlockThinkingBlockToJSON,
     MRAnthropicTypesThinkingBlockThinkingBlockToJSONTyped,
-} from './MRAnthropicTypesThinkingBlockThinkingBlock';
-import type { MRBetaCodeExecutionToolResultBlock } from './MRBetaCodeExecutionToolResultBlock';
+} from './MRAnthropicTypesThinkingBlockThinkingBlock.js';
+import type { MRBetaCodeExecutionToolResultBlock } from './MRBetaCodeExecutionToolResultBlock.js';
 import {
     MRBetaCodeExecutionToolResultBlockFromJSON,
     MRBetaCodeExecutionToolResultBlockFromJSONTyped,
     MRBetaCodeExecutionToolResultBlockToJSON,
     MRBetaCodeExecutionToolResultBlockToJSONTyped,
-} from './MRBetaCodeExecutionToolResultBlock';
-import type { MRToolSearchToolResultBlock } from './MRToolSearchToolResultBlock';
+} from './MRBetaCodeExecutionToolResultBlock.js';
+import type { MRToolSearchToolResultBlock } from './MRToolSearchToolResultBlock.js';
 import {
     MRToolSearchToolResultBlockFromJSON,
     MRToolSearchToolResultBlockFromJSONTyped,
     MRToolSearchToolResultBlockToJSON,
     MRToolSearchToolResultBlockToJSONTyped,
-} from './MRToolSearchToolResultBlock';
-import type { MRWebFetchToolResultBlock } from './MRWebFetchToolResultBlock';
+} from './MRToolSearchToolResultBlock.js';
+import type { MRWebFetchToolResultBlock } from './MRWebFetchToolResultBlock.js';
 import {
     MRWebFetchToolResultBlockFromJSON,
     MRWebFetchToolResultBlockFromJSONTyped,
     MRWebFetchToolResultBlockToJSON,
     MRWebFetchToolResultBlockToJSONTyped,
-} from './MRWebFetchToolResultBlock';
-import type { MRAnyLlmTypesMessagesThinkingBlock } from './MRAnyLlmTypesMessagesThinkingBlock';
+} from './MRWebFetchToolResultBlock.js';
+import type { MRAnyLlmTypesMessagesThinkingBlock } from './MRAnyLlmTypesMessagesThinkingBlock.js';
 import {
     MRAnyLlmTypesMessagesThinkingBlockFromJSON,
     MRAnyLlmTypesMessagesThinkingBlockFromJSONTyped,
     MRAnyLlmTypesMessagesThinkingBlockToJSON,
     MRAnyLlmTypesMessagesThinkingBlockToJSONTyped,
-} from './MRAnyLlmTypesMessagesThinkingBlock';
-import type { MRBetaContainerUploadBlock } from './MRBetaContainerUploadBlock';
+} from './MRAnyLlmTypesMessagesThinkingBlock.js';
+import type { MRBetaContainerUploadBlock } from './MRBetaContainerUploadBlock.js';
 import {
     MRBetaContainerUploadBlockFromJSON,
     MRBetaContainerUploadBlockFromJSONTyped,
     MRBetaContainerUploadBlockToJSON,
     MRBetaContainerUploadBlockToJSONTyped,
-} from './MRBetaContainerUploadBlock';
-import type { MRBashCodeExecutionToolResultBlock } from './MRBashCodeExecutionToolResultBlock';
+} from './MRBetaContainerUploadBlock.js';
+import type { MRBashCodeExecutionToolResultBlock } from './MRBashCodeExecutionToolResultBlock.js';
 import {
     MRBashCodeExecutionToolResultBlockFromJSON,
     MRBashCodeExecutionToolResultBlockFromJSONTyped,
     MRBashCodeExecutionToolResultBlockToJSON,
     MRBashCodeExecutionToolResultBlockToJSONTyped,
-} from './MRBashCodeExecutionToolResultBlock';
-import type { MRBetaWebSearchToolResultBlock } from './MRBetaWebSearchToolResultBlock';
+} from './MRBashCodeExecutionToolResultBlock.js';
+import type { MRBetaWebSearchToolResultBlock } from './MRBetaWebSearchToolResultBlock.js';
 import {
     MRBetaWebSearchToolResultBlockFromJSON,
     MRBetaWebSearchToolResultBlockFromJSONTyped,
     MRBetaWebSearchToolResultBlockToJSON,
     MRBetaWebSearchToolResultBlockToJSONTyped,
-} from './MRBetaWebSearchToolResultBlock';
-import type { MRBetaToolSearchToolResultBlock } from './MRBetaToolSearchToolResultBlock';
+} from './MRBetaWebSearchToolResultBlock.js';
+import type { MRBetaToolSearchToolResultBlock } from './MRBetaToolSearchToolResultBlock.js';
 import {
     MRBetaToolSearchToolResultBlockFromJSON,
     MRBetaToolSearchToolResultBlockFromJSONTyped,
     MRBetaToolSearchToolResultBlockToJSON,
     MRBetaToolSearchToolResultBlockToJSONTyped,
-} from './MRBetaToolSearchToolResultBlock';
-import type { MRBetaThinkingBlock } from './MRBetaThinkingBlock';
+} from './MRBetaToolSearchToolResultBlock.js';
+import type { MRBetaThinkingBlock } from './MRBetaThinkingBlock.js';
 import {
     MRBetaThinkingBlockFromJSON,
     MRBetaThinkingBlockFromJSONTyped,
     MRBetaThinkingBlockToJSON,
     MRBetaThinkingBlockToJSONTyped,
-} from './MRBetaThinkingBlock';
-import type { MRContainerUploadBlock } from './MRContainerUploadBlock';
+} from './MRBetaThinkingBlock.js';
+import type { MRContainerUploadBlock } from './MRContainerUploadBlock.js';
 import {
     MRContainerUploadBlockFromJSON,
     MRContainerUploadBlockFromJSONTyped,
     MRContainerUploadBlockToJSON,
     MRContainerUploadBlockToJSONTyped,
-} from './MRContainerUploadBlock';
-import type { MRBetaTextEditorCodeExecutionToolResultBlock } from './MRBetaTextEditorCodeExecutionToolResultBlock';
+} from './MRContainerUploadBlock.js';
+import type { MRBetaTextEditorCodeExecutionToolResultBlock } from './MRBetaTextEditorCodeExecutionToolResultBlock.js';
 import {
     MRBetaTextEditorCodeExecutionToolResultBlockFromJSON,
     MRBetaTextEditorCodeExecutionToolResultBlockFromJSONTyped,
     MRBetaTextEditorCodeExecutionToolResultBlockToJSON,
     MRBetaTextEditorCodeExecutionToolResultBlockToJSONTyped,
-} from './MRBetaTextEditorCodeExecutionToolResultBlock';
-import type { MRRedactedThinkingBlock } from './MRRedactedThinkingBlock';
+} from './MRBetaTextEditorCodeExecutionToolResultBlock.js';
+import type { MRRedactedThinkingBlock } from './MRRedactedThinkingBlock.js';
 import {
     MRRedactedThinkingBlockFromJSON,
     MRRedactedThinkingBlockFromJSONTyped,
     MRRedactedThinkingBlockToJSON,
     MRRedactedThinkingBlockToJSONTyped,
-} from './MRRedactedThinkingBlock';
-import type { MRBetaMCPToolUseBlock } from './MRBetaMCPToolUseBlock';
+} from './MRRedactedThinkingBlock.js';
+import type { MRBetaMCPToolUseBlock } from './MRBetaMCPToolUseBlock.js';
 import {
     MRBetaMCPToolUseBlockFromJSON,
     MRBetaMCPToolUseBlockFromJSONTyped,
     MRBetaMCPToolUseBlockToJSON,
     MRBetaMCPToolUseBlockToJSONTyped,
-} from './MRBetaMCPToolUseBlock';
-import type { MRTextEditorCodeExecutionToolResultBlock } from './MRTextEditorCodeExecutionToolResultBlock';
+} from './MRBetaMCPToolUseBlock.js';
+import type { MRTextEditorCodeExecutionToolResultBlock } from './MRTextEditorCodeExecutionToolResultBlock.js';
 import {
     MRTextEditorCodeExecutionToolResultBlockFromJSON,
     MRTextEditorCodeExecutionToolResultBlockFromJSONTyped,
     MRTextEditorCodeExecutionToolResultBlockToJSON,
     MRTextEditorCodeExecutionToolResultBlockToJSONTyped,
-} from './MRTextEditorCodeExecutionToolResultBlock';
-import type { MRBetaWebFetchToolResultBlock } from './MRBetaWebFetchToolResultBlock';
+} from './MRTextEditorCodeExecutionToolResultBlock.js';
+import type { MRBetaWebFetchToolResultBlock } from './MRBetaWebFetchToolResultBlock.js';
 import {
     MRBetaWebFetchToolResultBlockFromJSON,
     MRBetaWebFetchToolResultBlockFromJSONTyped,
     MRBetaWebFetchToolResultBlockToJSON,
     MRBetaWebFetchToolResultBlockToJSONTyped,
-} from './MRBetaWebFetchToolResultBlock';
-import type { MRBetaMCPToolResultBlock } from './MRBetaMCPToolResultBlock';
+} from './MRBetaWebFetchToolResultBlock.js';
+import type { MRBetaMCPToolResultBlock } from './MRBetaMCPToolResultBlock.js';
 import {
     MRBetaMCPToolResultBlockFromJSON,
     MRBetaMCPToolResultBlockFromJSONTyped,
     MRBetaMCPToolResultBlockToJSON,
     MRBetaMCPToolResultBlockToJSONTyped,
-} from './MRBetaMCPToolResultBlock';
-import type { MRBetaTextBlockCitationsInner } from './MRBetaTextBlockCitationsInner';
+} from './MRBetaMCPToolResultBlock.js';
+import type { MRBetaTextBlockCitationsInner } from './MRBetaTextBlockCitationsInner.js';
 import {
     MRBetaTextBlockCitationsInnerFromJSON,
     MRBetaTextBlockCitationsInnerFromJSONTyped,
     MRBetaTextBlockCitationsInnerToJSON,
     MRBetaTextBlockCitationsInnerToJSONTyped,
-} from './MRBetaTextBlockCitationsInner';
-import type { MRCodeExecutionToolResultBlock } from './MRCodeExecutionToolResultBlock';
+} from './MRBetaTextBlockCitationsInner.js';
+import type { MRCodeExecutionToolResultBlock } from './MRCodeExecutionToolResultBlock.js';
 import {
     MRCodeExecutionToolResultBlockFromJSON,
     MRCodeExecutionToolResultBlockFromJSONTyped,
     MRCodeExecutionToolResultBlockToJSON,
     MRCodeExecutionToolResultBlockToJSONTyped,
-} from './MRCodeExecutionToolResultBlock';
-import type { MRBetaCompactionBlock } from './MRBetaCompactionBlock';
+} from './MRCodeExecutionToolResultBlock.js';
+import type { MRBetaCompactionBlock } from './MRBetaCompactionBlock.js';
 import {
     MRBetaCompactionBlockFromJSON,
     MRBetaCompactionBlockFromJSONTyped,
     MRBetaCompactionBlockToJSON,
     MRBetaCompactionBlockToJSONTyped,
-} from './MRBetaCompactionBlock';
-import type { MRServerToolUseBlock } from './MRServerToolUseBlock';
+} from './MRBetaCompactionBlock.js';
+import type { MRServerToolUseBlock } from './MRServerToolUseBlock.js';
 import {
     MRServerToolUseBlockFromJSON,
     MRServerToolUseBlockFromJSONTyped,
     MRServerToolUseBlockToJSON,
     MRServerToolUseBlockToJSONTyped,
-} from './MRServerToolUseBlock';
-import type { MRBetaServerToolUseBlock } from './MRBetaServerToolUseBlock';
+} from './MRServerToolUseBlock.js';
+import type { MRBetaServerToolUseBlock } from './MRBetaServerToolUseBlock.js';
 import {
     MRBetaServerToolUseBlockFromJSON,
     MRBetaServerToolUseBlockFromJSONTyped,
     MRBetaServerToolUseBlockToJSON,
     MRBetaServerToolUseBlockToJSONTyped,
-} from './MRBetaServerToolUseBlock';
-import type { MRBetaBashCodeExecutionToolResultBlock } from './MRBetaBashCodeExecutionToolResultBlock';
+} from './MRBetaServerToolUseBlock.js';
+import type { MRBetaBashCodeExecutionToolResultBlock } from './MRBetaBashCodeExecutionToolResultBlock.js';
 import {
     MRBetaBashCodeExecutionToolResultBlockFromJSON,
     MRBetaBashCodeExecutionToolResultBlockFromJSONTyped,
     MRBetaBashCodeExecutionToolResultBlockToJSON,
     MRBetaBashCodeExecutionToolResultBlockToJSONTyped,
-} from './MRBetaBashCodeExecutionToolResultBlock';
-import type { MRBetaTextBlock } from './MRBetaTextBlock';
+} from './MRBetaBashCodeExecutionToolResultBlock.js';
+import type { MRBetaTextBlock } from './MRBetaTextBlock.js';
 import {
     MRBetaTextBlockFromJSON,
     MRBetaTextBlockFromJSONTyped,
     MRBetaTextBlockToJSON,
     MRBetaTextBlockToJSONTyped,
-} from './MRBetaTextBlock';
-import type { MRToolUseBlock } from './MRToolUseBlock';
+} from './MRBetaTextBlock.js';
+import type { MRToolUseBlock } from './MRToolUseBlock.js';
 import {
     MRToolUseBlockFromJSON,
     MRToolUseBlockFromJSONTyped,
     MRToolUseBlockToJSON,
     MRToolUseBlockToJSONTyped,
-} from './MRToolUseBlock';
-import type { Caller } from './Caller';
+} from './MRToolUseBlock.js';
+import type { Caller } from './Caller.js';
 import {
     CallerFromJSON,
     CallerFromJSONTyped,
     CallerToJSON,
     CallerToJSONTyped,
-} from './Caller';
-import type { MRTextBlock } from './MRTextBlock';
+} from './Caller.js';
+import type { MRTextBlock } from './MRTextBlock.js';
 import {
     MRTextBlockFromJSON,
     MRTextBlockFromJSONTyped,
     MRTextBlockToJSON,
     MRTextBlockToJSONTyped,
-} from './MRTextBlock';
-import type { MRBetaRedactedThinkingBlock } from './MRBetaRedactedThinkingBlock';
+} from './MRTextBlock.js';
+import type { MRBetaRedactedThinkingBlock } from './MRBetaRedactedThinkingBlock.js';
 import {
     MRBetaRedactedThinkingBlockFromJSON,
     MRBetaRedactedThinkingBlockFromJSONTyped,
     MRBetaRedactedThinkingBlockToJSON,
     MRBetaRedactedThinkingBlockToJSONTyped,
-} from './MRBetaRedactedThinkingBlock';
-import type { MRBetaToolUseBlock } from './MRBetaToolUseBlock';
+} from './MRBetaRedactedThinkingBlock.js';
+import type { MRBetaToolUseBlock } from './MRBetaToolUseBlock.js';
 import {
     MRBetaToolUseBlockFromJSON,
     MRBetaToolUseBlockFromJSONTyped,
     MRBetaToolUseBlockToJSON,
     MRBetaToolUseBlockToJSONTyped,
-} from './MRBetaToolUseBlock';
+} from './MRBetaToolUseBlock.js';
 
 /**
  * 

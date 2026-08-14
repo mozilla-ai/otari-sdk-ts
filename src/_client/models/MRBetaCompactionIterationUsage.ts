@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRBetaCacheCreation } from './MRBetaCacheCreation';
+import { mapValues } from '../runtime.js';
+import type { MRBetaCacheCreation } from './MRBetaCacheCreation.js';
 import {
     MRBetaCacheCreationFromJSON,
     MRBetaCacheCreationFromJSONTyped,
     MRBetaCacheCreationToJSON,
     MRBetaCacheCreationToJSONTyped,
-} from './MRBetaCacheCreation';
+} from './MRBetaCacheCreation.js';
 
 /**
  * Token usage for a compaction iteration.

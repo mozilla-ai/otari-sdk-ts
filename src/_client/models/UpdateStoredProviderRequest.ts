@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues } from '../runtime.js';
 /**
  * Update a stored provider. Omitted fields are unchanged; ``api_key`` rotates in place.
  * @export

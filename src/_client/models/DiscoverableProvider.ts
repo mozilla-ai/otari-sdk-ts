@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { DiscoverableModel } from './DiscoverableModel';
+import { mapValues } from '../runtime.js';
+import type { DiscoverableModel } from './DiscoverableModel.js';
 import {
     DiscoverableModelFromJSON,
     DiscoverableModelFromJSONTyped,
     DiscoverableModelToJSON,
     DiscoverableModelToJSONTyped,
-} from './DiscoverableModel';
+} from './DiscoverableModel.js';
 
 /**
  * One provider instance's discovery result.
@@ -27,6 +27,12 @@ import {
  * @interface DiscoverableProvider
  */
 export interface DiscoverableProvider {
+    /**
+     * When this instance was last dialed, ISO 8601. Null when it has not been checked yet, which is what the first read after a restart sees while the background refresh runs.
+     * @type {string}
+     * @memberof DiscoverableProvider
+     */
+    checkedAt?: string | null;
     /**
      * True when discovery failed only because this backend serves no model-listing endpoint. The provider may still handle requests for models declared in config.
      * @type {boolean}
@@ -79,6 +85,7 @@ export function DiscoverableProviderFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
+        'checkedAt': json['checked_at'] == null ? undefined : json['checked_at'],
         'discoveryUnsupported': json['discovery_unsupported'] == null ? undefined : json['discovery_unsupported'],
         'error': json['error'] == null ? undefined : json['error'],
         'models': ((json['models'] as Array<any>).map(DiscoverableModelFromJSON)),
@@ -98,6 +105,7 @@ export function DiscoverableProviderToJSONTyped(value?: DiscoverableProvider | n
 
     return {
         
+        'checked_at': value['checkedAt'],
         'discovery_unsupported': value['discoveryUnsupported'],
         'error': value['error'],
         'models': ((value['models'] as Array<any>).map(DiscoverableModelToJSON)),

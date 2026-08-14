@@ -12,21 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { CCKCompletionTokensDetails } from './CCKCompletionTokensDetails';
+import { mapValues } from '../runtime.js';
+import type { CCKCompletionTokensDetails } from './CCKCompletionTokensDetails.js';
 import {
     CCKCompletionTokensDetailsFromJSON,
     CCKCompletionTokensDetailsFromJSONTyped,
     CCKCompletionTokensDetailsToJSON,
     CCKCompletionTokensDetailsToJSONTyped,
-} from './CCKCompletionTokensDetails';
-import type { CCKPromptTokensDetails } from './CCKPromptTokensDetails';
+} from './CCKCompletionTokensDetails.js';
+import type { CCKPromptTokensDetails } from './CCKPromptTokensDetails.js';
 import {
     CCKPromptTokensDetailsFromJSON,
     CCKPromptTokensDetailsFromJSONTyped,
     CCKPromptTokensDetailsToJSON,
     CCKPromptTokensDetailsToJSONTyped,
-} from './CCKPromptTokensDetails';
+} from './CCKPromptTokensDetails.js';
 
 /**
  * Usage statistics for the completion request.

@@ -12,32 +12,32 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
-} from '../models/HTTPValidationError';
+} from '../models/HTTPValidationError.js';
 import {
     type TestServiceRequest,
     TestServiceRequestFromJSON,
     TestServiceRequestToJSON,
-} from '../models/TestServiceRequest';
+} from '../models/TestServiceRequest.js';
 import {
     type TestServiceResponse,
     TestServiceResponseFromJSON,
     TestServiceResponseToJSON,
-} from '../models/TestServiceResponse';
+} from '../models/TestServiceResponse.js';
 import {
     type ToolSettingsResponse,
     ToolSettingsResponseFromJSON,
     ToolSettingsResponseToJSON,
-} from '../models/ToolSettingsResponse';
+} from '../models/ToolSettingsResponse.js';
 import {
     type UpdateToolSettingsRequest,
     UpdateToolSettingsRequestFromJSON,
     UpdateToolSettingsRequestToJSON,
-} from '../models/UpdateToolSettingsRequest';
+} from '../models/UpdateToolSettingsRequest.js';
 
 export interface TestServiceV1ToolSettingsServiceTestPostRequest {
     service: string;

@@ -7,6 +7,7 @@ One provider instance\'s discovery result.
 
 Name | Type
 ------------ | -------------
+`checkedAt` | string
 `discoveryUnsupported` | boolean
 `error` | string
 `models` | [Array&lt;DiscoverableModel&gt;](DiscoverableModel.md)
@@ -20,6 +21,7 @@ import type { DiscoverableProvider } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "checkedAt": null,
   "discoveryUnsupported": null,
   "error": null,
   "models": null,

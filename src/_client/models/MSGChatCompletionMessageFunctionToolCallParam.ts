@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MSGFunction } from './MSGFunction';
+import { mapValues } from '../runtime.js';
+import type { MSGFunction } from './MSGFunction.js';
 import {
     MSGFunctionFromJSON,
     MSGFunctionFromJSONTyped,
     MSGFunctionToJSON,
     MSGFunctionToJSONTyped,
-} from './MSGFunction';
+} from './MSGFunction.js';
 
 /**
  * A call to a function tool created by the model.
