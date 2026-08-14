@@ -626,6 +626,21 @@ describe("OtariClient error mapping", () => {
     ).rejects.toBeInstanceOf(InsufficientFundsError);
   });
 
+  it.each([
+    [{ error: { message: "context length exceeded" } }, "context length exceeded"],
+    [{ error: { type: "invalid_request_error" } }, '{"type":"invalid_request_error"}'],
+  ])("extracts a useful message from error envelopes", async (body, message) => {
+    const mock = jsonFetch(400, body);
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "vk",
+      fetch: mock.fetch,
+    });
+    await expect(client.response({ model: "openai:gpt-4o-mini", input: [] })).rejects.toThrow(
+      message,
+    );
+  });
+
   it("carries retry-after on 429", async () => {
     const mock = jsonFetch(429, { detail: "slow down" }, { "retry-after": "30" });
     const client = new OtariClient({

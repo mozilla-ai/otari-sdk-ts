@@ -51,7 +51,11 @@ function extractDetail(body: unknown, fallback: string): string {
 function detailFromObject(parsed: Record<string, unknown>): string | undefined {
   const detail = parsed.detail ?? parsed.message ?? parsed.error;
   if (typeof detail === "string") return detail;
-  if (detail != null) return String(detail);
+  if (detail && typeof detail === "object") {
+    const nested = (detail as Record<string, unknown>).message;
+    if (typeof nested === "string") return nested;
+  }
+  if (detail != null) return JSON.stringify(detail);
   return undefined;
 }
 
