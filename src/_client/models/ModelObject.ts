@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { ModelPricingInfo } from './ModelPricingInfo';
+import { mapValues } from '../runtime.js';
+import type { ModelPricingInfo } from './ModelPricingInfo.js';
 import {
     ModelPricingInfoFromJSON,
     ModelPricingInfoFromJSONTyped,
     ModelPricingInfoToJSON,
     ModelPricingInfoToJSONTyped,
-} from './ModelPricingInfo';
+} from './ModelPricingInfo.js';
 
 /**
  * OpenAI-compatible model object.

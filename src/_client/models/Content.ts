@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { ContentAnyOfInner } from './ContentAnyOfInner';
+import { mapValues } from '../runtime.js';
+import type { ContentAnyOfInner } from './ContentAnyOfInner.js';
 import {
     ContentAnyOfInnerFromJSON,
     ContentAnyOfInnerFromJSONTyped,
     ContentAnyOfInnerToJSON,
     ContentAnyOfInnerToJSONTyped,
-} from './ContentAnyOfInner';
+} from './ContentAnyOfInner.js';
 
 /**
  * 

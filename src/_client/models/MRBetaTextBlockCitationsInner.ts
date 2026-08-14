@@ -12,42 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRBetaCitationContentBlockLocation } from './MRBetaCitationContentBlockLocation';
+import { mapValues } from '../runtime.js';
+import type { MRBetaCitationContentBlockLocation } from './MRBetaCitationContentBlockLocation.js';
 import {
     MRBetaCitationContentBlockLocationFromJSON,
     MRBetaCitationContentBlockLocationFromJSONTyped,
     MRBetaCitationContentBlockLocationToJSON,
     MRBetaCitationContentBlockLocationToJSONTyped,
-} from './MRBetaCitationContentBlockLocation';
-import type { MRBetaCitationPageLocation } from './MRBetaCitationPageLocation';
+} from './MRBetaCitationContentBlockLocation.js';
+import type { MRBetaCitationPageLocation } from './MRBetaCitationPageLocation.js';
 import {
     MRBetaCitationPageLocationFromJSON,
     MRBetaCitationPageLocationFromJSONTyped,
     MRBetaCitationPageLocationToJSON,
     MRBetaCitationPageLocationToJSONTyped,
-} from './MRBetaCitationPageLocation';
-import type { MRBetaCitationSearchResultLocation } from './MRBetaCitationSearchResultLocation';
+} from './MRBetaCitationPageLocation.js';
+import type { MRBetaCitationSearchResultLocation } from './MRBetaCitationSearchResultLocation.js';
 import {
     MRBetaCitationSearchResultLocationFromJSON,
     MRBetaCitationSearchResultLocationFromJSONTyped,
     MRBetaCitationSearchResultLocationToJSON,
     MRBetaCitationSearchResultLocationToJSONTyped,
-} from './MRBetaCitationSearchResultLocation';
-import type { MRBetaCitationsWebSearchResultLocation } from './MRBetaCitationsWebSearchResultLocation';
+} from './MRBetaCitationSearchResultLocation.js';
+import type { MRBetaCitationsWebSearchResultLocation } from './MRBetaCitationsWebSearchResultLocation.js';
 import {
     MRBetaCitationsWebSearchResultLocationFromJSON,
     MRBetaCitationsWebSearchResultLocationFromJSONTyped,
     MRBetaCitationsWebSearchResultLocationToJSON,
     MRBetaCitationsWebSearchResultLocationToJSONTyped,
-} from './MRBetaCitationsWebSearchResultLocation';
-import type { MRBetaCitationCharLocation } from './MRBetaCitationCharLocation';
+} from './MRBetaCitationsWebSearchResultLocation.js';
+import type { MRBetaCitationCharLocation } from './MRBetaCitationCharLocation.js';
 import {
     MRBetaCitationCharLocationFromJSON,
     MRBetaCitationCharLocationFromJSONTyped,
     MRBetaCitationCharLocationToJSON,
     MRBetaCitationCharLocationToJSONTyped,
-} from './MRBetaCitationCharLocation';
+} from './MRBetaCitationCharLocation.js';
 
 /**
  * 

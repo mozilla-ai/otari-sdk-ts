@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { ModelObject } from './ModelObject';
+import { mapValues } from '../runtime.js';
+import type { ModelObject } from './ModelObject.js';
 import {
     ModelObjectFromJSON,
     ModelObjectFromJSONTyped,
     ModelObjectToJSON,
     ModelObjectToJSONTyped,
-} from './ModelObject';
+} from './ModelObject.js';
 
 /**
  * OpenAI-compatible model list response.

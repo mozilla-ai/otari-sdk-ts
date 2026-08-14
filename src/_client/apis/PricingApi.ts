@@ -12,32 +12,32 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
-} from '../models/HTTPValidationError';
+} from '../models/HTTPValidationError.js';
 import {
     type PricingRefreshConfirmationResponse,
     PricingRefreshConfirmationResponseFromJSON,
     PricingRefreshConfirmationResponseToJSON,
-} from '../models/PricingRefreshConfirmationResponse';
+} from '../models/PricingRefreshConfirmationResponse.js';
 import {
     type PricingRefreshPreviewResponse,
     PricingRefreshPreviewResponseFromJSON,
     PricingRefreshPreviewResponseToJSON,
-} from '../models/PricingRefreshPreviewResponse';
+} from '../models/PricingRefreshPreviewResponse.js';
 import {
     type PricingResponse,
     PricingResponseFromJSON,
     PricingResponseToJSON,
-} from '../models/PricingResponse';
+} from '../models/PricingResponse.js';
 import {
     type SetPricingRequest,
     SetPricingRequestFromJSON,
     SetPricingRequestToJSON,
-} from '../models/SetPricingRequest';
+} from '../models/SetPricingRequest.js';
 
 export interface DeletePricingV1PricingModelKeyDeleteRequest {
     modelKey: string;
@@ -472,7 +472,7 @@ export class PricingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Set or update pricing for a model.  Rejects an alias: pricing, budgets, and usage all key on the resolved target, so a row stored under an alias name would never be read.
+     * Set or update pricing for a model.  Rejects an alias or a routing policy: pricing, budgets, and usage all key on the model a request resolves to, so a row stored under either name would never be read.
      * Set Pricing
      */
     async setPricingV1PricingPostRaw(requestParameters: SetPricingV1PricingPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PricingResponse>> {
@@ -483,7 +483,7 @@ export class PricingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Set or update pricing for a model.  Rejects an alias: pricing, budgets, and usage all key on the resolved target, so a row stored under an alias name would never be read.
+     * Set or update pricing for a model.  Rejects an alias or a routing policy: pricing, budgets, and usage all key on the model a request resolves to, so a row stored under either name would never be read.
      * Set Pricing
      */
     async setPricingV1PricingPost(requestParameters: SetPricingV1PricingPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PricingResponse> {

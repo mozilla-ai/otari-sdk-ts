@@ -12,21 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { EMBUsage } from './EMBUsage';
+import { mapValues } from '../runtime.js';
+import type { EMBUsage } from './EMBUsage.js';
 import {
     EMBUsageFromJSON,
     EMBUsageFromJSONTyped,
     EMBUsageToJSON,
     EMBUsageToJSONTyped,
-} from './EMBUsage';
-import type { EMBEmbedding } from './EMBEmbedding';
+} from './EMBUsage.js';
+import type { EMBEmbedding } from './EMBEmbedding.js';
 import {
     EMBEmbeddingFromJSON,
     EMBEmbeddingFromJSONTyped,
     EMBEmbeddingToJSON,
     EMBEmbeddingToJSONTyped,
-} from './EMBEmbedding';
+} from './EMBEmbedding.js';
 
 /**
  * 

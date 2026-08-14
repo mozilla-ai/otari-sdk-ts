@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type CreateSessionRequest,
     CreateSessionRequestFromJSON,
     CreateSessionRequestToJSON,
-} from '../models/CreateSessionRequest';
+} from '../models/CreateSessionRequest.js';
 import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
-} from '../models/HTTPValidationError';
+} from '../models/HTTPValidationError.js';
 import {
     type SessionResponse,
     SessionResponseFromJSON,
     SessionResponseToJSON,
-} from '../models/SessionResponse';
+} from '../models/SessionResponse.js';
 
 export interface CreateSessionV1AuthSessionPostRequest {
     createSessionRequest: CreateSessionRequest;

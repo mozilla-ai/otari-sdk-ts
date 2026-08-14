@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type ChatCompletion,
     ChatCompletionFromJSON,
     ChatCompletionToJSON,
-} from '../models/ChatCompletion';
+} from '../models/ChatCompletion.js';
 import {
     type ChatCompletionRequest,
     ChatCompletionRequestFromJSON,
     ChatCompletionRequestToJSON,
-} from '../models/ChatCompletionRequest';
+} from '../models/ChatCompletionRequest.js';
 import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
-} from '../models/HTTPValidationError';
+} from '../models/HTTPValidationError.js';
 
 export interface ChatCompletionsV1ChatCompletionsPostRequest {
     chatCompletionRequest: ChatCompletionRequest;

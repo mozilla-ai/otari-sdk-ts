@@ -12,62 +12,62 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type CreateStoredProviderRequest,
     CreateStoredProviderRequestFromJSON,
     CreateStoredProviderRequestToJSON,
-} from '../models/CreateStoredProviderRequest';
+} from '../models/CreateStoredProviderRequest.js';
 import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
-} from '../models/HTTPValidationError';
+} from '../models/HTTPValidationError.js';
 import {
     type KnownProviderSchema,
     KnownProviderSchemaFromJSON,
     KnownProviderSchemaToJSON,
-} from '../models/KnownProviderSchema';
+} from '../models/KnownProviderSchema.js';
 import {
     type KnownProviderSummarySchema,
     KnownProviderSummarySchemaFromJSON,
     KnownProviderSummarySchemaToJSON,
-} from '../models/KnownProviderSummarySchema';
+} from '../models/KnownProviderSummarySchema.js';
 import {
     type ProviderHealthResponse,
     ProviderHealthResponseFromJSON,
     ProviderHealthResponseToJSON,
-} from '../models/ProviderHealthResponse';
+} from '../models/ProviderHealthResponse.js';
 import {
     type ProvidersResponse,
     ProvidersResponseFromJSON,
     ProvidersResponseToJSON,
-} from '../models/ProvidersResponse';
+} from '../models/ProvidersResponse.js';
 import {
     type ReencryptProviderCredentialsResponse,
     ReencryptProviderCredentialsResponseFromJSON,
     ReencryptProviderCredentialsResponseToJSON,
-} from '../models/ReencryptProviderCredentialsResponse';
+} from '../models/ReencryptProviderCredentialsResponse.js';
 import {
     type StoredProviderResponse,
     StoredProviderResponseFromJSON,
     StoredProviderResponseToJSON,
-} from '../models/StoredProviderResponse';
+} from '../models/StoredProviderResponse.js';
 import {
     type TestProviderRequest,
     TestProviderRequestFromJSON,
     TestProviderRequestToJSON,
-} from '../models/TestProviderRequest';
+} from '../models/TestProviderRequest.js';
 import {
     type TestProviderResponse,
     TestProviderResponseFromJSON,
     TestProviderResponseToJSON,
-} from '../models/TestProviderResponse';
+} from '../models/TestProviderResponse.js';
 import {
     type UpdateStoredProviderRequest,
     UpdateStoredProviderRequestFromJSON,
     UpdateStoredProviderRequestToJSON,
-} from '../models/UpdateStoredProviderRequest';
+} from '../models/UpdateStoredProviderRequest.js';
 
 export interface CreateStoredProviderV1ProviderCredentialsPostRequest {
     createStoredProviderRequest: CreateStoredProviderRequest;

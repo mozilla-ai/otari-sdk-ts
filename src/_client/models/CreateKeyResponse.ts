@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues } from '../runtime.js';
 /**
  * Response model for creating a new API key.
  * @export
@@ -25,6 +25,12 @@ export interface CreateKeyResponse {
      * @memberof CreateKeyResponse
      */
     allowedModels: Array<string> | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreateKeyResponse
+     */
+    captureAgentTelemetry: boolean | null;
     /**
      * 
      * @type {string}
@@ -98,6 +104,7 @@ export interface CreateKeyResponse {
  */
 export function instanceOfCreateKeyResponse(value: object): value is CreateKeyResponse {
     if (!('allowedModels' in value) || value['allowedModels'] === undefined) return false;
+    if (!('captureAgentTelemetry' in value) || value['captureAgentTelemetry'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
     if (!('excludeFromBudget' in value) || value['excludeFromBudget'] === undefined) return false;
     if (!('expiresAt' in value) || value['expiresAt'] === undefined) return false;
@@ -123,6 +130,7 @@ export function CreateKeyResponseFromJSONTyped(json: any, ignoreDiscriminator: b
     return {
         
         'allowedModels': json['allowed_models'] == null ? null : json['allowed_models'],
+        'captureAgentTelemetry': json['capture_agent_telemetry'],
         'createdAt': json['created_at'],
         'excludeFromBudget': json['exclude_from_budget'],
         'expiresAt': json['expires_at'],
@@ -149,6 +157,7 @@ export function CreateKeyResponseToJSONTyped(value?: CreateKeyResponse | null, i
     return {
         
         'allowed_models': value['allowedModels'],
+        'capture_agent_telemetry': value['captureAgentTelemetry'],
         'created_at': value['createdAt'],
         'exclude_from_budget': value['excludeFromBudget'],
         'expires_at': value['expiresAt'],

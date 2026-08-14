@@ -12,32 +12,47 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type ExplainRequest,
     ExplainRequestFromJSON,
     ExplainRequestToJSON,
-} from '../models/ExplainRequest';
+} from '../models/ExplainRequest.js';
 import {
     type ExplainResponse,
     ExplainResponseFromJSON,
     ExplainResponseToJSON,
-} from '../models/ExplainResponse';
+} from '../models/ExplainResponse.js';
 import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
-} from '../models/HTTPValidationError';
+} from '../models/HTTPValidationError.js';
 import {
     type PolicyRequest,
     PolicyRequestFromJSON,
     PolicyRequestToJSON,
-} from '../models/PolicyRequest';
+} from '../models/PolicyRequest.js';
 import {
     type PolicyResponse,
     PolicyResponseFromJSON,
     PolicyResponseToJSON,
-} from '../models/PolicyResponse';
+} from '../models/PolicyResponse.js';
+import {
+    type RankRequest,
+    RankRequestFromJSON,
+    RankRequestToJSON,
+} from '../models/RankRequest.js';
+import {
+    type RankResponse,
+    RankResponseFromJSON,
+    RankResponseToJSON,
+} from '../models/RankResponse.js';
+import {
+    type RouterStatus,
+    RouterStatusFromJSON,
+    RouterStatusToJSON,
+} from '../models/RouterStatus.js';
 
 export interface DeletePolicyV1RoutingPoliciesNameDeleteRequest {
     name: string;
@@ -46,6 +61,14 @@ export interface DeletePolicyV1RoutingPoliciesNameDeleteRequest {
 
 export interface ExplainPolicyV1RoutingPoliciesExplainPostRequest {
     explainRequest: ExplainRequest;
+}
+
+export interface RankCandidatesV1RoutingPreferencesRankPostRequest {
+    rankRequest: RankRequest;
+}
+
+export interface RoutingMemoryStatusV1RoutingStatusGetRequest {
+    userId: string;
 }
 
 export interface SetPolicyV1RoutingPoliciesPostRequest {
@@ -220,6 +243,121 @@ export class RoutingApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for rankCandidatesV1RoutingPreferencesRankPost without sending the request
+     */
+    async rankCandidatesV1RoutingPreferencesRankPostRequestOpts(requestParameters: RankCandidatesV1RoutingPreferencesRankPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['rankRequest'] == null) {
+            throw new runtime.RequiredError(
+                'rankRequest',
+                'Required parameter "rankRequest" was null or undefined when calling rankCandidatesV1RoutingPreferencesRankPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/routing/preferences/rank`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: RankRequestToJSON(requestParameters['rankRequest']),
+        };
+    }
+
+    /**
+     * Record scored examples: one routing-memory record each, plus an audit row.  The routing-memory record is written before its audit row for each example, because it is the load-bearing one (the router votes over it) and embedding it can fail; writing the audit row only afterwards means a failed embedding never leaves an orphan audit row.  A failed embedding is a 502 that names the model, not a 500. Every example in the batch is embedded, so this is the call an operator makes most often and the one most likely to meet a misconfigured ``router_embedding_model``.  Score keys are stored canonically as ``instance:model`` (see :func:`_validated_scores`), which is the form the router canonicalizes its candidates to, so how a policy spells a candidate cannot decide whether it matches.
+     * Rank Candidates
+     */
+    async rankCandidatesV1RoutingPreferencesRankPostRaw(requestParameters: RankCandidatesV1RoutingPreferencesRankPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RankResponse>> {
+        const requestOptions = await this.rankCandidatesV1RoutingPreferencesRankPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => RankResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Record scored examples: one routing-memory record each, plus an audit row.  The routing-memory record is written before its audit row for each example, because it is the load-bearing one (the router votes over it) and embedding it can fail; writing the audit row only afterwards means a failed embedding never leaves an orphan audit row.  A failed embedding is a 502 that names the model, not a 500. Every example in the batch is embedded, so this is the call an operator makes most often and the one most likely to meet a misconfigured ``router_embedding_model``.  Score keys are stored canonically as ``instance:model`` (see :func:`_validated_scores`), which is the form the router canonicalizes its candidates to, so how a policy spells a candidate cannot decide whether it matches.
+     * Rank Candidates
+     */
+    async rankCandidatesV1RoutingPreferencesRankPost(requestParameters: RankCandidatesV1RoutingPreferencesRankPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RankResponse> {
+        const response = await this.rankCandidatesV1RoutingPreferencesRankPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for routingMemoryStatusV1RoutingStatusGet without sending the request
+     */
+    async routingMemoryStatusV1RoutingStatusGetRequestOpts(requestParameters: RoutingMemoryStatusV1RoutingStatusGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['userId'] == null) {
+            throw new runtime.RequiredError(
+                'userId',
+                'Required parameter "userId" was null or undefined when calling routingMemoryStatusV1RoutingStatusGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['userId'] != null) {
+            queryParameters['user_id'] = requestParameters['userId'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/routing/status`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Report how warm one user\'s routing memory is, per pool.  ``user_id`` is required rather than optional because there is no aggregate answer: warmth is per user, and a total across users would describe a pool that no request ever votes over.
+     * Routing Memory Status
+     */
+    async routingMemoryStatusV1RoutingStatusGetRaw(requestParameters: RoutingMemoryStatusV1RoutingStatusGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RouterStatus>> {
+        const requestOptions = await this.routingMemoryStatusV1RoutingStatusGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => RouterStatusFromJSON(jsonValue));
+    }
+
+    /**
+     * Report how warm one user\'s routing memory is, per pool.  ``user_id`` is required rather than optional because there is no aggregate answer: warmth is per user, and a total across users would describe a pool that no request ever votes over.
+     * Routing Memory Status
+     */
+    async routingMemoryStatusV1RoutingStatusGet(requestParameters: RoutingMemoryStatusV1RoutingStatusGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RouterStatus> {
+        const response = await this.routingMemoryStatusV1RoutingStatusGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for setPolicyV1RoutingPoliciesPost without sending the request
      */
     async setPolicyV1RoutingPoliciesPostRequestOpts(requestParameters: SetPolicyV1RoutingPoliciesPostRequest): Promise<runtime.RequestOpts> {
@@ -257,7 +395,7 @@ export class RoutingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create or update a stored policy, global or scoped to one user.  The spec is validated here and stored as given, so a row can never contain a body this build would refuse at load. The cache is refreshed twice: once before validating (so the shadowing checks see other writers\' policies) and once after committing (so this worker serves the new policy immediately).
+     * Create or update a stored policy, global or scoped to one user.  The spec is validated here and stored as given, so a row can never contain a body this build would refuse at load. The cache is refreshed twice: once before validating (so the shadowing checks see other writers\' policies) and once after committing (so this worker serves the new policy immediately).  ``rename_from`` renames the row instead of keying on ``name``. It is part of this write rather than an endpoint of its own so that an edit which both renames a policy and re-targets it cannot land half-applied, leaving the old name serving the new spec. The new name is validated exactly as a fresh one is, because a rename can walk a policy into every collision a create can. Sending the field asserts the named policy is stored, so it never falls back to creating one.
      * Set Policy
      */
     async setPolicyV1RoutingPoliciesPostRaw(requestParameters: SetPolicyV1RoutingPoliciesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PolicyResponse>> {
@@ -268,7 +406,7 @@ export class RoutingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create or update a stored policy, global or scoped to one user.  The spec is validated here and stored as given, so a row can never contain a body this build would refuse at load. The cache is refreshed twice: once before validating (so the shadowing checks see other writers\' policies) and once after committing (so this worker serves the new policy immediately).
+     * Create or update a stored policy, global or scoped to one user.  The spec is validated here and stored as given, so a row can never contain a body this build would refuse at load. The cache is refreshed twice: once before validating (so the shadowing checks see other writers\' policies) and once after committing (so this worker serves the new policy immediately).  ``rename_from`` renames the row instead of keying on ``name``. It is part of this write rather than an endpoint of its own so that an edit which both renames a policy and re-targets it cannot land half-applied, leaving the old name serving the new spec. The new name is validated exactly as a fresh one is, because a rename can walk a policy into every collision a create can. Sending the field asserts the named policy is stored, so it never falls back to creating one.
      * Set Policy
      */
     async setPolicyV1RoutingPoliciesPost(requestParameters: SetPolicyV1RoutingPoliciesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PolicyResponse> {

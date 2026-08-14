@@ -12,28 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRToolSearchToolResultError } from './MRToolSearchToolResultError';
+import { mapValues } from '../runtime.js';
+import type { MRToolSearchToolResultError } from './MRToolSearchToolResultError.js';
 import {
     MRToolSearchToolResultErrorFromJSON,
     MRToolSearchToolResultErrorFromJSONTyped,
     MRToolSearchToolResultErrorToJSON,
     MRToolSearchToolResultErrorToJSONTyped,
-} from './MRToolSearchToolResultError';
-import type { MRToolSearchToolSearchResultBlock } from './MRToolSearchToolSearchResultBlock';
+} from './MRToolSearchToolResultError.js';
+import type { MRToolSearchToolSearchResultBlock } from './MRToolSearchToolSearchResultBlock.js';
 import {
     MRToolSearchToolSearchResultBlockFromJSON,
     MRToolSearchToolSearchResultBlockFromJSONTyped,
     MRToolSearchToolSearchResultBlockToJSON,
     MRToolSearchToolSearchResultBlockToJSONTyped,
-} from './MRToolSearchToolSearchResultBlock';
-import type { MRToolReferenceBlock } from './MRToolReferenceBlock';
+} from './MRToolSearchToolSearchResultBlock.js';
+import type { MRToolReferenceBlock } from './MRToolReferenceBlock.js';
 import {
     MRToolReferenceBlockFromJSON,
     MRToolReferenceBlockFromJSONTyped,
     MRToolReferenceBlockToJSON,
     MRToolReferenceBlockToJSONTyped,
-} from './MRToolReferenceBlock';
+} from './MRToolReferenceBlock.js';
 
 /**
  * 

@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { CCChatCompletionTokenLogprob } from './CCChatCompletionTokenLogprob';
+import { mapValues } from '../runtime.js';
+import type { CCChatCompletionTokenLogprob } from './CCChatCompletionTokenLogprob.js';
 import {
     CCChatCompletionTokenLogprobFromJSON,
     CCChatCompletionTokenLogprobFromJSONTyped,
     CCChatCompletionTokenLogprobToJSON,
     CCChatCompletionTokenLogprobToJSONTyped,
-} from './CCChatCompletionTokenLogprob';
+} from './CCChatCompletionTokenLogprob.js';
 
 /**
  * Log probability information for the choice.

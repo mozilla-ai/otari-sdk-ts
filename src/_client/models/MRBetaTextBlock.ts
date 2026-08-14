@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRBetaTextBlockCitationsInner } from './MRBetaTextBlockCitationsInner';
+import { mapValues } from '../runtime.js';
+import type { MRBetaTextBlockCitationsInner } from './MRBetaTextBlockCitationsInner.js';
 import {
     MRBetaTextBlockCitationsInnerFromJSON,
     MRBetaTextBlockCitationsInnerFromJSONTyped,
     MRBetaTextBlockCitationsInnerToJSON,
     MRBetaTextBlockCitationsInnerToJSONTyped,
-} from './MRBetaTextBlockCitationsInner';
+} from './MRBetaTextBlockCitationsInner.js';
 
 /**
  * 

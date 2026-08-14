@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { System } from './System';
+import { mapValues } from '../runtime.js';
+import type { System } from './System.js';
 import {
     SystemFromJSON,
     SystemFromJSONTyped,
     SystemToJSON,
     SystemToJSONTyped,
-} from './System';
+} from './System.js';
 
 /**
  * Anthropic ``/v1/messages/count_tokens`` request.

@@ -12,21 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRBetaClearThinking20251015EditResponse } from './MRBetaClearThinking20251015EditResponse';
+import { mapValues } from '../runtime.js';
+import type { MRBetaClearThinking20251015EditResponse } from './MRBetaClearThinking20251015EditResponse.js';
 import {
     MRBetaClearThinking20251015EditResponseFromJSON,
     MRBetaClearThinking20251015EditResponseFromJSONTyped,
     MRBetaClearThinking20251015EditResponseToJSON,
     MRBetaClearThinking20251015EditResponseToJSONTyped,
-} from './MRBetaClearThinking20251015EditResponse';
-import type { MRBetaClearToolUses20250919EditResponse } from './MRBetaClearToolUses20250919EditResponse';
+} from './MRBetaClearThinking20251015EditResponse.js';
+import type { MRBetaClearToolUses20250919EditResponse } from './MRBetaClearToolUses20250919EditResponse.js';
 import {
     MRBetaClearToolUses20250919EditResponseFromJSON,
     MRBetaClearToolUses20250919EditResponseFromJSONTyped,
     MRBetaClearToolUses20250919EditResponseToJSON,
     MRBetaClearToolUses20250919EditResponseToJSONTyped,
-} from './MRBetaClearToolUses20250919EditResponse';
+} from './MRBetaClearToolUses20250919EditResponse.js';
 
 /**
  * 

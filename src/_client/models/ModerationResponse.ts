@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { ModerationResult } from './ModerationResult';
+import { mapValues } from '../runtime.js';
+import type { ModerationResult } from './ModerationResult.js';
 import {
     ModerationResultFromJSON,
     ModerationResultFromJSONTyped,
     ModerationResultToJSON,
     ModerationResultToJSONTyped,
-} from './ModerationResult';
+} from './ModerationResult.js';
 
 /**
  * Normalized moderation response across providers.

@@ -12,49 +12,49 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { ToolChoice } from './ToolChoice';
+import { mapValues } from '../runtime.js';
+import type { ToolChoice } from './ToolChoice.js';
 import {
     ToolChoiceFromJSON,
     ToolChoiceFromJSONTyped,
     ToolChoiceToJSON,
     ToolChoiceToJSONTyped,
-} from './ToolChoice';
-import type { McpServerConfig } from './McpServerConfig';
+} from './ToolChoice.js';
+import type { McpServerConfig } from './McpServerConfig.js';
 import {
     McpServerConfigFromJSON,
     McpServerConfigFromJSONTyped,
     McpServerConfigToJSON,
     McpServerConfigToJSONTyped,
-} from './McpServerConfig';
-import type { Stop } from './Stop';
+} from './McpServerConfig.js';
+import type { Stop } from './Stop.js';
 import {
     StopFromJSON,
     StopFromJSONTyped,
     StopToJSON,
     StopToJSONTyped,
-} from './Stop';
-import type { ChatMessageInput } from './ChatMessageInput';
+} from './Stop.js';
+import type { ChatMessageInput } from './ChatMessageInput.js';
 import {
     ChatMessageInputFromJSON,
     ChatMessageInputFromJSONTyped,
     ChatMessageInputToJSON,
     ChatMessageInputToJSONTyped,
-} from './ChatMessageInput';
-import type { GuardrailConfig } from './GuardrailConfig';
+} from './ChatMessageInput.js';
+import type { GuardrailConfig } from './GuardrailConfig.js';
 import {
     GuardrailConfigFromJSON,
     GuardrailConfigFromJSONTyped,
     GuardrailConfigToJSON,
     GuardrailConfigToJSONTyped,
-} from './GuardrailConfig';
-import type { ChatCompletionRequestToolsInner } from './ChatCompletionRequestToolsInner';
+} from './GuardrailConfig.js';
+import type { ChatCompletionRequestToolsInner } from './ChatCompletionRequestToolsInner.js';
 import {
     ChatCompletionRequestToolsInnerFromJSON,
     ChatCompletionRequestToolsInnerFromJSONTyped,
     ChatCompletionRequestToolsInnerToJSON,
     ChatCompletionRequestToolsInnerToJSONTyped,
-} from './ChatCompletionRequestToolsInner';
+} from './ChatCompletionRequestToolsInner.js';
 
 /**
  * OpenAI-compatible chat completion request.
@@ -62,9 +62,11 @@ import {
  * The completion-param fields are derived from any-llm's ``CompletionParams``
  * (see ``_schema_derive``) so the schema cannot silently drop a param any-llm
  * forwards. Fields below either tighten a derived field (``messages``,
- * ``response_format``) or add gateway-internal behavior (``mcp_servers``,
- * ``mcp_server_ids``, ``guardrails``, ``tools_header``, ``max_tool_iterations``)
- * that is stripped before the request is forwarded upstream.
+ * ``response_format``), declare an OpenAI wire param ``CompletionParams`` does
+ * not model (``service_tier``, forwarded as an any-llm ``**kwargs`` param), or
+ * add gateway-internal behavior (``mcp_servers``, ``mcp_server_ids``,
+ * ``guardrails``, ``tools_header``, ``max_tool_iterations``) that is stripped
+ * before the request is forwarded upstream.
  * @export
  * @interface ChatCompletionRequest
  */
@@ -171,6 +173,12 @@ export interface ChatCompletionRequest {
      * @memberof ChatCompletionRequest
      */
     seed?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatCompletionRequest
+     */
+    serviceTier?: string | null;
     /**
      * Optional caller-supplied label for cost attribution (per run, experiment, or conversation). In hybrid mode it is forwarded onto the platform usage report so spend can be sliced by session without standing up OpenTelemetry. Stripped before the request is forwarded upstream to the provider. Has no effect in standalone mode, where there is no platform to report it to.
      * @type {string}
@@ -292,6 +300,7 @@ export function ChatCompletionRequestFromJSONTyped(json: any, ignoreDiscriminato
         'reasoningEffort': json['reasoning_effort'] == null ? undefined : json['reasoning_effort'],
         'responseFormat': json['response_format'] == null ? undefined : json['response_format'],
         'seed': json['seed'] == null ? undefined : json['seed'],
+        'serviceTier': json['service_tier'] == null ? undefined : json['service_tier'],
         'sessionLabel': json['session_label'] == null ? undefined : json['session_label'],
         'stop': json['stop'] == null ? undefined : StopFromJSON(json['stop']),
         'stream': json['stream'] == null ? undefined : json['stream'],
@@ -334,6 +343,7 @@ export function ChatCompletionRequestToJSONTyped(value?: ChatCompletionRequest |
         'reasoning_effort': value['reasoningEffort'],
         'response_format': value['responseFormat'],
         'seed': value['seed'],
+        'service_tier': value['serviceTier'],
         'session_label': value['sessionLabel'],
         'stop': StopToJSON(value['stop']),
         'stream': value['stream'],

@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRToolReferenceBlock } from './MRToolReferenceBlock';
+import { mapValues } from '../runtime.js';
+import type { MRToolReferenceBlock } from './MRToolReferenceBlock.js';
 import {
     MRToolReferenceBlockFromJSON,
     MRToolReferenceBlockFromJSONTyped,
     MRToolReferenceBlockToJSON,
     MRToolReferenceBlockToJSONTyped,
-} from './MRToolReferenceBlock';
+} from './MRToolReferenceBlock.js';
 
 /**
  * 

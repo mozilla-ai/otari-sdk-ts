@@ -8,6 +8,7 @@ A single usage log entry.
 Name | Type
 ------------ | -------------
 `apiKeyId` | string
+`apiKeyName` | string
 `attemptCount` | number
 `attemptPosition` | number
 `billingMeters` | { [key: string]: any; }
@@ -34,6 +35,7 @@ Name | Type
 `statusCode` | number
 `timestamp` | string
 `totalTokens` | number
+`userAlias` | string
 `userId` | string
 
 ## Example
@@ -44,6 +46,7 @@ import type { UsageEntry } from ''
 // TODO: Update the object below with actual values
 const example = {
   "apiKeyId": null,
+  "apiKeyName": null,
   "attemptCount": null,
   "attemptPosition": null,
   "billingMeters": null,
@@ -70,6 +73,7 @@ const example = {
   "statusCode": null,
   "timestamp": null,
   "totalTokens": null,
+  "userAlias": null,
   "userId": null,
 } satisfies UsageEntry
 

@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRBashCodeExecutionOutputBlock } from './MRBashCodeExecutionOutputBlock';
+import { mapValues } from '../runtime.js';
+import type { MRBashCodeExecutionOutputBlock } from './MRBashCodeExecutionOutputBlock.js';
 import {
     MRBashCodeExecutionOutputBlockFromJSON,
     MRBashCodeExecutionOutputBlockFromJSONTyped,
     MRBashCodeExecutionOutputBlockToJSON,
     MRBashCodeExecutionOutputBlockToJSONTyped,
-} from './MRBashCodeExecutionOutputBlock';
+} from './MRBashCodeExecutionOutputBlock.js';
 
 /**
  * 

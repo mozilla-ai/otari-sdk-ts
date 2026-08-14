@@ -12,42 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRCitationsSearchResultLocation } from './MRCitationsSearchResultLocation';
+import { mapValues } from '../runtime.js';
+import type { MRCitationsSearchResultLocation } from './MRCitationsSearchResultLocation.js';
 import {
     MRCitationsSearchResultLocationFromJSON,
     MRCitationsSearchResultLocationFromJSONTyped,
     MRCitationsSearchResultLocationToJSON,
     MRCitationsSearchResultLocationToJSONTyped,
-} from './MRCitationsSearchResultLocation';
-import type { MRCitationContentBlockLocation } from './MRCitationContentBlockLocation';
+} from './MRCitationsSearchResultLocation.js';
+import type { MRCitationContentBlockLocation } from './MRCitationContentBlockLocation.js';
 import {
     MRCitationContentBlockLocationFromJSON,
     MRCitationContentBlockLocationFromJSONTyped,
     MRCitationContentBlockLocationToJSON,
     MRCitationContentBlockLocationToJSONTyped,
-} from './MRCitationContentBlockLocation';
-import type { MRCitationPageLocation } from './MRCitationPageLocation';
+} from './MRCitationContentBlockLocation.js';
+import type { MRCitationPageLocation } from './MRCitationPageLocation.js';
 import {
     MRCitationPageLocationFromJSON,
     MRCitationPageLocationFromJSONTyped,
     MRCitationPageLocationToJSON,
     MRCitationPageLocationToJSONTyped,
-} from './MRCitationPageLocation';
-import type { MRCitationCharLocation } from './MRCitationCharLocation';
+} from './MRCitationPageLocation.js';
+import type { MRCitationCharLocation } from './MRCitationCharLocation.js';
 import {
     MRCitationCharLocationFromJSON,
     MRCitationCharLocationFromJSONTyped,
     MRCitationCharLocationToJSON,
     MRCitationCharLocationToJSONTyped,
-} from './MRCitationCharLocation';
-import type { MRCitationsWebSearchResultLocation } from './MRCitationsWebSearchResultLocation';
+} from './MRCitationCharLocation.js';
+import type { MRCitationsWebSearchResultLocation } from './MRCitationsWebSearchResultLocation.js';
 import {
     MRCitationsWebSearchResultLocationFromJSON,
     MRCitationsWebSearchResultLocationFromJSONTyped,
     MRCitationsWebSearchResultLocationToJSON,
     MRCitationsWebSearchResultLocationToJSONTyped,
-} from './MRCitationsWebSearchResultLocation';
+} from './MRCitationsWebSearchResultLocation.js';
 
 /**
  * 

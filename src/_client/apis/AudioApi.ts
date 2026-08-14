@@ -12,17 +12,17 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type AudioSpeechRequest,
     AudioSpeechRequestFromJSON,
     AudioSpeechRequestToJSON,
-} from '../models/AudioSpeechRequest';
+} from '../models/AudioSpeechRequest.js';
 import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
-} from '../models/HTTPValidationError';
+} from '../models/HTTPValidationError.js';
 
 export interface CreateSpeechV1AudioSpeechPostRequest {
     audioSpeechRequest: AudioSpeechRequest;

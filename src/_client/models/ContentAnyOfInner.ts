@@ -12,21 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MSGChatCompletionContentPartRefusalParam } from './MSGChatCompletionContentPartRefusalParam';
+import { mapValues } from '../runtime.js';
+import type { MSGChatCompletionContentPartRefusalParam } from './MSGChatCompletionContentPartRefusalParam.js';
 import {
     MSGChatCompletionContentPartRefusalParamFromJSON,
     MSGChatCompletionContentPartRefusalParamFromJSONTyped,
     MSGChatCompletionContentPartRefusalParamToJSON,
     MSGChatCompletionContentPartRefusalParamToJSONTyped,
-} from './MSGChatCompletionContentPartRefusalParam';
-import type { MSGChatCompletionContentPartTextParam } from './MSGChatCompletionContentPartTextParam';
+} from './MSGChatCompletionContentPartRefusalParam.js';
+import type { MSGChatCompletionContentPartTextParam } from './MSGChatCompletionContentPartTextParam.js';
 import {
     MSGChatCompletionContentPartTextParamFromJSON,
     MSGChatCompletionContentPartTextParamFromJSONTyped,
     MSGChatCompletionContentPartTextParamToJSON,
     MSGChatCompletionContentPartTextParamToJSONTyped,
-} from './MSGChatCompletionContentPartTextParam';
+} from './MSGChatCompletionContentPartTextParam.js';
 
 /**
  * 

@@ -12,21 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { IMGUsageInputTokensDetails } from './IMGUsageInputTokensDetails';
+import { mapValues } from '../runtime.js';
+import type { IMGUsageInputTokensDetails } from './IMGUsageInputTokensDetails.js';
 import {
     IMGUsageInputTokensDetailsFromJSON,
     IMGUsageInputTokensDetailsFromJSONTyped,
     IMGUsageInputTokensDetailsToJSON,
     IMGUsageInputTokensDetailsToJSONTyped,
-} from './IMGUsageInputTokensDetails';
-import type { IMGUsageOutputTokensDetails } from './IMGUsageOutputTokensDetails';
+} from './IMGUsageInputTokensDetails.js';
+import type { IMGUsageOutputTokensDetails } from './IMGUsageOutputTokensDetails.js';
 import {
     IMGUsageOutputTokensDetailsFromJSON,
     IMGUsageOutputTokensDetailsFromJSONTyped,
     IMGUsageOutputTokensDetailsToJSON,
     IMGUsageOutputTokensDetailsToJSONTyped,
-} from './IMGUsageOutputTokensDetails';
+} from './IMGUsageOutputTokensDetails.js';
 
 /**
  * For `gpt-image-1` only, the token usage information for the image generation.

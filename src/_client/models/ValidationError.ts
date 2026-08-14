@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { LocationInner } from './LocationInner';
+import { mapValues } from '../runtime.js';
+import type { LocationInner } from './LocationInner.js';
 import {
     LocationInnerFromJSON,
     LocationInnerFromJSONTyped,
     LocationInnerToJSON,
     LocationInnerToJSONTyped,
-} from './LocationInner';
+} from './LocationInner.js';
 
 /**
  * 

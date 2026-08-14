@@ -8,6 +8,7 @@ Request model for creating a new API key.
 Name | Type
 ------------ | -------------
 `allowedModels` | Array&lt;string&gt;
+`captureAgentTelemetry` | boolean
 `excludeFromBudget` | boolean
 `expiresAt` | Date
 `keyName` | string
@@ -23,6 +24,7 @@ import type { CreateKeyRequest } from ''
 // TODO: Update the object below with actual values
 const example = {
   "allowedModels": null,
+  "captureAgentTelemetry": null,
   "excludeFromBudget": null,
   "expiresAt": null,
   "keyName": null,

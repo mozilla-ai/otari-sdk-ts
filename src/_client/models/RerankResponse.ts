@@ -12,28 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { RRRerankResult } from './RRRerankResult';
+import { mapValues } from '../runtime.js';
+import type { RRRerankResult } from './RRRerankResult.js';
 import {
     RRRerankResultFromJSON,
     RRRerankResultFromJSONTyped,
     RRRerankResultToJSON,
     RRRerankResultToJSONTyped,
-} from './RRRerankResult';
-import type { RRRerankMeta } from './RRRerankMeta';
+} from './RRRerankResult.js';
+import type { RRRerankMeta } from './RRRerankMeta.js';
 import {
     RRRerankMetaFromJSON,
     RRRerankMetaFromJSONTyped,
     RRRerankMetaToJSON,
     RRRerankMetaToJSONTyped,
-} from './RRRerankMeta';
-import type { RRRerankUsage } from './RRRerankUsage';
+} from './RRRerankMeta.js';
+import type { RRRerankUsage } from './RRRerankUsage.js';
 import {
     RRRerankUsageFromJSON,
     RRRerankUsageFromJSONTyped,
     RRRerankUsageToJSON,
     RRRerankUsageToJSONTyped,
-} from './RRRerankUsage';
+} from './RRRerankUsage.js';
 
 /**
  * Normalized rerank response, provider-agnostic.
@@ -42,7 +42,7 @@ import {
  */
 export interface RerankResponse {
     /**
-     * Delete the alias scoped to this user. Omit to delete the global alias of that name.
+     * Filter to a single event type or metric name (e.g. 'tool_result', 'claude_code.commit.count')
      * @type {string}
      * @memberof RerankResponse
      */

@@ -12,27 +12,27 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type GatewaySettings,
     GatewaySettingsFromJSON,
     GatewaySettingsToJSON,
-} from '../models/GatewaySettings';
+} from '../models/GatewaySettings.js';
 import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
-} from '../models/HTTPValidationError';
+} from '../models/HTTPValidationError.js';
 import {
     type RotateMasterKeyResponse,
     RotateMasterKeyResponseFromJSON,
     RotateMasterKeyResponseToJSON,
-} from '../models/RotateMasterKeyResponse';
+} from '../models/RotateMasterKeyResponse.js';
 import {
     type UpdateSettingsRequest,
     UpdateSettingsRequestFromJSON,
     UpdateSettingsRequestToJSON,
-} from '../models/UpdateSettingsRequest';
+} from '../models/UpdateSettingsRequest.js';
 
 export interface UpdateSettingsV1SettingsPatchRequest {
     updateSettingsRequest: UpdateSettingsRequest;

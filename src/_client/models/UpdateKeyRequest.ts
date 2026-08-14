@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues } from '../runtime.js';
 /**
  * Request model for updating a key.
  * @export
@@ -25,6 +25,12 @@ export interface UpdateKeyRequest {
      * @memberof UpdateKeyRequest
      */
     allowedModels?: Array<string> | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateKeyRequest
+     */
+    captureAgentTelemetry?: boolean | null;
     /**
      * 
      * @type {boolean}
@@ -81,6 +87,7 @@ export function UpdateKeyRequestFromJSONTyped(json: any, ignoreDiscriminator: bo
     return {
         
         'allowedModels': json['allowed_models'] == null ? undefined : json['allowed_models'],
+        'captureAgentTelemetry': json['capture_agent_telemetry'] == null ? undefined : json['capture_agent_telemetry'],
         'excludeFromBudget': json['exclude_from_budget'] == null ? undefined : json['exclude_from_budget'],
         'expiresAt': json['expires_at'] == null ? undefined : (new Date(json['expires_at'])),
         'isActive': json['is_active'] == null ? undefined : json['is_active'],
@@ -102,6 +109,7 @@ export function UpdateKeyRequestToJSONTyped(value?: UpdateKeyRequest | null, ign
     return {
         
         'allowed_models': value['allowedModels'],
+        'capture_agent_telemetry': value['captureAgentTelemetry'],
         'exclude_from_budget': value['excludeFromBudget'],
         'expires_at': value['expiresAt'] == null ? value['expiresAt'] : value['expiresAt'].toISOString(),
         'is_active': value['isActive'],

@@ -12,28 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { CCChatCompletionAudio } from './CCChatCompletionAudio';
+import { mapValues } from '../runtime.js';
+import type { CCChatCompletionAudio } from './CCChatCompletionAudio.js';
 import {
     CCChatCompletionAudioFromJSON,
     CCChatCompletionAudioFromJSONTyped,
     CCChatCompletionAudioToJSON,
     CCChatCompletionAudioToJSONTyped,
-} from './CCChatCompletionAudio';
-import type { CCFunctionCall } from './CCFunctionCall';
+} from './CCChatCompletionAudio.js';
+import type { CCFunctionCall } from './CCFunctionCall.js';
 import {
     CCFunctionCallFromJSON,
     CCFunctionCallFromJSONTyped,
     CCFunctionCallToJSON,
     CCFunctionCallToJSONTyped,
-} from './CCFunctionCall';
-import type { CCChatCompletionMessageToolCallsInner } from './CCChatCompletionMessageToolCallsInner';
+} from './CCFunctionCall.js';
+import type { CCChatCompletionMessageToolCallsInner } from './CCChatCompletionMessageToolCallsInner.js';
 import {
     CCChatCompletionMessageToolCallsInnerFromJSON,
     CCChatCompletionMessageToolCallsInnerFromJSONTyped,
     CCChatCompletionMessageToolCallsInnerToJSON,
     CCChatCompletionMessageToolCallsInnerToJSONTyped,
-} from './CCChatCompletionMessageToolCallsInner';
+} from './CCChatCompletionMessageToolCallsInner.js';
 
 /**
  * 
@@ -85,7 +85,7 @@ export interface CCChatCompletionMessage {
      */
     toolCalls?: Array<CCChatCompletionMessageToolCallsInner> | null;
     /**
-     * Delete the alias scoped to this user. Omit to delete the global alias of that name.
+     * Filter to a single event type or metric name (e.g. 'tool_result', 'claude_code.commit.count')
      * @type {string}
      * @memberof CCChatCompletionMessage
      */

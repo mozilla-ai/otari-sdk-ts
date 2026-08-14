@@ -12,42 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { UsageSeriesPoint } from './UsageSeriesPoint';
+import { mapValues } from '../runtime.js';
+import type { UsageSeriesPoint } from './UsageSeriesPoint.js';
 import {
     UsageSeriesPointFromJSON,
     UsageSeriesPointFromJSONTyped,
     UsageSeriesPointToJSON,
     UsageSeriesPointToJSONTyped,
-} from './UsageSeriesPoint';
-import type { UsageTotals } from './UsageTotals';
+} from './UsageSeriesPoint.js';
+import type { UsageTotals } from './UsageTotals.js';
 import {
     UsageTotalsFromJSON,
     UsageTotalsFromJSONTyped,
     UsageTotalsToJSON,
     UsageTotalsToJSONTyped,
-} from './UsageTotals';
-import type { UsageGroupRow } from './UsageGroupRow';
+} from './UsageTotals.js';
+import type { UsageGroupRow } from './UsageGroupRow.js';
 import {
     UsageGroupRowFromJSON,
     UsageGroupRowFromJSONTyped,
     UsageGroupRowToJSON,
     UsageGroupRowToJSONTyped,
-} from './UsageGroupRow';
-import type { UsageToolRow } from './UsageToolRow';
+} from './UsageGroupRow.js';
+import type { UsageToolRow } from './UsageToolRow.js';
 import {
     UsageToolRowFromJSON,
     UsageToolRowFromJSONTyped,
     UsageToolRowToJSON,
     UsageToolRowToJSONTyped,
-} from './UsageToolRow';
-import type { UsageErrorCodeRow } from './UsageErrorCodeRow';
+} from './UsageToolRow.js';
+import type { UsageErrorCodeRow } from './UsageErrorCodeRow.js';
 import {
     UsageErrorCodeRowFromJSON,
     UsageErrorCodeRowFromJSONTyped,
     UsageErrorCodeRowToJSON,
     UsageErrorCodeRowToJSONTyped,
-} from './UsageErrorCodeRow';
+} from './UsageErrorCodeRow.js';
 
 /**
  * Aggregate spend/volume for the Usage & analytics page.

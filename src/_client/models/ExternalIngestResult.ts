@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { ExternalIngestError } from './ExternalIngestError';
+import { mapValues } from '../runtime.js';
+import type { ExternalIngestError } from './ExternalIngestError.js';
 import {
     ExternalIngestErrorFromJSON,
     ExternalIngestErrorFromJSONTyped,
     ExternalIngestErrorToJSON,
     ExternalIngestErrorToJSONTyped,
-} from './ExternalIngestError';
+} from './ExternalIngestError.js';
 
 /**
  * Per-batch outcome. Re-submitting is safe: prior events count as duplicates.

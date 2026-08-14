@@ -12,56 +12,56 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { Content16Inner } from './Content16Inner';
+import { mapValues } from '../runtime.js';
+import type { Content16Inner } from './Content16Inner.js';
 import {
     Content16InnerFromJSON,
     Content16InnerFromJSONTyped,
     Content16InnerToJSON,
     Content16InnerToJSONTyped,
-} from './Content16Inner';
-import type { MRBetaContainer } from './MRBetaContainer';
+} from './Content16Inner.js';
+import type { MRBetaContainer } from './MRBetaContainer.js';
 import {
     MRBetaContainerFromJSON,
     MRBetaContainerFromJSONTyped,
     MRBetaContainerToJSON,
     MRBetaContainerToJSONTyped,
-} from './MRBetaContainer';
-import type { MRRefusalStopDetails } from './MRRefusalStopDetails';
+} from './MRBetaContainer.js';
+import type { MRRefusalStopDetails } from './MRRefusalStopDetails.js';
 import {
     MRRefusalStopDetailsFromJSON,
     MRRefusalStopDetailsFromJSONTyped,
     MRRefusalStopDetailsToJSON,
     MRRefusalStopDetailsToJSONTyped,
-} from './MRRefusalStopDetails';
-import type { Model1 } from './Model1';
+} from './MRRefusalStopDetails.js';
+import type { Model1 } from './Model1.js';
 import {
     Model1FromJSON,
     Model1FromJSONTyped,
     Model1ToJSON,
     Model1ToJSONTyped,
-} from './Model1';
-import type { MRBetaContextManagementResponse } from './MRBetaContextManagementResponse';
+} from './Model1.js';
+import type { MRBetaContextManagementResponse } from './MRBetaContextManagementResponse.js';
 import {
     MRBetaContextManagementResponseFromJSON,
     MRBetaContextManagementResponseFromJSONTyped,
     MRBetaContextManagementResponseToJSON,
     MRBetaContextManagementResponseToJSONTyped,
-} from './MRBetaContextManagementResponse';
-import type { MRBetaDiagnosticsFallback } from './MRBetaDiagnosticsFallback';
+} from './MRBetaContextManagementResponse.js';
+import type { MRBetaDiagnosticsFallback } from './MRBetaDiagnosticsFallback.js';
 import {
     MRBetaDiagnosticsFallbackFromJSON,
     MRBetaDiagnosticsFallbackFromJSONTyped,
     MRBetaDiagnosticsFallbackToJSON,
     MRBetaDiagnosticsFallbackToJSONTyped,
-} from './MRBetaDiagnosticsFallback';
-import type { MRMessageUsage } from './MRMessageUsage';
+} from './MRBetaDiagnosticsFallback.js';
+import type { MRMessageUsage } from './MRMessageUsage.js';
 import {
     MRMessageUsageFromJSON,
     MRMessageUsageFromJSONTyped,
     MRMessageUsageToJSON,
     MRMessageUsageToJSONTyped,
-} from './MRMessageUsage';
+} from './MRMessageUsage.js';
 
 /**
  * 
@@ -113,7 +113,7 @@ export interface MessageResponse {
      */
     stopReason?: MessageResponseStopReasonEnum | null;
     /**
-     * Delete the alias scoped to this user. Omit to delete the global alias of that name.
+     * Filter to a single event type or metric name (e.g. 'tool_result', 'claude_code.commit.count')
      * @type {string}
      * @memberof MessageResponse
      */

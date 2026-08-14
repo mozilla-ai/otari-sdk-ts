@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRTextBlockCitationsInner } from './MRTextBlockCitationsInner';
+import { mapValues } from '../runtime.js';
+import type { MRTextBlockCitationsInner } from './MRTextBlockCitationsInner.js';
 import {
     MRTextBlockCitationsInnerFromJSON,
     MRTextBlockCitationsInnerFromJSONTyped,
     MRTextBlockCitationsInnerToJSON,
     MRTextBlockCitationsInnerToJSONTyped,
-} from './MRTextBlockCitationsInner';
+} from './MRTextBlockCitationsInner.js';
 
 /**
  * 

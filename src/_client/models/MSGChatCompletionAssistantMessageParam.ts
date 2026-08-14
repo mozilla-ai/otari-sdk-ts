@@ -12,35 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { Content } from './Content';
+import { mapValues } from '../runtime.js';
+import type { Content } from './Content.js';
 import {
     ContentFromJSON,
     ContentFromJSONTyped,
     ContentToJSON,
     ContentToJSONTyped,
-} from './Content';
-import type { MSGAudio } from './MSGAudio';
+} from './Content.js';
+import type { MSGAudio } from './MSGAudio.js';
 import {
     MSGAudioFromJSON,
     MSGAudioFromJSONTyped,
     MSGAudioToJSON,
     MSGAudioToJSONTyped,
-} from './MSGAudio';
-import type { MSGFunctionCall } from './MSGFunctionCall';
+} from './MSGAudio.js';
+import type { MSGFunctionCall } from './MSGFunctionCall.js';
 import {
     MSGFunctionCallFromJSON,
     MSGFunctionCallFromJSONTyped,
     MSGFunctionCallToJSON,
     MSGFunctionCallToJSONTyped,
-} from './MSGFunctionCall';
-import type { ToolCallsInner } from './ToolCallsInner';
+} from './MSGFunctionCall.js';
+import type { ToolCallsInner } from './ToolCallsInner.js';
 import {
     ToolCallsInnerFromJSON,
     ToolCallsInnerFromJSONTyped,
     ToolCallsInnerToJSON,
     ToolCallsInnerToJSONTyped,
-} from './ToolCallsInner';
+} from './ToolCallsInner.js';
 
 /**
  * Messages sent by the model in response to user messages.

@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { CCFunction } from './CCFunction';
+import { mapValues } from '../runtime.js';
+import type { CCFunction } from './CCFunction.js';
 import {
     CCFunctionFromJSON,
     CCFunctionFromJSONTyped,
     CCFunctionToJSON,
     CCFunctionToJSONTyped,
-} from './CCFunction';
+} from './CCFunction.js';
 
 /**
  * A call to a function tool created by the model.

@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MSGFileFile } from './MSGFileFile';
+import { mapValues } from '../runtime.js';
+import type { MSGFileFile } from './MSGFileFile.js';
 import {
     MSGFileFileFromJSON,
     MSGFileFileFromJSONTyped,
     MSGFileFileToJSON,
     MSGFileFileToJSONTyped,
-} from './MSGFileFile';
+} from './MSGFileFile.js';
 
 /**
  * Learn about [file inputs](https://platform.openai.com/docs/guides/text) for text generation.

@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { Caller } from './Caller';
+import { mapValues } from '../runtime.js';
+import type { Caller } from './Caller.js';
 import {
     CallerFromJSON,
     CallerFromJSONTyped,
     CallerToJSON,
     CallerToJSONTyped,
-} from './Caller';
+} from './Caller.js';
 
 /**
  * 

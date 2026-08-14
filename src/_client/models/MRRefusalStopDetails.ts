@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues } from '../runtime.js';
 /**
  * Structured information about a refusal.
  * @export
@@ -27,7 +27,7 @@ export interface MRRefusalStopDetails {
      */
     category?: MRRefusalStopDetailsCategoryEnum | null;
     /**
-     * Delete the alias scoped to this user. Omit to delete the global alias of that name.
+     * Filter to a single event type or metric name (e.g. 'tool_result', 'claude_code.commit.count')
      * @type {string}
      * @memberof MRRefusalStopDetails
      */

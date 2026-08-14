@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type AliasRequest,
     AliasRequestFromJSON,
     AliasRequestToJSON,
-} from '../models/AliasRequest';
+} from '../models/AliasRequest.js';
 import {
     type AliasResponse,
     AliasResponseFromJSON,
     AliasResponseToJSON,
-} from '../models/AliasResponse';
+} from '../models/AliasResponse.js';
 import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
-} from '../models/HTTPValidationError';
+} from '../models/HTTPValidationError.js';
 
 export interface DeleteAliasV1AliasesNameDeleteRequest {
     name: string;

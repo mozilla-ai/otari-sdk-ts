@@ -12,6 +12,9 @@ Name | Type
 `guardrails` | Array&lt;{ [key: string]: any; } | null&gt;
 `isDynamic` | boolean
 `name` | string
+`routerBackend` | string
+`routerCandidates` | Array&lt;string&gt;
+`routerWeights` | { [key: string]: number; }
 `selectionReason` | string
 
 ## Example
@@ -26,6 +29,9 @@ const example = {
   "guardrails": null,
   "isDynamic": null,
   "name": null,
+  "routerBackend": null,
+  "routerCandidates": null,
+  "routerWeights": null,
   "selectionReason": null,
 } satisfies ExplainResponse
 

@@ -12,21 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { CCKChoiceDeltaToolCall } from './CCKChoiceDeltaToolCall';
+import { mapValues } from '../runtime.js';
+import type { CCKChoiceDeltaToolCall } from './CCKChoiceDeltaToolCall.js';
 import {
     CCKChoiceDeltaToolCallFromJSON,
     CCKChoiceDeltaToolCallFromJSONTyped,
     CCKChoiceDeltaToolCallToJSON,
     CCKChoiceDeltaToolCallToJSONTyped,
-} from './CCKChoiceDeltaToolCall';
-import type { CCKChoiceDeltaFunctionCall } from './CCKChoiceDeltaFunctionCall';
+} from './CCKChoiceDeltaToolCall.js';
+import type { CCKChoiceDeltaFunctionCall } from './CCKChoiceDeltaFunctionCall.js';
 import {
     CCKChoiceDeltaFunctionCallFromJSON,
     CCKChoiceDeltaFunctionCallFromJSONTyped,
     CCKChoiceDeltaFunctionCallToJSON,
     CCKChoiceDeltaFunctionCallToJSONTyped,
-} from './CCKChoiceDeltaFunctionCall';
+} from './CCKChoiceDeltaFunctionCall.js';
 
 /**
  * 
@@ -66,7 +66,7 @@ export interface CCKChoiceDelta {
      */
     toolCalls?: Array<CCKChoiceDeltaToolCall> | null;
     /**
-     * Delete the alias scoped to this user. Omit to delete the global alias of that name.
+     * Filter to a single event type or metric name (e.g. 'tool_result', 'claude_code.commit.count')
      * @type {string}
      * @memberof CCKChoiceDelta
      */

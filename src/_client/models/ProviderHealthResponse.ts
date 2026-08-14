@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { ProviderHealthSchema } from './ProviderHealthSchema';
+import { mapValues } from '../runtime.js';
+import type { ProviderHealthSchema } from './ProviderHealthSchema.js';
 import {
     ProviderHealthSchemaFromJSON,
     ProviderHealthSchemaFromJSONTyped,
     ProviderHealthSchemaToJSON,
     ProviderHealthSchemaToJSONTyped,
-} from './ProviderHealthSchema';
+} from './ProviderHealthSchema.js';
 
 /**
  * Provider connectivity across the whole gateway, for the health monitor.

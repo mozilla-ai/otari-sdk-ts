@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { CCKChoiceDeltaToolCallFunction } from './CCKChoiceDeltaToolCallFunction';
+import { mapValues } from '../runtime.js';
+import type { CCKChoiceDeltaToolCallFunction } from './CCKChoiceDeltaToolCallFunction.js';
 import {
     CCKChoiceDeltaToolCallFunctionFromJSON,
     CCKChoiceDeltaToolCallFunctionFromJSONTyped,
     CCKChoiceDeltaToolCallFunctionToJSON,
     CCKChoiceDeltaToolCallFunctionToJSONTyped,
-} from './CCKChoiceDeltaToolCallFunction';
+} from './CCKChoiceDeltaToolCallFunction.js';
 
 /**
  * Streaming counterpart of ``ChatCompletionMessageFunctionToolCall``.

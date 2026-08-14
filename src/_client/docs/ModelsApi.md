@@ -87,11 +87,11 @@ example().catch(console.error);
 
 ## listDiscoverableModelsV1ModelsDiscoverableGet
 
-> DiscoverableModelsResponse listDiscoverableModelsV1ModelsDiscoverableGet()
+> DiscoverableModelsResponse listDiscoverableModelsV1ModelsDiscoverableGet(refresh)
 
 List Discoverable Models
 
-List every model the configured provider credentials can reach.  Operator-facing counterpart to GET /v1/models, which serves a curated catalog to API callers. This reports each provider separately and keeps its error, so a provider with a bad key is distinguishable from one with no models. It is master-key gated because a provider error message describes the gateway\&#39;s own configuration.
+List every model the configured provider credentials can reach.  Operator-facing counterpart to GET /v1/models, which serves a curated catalog to API callers. This reports each provider separately and keeps its error, so a provider with a bad key is distinguishable from one with no models. It is master-key gated because a provider error message describes the gateway\&#39;s own configuration.  Answers from the discovery cache, which a background refresher keeps warm, so the call does not wait on a slow or unreachable provider. Each provider carries the &#x60;&#x60;checked_at&#x60;&#x60; its result was produced at; a null one has not been dialed yet. Pass &#x60;&#x60;refresh&#x3D;true&#x60;&#x60; to force a live re-dial of every provider.
 
 ### Example
 
@@ -112,8 +112,13 @@ async function example() {
   });
   const api = new ModelsApi(config);
 
+  const body = {
+    // boolean | Re-dial every provider instead of answering from the discovery cache. (optional)
+    refresh: true,
+  } satisfies ListDiscoverableModelsV1ModelsDiscoverableGetRequest;
+
   try {
-    const data = await api.listDiscoverableModelsV1ModelsDiscoverableGet();
+    const data = await api.listDiscoverableModelsV1ModelsDiscoverableGet(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -126,7 +131,10 @@ example().catch(console.error);
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **refresh** | `boolean` | Re-dial every provider instead of answering from the discovery cache. | [Optional] [Defaults to `false`] |
 
 ### Return type
 
@@ -146,6 +154,7 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -156,7 +165,7 @@ This endpoint does not need any parameter.
 
 List Model Metadata
 
-Per-model metadata for the dashboard\&#39;s detail view, from models.dev.  Covers every model models.dev lists under a configured provider, keyed by the &#x60;&#x60;instance:model&#x60;&#x60; selector the dashboard uses. &#x60;&#x60;available&#x60;&#x60; is false when enrichment is disabled (&#x60;&#x60;models_dev_metadata&#x60;&#x60;) or models.dev could not be reached; the response is then empty and the UI falls back to bundled data. Master-key gated: it describes the gateway\&#39;s configured providers.
+Per-model metadata for the dashboard\&#39;s detail view, from models.dev.  Covers every model models.dev lists under a configured provider, keyed by the &#x60;&#x60;instance:model&#x60;&#x60; selector the dashboard uses. &#x60;&#x60;available&#x60;&#x60; is false when enrichment is disabled (&#x60;&#x60;models_dev_metadata&#x60;&#x60;) or models.dev could not be reached; the response is then empty and the UI falls back to bundled data. Master-key gated: it describes the gateway\&#39;s configured providers.  Answers from the cached catalog, kept warm by a background refresher, so the dashboard never waits on the models.dev fetch timeout.
 
 ### Example
 

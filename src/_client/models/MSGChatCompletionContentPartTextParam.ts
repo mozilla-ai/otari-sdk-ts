@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues } from '../runtime.js';
 /**
  * Learn about [text inputs](https://platform.openai.com/docs/guides/text-generation).
  * @export

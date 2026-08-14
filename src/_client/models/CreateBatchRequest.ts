@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { BatchRequestItem } from './BatchRequestItem';
+import { mapValues } from '../runtime.js';
+import type { BatchRequestItem } from './BatchRequestItem.js';
 import {
     BatchRequestItemFromJSON,
     BatchRequestItemFromJSONTyped,
     BatchRequestItemToJSON,
     BatchRequestItemToJSONTyped,
-} from './BatchRequestItem';
+} from './BatchRequestItem.js';
 
 /**
  * 

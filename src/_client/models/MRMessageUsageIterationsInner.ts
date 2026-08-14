@@ -12,28 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRBetaCompactionIterationUsage } from './MRBetaCompactionIterationUsage';
+import { mapValues } from '../runtime.js';
+import type { MRBetaCompactionIterationUsage } from './MRBetaCompactionIterationUsage.js';
 import {
     MRBetaCompactionIterationUsageFromJSON,
     MRBetaCompactionIterationUsageFromJSONTyped,
     MRBetaCompactionIterationUsageToJSON,
     MRBetaCompactionIterationUsageToJSONTyped,
-} from './MRBetaCompactionIterationUsage';
-import type { MRBetaCacheCreation } from './MRBetaCacheCreation';
+} from './MRBetaCompactionIterationUsage.js';
+import type { MRBetaCacheCreation } from './MRBetaCacheCreation.js';
 import {
     MRBetaCacheCreationFromJSON,
     MRBetaCacheCreationFromJSONTyped,
     MRBetaCacheCreationToJSON,
     MRBetaCacheCreationToJSONTyped,
-} from './MRBetaCacheCreation';
-import type { MRBetaMessageIterationUsage } from './MRBetaMessageIterationUsage';
+} from './MRBetaCacheCreation.js';
+import type { MRBetaMessageIterationUsage } from './MRBetaMessageIterationUsage.js';
 import {
     MRBetaMessageIterationUsageFromJSON,
     MRBetaMessageIterationUsageFromJSONTyped,
     MRBetaMessageIterationUsageToJSON,
     MRBetaMessageIterationUsageToJSONTyped,
-} from './MRBetaMessageIterationUsage';
+} from './MRBetaMessageIterationUsage.js';
 
 /**
  * 

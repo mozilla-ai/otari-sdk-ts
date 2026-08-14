@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
-} from '../models/HTTPValidationError';
+} from '../models/HTTPValidationError.js';
 import {
     type SearchRequest,
     SearchRequestFromJSON,
     SearchRequestToJSON,
-} from '../models/SearchRequest';
+} from '../models/SearchRequest.js';
 import {
     type SearchResponse,
     SearchResponseFromJSON,
     SearchResponseToJSON,
-} from '../models/SearchResponse';
+} from '../models/SearchResponse.js';
 
 export interface CreateSearchForToolV1SearchSearchToolNamePostRequest {
     searchToolName: string;

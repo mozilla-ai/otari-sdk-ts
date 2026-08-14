@@ -12,56 +12,56 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MSGImageURL } from './MSGImageURL';
+import { mapValues } from '../runtime.js';
+import type { MSGImageURL } from './MSGImageURL.js';
 import {
     MSGImageURLFromJSON,
     MSGImageURLFromJSONTyped,
     MSGImageURLToJSON,
     MSGImageURLToJSONTyped,
-} from './MSGImageURL';
-import type { MSGFile } from './MSGFile';
+} from './MSGImageURL.js';
+import type { MSGFile } from './MSGFile.js';
 import {
     MSGFileFromJSON,
     MSGFileFromJSONTyped,
     MSGFileToJSON,
     MSGFileToJSONTyped,
-} from './MSGFile';
-import type { MSGChatCompletionContentPartTextParam } from './MSGChatCompletionContentPartTextParam';
+} from './MSGFile.js';
+import type { MSGChatCompletionContentPartTextParam } from './MSGChatCompletionContentPartTextParam.js';
 import {
     MSGChatCompletionContentPartTextParamFromJSON,
     MSGChatCompletionContentPartTextParamFromJSONTyped,
     MSGChatCompletionContentPartTextParamToJSON,
     MSGChatCompletionContentPartTextParamToJSONTyped,
-} from './MSGChatCompletionContentPartTextParam';
-import type { MSGFileFile } from './MSGFileFile';
+} from './MSGChatCompletionContentPartTextParam.js';
+import type { MSGFileFile } from './MSGFileFile.js';
 import {
     MSGFileFileFromJSON,
     MSGFileFileFromJSONTyped,
     MSGFileFileToJSON,
     MSGFileFileToJSONTyped,
-} from './MSGFileFile';
-import type { MSGChatCompletionContentPartInputAudioParam } from './MSGChatCompletionContentPartInputAudioParam';
+} from './MSGFileFile.js';
+import type { MSGChatCompletionContentPartInputAudioParam } from './MSGChatCompletionContentPartInputAudioParam.js';
 import {
     MSGChatCompletionContentPartInputAudioParamFromJSON,
     MSGChatCompletionContentPartInputAudioParamFromJSONTyped,
     MSGChatCompletionContentPartInputAudioParamToJSON,
     MSGChatCompletionContentPartInputAudioParamToJSONTyped,
-} from './MSGChatCompletionContentPartInputAudioParam';
-import type { MSGInputAudio } from './MSGInputAudio';
+} from './MSGChatCompletionContentPartInputAudioParam.js';
+import type { MSGInputAudio } from './MSGInputAudio.js';
 import {
     MSGInputAudioFromJSON,
     MSGInputAudioFromJSONTyped,
     MSGInputAudioToJSON,
     MSGInputAudioToJSONTyped,
-} from './MSGInputAudio';
-import type { MSGChatCompletionContentPartImageParam } from './MSGChatCompletionContentPartImageParam';
+} from './MSGInputAudio.js';
+import type { MSGChatCompletionContentPartImageParam } from './MSGChatCompletionContentPartImageParam.js';
 import {
     MSGChatCompletionContentPartImageParamFromJSON,
     MSGChatCompletionContentPartImageParamFromJSONTyped,
     MSGChatCompletionContentPartImageParamToJSON,
     MSGChatCompletionContentPartImageParamToJSONTyped,
-} from './MSGChatCompletionContentPartImageParam';
+} from './MSGChatCompletionContentPartImageParam.js';
 
 /**
  * 

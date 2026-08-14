@@ -12,32 +12,32 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type BudgetResetLogResponse,
     BudgetResetLogResponseFromJSON,
     BudgetResetLogResponseToJSON,
-} from '../models/BudgetResetLogResponse';
+} from '../models/BudgetResetLogResponse.js';
 import {
     type BudgetResponse,
     BudgetResponseFromJSON,
     BudgetResponseToJSON,
-} from '../models/BudgetResponse';
+} from '../models/BudgetResponse.js';
 import {
     type CreateBudgetRequest,
     CreateBudgetRequestFromJSON,
     CreateBudgetRequestToJSON,
-} from '../models/CreateBudgetRequest';
+} from '../models/CreateBudgetRequest.js';
 import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
-} from '../models/HTTPValidationError';
+} from '../models/HTTPValidationError.js';
 import {
     type UpdateBudgetRequest,
     UpdateBudgetRequestFromJSON,
     UpdateBudgetRequestToJSON,
-} from '../models/UpdateBudgetRequest';
+} from '../models/UpdateBudgetRequest.js';
 
 export interface CreateBudgetV1BudgetsPostRequest {
     createBudgetRequest: CreateBudgetRequest;

@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { Input } from './Input';
+import { mapValues } from '../runtime.js';
+import type { Input } from './Input.js';
 import {
     InputFromJSON,
     InputFromJSONTyped,
     InputToJSON,
     InputToJSONTyped,
-} from './Input';
+} from './Input.js';
 
 /**
  * OpenAI-compatible embedding request.

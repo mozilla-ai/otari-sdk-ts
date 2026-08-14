@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRDocumentBlock } from './MRDocumentBlock';
+import { mapValues } from '../runtime.js';
+import type { MRDocumentBlock } from './MRDocumentBlock.js';
 import {
     MRDocumentBlockFromJSON,
     MRDocumentBlockFromJSONTyped,
     MRDocumentBlockToJSON,
     MRDocumentBlockToJSONTyped,
-} from './MRDocumentBlock';
+} from './MRDocumentBlock.js';
 
 /**
  * 

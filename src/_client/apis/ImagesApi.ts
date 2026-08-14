@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
-} from '../models/HTTPValidationError';
+} from '../models/HTTPValidationError.js';
 import {
     type ImageGenerationRequest,
     ImageGenerationRequestFromJSON,
     ImageGenerationRequestToJSON,
-} from '../models/ImageGenerationRequest';
+} from '../models/ImageGenerationRequest.js';
 import {
     type ImagesResponse,
     ImagesResponseFromJSON,
     ImagesResponseToJSON,
-} from '../models/ImagesResponse';
+} from '../models/ImagesResponse.js';
 
 export interface CreateImageV1ImagesGenerationsPostRequest {
     imageGenerationRequest: ImageGenerationRequest;

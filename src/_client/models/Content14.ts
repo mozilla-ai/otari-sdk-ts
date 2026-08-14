@@ -12,28 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRDocumentBlock } from './MRDocumentBlock';
+import { mapValues } from '../runtime.js';
+import type { MRDocumentBlock } from './MRDocumentBlock.js';
 import {
     MRDocumentBlockFromJSON,
     MRDocumentBlockFromJSONTyped,
     MRDocumentBlockToJSON,
     MRDocumentBlockToJSONTyped,
-} from './MRDocumentBlock';
-import type { MRWebFetchToolResultErrorBlock } from './MRWebFetchToolResultErrorBlock';
+} from './MRDocumentBlock.js';
+import type { MRWebFetchToolResultErrorBlock } from './MRWebFetchToolResultErrorBlock.js';
 import {
     MRWebFetchToolResultErrorBlockFromJSON,
     MRWebFetchToolResultErrorBlockFromJSONTyped,
     MRWebFetchToolResultErrorBlockToJSON,
     MRWebFetchToolResultErrorBlockToJSONTyped,
-} from './MRWebFetchToolResultErrorBlock';
-import type { MRWebFetchBlock } from './MRWebFetchBlock';
+} from './MRWebFetchToolResultErrorBlock.js';
+import type { MRWebFetchBlock } from './MRWebFetchBlock.js';
 import {
     MRWebFetchBlockFromJSON,
     MRWebFetchBlockFromJSONTyped,
     MRWebFetchBlockToJSON,
     MRWebFetchBlockToJSONTyped,
-} from './MRWebFetchBlock';
+} from './MRWebFetchBlock.js';
 
 /**
  * 

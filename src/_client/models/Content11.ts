@@ -12,35 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRCodeExecutionResultBlock } from './MRCodeExecutionResultBlock';
+import { mapValues } from '../runtime.js';
+import type { MRCodeExecutionResultBlock } from './MRCodeExecutionResultBlock.js';
 import {
     MRCodeExecutionResultBlockFromJSON,
     MRCodeExecutionResultBlockFromJSONTyped,
     MRCodeExecutionResultBlockToJSON,
     MRCodeExecutionResultBlockToJSONTyped,
-} from './MRCodeExecutionResultBlock';
-import type { MRCodeExecutionOutputBlock } from './MRCodeExecutionOutputBlock';
+} from './MRCodeExecutionResultBlock.js';
+import type { MRCodeExecutionOutputBlock } from './MRCodeExecutionOutputBlock.js';
 import {
     MRCodeExecutionOutputBlockFromJSON,
     MRCodeExecutionOutputBlockFromJSONTyped,
     MRCodeExecutionOutputBlockToJSON,
     MRCodeExecutionOutputBlockToJSONTyped,
-} from './MRCodeExecutionOutputBlock';
-import type { MREncryptedCodeExecutionResultBlock } from './MREncryptedCodeExecutionResultBlock';
+} from './MRCodeExecutionOutputBlock.js';
+import type { MREncryptedCodeExecutionResultBlock } from './MREncryptedCodeExecutionResultBlock.js';
 import {
     MREncryptedCodeExecutionResultBlockFromJSON,
     MREncryptedCodeExecutionResultBlockFromJSONTyped,
     MREncryptedCodeExecutionResultBlockToJSON,
     MREncryptedCodeExecutionResultBlockToJSONTyped,
-} from './MREncryptedCodeExecutionResultBlock';
-import type { MRCodeExecutionToolResultError } from './MRCodeExecutionToolResultError';
+} from './MREncryptedCodeExecutionResultBlock.js';
+import type { MRCodeExecutionToolResultError } from './MRCodeExecutionToolResultError.js';
 import {
     MRCodeExecutionToolResultErrorFromJSON,
     MRCodeExecutionToolResultErrorFromJSONTyped,
     MRCodeExecutionToolResultErrorToJSON,
     MRCodeExecutionToolResultErrorToJSONTyped,
-} from './MRCodeExecutionToolResultError';
+} from './MRCodeExecutionToolResultError.js';
 
 /**
  * 

@@ -12,21 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { MRBetaPlainTextSource } from './MRBetaPlainTextSource';
+import { mapValues } from '../runtime.js';
+import type { MRBetaPlainTextSource } from './MRBetaPlainTextSource.js';
 import {
     MRBetaPlainTextSourceFromJSON,
     MRBetaPlainTextSourceFromJSONTyped,
     MRBetaPlainTextSourceToJSON,
     MRBetaPlainTextSourceToJSONTyped,
-} from './MRBetaPlainTextSource';
-import type { MRBetaBase64PDFSource } from './MRBetaBase64PDFSource';
+} from './MRBetaPlainTextSource.js';
+import type { MRBetaBase64PDFSource } from './MRBetaBase64PDFSource.js';
 import {
     MRBetaBase64PDFSourceFromJSON,
     MRBetaBase64PDFSourceFromJSONTyped,
     MRBetaBase64PDFSourceToJSON,
     MRBetaBase64PDFSourceToJSONTyped,
-} from './MRBetaBase64PDFSource';
+} from './MRBetaBase64PDFSource.js';
 
 /**
  * 

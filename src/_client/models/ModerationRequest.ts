@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { Input1 } from './Input1';
+import { mapValues } from '../runtime.js';
+import type { Input1 } from './Input1.js';
 import {
     Input1FromJSON,
     Input1FromJSONTyped,
     Input1ToJSON,
     Input1ToJSONTyped,
-} from './Input1';
+} from './Input1.js';
 
 /**
  * OpenAI-compatible moderation request.

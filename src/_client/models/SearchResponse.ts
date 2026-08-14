@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { SearchResultItem } from './SearchResultItem';
+import { mapValues } from '../runtime.js';
+import type { SearchResultItem } from './SearchResultItem.js';
 import {
     SearchResultItemFromJSON,
     SearchResultItemFromJSONTyped,
     SearchResultItemToJSON,
     SearchResultItemToJSONTyped,
-} from './SearchResultItem';
+} from './SearchResultItem.js';
 
 /**
  * A completed search.

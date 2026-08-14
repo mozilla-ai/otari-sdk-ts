@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues } from '../runtime.js';
 /**
  * Request to create or update a routing policy.
  * @export
@@ -25,6 +25,12 @@ export interface PolicyRequest {
      * @memberof PolicyRequest
      */
     name: string;
+    /**
+     * Current name of the policy to rename, in the same scope. The stored row keeps its id and created_at and takes `name` and `spec`. Sending it asserts that policy exists, so a name with no stored row is a 404 rather than a create, even when it equals `name`. Omit to create or update the policy named `name`. Renaming changes what callers must send as `model`; usage already recorded keeps the old name.
+     * @type {string}
+     * @memberof PolicyRequest
+     */
+    renameFrom?: string | null;
     /**
      * The policy body: select (with exactly one `default` entry, last), optional on_failure and guardrails. Same schema as a `routing.policies` entry in config.yml, and closed to unknown keys, so a typo is a 400 rather than a silently ignored setting.
      * @type {{ [key: string]: any; }}
@@ -59,6 +65,7 @@ export function PolicyRequestFromJSONTyped(json: any, ignoreDiscriminator: boole
     return {
         
         'name': json['name'],
+        'renameFrom': json['rename_from'] == null ? undefined : json['rename_from'],
         'spec': json['spec'],
         'userId': json['user_id'] == null ? undefined : json['user_id'],
     };
@@ -76,6 +83,7 @@ export function PolicyRequestToJSONTyped(value?: PolicyRequest | null, ignoreDis
     return {
         
         'name': value['name'],
+        'rename_from': value['renameFrom'],
         'spec': value['spec'],
         'user_id': value['userId'],
     };

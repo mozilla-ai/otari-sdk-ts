@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type CreateEmbeddingResponse,
     CreateEmbeddingResponseFromJSON,
     CreateEmbeddingResponseToJSON,
-} from '../models/CreateEmbeddingResponse';
+} from '../models/CreateEmbeddingResponse.js';
 import {
     type EmbeddingRequest,
     EmbeddingRequestFromJSON,
     EmbeddingRequestToJSON,
-} from '../models/EmbeddingRequest';
+} from '../models/EmbeddingRequest.js';
 import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
-} from '../models/HTTPValidationError';
+} from '../models/HTTPValidationError.js';
 
 export interface CreateEmbeddingV1EmbeddingsPostRequest {
     embeddingRequest: EmbeddingRequest;

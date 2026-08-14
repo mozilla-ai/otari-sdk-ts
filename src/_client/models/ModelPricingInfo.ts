@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { PricingTiersInnerValue } from './PricingTiersInnerValue';
+import { mapValues } from '../runtime.js';
+import type { PricingTiersInnerValue } from './PricingTiersInnerValue.js';
 import {
     PricingTiersInnerValueFromJSON,
     PricingTiersInnerValueFromJSONTyped,
     PricingTiersInnerValueToJSON,
     PricingTiersInnerValueToJSONTyped,
-} from './PricingTiersInnerValue';
+} from './PricingTiersInnerValue.js';
 
 /**
  * Pricing information for a model.

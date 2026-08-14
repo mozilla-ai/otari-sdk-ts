@@ -8,6 +8,7 @@ Request to create or update a routing policy.
 Name | Type
 ------------ | -------------
 `name` | string
+`renameFrom` | string
 `spec` | { [key: string]: any; }
 `userId` | string
 
@@ -19,6 +20,7 @@ import type { PolicyRequest } from ''
 // TODO: Update the object below with actual values
 const example = {
   "name": null,
+  "renameFrom": null,
   "spec": null,
   "userId": null,
 } satisfies PolicyRequest

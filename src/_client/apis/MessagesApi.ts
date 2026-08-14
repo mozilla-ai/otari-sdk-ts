@@ -12,32 +12,32 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type CountTokensRequest,
     CountTokensRequestFromJSON,
     CountTokensRequestToJSON,
-} from '../models/CountTokensRequest';
+} from '../models/CountTokensRequest.js';
 import {
     type CountTokensResponse,
     CountTokensResponseFromJSON,
     CountTokensResponseToJSON,
-} from '../models/CountTokensResponse';
+} from '../models/CountTokensResponse.js';
 import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
-} from '../models/HTTPValidationError';
+} from '../models/HTTPValidationError.js';
 import {
     type MessageResponse,
     MessageResponseFromJSON,
     MessageResponseToJSON,
-} from '../models/MessageResponse';
+} from '../models/MessageResponse.js';
 import {
     type MessagesRequest,
     MessagesRequestFromJSON,
     MessagesRequestToJSON,
-} from '../models/MessagesRequest';
+} from '../models/MessagesRequest.js';
 
 export interface CountMessageTokensV1MessagesCountTokensPostRequest {
     countTokensRequest: CountTokensRequest;

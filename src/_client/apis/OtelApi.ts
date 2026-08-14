@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 
 /**
  * 
@@ -67,6 +67,57 @@ export class OtelApi extends runtime.BaseAPI {
      */
     async receiveLogsV1LogsPost(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.receiveLogsV1LogsPostRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for receiveMetricsV1MetricsPost without sending the request
+     */
+    async receiveMetricsV1MetricsPostRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/metrics`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Ingest content-free coding-agent outcome metrics from OTLP metric points.  Records the outcome counters a coding agent reports on the metrics signal and that Otari has no other source for: lines of code changed, commits, pull requests, and active time. Points are stored exactly as reported, with their OTLP series identity, so a cumulative counter is turned into an increment at read time rather than re-counted on every export. Metrics that duplicate an already-recorded signal (token/cost usage, already billed; edit decisions, already captured as behavioral events) are skipped, as is any metric name this gateway does not know, so a newer agent version never breaks reception.  Outcome metrics are never billable: they touch no budget and no spend. Capture answers to the same ``capture_agent_telemetry`` toggle as behavioral events; with it off, the export still succeeds and simply stores nothing.
+     * Receive Metrics
+     */
+    async receiveMetricsV1MetricsPostRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.receiveMetricsV1MetricsPostRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Ingest content-free coding-agent outcome metrics from OTLP metric points.  Records the outcome counters a coding agent reports on the metrics signal and that Otari has no other source for: lines of code changed, commits, pull requests, and active time. Points are stored exactly as reported, with their OTLP series identity, so a cumulative counter is turned into an increment at read time rather than re-counted on every export. Metrics that duplicate an already-recorded signal (token/cost usage, already billed; edit decisions, already captured as behavioral events) are skipped, as is any metric name this gateway does not know, so a newer agent version never breaks reception.  Outcome metrics are never billable: they touch no budget and no spend. Capture answers to the same ``capture_agent_telemetry`` toggle as behavioral events; with it off, the export still succeeds and simply stores nothing.
+     * Receive Metrics
+     */
+    async receiveMetricsV1MetricsPost(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.receiveMetricsV1MetricsPostRaw(initOverrides);
         return await response.value();
     }
 

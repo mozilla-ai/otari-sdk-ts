@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { ProviderCapabilitiesSchema } from './ProviderCapabilitiesSchema';
+import { mapValues } from '../runtime.js';
+import type { ProviderCapabilitiesSchema } from './ProviderCapabilitiesSchema.js';
 import {
     ProviderCapabilitiesSchemaFromJSON,
     ProviderCapabilitiesSchemaFromJSONTyped,
     ProviderCapabilitiesSchemaToJSON,
     ProviderCapabilitiesSchemaToJSONTyped,
-} from './ProviderCapabilitiesSchema';
+} from './ProviderCapabilitiesSchema.js';
 
 /**
  * Static, network-free metadata for one configured provider instance.

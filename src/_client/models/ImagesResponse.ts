@@ -12,21 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { IMGImage } from './IMGImage';
+import { mapValues } from '../runtime.js';
+import type { IMGImage } from './IMGImage.js';
 import {
     IMGImageFromJSON,
     IMGImageFromJSONTyped,
     IMGImageToJSON,
     IMGImageToJSONTyped,
-} from './IMGImage';
-import type { IMGUsage } from './IMGUsage';
+} from './IMGImage.js';
+import type { IMGUsage } from './IMGUsage.js';
 import {
     IMGUsageFromJSON,
     IMGUsageFromJSONTyped,
     IMGUsageToJSON,
     IMGUsageToJSONTyped,
-} from './IMGUsage';
+} from './IMGUsage.js';
 
 /**
  * The response from the image generation endpoint.
