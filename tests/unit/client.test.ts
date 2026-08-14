@@ -262,6 +262,29 @@ describe("OtariClient.completion", () => {
     expect(mock.last.headers["otari-key"]).toBe("Bearer vk");
   });
 
+  it("sends snake_case params unchanged and keeps typed response parsing", async () => {
+    const mock = jsonFetch(200, CHAT_RESPONSE);
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "vk",
+      fetch: mock.fetch,
+    });
+    const params = {
+      model: "openai:gpt-4o-mini",
+      messages: [{ role: "user", content: "Hi" }],
+      max_tokens: 100,
+      top_p: 0.9,
+    };
+
+    const result = await client.completion(params);
+
+    expect(mock.last.body).toEqual(params);
+    expect(Object.keys(mock.last.body as Record<string, unknown>)).not.toContain("maxTokens");
+    // The response is still normalized through the generated model: the wire's
+    // snake_case `finish_reason` surfaces as the typed `finishReason`.
+    expect(result.choices[0].finishReason).toBe("stop");
+  });
+
   it("sends Bearer Authorization in platform mode", async () => {
     const mock = jsonFetch(200, CHAT_RESPONSE);
     const client = new OtariClient({
@@ -271,6 +294,30 @@ describe("OtariClient.completion", () => {
     });
     await client.completion({ model: "m", messages: [{ role: "user", content: "Hi" }] });
     expect(mock.last.headers.authorization).toBe("Bearer tk");
+  });
+});
+
+describe("OtariClient.response", () => {
+  it("sends snake_case params without camelCase aliases", async () => {
+    const mock = jsonFetch(200, { output_text: "", output: [] });
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "vk",
+      fetch: mock.fetch,
+    });
+    const params = {
+      model: "openai:gpt-4o-mini",
+      input: [],
+      prompt_cache_key: "cache-key",
+      max_output_tokens: 100,
+      previous_response_id: "response-id",
+      top_p: 1,
+    };
+
+    await client.response(params);
+
+    expect(mock.last.body).toEqual(params);
+    expect(Object.keys(mock.last.body as Record<string, unknown>)).not.toContain("promptCacheKey");
   });
 });
 

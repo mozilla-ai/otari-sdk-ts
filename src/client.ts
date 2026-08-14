@@ -26,9 +26,8 @@
 
 import {
   BatchesApi,
-  ChatApi,
   type ChatCompletion,
-  ChatCompletionRequestFromJSON,
+  ChatCompletionFromJSON,
   Configuration,
   CountTokensRequestFromJSON,
   type CountTokensResponse,
@@ -50,8 +49,6 @@ import {
   RerankApi,
   RerankRequestFromJSON,
   type RerankResponse,
-  ResponsesApi,
-  ResponsesRequestFromJSON,
 } from "./_client/index.js";
 import { ControlPlane } from "./controlPlane.js";
 import { OtariError } from "./errors.js";
@@ -117,8 +114,6 @@ export class OtariClient {
   /** Shared fetch implementation (the test seam) used by core, shim, and control-plane. */
   private readonly fetchApi: typeof fetch;
 
-  private readonly chatApi: ChatApi;
-  private readonly responsesApi: ResponsesApi;
   private readonly embeddingsApi: EmbeddingsApi;
   private readonly moderationsApi: ModerationsApi;
   private readonly rerankApi: RerankApi;
@@ -198,8 +193,6 @@ export class OtariClient {
       fetchApi: this.fetchApi,
     });
 
-    this.chatApi = new ChatApi(config);
-    this.responsesApi = new ResponsesApi(config);
     this.embeddingsApi = new EmbeddingsApi(config);
     this.moderationsApi = new ModerationsApi(config);
     this.rerankApi = new RerankApi(config);
@@ -255,11 +248,11 @@ export class OtariClient {
         "chat",
       );
     }
-    return this.call(() =>
-      this.chatApi.chatCompletionsV1ChatCompletionsPost({
-        chatCompletionRequest: ChatCompletionRequestFromJSON(params),
-      }),
-    );
+    // Params go on the wire unchanged (OpenAI snake_case names). The response is
+    // still parsed through the generated model so the typed `ChatCompletion`
+    // contract (camelCase fields) is preserved.
+    const data = await this.post("/chat/completions", { json: params });
+    return ChatCompletionFromJSON(await data.json());
   }
 
   // -- Responses API --------------------------------------------------------
@@ -277,11 +270,7 @@ export class OtariClient {
     if (params.stream) {
       return this.stream<unknown>("/responses", { ...params, stream: true }, "responses");
     }
-    return this.call(() =>
-      this.responsesApi.createResponseV1ResponsesPost({
-        responsesRequest: ResponsesRequestFromJSON(params),
-      }),
-    );
+    return (await this.post("/responses", { json: params })).json();
   }
 
   // -- Messages API (Anthropic-shaped /messages) ----------------------------
