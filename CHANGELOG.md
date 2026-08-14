@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.1](https://github.com/mozilla-ai/otari-sdk-ts/compare/otari-v0.4.0...otari-v0.4.1) (2026-08-14)
+
+
+### Bug Fixes
+
+* **ci:** make the endpoint-coverage check offline and deterministic ([#36](https://github.com/mozilla-ai/otari-sdk-ts/issues/36)) ([5eef0b9](https://github.com/mozilla-ai/otari-sdk-ts/commit/5eef0b9cb5e3248f853e976957b5ffa8a850adb0))
+* **control-plane:** map generated ResponseError to typed OtariError ([#30](https://github.com/mozilla-ai/otari-sdk-ts/issues/30)) ([35c72a8](https://github.com/mozilla-ai/otari-sdk-ts/commit/35c72a8fe18e925386a8df4f34d151a1f1de43b3))
+
 ## [0.4.0](https://github.com/mozilla-ai/otari-sdk-ts/compare/otari-v0.3.1...otari-v0.4.0) (2026-06-16)
 
 
