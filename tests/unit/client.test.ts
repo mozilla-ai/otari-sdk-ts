@@ -274,6 +274,32 @@ describe("OtariClient.completion", () => {
   });
 });
 
+describe("OtariClient.response", () => {
+  it("sends snake_case params without camelCase aliases", async () => {
+    const mock = jsonFetch(200, { output_text: "", output: [] });
+    const client = new OtariClient({
+      apiBase: "http://localhost:8000",
+      apiKey: "vk",
+      fetch: mock.fetch,
+    });
+    const params = {
+      model: "openai:gpt-4o-mini",
+      input: [],
+      prompt_cache_key: "cache-key",
+      max_output_tokens: 100,
+      previous_response_id: "response-id",
+      top_p: 1,
+    };
+
+    await client.response(params);
+
+    expect(mock.last.body).toEqual(params);
+    expect(Object.keys(mock.last.body as Record<string, unknown>)).not.toContain(
+      "promptCacheKey",
+    );
+  });
+});
+
 describe("OtariClient.embedding", () => {
   it("returns a typed embedding", async () => {
     const mock = jsonFetch(200, EMBEDDING_RESPONSE);

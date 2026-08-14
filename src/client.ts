@@ -50,8 +50,6 @@ import {
   RerankApi,
   RerankRequestFromJSON,
   type RerankResponse,
-  ResponsesApi,
-  ResponsesRequestFromJSON,
 } from "./_client/index.js";
 import { ControlPlane } from "./controlPlane.js";
 import { OtariError } from "./errors.js";
@@ -118,7 +116,6 @@ export class OtariClient {
   private readonly fetchApi: typeof fetch;
 
   private readonly chatApi: ChatApi;
-  private readonly responsesApi: ResponsesApi;
   private readonly embeddingsApi: EmbeddingsApi;
   private readonly moderationsApi: ModerationsApi;
   private readonly rerankApi: RerankApi;
@@ -199,7 +196,6 @@ export class OtariClient {
     });
 
     this.chatApi = new ChatApi(config);
-    this.responsesApi = new ResponsesApi(config);
     this.embeddingsApi = new EmbeddingsApi(config);
     this.moderationsApi = new ModerationsApi(config);
     this.rerankApi = new RerankApi(config);
@@ -277,11 +273,7 @@ export class OtariClient {
     if (params.stream) {
       return this.stream<unknown>("/responses", { ...params, stream: true }, "responses");
     }
-    return this.call(() =>
-      this.responsesApi.createResponseV1ResponsesPost({
-        responsesRequest: ResponsesRequestFromJSON(params),
-      }),
-    );
+    return (await this.post("/responses", { json: params })).json();
   }
 
   // -- Messages API (Anthropic-shaped /messages) ----------------------------
