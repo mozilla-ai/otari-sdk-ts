@@ -91,7 +91,7 @@ export interface CCChatCompletionMessage {
      */
     reasoning?: string | null;
     /**
-     * An unsaved policy body to explain.
+     * Provider-native request fields used as defaults (e.g. exa's 'type', searxng's 'engines').
      * @type {{ [key: string]: any; }}
      * @memberof CCChatCompletionMessage
      */

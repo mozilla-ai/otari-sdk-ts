@@ -11,6 +11,7 @@ Name | Type
 `input` | { [key: string]: any; }
 `name` | string
 `type` | string
+`toolsetName` | string
 
 ## Example
 
@@ -24,6 +25,7 @@ const example = {
   "input": null,
   "name": null,
   "type": null,
+  "toolsetName": null,
 } satisfies MRToolUseBlock
 
 console.log(example)

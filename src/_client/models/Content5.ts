@@ -13,34 +13,27 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { MRBetaCodeExecutionToolResultError } from './MRBetaCodeExecutionToolResultError.js';
+import type { MRBetaBashCodeExecutionToolResultError } from './MRBetaBashCodeExecutionToolResultError.js';
 import {
-    MRBetaCodeExecutionToolResultErrorFromJSON,
-    MRBetaCodeExecutionToolResultErrorFromJSONTyped,
-    MRBetaCodeExecutionToolResultErrorToJSON,
-    MRBetaCodeExecutionToolResultErrorToJSONTyped,
-} from './MRBetaCodeExecutionToolResultError.js';
-import type { MRBetaCodeExecutionOutputBlock } from './MRBetaCodeExecutionOutputBlock.js';
+    MRBetaBashCodeExecutionToolResultErrorFromJSON,
+    MRBetaBashCodeExecutionToolResultErrorFromJSONTyped,
+    MRBetaBashCodeExecutionToolResultErrorToJSON,
+    MRBetaBashCodeExecutionToolResultErrorToJSONTyped,
+} from './MRBetaBashCodeExecutionToolResultError.js';
+import type { MRBetaBashCodeExecutionResultBlock } from './MRBetaBashCodeExecutionResultBlock.js';
 import {
-    MRBetaCodeExecutionOutputBlockFromJSON,
-    MRBetaCodeExecutionOutputBlockFromJSONTyped,
-    MRBetaCodeExecutionOutputBlockToJSON,
-    MRBetaCodeExecutionOutputBlockToJSONTyped,
-} from './MRBetaCodeExecutionOutputBlock.js';
-import type { MRBetaEncryptedCodeExecutionResultBlock } from './MRBetaEncryptedCodeExecutionResultBlock.js';
+    MRBetaBashCodeExecutionResultBlockFromJSON,
+    MRBetaBashCodeExecutionResultBlockFromJSONTyped,
+    MRBetaBashCodeExecutionResultBlockToJSON,
+    MRBetaBashCodeExecutionResultBlockToJSONTyped,
+} from './MRBetaBashCodeExecutionResultBlock.js';
+import type { MRBetaBashCodeExecutionOutputBlock } from './MRBetaBashCodeExecutionOutputBlock.js';
 import {
-    MRBetaEncryptedCodeExecutionResultBlockFromJSON,
-    MRBetaEncryptedCodeExecutionResultBlockFromJSONTyped,
-    MRBetaEncryptedCodeExecutionResultBlockToJSON,
-    MRBetaEncryptedCodeExecutionResultBlockToJSONTyped,
-} from './MRBetaEncryptedCodeExecutionResultBlock.js';
-import type { MRBetaCodeExecutionResultBlock } from './MRBetaCodeExecutionResultBlock.js';
-import {
-    MRBetaCodeExecutionResultBlockFromJSON,
-    MRBetaCodeExecutionResultBlockFromJSONTyped,
-    MRBetaCodeExecutionResultBlockToJSON,
-    MRBetaCodeExecutionResultBlockToJSONTyped,
-} from './MRBetaCodeExecutionResultBlock.js';
+    MRBetaBashCodeExecutionOutputBlockFromJSON,
+    MRBetaBashCodeExecutionOutputBlockFromJSONTyped,
+    MRBetaBashCodeExecutionOutputBlockToJSON,
+    MRBetaBashCodeExecutionOutputBlockToJSONTyped,
+} from './MRBetaBashCodeExecutionOutputBlock.js';
 
 /**
  * 
@@ -62,10 +55,10 @@ export interface Content5 {
     type: Content5TypeEnum;
     /**
      * 
-     * @type {Array<MRBetaCodeExecutionOutputBlock>}
+     * @type {Array<MRBetaBashCodeExecutionOutputBlock>}
      * @memberof Content5
      */
-    content: Array<MRBetaCodeExecutionOutputBlock>;
+    content: Array<MRBetaBashCodeExecutionOutputBlock>;
     /**
      * 
      * @type {number}
@@ -84,12 +77,6 @@ export interface Content5 {
      * @memberof Content5
      */
     stdout: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Content5
-     */
-    encryptedStdout: string;
 }
 
 
@@ -100,7 +87,8 @@ export const Content5ErrorCodeEnum = {
     InvalidToolInput: 'invalid_tool_input',
     Unavailable: 'unavailable',
     TooManyRequests: 'too_many_requests',
-    ExecutionTimeExceeded: 'execution_time_exceeded'
+    ExecutionTimeExceeded: 'execution_time_exceeded',
+    OutputFileTooLarge: 'output_file_too_large'
 } as const;
 export type Content5ErrorCodeEnum = typeof Content5ErrorCodeEnum[keyof typeof Content5ErrorCodeEnum];
 
@@ -108,9 +96,8 @@ export type Content5ErrorCodeEnum = typeof Content5ErrorCodeEnum[keyof typeof Co
  * @export
  */
 export const Content5TypeEnum = {
-    CodeExecutionToolResultError: 'code_execution_tool_result_error',
-    CodeExecutionResult: 'code_execution_result',
-    EncryptedCodeExecutionResult: 'encrypted_code_execution_result'
+    BashCodeExecutionToolResultError: 'bash_code_execution_tool_result_error',
+    BashCodeExecutionResult: 'bash_code_execution_result'
 } as const;
 export type Content5TypeEnum = typeof Content5TypeEnum[keyof typeof Content5TypeEnum];
 
@@ -125,7 +112,6 @@ export function instanceOfContent5(value: object): value is Content5 {
     if (!('returnCode' in value) || value['returnCode'] === undefined) return false;
     if (!('stderr' in value) || value['stderr'] === undefined) return false;
     if (!('stdout' in value) || value['stdout'] === undefined) return false;
-    if (!('encryptedStdout' in value) || value['encryptedStdout'] === undefined) return false;
     return true;
 }
 
@@ -141,11 +127,10 @@ export function Content5FromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         
         'errorCode': json['error_code'],
         'type': json['type'],
-        'content': ((json['content'] as Array<any>).map(MRBetaCodeExecutionOutputBlockFromJSON)),
+        'content': ((json['content'] as Array<any>).map(MRBetaBashCodeExecutionOutputBlockFromJSON)),
         'returnCode': json['return_code'],
         'stderr': json['stderr'],
         'stdout': json['stdout'],
-        'encryptedStdout': json['encrypted_stdout'],
     };
 }
 
@@ -162,11 +147,10 @@ export function Content5ToJSONTyped(value?: Content5 | null, ignoreDiscriminator
         
         'error_code': value['errorCode'],
         'type': value['type'],
-        'content': ((value['content'] as Array<any>).map(MRBetaCodeExecutionOutputBlockToJSON)),
+        'content': ((value['content'] as Array<any>).map(MRBetaBashCodeExecutionOutputBlockToJSON)),
         'return_code': value['returnCode'],
         'stderr': value['stderr'],
         'stdout': value['stdout'],
-        'encrypted_stdout': value['encryptedStdout'],
     };
 }
 

@@ -61,6 +61,12 @@ export interface PolicyResponse {
      * @memberof PolicyResponse
      */
     userId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PolicyResponse
+     */
+    workspaceId?: string | null;
 }
 
 /**
@@ -90,6 +96,7 @@ export function PolicyResponseFromJSONTyped(json: any, ignoreDiscriminator: bool
         'spec': json['spec'],
         'updatedAt': json['updated_at'] == null ? undefined : json['updated_at'],
         'userId': json['user_id'] == null ? undefined : json['user_id'],
+        'workspaceId': json['workspace_id'] == null ? undefined : json['workspace_id'],
     };
 }
 
@@ -111,6 +118,7 @@ export function PolicyResponseToJSONTyped(value?: PolicyResponse | null, ignoreD
         'spec': value['spec'],
         'updated_at': value['updatedAt'],
         'user_id': value['userId'],
+        'workspace_id': value['workspaceId'],
     };
 }
 

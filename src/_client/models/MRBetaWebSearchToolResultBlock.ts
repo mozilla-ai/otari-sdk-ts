@@ -20,13 +20,13 @@ import {
     CallerToJSON,
     CallerToJSONTyped,
 } from './Caller.js';
-import type { Content10 } from './Content10.js';
+import type { Content11 } from './Content11.js';
 import {
-    Content10FromJSON,
-    Content10FromJSONTyped,
-    Content10ToJSON,
-    Content10ToJSONTyped,
-} from './Content10.js';
+    Content11FromJSON,
+    Content11FromJSONTyped,
+    Content11ToJSON,
+    Content11ToJSONTyped,
+} from './Content11.js';
 
 /**
  * 
@@ -37,10 +37,10 @@ export interface MRBetaWebSearchToolResultBlock {
     [key: string]: any | any;
     /**
      * 
-     * @type {Content10}
+     * @type {Content11}
      * @memberof MRBetaWebSearchToolResultBlock
      */
-    content: Content10;
+    content: Content11;
     /**
      * 
      * @type {string}
@@ -92,7 +92,7 @@ export function MRBetaWebSearchToolResultBlockFromJSONTyped(json: any, ignoreDis
     return {
         
             ...json,
-        'content': Content10FromJSON(json['content']),
+        'content': Content11FromJSON(json['content']),
         'toolUseId': json['tool_use_id'],
         'type': json['type'],
         'caller': json['caller'] == null ? undefined : CallerFromJSON(json['caller']),
@@ -111,7 +111,7 @@ export function MRBetaWebSearchToolResultBlockToJSONTyped(value?: MRBetaWebSearc
     return {
         
             ...value,
-        'content': Content10ToJSON(value['content']),
+        'content': Content11ToJSON(value['content']),
         'tool_use_id': value['toolUseId'],
         'type': value['type'],
         'caller': CallerToJSON(value['caller']),

@@ -31,6 +31,12 @@ export interface MRBetaCompactionBlock {
      */
     content?: string | null;
     /**
+     * Filter to a single event type or metric name (e.g. 'tool_result', 'claude_code.commit.count')
+     * @type {string}
+     * @memberof MRBetaCompactionBlock
+     */
+    encryptedContent?: string | null;
+    /**
      * 
      * @type {MRBetaCompactionBlockTypeEnum}
      * @memberof MRBetaCompactionBlock
@@ -68,6 +74,7 @@ export function MRBetaCompactionBlockFromJSONTyped(json: any, ignoreDiscriminato
         
             ...json,
         'content': json['content'] == null ? undefined : json['content'],
+        'encryptedContent': json['encrypted_content'] == null ? undefined : json['encrypted_content'],
         'type': json['type'],
     };
 }
@@ -85,6 +92,7 @@ export function MRBetaCompactionBlockToJSONTyped(value?: MRBetaCompactionBlock |
         
             ...value,
         'content': value['content'],
+        'encrypted_content': value['encryptedContent'],
         'type': value['type'],
     };
 }

@@ -93,7 +93,7 @@ example().catch(console.error);
 
 Delete Budget
 
-Delete a budget.
+Delete a budget.  Refused with 409 while anything still names this budget: a workspace handing it to its members, or a scoped ceiling enforcing it. Both foreign keys are &#x60;&#x60;RESTRICT&#x60;&#x60;, so the database would refuse either anyway, but as an &#x60;&#x60;IntegrityError&#x60;&#x60; reported as \&quot;Database error\&quot; with nothing naming what to go and change. Checked here so the refusal can say which, and where.
 
 ### Example
 

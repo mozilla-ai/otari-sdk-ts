@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { PricingTiersInnerValue } from './PricingTiersInnerValue.js';
+import type { PricingTiersInner } from './PricingTiersInner.js';
 import {
-    PricingTiersInnerValueFromJSON,
-    PricingTiersInnerValueFromJSONTyped,
-    PricingTiersInnerValueToJSON,
-    PricingTiersInnerValueToJSONTyped,
-} from './PricingTiersInnerValue.js';
+    PricingTiersInnerFromJSON,
+    PricingTiersInnerFromJSONTyped,
+    PricingTiersInnerToJSON,
+    PricingTiersInnerToJSONTyped,
+} from './PricingTiersInner.js';
 
 /**
  * Pricing information for a model.
@@ -59,10 +59,10 @@ export interface ModelPricingInfo {
     outputPricePerMillion: number;
     /**
      * 
-     * @type {Array<{ [key: string]: PricingTiersInnerValue; }>}
+     * @type {Array<PricingTiersInner>}
      * @memberof ModelPricingInfo
      */
-    pricingTiers?: Array<{ [key: string]: PricingTiersInnerValue; }>;
+    pricingTiers?: Array<PricingTiersInner>;
 }
 
 /**
@@ -89,7 +89,7 @@ export function ModelPricingInfoFromJSONTyped(json: any, ignoreDiscriminator: bo
         'cacheWritePricePerMillion': json['cache_write_price_per_million'] == null ? undefined : json['cache_write_price_per_million'],
         'inputPricePerMillion': json['input_price_per_million'],
         'outputPricePerMillion': json['output_price_per_million'],
-        'pricingTiers': json['pricing_tiers'] == null ? undefined : json['pricing_tiers'],
+        'pricingTiers': json['pricing_tiers'] == null ? undefined : ((json['pricing_tiers'] as Array<any>).map(PricingTiersInnerFromJSON)),
     };
 }
 
@@ -109,7 +109,7 @@ export function ModelPricingInfoToJSONTyped(value?: ModelPricingInfo | null, ign
         'cache_write_price_per_million': value['cacheWritePricePerMillion'],
         'input_price_per_million': value['inputPricePerMillion'],
         'output_price_per_million': value['outputPricePerMillion'],
-        'pricing_tiers': value['pricingTiers'],
+        'pricing_tiers': value['pricingTiers'] == null ? undefined : ((value['pricingTiers'] as Array<any>).map(PricingTiersInnerToJSON)),
     };
 }
 

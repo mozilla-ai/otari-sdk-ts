@@ -11,18 +11,17 @@ All URIs are relative to *http://localhost*
 | [**listUsageV1UsageGet**](UsageApi.md#listusagev1usageget) | **GET** /v1/usage | List Usage |
 | [**setUsagePriceRowsV1UsageSetPricePost**](UsageApi.md#setusagepricerowsv1usagesetpricepost) | **POST** /v1/usage/set-price | Set Usage Price Rows |
 | [**usageSeriesV1UsageSeriesGet**](UsageApi.md#usageseriesv1usageseriesget) | **GET** /v1/usage/series | Usage Series |
-| [**usageSummaryCsvV1UsageSummaryCsvGet**](UsageApi.md#usagesummarycsvv1usagesummarycsvget) | **GET** /v1/usage/summary.csv | Usage Summary Csv |
 | [**usageSummaryV1UsageSummaryGet**](UsageApi.md#usagesummaryv1usagesummaryget) | **GET** /v1/usage/summary | Usage Summary |
 
 
 
 ## countUsageV1UsageCountGet
 
-> UsageCount countUsageV1UsageCountGet(startDate, endDate, userId, status, statusCode, model, endpoint, provider, source, sourceLabel, apiKeyId, priced, tool, countsTowardBudget, requestGroupId)
+> UsageCount countUsageV1UsageCountGet(startDate, endDate, userId, status, statusCode, model, endpoint, provider, source, sourceLabel, apiKeyId, priced, tool, countsTowardBudget, requestGroupId, workspaceId)
 
 Count Usage
 
-Total number of usage logs matching the given filters.  Serves the dashboard paginator\&#39;s \&quot;N of M\&quot; total without changing the bare array contract of &#x60;&#x60;GET /v1/usage&#x60;&#x60;. Runs only when the client asks (a separate request), so the &#x60;&#x60;COUNT(*)&#x60;&#x60; is not paid on every page load. With &#x60;&#x60;counts_toward_budget&#x3D;false&#x60;&#x60; it also backs the \&quot;select all N matching this filter\&quot; affordance for bulk delete / set-price, which touch imported rows only.
+Total number of usage logs matching the given filters.  Serves the dashboard paginator\&#39;s \&quot;N of M\&quot; total without changing the bare array contract of &#x60;&#x60;GET /v1/usage&#x60;&#x60;. Runs only when the client asks (a separate request), so the &#x60;&#x60;COUNT(*)&#x60;&#x60; is not paid on every page load. With &#x60;&#x60;counts_toward_budget&#x3D;false&#x60;&#x60; it also backs the \&quot;select all N matching this filter\&quot; affordance for bulk delete / set-price, which touch imported rows only.  That value is the one place this count is narrower than &#x60;&#x60;GET /v1/usage&#x60;&#x60;: it also excludes rows this deployment served itself, so the number an operator confirms is the number the mutation can reach. The list still pages the budget-exempt gateway rows it omits.
 
 ### Example
 
@@ -70,10 +69,12 @@ async function example() {
     priced: true,
     // 'any' | 'web_search' | 'code_execution' | Filter to requests that ran a gateway-run tool. \'any\' matches any tool; a tool name (web_search, code_execution) matches that tool specifically. (optional)
     tool: tool_example,
-    // boolean | Filter by budget participation: true = only enforced gateway rows, false = only imported rows that never touch a budget (optional)
+    // boolean | Filter by budget participation: true = only enforced gateway rows, false = only imported rows, narrowed past the filter of the same name on GET /v1/usage so the total matches what bulk delete and set-price can reach (optional)
     countsTowardBudget: true,
     // Array<string> | Filter to the rows of one or more request groups; repeatable (request_group_id=a&request_group_id=b). A routed request writes one row per attempt, all sharing a request_group_id, so this returns a request\'s whole plan: its absorbed attempts and the attempt that served it. Ignore ordering by timestamp and read attempt_position to reconstruct the plan. At most 1000 ids per call. (optional)
     requestGroupId: ...,
+    // string | Only usage recorded in this workspace. (optional)
+    workspaceId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
   } satisfies CountUsageV1UsageCountGetRequest;
 
   try {
@@ -106,8 +107,9 @@ example().catch(console.error);
 | **apiKeyId** | `Array<string>` | Filter to one or more API key ids; repeatable (api_key_id&#x3D;a&amp;api_key_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **priced** | `boolean` | Filter by token-pricing state: true &#x3D; only rows whose model tokens were priced, false &#x3D; only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. | [Optional] [Defaults to `undefined`] |
 | **tool** | `any`, `web_search`, `code_execution` | Filter to requests that ran a gateway-run tool. \&#39;any\&#39; matches any tool; a tool name (web_search, code_execution) matches that tool specifically. | [Optional] [Defaults to `undefined`] [Enum: any, web_search, code_execution] |
-| **countsTowardBudget** | `boolean` | Filter by budget participation: true &#x3D; only enforced gateway rows, false &#x3D; only imported rows that never touch a budget | [Optional] [Defaults to `undefined`] |
+| **countsTowardBudget** | `boolean` | Filter by budget participation: true &#x3D; only enforced gateway rows, false &#x3D; only imported rows, narrowed past the filter of the same name on GET /v1/usage so the total matches what bulk delete and set-price can reach | [Optional] [Defaults to `undefined`] |
 | **requestGroupId** | `Array<string>` | Filter to the rows of one or more request groups; repeatable (request_group_id&#x3D;a&amp;request_group_id&#x3D;b). A routed request writes one row per attempt, all sharing a request_group_id, so this returns a request\&#39;s whole plan: its absorbed attempts and the attempt that served it. Ignore ordering by timestamp and read attempt_position to reconstruct the plan. At most 1000 ids per call. | [Optional] |
+| **workspaceId** | `string` | Only usage recorded in this workspace. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -347,7 +349,7 @@ This endpoint does not need any parameter.
 
 ## listUsageV1UsageGet
 
-> Array&lt;UsageEntry&gt; listUsageV1UsageGet(startDate, endDate, userId, status, statusCode, model, endpoint, provider, source, sourceLabel, apiKeyId, priced, tool, countsTowardBudget, requestGroupId, skip, limit)
+> Array&lt;UsageEntry&gt; listUsageV1UsageGet(startDate, endDate, userId, status, statusCode, model, endpoint, provider, source, sourceLabel, apiKeyId, priced, tool, countsTowardBudget, requestGroupId, workspaceId, skip, limit)
 
 List Usage
 
@@ -399,10 +401,12 @@ async function example() {
     priced: true,
     // 'any' | 'web_search' | 'code_execution' | Filter to requests that ran a gateway-run tool. \'any\' matches any tool; a tool name (web_search, code_execution) matches that tool specifically. (optional)
     tool: tool_example,
-    // boolean | Filter by budget participation: true = only enforced gateway rows, false = only imported rows that never touch a budget (optional)
+    // boolean | Filter by budget participation, which is not the same question as provenance: true = only enforced gateway rows, false = every row that never touches a budget, meaning imported usage and also gateway traffic on a budget-exempt key (optional)
     countsTowardBudget: true,
     // Array<string> | Filter to the rows of one or more request groups; repeatable (request_group_id=a&request_group_id=b). A routed request writes one row per attempt, all sharing a request_group_id, so this returns a request\'s whole plan: its absorbed attempts and the attempt that served it. Ignore ordering by timestamp and read attempt_position to reconstruct the plan. At most 1000 ids per call. (optional)
     requestGroupId: ...,
+    // string | Only usage recorded in this workspace. (optional)
+    workspaceId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
     // number (optional)
     skip: 56,
     // number (optional)
@@ -439,8 +443,9 @@ example().catch(console.error);
 | **apiKeyId** | `Array<string>` | Filter to one or more API key ids; repeatable (api_key_id&#x3D;a&amp;api_key_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **priced** | `boolean` | Filter by token-pricing state: true &#x3D; only rows whose model tokens were priced, false &#x3D; only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. | [Optional] [Defaults to `undefined`] |
 | **tool** | `any`, `web_search`, `code_execution` | Filter to requests that ran a gateway-run tool. \&#39;any\&#39; matches any tool; a tool name (web_search, code_execution) matches that tool specifically. | [Optional] [Defaults to `undefined`] [Enum: any, web_search, code_execution] |
-| **countsTowardBudget** | `boolean` | Filter by budget participation: true &#x3D; only enforced gateway rows, false &#x3D; only imported rows that never touch a budget | [Optional] [Defaults to `undefined`] |
+| **countsTowardBudget** | `boolean` | Filter by budget participation, which is not the same question as provenance: true &#x3D; only enforced gateway rows, false &#x3D; every row that never touches a budget, meaning imported usage and also gateway traffic on a budget-exempt key | [Optional] [Defaults to `undefined`] |
 | **requestGroupId** | `Array<string>` | Filter to the rows of one or more request groups; repeatable (request_group_id&#x3D;a&amp;request_group_id&#x3D;b). A routed request writes one row per attempt, all sharing a request_group_id, so this returns a request\&#39;s whole plan: its absorbed attempts and the attempt that served it. Ignore ordering by timestamp and read attempt_position to reconstruct the plan. At most 1000 ids per call. | [Optional] |
+| **workspaceId** | `string` | Only usage recorded in this workspace. | [Optional] [Defaults to `undefined`] |
 | **skip** | `number` |  | [Optional] [Defaults to `0`] |
 | **limit** | `number` |  | [Optional] [Defaults to `100`] |
 
@@ -543,7 +548,7 @@ example().catch(console.error);
 
 ## usageSeriesV1UsageSeriesGet
 
-> UsageGroupedSeries usageSeriesV1UsageSeriesGet(groupBy, startDate, endDate, userId, status, statusCode, model, endpoint, provider, source, sourceLabel, apiKeyId, priced, tool, countsTowardBudget, bucket)
+> UsageGroupedSeries usageSeriesV1UsageSeriesGet(groupBy, startDate, endDate, userId, status, statusCode, model, endpoint, provider, source, sourceLabel, apiKeyId, priced, tool, countsTowardBudget, workspaceId, bucket)
 
 Usage Series
 
@@ -597,8 +602,10 @@ async function example() {
     priced: true,
     // 'any' | 'web_search' | 'code_execution' | Filter to requests that ran a gateway-run tool. \'any\' matches any tool; a tool name (web_search, code_execution) matches that tool specifically. (optional)
     tool: tool_example,
-    // boolean | Filter by budget participation: true = only enforced gateway rows, false = only imported rows that never touch a budget (optional)
+    // boolean | Filter by budget participation, which is not the same question as provenance: true = only enforced gateway rows, false = every row that never touches a budget, meaning imported usage and also gateway traffic on a budget-exempt key (optional)
     countsTowardBudget: true,
+    // string | Only usage recorded in this workspace. (optional)
+    workspaceId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
     // 'hour' | 'day' | Time-series granularity: \'hour\' or \'day\' (optional)
     bucket: bucket_example,
   } satisfies UsageSeriesV1UsageSeriesGetRequest;
@@ -634,7 +641,8 @@ example().catch(console.error);
 | **apiKeyId** | `Array<string>` | Filter to one or more API key ids; repeatable (api_key_id&#x3D;a&amp;api_key_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **priced** | `boolean` | Filter by token-pricing state: true &#x3D; only rows whose model tokens were priced, false &#x3D; only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. | [Optional] [Defaults to `undefined`] |
 | **tool** | `any`, `web_search`, `code_execution` | Filter to requests that ran a gateway-run tool. \&#39;any\&#39; matches any tool; a tool name (web_search, code_execution) matches that tool specifically. | [Optional] [Defaults to `undefined`] [Enum: any, web_search, code_execution] |
-| **countsTowardBudget** | `boolean` | Filter by budget participation: true &#x3D; only enforced gateway rows, false &#x3D; only imported rows that never touch a budget | [Optional] [Defaults to `undefined`] |
+| **countsTowardBudget** | `boolean` | Filter by budget participation, which is not the same question as provenance: true &#x3D; only enforced gateway rows, false &#x3D; every row that never touches a budget, meaning imported usage and also gateway traffic on a budget-exempt key | [Optional] [Defaults to `undefined`] |
+| **workspaceId** | `string` | Only usage recorded in this workspace. | [Optional] [Defaults to `undefined`] |
 | **bucket** | `hour`, `day` | Time-series granularity: \&#39;hour\&#39; or \&#39;day\&#39; | [Optional] [Defaults to `&#39;day&#39;`] [Enum: hour, day] |
 
 ### Return type
@@ -660,122 +668,9 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## usageSummaryCsvV1UsageSummaryCsvGet
-
-> any usageSummaryCsvV1UsageSummaryCsvGet(startDate, endDate, userId, status, statusCode, model, endpoint, provider, source, sourceLabel, apiKeyId, priced, tool, countsTowardBudget)
-
-Usage Summary Csv
-
-Download every breakdown the summary reports, as one CSV.  One row per (dimension, key): model, user, API key, source, session (&#x60;&#x60;source_label&#x60;&#x60;), endpoint, and provider. A dedicated route rather than a &#x60;&#x60;format&#x3D;csv&#x60;&#x60; flag on &#x60;&#x60;/summary&#x60;&#x60; so that endpoint keeps a single JSON response model and a clean OpenAPI schema. The export is **uncapped** (no top-N fold): finance wants every row. &#x60;&#x60;tokens&#x60;&#x60; is the billed total (fresh input, both cache buckets, and output), matching the dashboard\&#39;s analytics. Kept separate from the bare-array &#x60;&#x60;/v1/usage&#x60;&#x60; contract, which is untouched.
-
-### Example
-
-```ts
-import {
-  Configuration,
-  UsageApi,
-} from '';
-import type { UsageSummaryCsvV1UsageSummaryCsvGetRequest } from '';
-
-async function example() {
-  console.log("🚀 Testing  SDK...");
-  const config = new Configuration({ 
-    // To configure API key authorization: XApiKeyAuth
-    apiKey: "YOUR API KEY",
-    // To configure API key authorization: ApiKeyAuth
-    apiKey: "YOUR API KEY",
-  });
-  const api = new UsageApi(config);
-
-  const body = {
-    // Date | Return logs with timestamp >= start_date (ISO 8601 or Unix epoch seconds) (optional)
-    startDate: 2013-10-20T19:20:30+01:00,
-    // Date | Return logs with timestamp < end_date (ISO 8601 or Unix epoch seconds) (optional)
-    endDate: 2013-10-20T19:20:30+01:00,
-    // Array<string> | Filter to one or more users; repeatable (user_id=a&user_id=b). Several values match any of them. At most 50 per call. (optional)
-    userId: ...,
-    // string | Filter to a single status: \'success\', \'error\', or \'absorbed\' (an attempt a routing policy recovered from, excluded from error_count and request_count) (optional)
-    status: status_example,
-    // number | Filter to a single failure status code (e.g. 429 for provider rate limits, 402 for missing-pricing rejections). Only error rows carry one, so this filter also restricts to status=\'error\' unless \'status\' is given explicitly (optional)
-    statusCode: 56,
-    // Array<string> | Filter to one or more models; repeatable (model=a&model=b). Several values match any of them. At most 50 per call. (optional)
-    model: ...,
-    // string | Filter to a single endpoint (e.g. \'/v1/chat/completions\') (optional)
-    endpoint: endpoint_example,
-    // string | Filter to a single provider (e.g. \'openai\') (optional)
-    provider: provider_example,
-    // string | Filter to a single provenance source (e.g. \'gateway\' or \'claude_code\') (optional)
-    source: source_example,
-    // string | Filter to a single session/project label (the source_label carried by imported usage) (optional)
-    sourceLabel: sourceLabel_example,
-    // Array<string> | Filter to one or more API key ids; repeatable (api_key_id=a&api_key_id=b). Several values match any of them. At most 50 per call. (optional)
-    apiKeyId: ...,
-    // boolean | Filter by token-pricing state: true = only rows whose model tokens were priced, false = only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. (optional)
-    priced: true,
-    // 'any' | 'web_search' | 'code_execution' | Filter to requests that ran a gateway-run tool. \'any\' matches any tool; a tool name (web_search, code_execution) matches that tool specifically. (optional)
-    tool: tool_example,
-    // boolean | Filter by budget participation: true = only enforced gateway rows, false = only imported rows that never touch a budget (optional)
-    countsTowardBudget: true,
-  } satisfies UsageSummaryCsvV1UsageSummaryCsvGetRequest;
-
-  try {
-    const data = await api.usageSummaryCsvV1UsageSummaryCsvGet(body);
-    console.log(data);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// Run the test
-example().catch(console.error);
-```
-
-### Parameters
-
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **startDate** | `Date` | Return logs with timestamp &gt;&#x3D; start_date (ISO 8601 or Unix epoch seconds) | [Optional] [Defaults to `undefined`] |
-| **endDate** | `Date` | Return logs with timestamp &lt; end_date (ISO 8601 or Unix epoch seconds) | [Optional] [Defaults to `undefined`] |
-| **userId** | `Array<string>` | Filter to one or more users; repeatable (user_id&#x3D;a&amp;user_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
-| **status** | `string` | Filter to a single status: \&#39;success\&#39;, \&#39;error\&#39;, or \&#39;absorbed\&#39; (an attempt a routing policy recovered from, excluded from error_count and request_count) | [Optional] [Defaults to `undefined`] |
-| **statusCode** | `number` | Filter to a single failure status code (e.g. 429 for provider rate limits, 402 for missing-pricing rejections). Only error rows carry one, so this filter also restricts to status&#x3D;\&#39;error\&#39; unless \&#39;status\&#39; is given explicitly | [Optional] [Defaults to `undefined`] |
-| **model** | `Array<string>` | Filter to one or more models; repeatable (model&#x3D;a&amp;model&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
-| **endpoint** | `string` | Filter to a single endpoint (e.g. \&#39;/v1/chat/completions\&#39;) | [Optional] [Defaults to `undefined`] |
-| **provider** | `string` | Filter to a single provider (e.g. \&#39;openai\&#39;) | [Optional] [Defaults to `undefined`] |
-| **source** | `string` | Filter to a single provenance source (e.g. \&#39;gateway\&#39; or \&#39;claude_code\&#39;) | [Optional] [Defaults to `undefined`] |
-| **sourceLabel** | `string` | Filter to a single session/project label (the source_label carried by imported usage) | [Optional] [Defaults to `undefined`] |
-| **apiKeyId** | `Array<string>` | Filter to one or more API key ids; repeatable (api_key_id&#x3D;a&amp;api_key_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
-| **priced** | `boolean` | Filter by token-pricing state: true &#x3D; only rows whose model tokens were priced, false &#x3D; only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. | [Optional] [Defaults to `undefined`] |
-| **tool** | `any`, `web_search`, `code_execution` | Filter to requests that ran a gateway-run tool. \&#39;any\&#39; matches any tool; a tool name (web_search, code_execution) matches that tool specifically. | [Optional] [Defaults to `undefined`] [Enum: any, web_search, code_execution] |
-| **countsTowardBudget** | `boolean` | Filter by budget participation: true &#x3D; only enforced gateway rows, false &#x3D; only imported rows that never touch a budget | [Optional] [Defaults to `undefined`] |
-
-### Return type
-
-**any**
-
-### Authorization
-
-[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: `application/json`
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | Successful Response |  -  |
-| **422** | Validation Error |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-
 ## usageSummaryV1UsageSummaryGet
 
-> UsageSummary usageSummaryV1UsageSummaryGet(startDate, endDate, userId, status, statusCode, model, endpoint, provider, source, sourceLabel, apiKeyId, priced, tool, countsTowardBudget, bucket, dimensions)
+> UsageSummary usageSummaryV1UsageSummaryGet(startDate, endDate, userId, status, statusCode, model, endpoint, provider, source, sourceLabel, apiKeyId, priced, tool, countsTowardBudget, workspaceId, bucket, dimensions)
 
 Usage Summary
 
@@ -827,8 +722,10 @@ async function example() {
     priced: true,
     // 'any' | 'web_search' | 'code_execution' | Filter to requests that ran a gateway-run tool. \'any\' matches any tool; a tool name (web_search, code_execution) matches that tool specifically. (optional)
     tool: tool_example,
-    // boolean | Filter by budget participation: true = only enforced gateway rows, false = only imported rows that never touch a budget (optional)
+    // boolean | Filter by budget participation, which is not the same question as provenance: true = only enforced gateway rows, false = every row that never touches a budget, meaning imported usage and also gateway traffic on a budget-exempt key (optional)
     countsTowardBudget: true,
+    // string | Only usage recorded in this workspace. (optional)
+    workspaceId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
     // 'hour' | 'day' | Time-series granularity: \'hour\' or \'day\' (optional)
     bucket: bucket_example,
     // Array<'model' | 'user' | 'api_key' | 'source' | 'source_label' | 'endpoint' | 'provider' | 'status_code' | 'tool' | 'none'> | Which breakdowns to compute; repeatable (dimensions=model&dimensions=user). Each value names the \'by_<value>\' response field it fills, except \'status_code\', which fills the failure taxonomy in \'errors_by_status_code\'. Omit for every breakdown (the default); pass \'none\' for a totals-and-series-only response. Each dimension left out skips one GROUP BY scan, so a caller that reads only the tiles or the time series should say so. Fields that were not requested come back empty. (optional)
@@ -865,7 +762,8 @@ example().catch(console.error);
 | **apiKeyId** | `Array<string>` | Filter to one or more API key ids; repeatable (api_key_id&#x3D;a&amp;api_key_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **priced** | `boolean` | Filter by token-pricing state: true &#x3D; only rows whose model tokens were priced, false &#x3D; only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. | [Optional] [Defaults to `undefined`] |
 | **tool** | `any`, `web_search`, `code_execution` | Filter to requests that ran a gateway-run tool. \&#39;any\&#39; matches any tool; a tool name (web_search, code_execution) matches that tool specifically. | [Optional] [Defaults to `undefined`] [Enum: any, web_search, code_execution] |
-| **countsTowardBudget** | `boolean` | Filter by budget participation: true &#x3D; only enforced gateway rows, false &#x3D; only imported rows that never touch a budget | [Optional] [Defaults to `undefined`] |
+| **countsTowardBudget** | `boolean` | Filter by budget participation, which is not the same question as provenance: true &#x3D; only enforced gateway rows, false &#x3D; every row that never touches a budget, meaning imported usage and also gateway traffic on a budget-exempt key | [Optional] [Defaults to `undefined`] |
+| **workspaceId** | `string` | Only usage recorded in this workspace. | [Optional] [Defaults to `undefined`] |
 | **bucket** | `hour`, `day` | Time-series granularity: \&#39;hour\&#39; or \&#39;day\&#39; | [Optional] [Defaults to `&#39;day&#39;`] [Enum: hour, day] |
 | **dimensions** | `model`, `user`, `api_key`, `source`, `source_label`, `endpoint`, `provider`, `status_code`, `tool`, `none` | Which breakdowns to compute; repeatable (dimensions&#x3D;model&amp;dimensions&#x3D;user). Each value names the \&#39;by_&lt;value&gt;\&#39; response field it fills, except \&#39;status_code\&#39;, which fills the failure taxonomy in \&#39;errors_by_status_code\&#39;. Omit for every breakdown (the default); pass \&#39;none\&#39; for a totals-and-series-only response. Each dimension left out skips one GROUP BY scan, so a caller that reads only the tiles or the time series should say so. Fields that were not requested come back empty. | [Optional] [Enum: model, user, api_key, source, source_label, endpoint, provider, status_code, tool, none] |
 

@@ -13,27 +13,27 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { MRDocumentBlock } from './MRDocumentBlock.js';
+import type { MRToolSearchToolResultError } from './MRToolSearchToolResultError.js';
 import {
-    MRDocumentBlockFromJSON,
-    MRDocumentBlockFromJSONTyped,
-    MRDocumentBlockToJSON,
-    MRDocumentBlockToJSONTyped,
-} from './MRDocumentBlock.js';
-import type { MRWebFetchToolResultErrorBlock } from './MRWebFetchToolResultErrorBlock.js';
+    MRToolSearchToolResultErrorFromJSON,
+    MRToolSearchToolResultErrorFromJSONTyped,
+    MRToolSearchToolResultErrorToJSON,
+    MRToolSearchToolResultErrorToJSONTyped,
+} from './MRToolSearchToolResultError.js';
+import type { MRToolSearchToolSearchResultBlock } from './MRToolSearchToolSearchResultBlock.js';
 import {
-    MRWebFetchToolResultErrorBlockFromJSON,
-    MRWebFetchToolResultErrorBlockFromJSONTyped,
-    MRWebFetchToolResultErrorBlockToJSON,
-    MRWebFetchToolResultErrorBlockToJSONTyped,
-} from './MRWebFetchToolResultErrorBlock.js';
-import type { MRWebFetchBlock } from './MRWebFetchBlock.js';
+    MRToolSearchToolSearchResultBlockFromJSON,
+    MRToolSearchToolSearchResultBlockFromJSONTyped,
+    MRToolSearchToolSearchResultBlockToJSON,
+    MRToolSearchToolSearchResultBlockToJSONTyped,
+} from './MRToolSearchToolSearchResultBlock.js';
+import type { MRToolReferenceBlock } from './MRToolReferenceBlock.js';
 import {
-    MRWebFetchBlockFromJSON,
-    MRWebFetchBlockFromJSONTyped,
-    MRWebFetchBlockToJSON,
-    MRWebFetchBlockToJSONTyped,
-} from './MRWebFetchBlock.js';
+    MRToolReferenceBlockFromJSON,
+    MRToolReferenceBlockFromJSONTyped,
+    MRToolReferenceBlockToJSON,
+    MRToolReferenceBlockToJSONTyped,
+} from './MRToolReferenceBlock.js';
 
 /**
  * 
@@ -49,28 +49,22 @@ export interface Content14 {
     errorCode: Content14ErrorCodeEnum;
     /**
      * 
+     * @type {string}
+     * @memberof Content14
+     */
+    errorMessage?: string;
+    /**
+     * 
      * @type {Content14TypeEnum}
      * @memberof Content14
      */
     type: Content14TypeEnum;
     /**
      * 
-     * @type {MRDocumentBlock}
+     * @type {Array<MRToolReferenceBlock>}
      * @memberof Content14
      */
-    content: MRDocumentBlock;
-    /**
-     * 
-     * @type {string}
-     * @memberof Content14
-     */
-    retrievedAt?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Content14
-     */
-    url: string;
+    toolReferences: Array<MRToolReferenceBlock>;
 }
 
 
@@ -79,13 +73,9 @@ export interface Content14 {
  */
 export const Content14ErrorCodeEnum = {
     InvalidToolInput: 'invalid_tool_input',
-    UrlTooLong: 'url_too_long',
-    UrlNotAllowed: 'url_not_allowed',
-    UrlNotAccessible: 'url_not_accessible',
-    UnsupportedContentType: 'unsupported_content_type',
+    Unavailable: 'unavailable',
     TooManyRequests: 'too_many_requests',
-    MaxUsesExceeded: 'max_uses_exceeded',
-    Unavailable: 'unavailable'
+    ExecutionTimeExceeded: 'execution_time_exceeded'
 } as const;
 export type Content14ErrorCodeEnum = typeof Content14ErrorCodeEnum[keyof typeof Content14ErrorCodeEnum];
 
@@ -93,8 +83,8 @@ export type Content14ErrorCodeEnum = typeof Content14ErrorCodeEnum[keyof typeof 
  * @export
  */
 export const Content14TypeEnum = {
-    WebFetchToolResultError: 'web_fetch_tool_result_error',
-    WebFetchResult: 'web_fetch_result'
+    ToolSearchToolResultError: 'tool_search_tool_result_error',
+    ToolSearchToolSearchResult: 'tool_search_tool_search_result'
 } as const;
 export type Content14TypeEnum = typeof Content14TypeEnum[keyof typeof Content14TypeEnum];
 
@@ -105,8 +95,7 @@ export type Content14TypeEnum = typeof Content14TypeEnum[keyof typeof Content14T
 export function instanceOfContent14(value: object): value is Content14 {
     if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
-    if (!('content' in value) || value['content'] === undefined) return false;
-    if (!('url' in value) || value['url'] === undefined) return false;
+    if (!('toolReferences' in value) || value['toolReferences'] === undefined) return false;
     return true;
 }
 
@@ -121,10 +110,9 @@ export function Content14FromJSONTyped(json: any, ignoreDiscriminator: boolean):
     return {
         
         'errorCode': json['error_code'],
+        'errorMessage': json['error_message'] == null ? undefined : json['error_message'],
         'type': json['type'],
-        'content': MRDocumentBlockFromJSON(json['content']),
-        'retrievedAt': json['retrieved_at'] == null ? undefined : json['retrieved_at'],
-        'url': json['url'],
+        'toolReferences': ((json['tool_references'] as Array<any>).map(MRToolReferenceBlockFromJSON)),
     };
 }
 
@@ -140,10 +128,9 @@ export function Content14ToJSONTyped(value?: Content14 | null, ignoreDiscriminat
     return {
         
         'error_code': value['errorCode'],
+        'error_message': value['errorMessage'],
         'type': value['type'],
-        'content': MRDocumentBlockToJSON(value['content']),
-        'retrieved_at': value['retrievedAt'],
-        'url': value['url'],
+        'tool_references': ((value['toolReferences'] as Array<any>).map(MRToolReferenceBlockToJSON)),
     };
 }
 

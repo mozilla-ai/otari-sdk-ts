@@ -68,6 +68,12 @@ export interface CCChatCompletionMessageToolCallsInner {
     type: CCChatCompletionMessageToolCallsInnerTypeEnum;
     /**
      * 
+     * @type {{ [key: string]: any; }}
+     * @memberof CCChatCompletionMessageToolCallsInner
+     */
+    extraContent?: { [key: string]: any; };
+    /**
+     * 
      * @type {CCCustom}
      * @memberof CCChatCompletionMessageToolCallsInner
      */
@@ -109,6 +115,7 @@ export function CCChatCompletionMessageToolCallsInnerFromJSONTyped(json: any, ig
         'id': json['id'],
         '_function': CCFunctionFromJSON(json['function']),
         'type': json['type'],
+        'extraContent': json['extra_content'] == null ? undefined : json['extra_content'],
         'custom': CCCustomFromJSON(json['custom']),
     };
 }
@@ -127,6 +134,7 @@ export function CCChatCompletionMessageToolCallsInnerToJSONTyped(value?: CCChatC
         'id': value['id'],
         'function': CCFunctionToJSON(value['_function']),
         'type': value['type'],
+        'extra_content': value['extraContent'],
         'custom': CCCustomToJSON(value['custom']),
     };
 }

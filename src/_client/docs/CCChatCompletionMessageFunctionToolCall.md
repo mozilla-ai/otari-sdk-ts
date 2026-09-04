@@ -1,7 +1,7 @@
 
 # CCChatCompletionMessageFunctionToolCall
 
-A call to a function tool created by the model.
+Extended tool call type that includes extra_content for provider-specific data.  The extra_content field is used to store provider-specific metadata that needs to be preserved across multi-turn conversations. For example, Gemini 3 models require thought_signature to be passed back with function calls.  Example extra_content structure for Gemini:     {\"google\": {\"thought_signature\": \"<base64-encoded-signature>\"}}
 
 ## Properties
 
@@ -10,6 +10,7 @@ Name | Type
 `id` | string
 `_function` | [CCFunction](CCFunction.md)
 `type` | string
+`extraContent` | { [key: string]: any; }
 
 ## Example
 
@@ -21,6 +22,7 @@ const example = {
   "id": null,
   "_function": null,
   "type": null,
+  "extraContent": null,
 } satisfies CCChatCompletionMessageFunctionToolCall
 
 console.log(example)

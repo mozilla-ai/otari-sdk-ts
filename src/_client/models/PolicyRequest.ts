@@ -26,7 +26,7 @@ export interface PolicyRequest {
      */
     name: string;
     /**
-     * Current name of the policy to rename, in the same scope. The stored row keeps its id and created_at and takes `name` and `spec`. Sending it asserts that policy exists, so a name with no stored row is a 404 rather than a create, even when it equals `name`. Omit to create or update the policy named `name`. Renaming changes what callers must send as `model`; usage already recorded keeps the old name.
+     * Current name of the policy to rename, in the same scope, meaning the same workspace and the same user. A rename never moves a policy between them. The stored row keeps its id and created_at and takes `name` and `spec`. Sending it asserts that policy exists, so a name with no stored row is a 404 rather than a create, even when it equals `name`. Omit to create or update the policy named `name`. Renaming changes what callers must send as `model`; usage already recorded keeps the old name.
      * @type {string}
      * @memberof PolicyRequest
      */
@@ -38,11 +38,17 @@ export interface PolicyRequest {
      */
     spec: { [key: string]: any; };
     /**
-     * User this policy belongs to. Omit for a global policy every caller sees. A user-scoped policy resolves only for that user and shadows a global one of the same name.
+     * User this policy belongs to. Omit for a policy every caller in the workspace sees. A user-scoped policy resolves only for that user and shadows the workspace-wide one of the same name.
      * @type {string}
      * @memberof PolicyRequest
      */
     userId?: string | null;
+    /**
+     * Workspace this policy belongs to. Omit for the deployment's default workspace. The policy resolves only for requests in that workspace, so two workspaces can each define their own 'fast'.
+     * @type {string}
+     * @memberof PolicyRequest
+     */
+    workspaceId?: string | null;
 }
 
 /**
@@ -68,6 +74,7 @@ export function PolicyRequestFromJSONTyped(json: any, ignoreDiscriminator: boole
         'renameFrom': json['rename_from'] == null ? undefined : json['rename_from'],
         'spec': json['spec'],
         'userId': json['user_id'] == null ? undefined : json['user_id'],
+        'workspaceId': json['workspace_id'] == null ? undefined : json['workspace_id'],
     };
 }
 
@@ -86,6 +93,7 @@ export function PolicyRequestToJSONTyped(value?: PolicyRequest | null, ignoreDis
         'rename_from': value['renameFrom'],
         'spec': value['spec'],
         'user_id': value['userId'],
+        'workspace_id': value['workspaceId'],
     };
 }
 

@@ -14,6 +14,7 @@ Name | Type
 `name` | string
 `spec` | { [key: string]: any; }
 `userId` | string
+`workspaceId` | string
 
 ## Example
 
@@ -29,6 +30,7 @@ const example = {
   "name": null,
   "spec": null,
   "userId": null,
+  "workspaceId": null,
 } satisfies ExplainRequest
 
 console.log(example)

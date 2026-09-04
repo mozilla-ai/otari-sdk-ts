@@ -40,9 +40,9 @@ import {
  * 
  * Routing memory has no single warmth: it is a set of independent pools.
  * ``default_pool`` is what a request with no ``Otari-Router-Task`` header votes
- * over (every record the user has, labelled or not) and ``tasks`` lists each
- * partition, which only requests carrying that label use. Each crosses
- * ``seed_count`` on its own.
+ * over (every record the user has in this workspace, labeled or not) and
+ * ``tasks`` lists each partition, which only requests carrying that label use.
+ * Each crosses ``seed_count`` on its own.
  * @export
  * @interface RouterStatus
  */
@@ -107,6 +107,12 @@ export interface RouterStatus {
      * @memberof RouterStatus
      */
     userId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RouterStatus
+     */
+    workspaceId: string;
 }
 
 /**
@@ -123,6 +129,7 @@ export function instanceOfRouterStatus(value: object): value is RouterStatus {
     if (!('seedCount' in value) || value['seedCount'] === undefined) return false;
     if (!('tasks' in value) || value['tasks'] === undefined) return false;
     if (!('userId' in value) || value['userId'] === undefined) return false;
+    if (!('workspaceId' in value) || value['workspaceId'] === undefined) return false;
     return true;
 }
 
@@ -146,6 +153,7 @@ export function RouterStatusFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'seedCount': json['seed_count'],
         'tasks': ((json['tasks'] as Array<any>).map(TaskPoolFromJSON)),
         'userId': json['user_id'],
+        'workspaceId': json['workspace_id'],
     };
 }
 
@@ -170,6 +178,7 @@ export function RouterStatusToJSONTyped(value?: RouterStatus | null, ignoreDiscr
         'seed_count': value['seedCount'],
         'tasks': ((value['tasks'] as Array<any>).map(TaskPoolToJSON)),
         'user_id': value['userId'],
+        'workspace_id': value['workspaceId'],
     };
 }
 

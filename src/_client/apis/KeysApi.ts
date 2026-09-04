@@ -54,6 +54,7 @@ export interface GetKeyV1KeysKeyIdGetRequest {
 export interface ListKeysV1KeysGetRequest {
     skip?: number;
     limit?: number;
+    workspaceId?: string | null;
 }
 
 export interface RotateKeyV1KeysKeyIdRotatePostRequest {
@@ -108,7 +109,7 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new API key.  Requires master key authentication.  If user_id is provided, the key will be associated with that user (creates user if it doesn\'t exist). If user_id is not provided, the key is associated with the shared \"default\" user, which is created on first use. Keys without an explicit owner therefore share one identity, and so share budget, usage, and files.
+     * Create a new API key in the caller\'s organization.  Requires master key authentication.  If user_id is provided, the key will be associated with that user (creates user if it doesn\'t exist). If user_id is not provided, the key is associated with the shared \"default\" user, which is created on first use. Keys without an explicit owner therefore share one identity, and so share budget, usage, and files.  ``workspace_id`` names a workspace in the caller\'s organization, and omitting it mints into that organization\'s default workspace. A key resolves that organization\'s provider credentials and bills there, so minting into another organization\'s workspace would spend its budget on its credentials.
      * Create Key
      */
     async createKeyV1KeysPostRaw(requestParameters: CreateKeyV1KeysPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateKeyResponse>> {
@@ -119,7 +120,7 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new API key.  Requires master key authentication.  If user_id is provided, the key will be associated with that user (creates user if it doesn\'t exist). If user_id is not provided, the key is associated with the shared \"default\" user, which is created on first use. Keys without an explicit owner therefore share one identity, and so share budget, usage, and files.
+     * Create a new API key in the caller\'s organization.  Requires master key authentication.  If user_id is provided, the key will be associated with that user (creates user if it doesn\'t exist). If user_id is not provided, the key is associated with the shared \"default\" user, which is created on first use. Keys without an explicit owner therefore share one identity, and so share budget, usage, and files.  ``workspace_id`` names a workspace in the caller\'s organization, and omitting it mints into that organization\'s default workspace. A key resolves that organization\'s provider credentials and bills there, so minting into another organization\'s workspace would spend its budget on its credentials.
      * Create Key
      */
     async createKeyV1KeysPost(requestParameters: CreateKeyV1KeysPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateKeyResponse> {
@@ -163,7 +164,7 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete (revoke) an API key.  Requires master key authentication.
+     * Delete (revoke) an API key in the caller\'s organization.  Requires master key authentication.
      * Delete Key
      */
     async deleteKeyV1KeysKeyIdDeleteRaw(requestParameters: DeleteKeyV1KeysKeyIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -174,7 +175,7 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete (revoke) an API key.  Requires master key authentication.
+     * Delete (revoke) an API key in the caller\'s organization.  Requires master key authentication.
      * Delete Key
      */
     async deleteKeyV1KeysKeyIdDelete(requestParameters: DeleteKeyV1KeysKeyIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
@@ -217,7 +218,7 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get details of a specific API key.  Requires master key authentication.
+     * Get details of a specific API key in the caller\'s organization.  Requires master key authentication.
      * Get Key
      */
     async getKeyV1KeysKeyIdGetRaw(requestParameters: GetKeyV1KeysKeyIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<KeyInfo>> {
@@ -228,7 +229,7 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get details of a specific API key.  Requires master key authentication.
+     * Get details of a specific API key in the caller\'s organization.  Requires master key authentication.
      * Get Key
      */
     async getKeyV1KeysKeyIdGet(requestParameters: GetKeyV1KeysKeyIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<KeyInfo> {
@@ -248,6 +249,10 @@ export class KeysApi extends runtime.BaseAPI {
 
         if (requestParameters['limit'] != null) {
             queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        if (requestParameters['workspaceId'] != null) {
+            queryParameters['workspace_id'] = requestParameters['workspaceId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -272,7 +277,7 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
-     * List all API keys.  Requires master key authentication.
+     * List the API keys in the caller\'s organization.  Requires master key authentication. An unset ``workspace_id`` lists every key in that organization; naming a workspace in another one lists nothing rather than refusing, so the filter reports no more than the unfiltered read does.
      * List Keys
      */
     async listKeysV1KeysGetRaw(requestParameters: ListKeysV1KeysGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<KeyInfo>>> {
@@ -283,7 +288,7 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
-     * List all API keys.  Requires master key authentication.
+     * List the API keys in the caller\'s organization.  Requires master key authentication. An unset ``workspace_id`` lists every key in that organization; naming a workspace in another one lists nothing rather than refusing, so the filter reports no more than the unfiltered read does.
      * List Keys
      */
     async listKeysV1KeysGet(requestParameters: ListKeysV1KeysGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<KeyInfo>> {
@@ -327,7 +332,7 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
-     * Rotate an API key\'s secret in place.  Requires master key authentication.  Generates a new secret for the same key row (id, user, name, expiry, and metadata are preserved) and returns the new raw key once, using the same response shape as key creation. The previous secret stops authenticating immediately; there is no grace window.
+     * Rotate an API key\'s secret in place, within the caller\'s organization.  Requires master key authentication.  Generates a new secret for the same key row (id, user, name, expiry, and metadata are preserved) and returns the new raw key once, using the same response shape as key creation. The previous secret stops authenticating immediately; there is no grace window.
      * Rotate Key
      */
     async rotateKeyV1KeysKeyIdRotatePostRaw(requestParameters: RotateKeyV1KeysKeyIdRotatePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateKeyResponse>> {
@@ -338,7 +343,7 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
-     * Rotate an API key\'s secret in place.  Requires master key authentication.  Generates a new secret for the same key row (id, user, name, expiry, and metadata are preserved) and returns the new raw key once, using the same response shape as key creation. The previous secret stops authenticating immediately; there is no grace window.
+     * Rotate an API key\'s secret in place, within the caller\'s organization.  Requires master key authentication.  Generates a new secret for the same key row (id, user, name, expiry, and metadata are preserved) and returns the new raw key once, using the same response shape as key creation. The previous secret stops authenticating immediately; there is no grace window.
      * Rotate Key
      */
     async rotateKeyV1KeysKeyIdRotatePost(requestParameters: RotateKeyV1KeysKeyIdRotatePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateKeyResponse> {
@@ -392,7 +397,7 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update an API key.  Requires master key authentication.
+     * Update an API key in the caller\'s organization.  Requires master key authentication.
      * Update Key
      */
     async updateKeyV1KeysKeyIdPatchRaw(requestParameters: UpdateKeyV1KeysKeyIdPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<KeyInfo>> {
@@ -403,7 +408,7 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update an API key.  Requires master key authentication.
+     * Update an API key in the caller\'s organization.  Requires master key authentication.
      * Update Key
      */
     async updateKeyV1KeysKeyIdPatch(requestParameters: UpdateKeyV1KeysKeyIdPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<KeyInfo> {

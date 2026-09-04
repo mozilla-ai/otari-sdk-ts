@@ -56,7 +56,7 @@ export interface ExplainRequest {
      */
     name?: string | null;
     /**
-     * An unsaved policy body to explain.
+     * Provider-native request fields used as defaults (e.g. exa's 'type', searxng's 'engines').
      * @type {{ [key: string]: any; }}
      * @memberof ExplainRequest
      */
@@ -67,6 +67,12 @@ export interface ExplainRequest {
      * @memberof ExplainRequest
      */
     userId?: string | null;
+    /**
+     * Resolve `name` and the policy's candidate selectors in this workspace. Omit for the deployment's default workspace.
+     * @type {string}
+     * @memberof ExplainRequest
+     */
+    workspaceId?: string | null;
 }
 
 /**
@@ -93,6 +99,7 @@ export function ExplainRequestFromJSONTyped(json: any, ignoreDiscriminator: bool
         'name': json['name'] == null ? undefined : json['name'],
         'spec': json['spec'] == null ? undefined : json['spec'],
         'userId': json['user_id'] == null ? undefined : json['user_id'],
+        'workspaceId': json['workspace_id'] == null ? undefined : json['workspace_id'],
     };
 }
 
@@ -114,6 +121,7 @@ export function ExplainRequestToJSONTyped(value?: ExplainRequest | null, ignoreD
         'name': value['name'],
         'spec': value['spec'],
         'user_id': value['userId'],
+        'workspace_id': value['workspaceId'],
     };
 }
 

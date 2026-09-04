@@ -14,6 +14,16 @@
 
 import * as runtime from '../runtime.js';
 import {
+    type AuthenticatePasskeyRequest,
+    AuthenticatePasskeyRequestFromJSON,
+    AuthenticatePasskeyRequestToJSON,
+} from '../models/AuthenticatePasskeyRequest.js';
+import {
+    type AuthorizeResponse,
+    AuthorizeResponseFromJSON,
+    AuthorizeResponseToJSON,
+} from '../models/AuthorizeResponse.js';
+import {
     type CreateSessionRequest,
     CreateSessionRequestFromJSON,
     CreateSessionRequestToJSON,
@@ -24,19 +34,399 @@ import {
     HTTPValidationErrorToJSON,
 } from '../models/HTTPValidationError.js';
 import {
+    type OAuthCallbackRequest,
+    OAuthCallbackRequestFromJSON,
+    OAuthCallbackRequestToJSON,
+} from '../models/OAuthCallbackRequest.js';
+import {
+    type OAuthSessionResponse,
+    OAuthSessionResponseFromJSON,
+    OAuthSessionResponseToJSON,
+} from '../models/OAuthSessionResponse.js';
+import {
+    type PasskeySessionResponse,
+    PasskeySessionResponseFromJSON,
+    PasskeySessionResponseToJSON,
+} from '../models/PasskeySessionResponse.js';
+import {
+    type PasswordResponse,
+    PasswordResponseFromJSON,
+    PasswordResponseToJSON,
+} from '../models/PasswordResponse.js';
+import {
+    type RegisterPasskeyRequest,
+    RegisterPasskeyRequestFromJSON,
+    RegisterPasskeyRequestToJSON,
+} from '../models/RegisterPasskeyRequest.js';
+import {
+    type RequestPasswordResetRequest,
+    RequestPasswordResetRequestFromJSON,
+    RequestPasswordResetRequestToJSON,
+} from '../models/RequestPasswordResetRequest.js';
+import {
+    type RequestPasswordResetResponse,
+    RequestPasswordResetResponseFromJSON,
+    RequestPasswordResetResponseToJSON,
+} from '../models/RequestPasswordResetResponse.js';
+import {
+    type ResendVerificationRequest,
+    ResendVerificationRequestFromJSON,
+    ResendVerificationRequestToJSON,
+} from '../models/ResendVerificationRequest.js';
+import {
+    type ResendVerificationResponse,
+    ResendVerificationResponseFromJSON,
+    ResendVerificationResponseToJSON,
+} from '../models/ResendVerificationResponse.js';
+import {
+    type ResetPasswordRequest,
+    ResetPasswordRequestFromJSON,
+    ResetPasswordRequestToJSON,
+} from '../models/ResetPasswordRequest.js';
+import {
     type SessionResponse,
     SessionResponseFromJSON,
     SessionResponseToJSON,
 } from '../models/SessionResponse.js';
+import {
+    type SetPasswordRequest,
+    SetPasswordRequestFromJSON,
+    SetPasswordRequestToJSON,
+} from '../models/SetPasswordRequest.js';
+import {
+    type SignupRequest,
+    SignupRequestFromJSON,
+    SignupRequestToJSON,
+} from '../models/SignupRequest.js';
+import {
+    type SignupResponse,
+    SignupResponseFromJSON,
+    SignupResponseToJSON,
+} from '../models/SignupResponse.js';
+import {
+    type VerifyEmailRequest,
+    VerifyEmailRequestFromJSON,
+    VerifyEmailRequestToJSON,
+} from '../models/VerifyEmailRequest.js';
+import {
+    type VerifyEmailResponse,
+    VerifyEmailResponseFromJSON,
+    VerifyEmailResponseToJSON,
+} from '../models/VerifyEmailResponse.js';
+import {
+    type WebAuthnCredentialPublic,
+    WebAuthnCredentialPublicFromJSON,
+    WebAuthnCredentialPublicToJSON,
+} from '../models/WebAuthnCredentialPublic.js';
+import {
+    type WebAuthnCredentialUpdate,
+    WebAuthnCredentialUpdateFromJSON,
+    WebAuthnCredentialUpdateToJSON,
+} from '../models/WebAuthnCredentialUpdate.js';
+import {
+    type WebAuthnCredentialsPublic,
+    WebAuthnCredentialsPublicFromJSON,
+    WebAuthnCredentialsPublicToJSON,
+} from '../models/WebAuthnCredentialsPublic.js';
+
+export interface AuthenticatePasskeyV1AuthWebauthnAuthenticatePostRequest {
+    authenticatePasskeyRequest: AuthenticatePasskeyRequest;
+}
+
+export interface AuthorizeV1AuthOauthProviderAuthorizeGetRequest {
+    provider: string;
+}
+
+export interface CallbackV1AuthOauthProviderCallbackPostRequest {
+    provider: string;
+    oAuthCallbackRequest: OAuthCallbackRequest;
+}
+
+export interface ConfirmResetV1AuthPasswordResetConfirmPostRequest {
+    resetPasswordRequest: ResetPasswordRequest;
+}
 
 export interface CreateSessionV1AuthSessionPostRequest {
     createSessionRequest: CreateSessionRequest;
+}
+
+export interface DeletePasskeyV1AuthWebauthnCredentialsCredentialIdDeleteRequest {
+    credentialId: string;
+}
+
+export interface RegisterPasskeyV1AuthWebauthnRegisterPostRequest {
+    registerPasskeyRequest: RegisterPasskeyRequest;
+}
+
+export interface RenamePasskeyV1AuthWebauthnCredentialsCredentialIdPatchRequest {
+    credentialId: string;
+    webAuthnCredentialUpdate: WebAuthnCredentialUpdate;
+}
+
+export interface RequestResetV1AuthPasswordResetPostRequest {
+    requestPasswordResetRequest: RequestPasswordResetRequest;
+}
+
+export interface ResendVerificationV1AuthResendVerificationPostRequest {
+    resendVerificationRequest: ResendVerificationRequest;
+}
+
+export interface SetDashboardPasswordV1AuthPasswordPutRequest {
+    setPasswordRequest: SetPasswordRequest;
+}
+
+export interface SignupV1AuthSignupPostRequest {
+    signupRequest: SignupRequest;
+}
+
+export interface VerifyEmailRouteV1AuthVerifyEmailPostRequest {
+    verifyEmailRequest: VerifyEmailRequest;
 }
 
 /**
  * 
  */
 export class AuthApi extends runtime.BaseAPI {
+
+    /**
+     * Creates request options for authenticatePasskeyV1AuthWebauthnAuthenticatePost without sending the request
+     */
+    async authenticatePasskeyV1AuthWebauthnAuthenticatePostRequestOpts(requestParameters: AuthenticatePasskeyV1AuthWebauthnAuthenticatePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['authenticatePasskeyRequest'] == null) {
+            throw new runtime.RequiredError(
+                'authenticatePasskeyRequest',
+                'Required parameter "authenticatePasskeyRequest" was null or undefined when calling authenticatePasskeyV1AuthWebauthnAuthenticatePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/v1/auth/webauthn/authenticate`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: AuthenticatePasskeyRequestToJSON(requestParameters['authenticatePasskeyRequest']),
+        };
+    }
+
+    /**
+     * Verify an assertion and set the HttpOnly session cookie.  The session is bound to the identity whose passkey signed, exactly as a password sign-in binds one to the identity that authenticated, so every request it later authenticates resolves the same caller.  A refusal is counted like the other sign-in failures (``record_auth_failure``) and answered as a 401 by the tenancy error handler. Unlike the password path there is no separate post-failure throttle: this route is throttled unconditionally on the way in, because unlike a password there is no legitimate caller here whose correct credential must never be blocked (a passkey ceremony is one round trip a browser drives, not something a person retries by hand).  **Maintenance mode freezes this the way it freezes the password sign-in.** The freeze is on starting a session, not on a credential, so a passkey has to answer to it or the switch is bypassable by anybody holding one, which is the whole population it exists to hold off during a redeploy. Refused before the assertion is verified, so a frozen deployment does no crypto and counts no auth failure: nobody failed to authenticate, the gateway declined to try.
+     * Authenticate Passkey
+     */
+    async authenticatePasskeyV1AuthWebauthnAuthenticatePostRaw(requestParameters: AuthenticatePasskeyV1AuthWebauthnAuthenticatePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PasskeySessionResponse>> {
+        const requestOptions = await this.authenticatePasskeyV1AuthWebauthnAuthenticatePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PasskeySessionResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Verify an assertion and set the HttpOnly session cookie.  The session is bound to the identity whose passkey signed, exactly as a password sign-in binds one to the identity that authenticated, so every request it later authenticates resolves the same caller.  A refusal is counted like the other sign-in failures (``record_auth_failure``) and answered as a 401 by the tenancy error handler. Unlike the password path there is no separate post-failure throttle: this route is throttled unconditionally on the way in, because unlike a password there is no legitimate caller here whose correct credential must never be blocked (a passkey ceremony is one round trip a browser drives, not something a person retries by hand).  **Maintenance mode freezes this the way it freezes the password sign-in.** The freeze is on starting a session, not on a credential, so a passkey has to answer to it or the switch is bypassable by anybody holding one, which is the whole population it exists to hold off during a redeploy. Refused before the assertion is verified, so a frozen deployment does no crypto and counts no auth failure: nobody failed to authenticate, the gateway declined to try.
+     * Authenticate Passkey
+     */
+    async authenticatePasskeyV1AuthWebauthnAuthenticatePost(requestParameters: AuthenticatePasskeyV1AuthWebauthnAuthenticatePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PasskeySessionResponse> {
+        const response = await this.authenticatePasskeyV1AuthWebauthnAuthenticatePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for authenticationOptionsV1AuthWebauthnAuthenticateOptionsPost without sending the request
+     */
+    async authenticationOptionsV1AuthWebauthnAuthenticateOptionsPostRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/v1/auth/webauthn/authenticate/options`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Start a passkey sign-in. Public, throttled, and names no credentials.  The options carry no ``allowCredentials``, so this publishes nothing about who holds a passkey here; see ``webauthn_service.begin_authentication``.
+     * Authentication Options
+     */
+    async authenticationOptionsV1AuthWebauthnAuthenticateOptionsPostRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: any; }>> {
+        const requestOptions = await this.authenticationOptionsV1AuthWebauthnAuthenticateOptionsPostRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Start a passkey sign-in. Public, throttled, and names no credentials.  The options carry no ``allowCredentials``, so this publishes nothing about who holds a passkey here; see ``webauthn_service.begin_authentication``.
+     * Authentication Options
+     */
+    async authenticationOptionsV1AuthWebauthnAuthenticateOptionsPost(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: any; }> {
+        const response = await this.authenticationOptionsV1AuthWebauthnAuthenticateOptionsPostRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for authorizeV1AuthOauthProviderAuthorizeGet without sending the request
+     */
+    async authorizeV1AuthOauthProviderAuthorizeGetRequestOpts(requestParameters: AuthorizeV1AuthOauthProviderAuthorizeGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['provider'] == null) {
+            throw new runtime.RequiredError(
+                'provider',
+                'Required parameter "provider" was null or undefined when calling authorizeV1AuthOauthProviderAuthorizeGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/v1/auth/oauth/{provider}/authorize`;
+        urlPath = urlPath.replace('{provider}', encodeURIComponent(String(requestParameters['provider'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Start an OAuth sign-in: where to send the browser, and the state to keep.  A GET, and safe: it reads configuration and mints a random value, writing nothing. Repeating it simply produces another state, and only the one the browser kept is the one it will compare against.
+     * Authorize
+     */
+    async authorizeV1AuthOauthProviderAuthorizeGetRaw(requestParameters: AuthorizeV1AuthOauthProviderAuthorizeGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthorizeResponse>> {
+        const requestOptions = await this.authorizeV1AuthOauthProviderAuthorizeGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AuthorizeResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Start an OAuth sign-in: where to send the browser, and the state to keep.  A GET, and safe: it reads configuration and mints a random value, writing nothing. Repeating it simply produces another state, and only the one the browser kept is the one it will compare against.
+     * Authorize
+     */
+    async authorizeV1AuthOauthProviderAuthorizeGet(requestParameters: AuthorizeV1AuthOauthProviderAuthorizeGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AuthorizeResponse> {
+        const response = await this.authorizeV1AuthOauthProviderAuthorizeGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for callbackV1AuthOauthProviderCallbackPost without sending the request
+     */
+    async callbackV1AuthOauthProviderCallbackPostRequestOpts(requestParameters: CallbackV1AuthOauthProviderCallbackPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['provider'] == null) {
+            throw new runtime.RequiredError(
+                'provider',
+                'Required parameter "provider" was null or undefined when calling callbackV1AuthOauthProviderCallbackPost().'
+            );
+        }
+
+        if (requestParameters['oAuthCallbackRequest'] == null) {
+            throw new runtime.RequiredError(
+                'oAuthCallbackRequest',
+                'Required parameter "oAuthCallbackRequest" was null or undefined when calling callbackV1AuthOauthProviderCallbackPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/v1/auth/oauth/{provider}/callback`;
+        urlPath = urlPath.replace('{provider}', encodeURIComponent(String(requestParameters['provider'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: OAuthCallbackRequestToJSON(requestParameters['oAuthCallbackRequest']),
+        };
+    }
+
+    /**
+     * Exchange an authorization code and set the HttpOnly session cookie.  The session is bound to the identity the provider\'s account resolves to, exactly as a password sign-in binds one to the identity that authenticated, so every request it later authenticates resolves the same caller.  A refusal is counted like the other sign-in failures (``record_auth_failure``) and rendered by the tenancy error handler. Like the passkey route there is no separate post-failure throttle: this route is throttled unconditionally on the way in, because there is no legitimate caller here whose correct credential must never be blocked. An authorization code is single-use and minted by a redirect, not something a person retries by hand.  **Maintenance mode freezes this the way it freezes the other two sign-ins.** The freeze is on starting a session, not on a credential, so an OAuth sign-in has to answer to it or the switch is bypassable by anybody holding a Google account. Refused before the exchange, so a frozen deployment makes no outbound call, spends nobody\'s authorization code, and counts no auth failure: nobody failed to authenticate, the gateway declined to try.
+     * Callback
+     */
+    async callbackV1AuthOauthProviderCallbackPostRaw(requestParameters: CallbackV1AuthOauthProviderCallbackPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OAuthSessionResponse>> {
+        const requestOptions = await this.callbackV1AuthOauthProviderCallbackPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => OAuthSessionResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Exchange an authorization code and set the HttpOnly session cookie.  The session is bound to the identity the provider\'s account resolves to, exactly as a password sign-in binds one to the identity that authenticated, so every request it later authenticates resolves the same caller.  A refusal is counted like the other sign-in failures (``record_auth_failure``) and rendered by the tenancy error handler. Like the passkey route there is no separate post-failure throttle: this route is throttled unconditionally on the way in, because there is no legitimate caller here whose correct credential must never be blocked. An authorization code is single-use and minted by a redirect, not something a person retries by hand.  **Maintenance mode freezes this the way it freezes the other two sign-ins.** The freeze is on starting a session, not on a credential, so an OAuth sign-in has to answer to it or the switch is bypassable by anybody holding a Google account. Refused before the exchange, so a frozen deployment makes no outbound call, spends nobody\'s authorization code, and counts no auth failure: nobody failed to authenticate, the gateway declined to try.
+     * Callback
+     */
+    async callbackV1AuthOauthProviderCallbackPost(requestParameters: CallbackV1AuthOauthProviderCallbackPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OAuthSessionResponse> {
+        const response = await this.callbackV1AuthOauthProviderCallbackPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for confirmResetV1AuthPasswordResetConfirmPost without sending the request
+     */
+    async confirmResetV1AuthPasswordResetConfirmPostRequestOpts(requestParameters: ConfirmResetV1AuthPasswordResetConfirmPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['resetPasswordRequest'] == null) {
+            throw new runtime.RequiredError(
+                'resetPasswordRequest',
+                'Required parameter "resetPasswordRequest" was null or undefined when calling confirmResetV1AuthPasswordResetConfirmPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/v1/auth/password/reset/confirm`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ResetPasswordRequestToJSON(requestParameters['resetPasswordRequest']),
+        };
+    }
+
+    /**
+     * Complete a password reset. Single-use: the token stops working after this.
+     * Confirm Reset
+     */
+    async confirmResetV1AuthPasswordResetConfirmPostRaw(requestParameters: ConfirmResetV1AuthPasswordResetConfirmPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.confirmResetV1AuthPasswordResetConfirmPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Complete a password reset. Single-use: the token stops working after this.
+     * Confirm Reset
+     */
+    async confirmResetV1AuthPasswordResetConfirmPost(requestParameters: ConfirmResetV1AuthPasswordResetConfirmPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.confirmResetV1AuthPasswordResetConfirmPostRaw(requestParameters, initOverrides);
+    }
 
     /**
      * Creates request options for createSessionV1AuthSessionPost without sending the request
@@ -68,7 +458,7 @@ export class AuthApi extends runtime.BaseAPI {
     }
 
     /**
-     * Verify the master key and set the HttpOnly session cookie.  The rate-limit check deliberately runs only after a failed verification, not before it: a pre-verification gate can\'t know whether *this* attempt would have succeeded, so once an IP has used up its failure quota it would end up blocking that IP\'s legitimate owner too, not just further attackers. The issue this implements explicitly rules that out. The DB/hash lookup this exposes to repeated attempts only runs when no fixed master_key is configured (the auto-generated bootstrap-key path); with a configured master_key, verification is a constant-time string compare, not a DB round trip.
+     * Verify a sign-in credential and set the HttpOnly session cookie.  The session is bound to the identity that authenticated, so every request it later authenticates resolves a user and that user\'s active organization rather than only \"a credential was presented once\". The response names both, so a client knows who it is signed in as without a second call.  The rate-limit check deliberately runs only after a failed verification, not before it: a pre-verification gate can\'t know whether *this* attempt would have succeeded, so once an IP has used up its failure quota it would end up blocking that IP\'s legitimate owner too, not just further attackers. Running after verification also means the throttle bounds how many verdicts an IP gets, not how much work it can cause: a password attempt pays for a bcrypt verification (cost 12, on the order of 200ms of CPU, and one is burned against a stand-in hash even for an address nobody holds) before the limit is consulted, so a 429 costs the same as a 401. A gateway exposed to the internet should rate-limit this path at the proxy as well.  The maintenance-mode check runs before either credential is verified, and refuses both. Before, because a frozen deployment should not spend a bcrypt verification per attempt and the refusal is not about the credential anyway; both, because the way back out is the master key against ``PATCH /v1/settings/maintenance-mode`` through the header, which never passes through this door. That is what keeps the way back out off the frozen path, and it is why no identity needs an exemption here; an operator who no longer holds the master key recovers by setting ``OTARI_MASTER_KEY`` and restarting, which is a restart rather than a click. It leaks nothing either: ``GET /v1/bootstrap`` already publishes the same flag unauthenticated, so the sign-in screen can render the right page.
      * Create Session
      */
     async createSessionV1AuthSessionPostRaw(requestParameters: CreateSessionV1AuthSessionPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SessionResponse>> {
@@ -79,12 +469,66 @@ export class AuthApi extends runtime.BaseAPI {
     }
 
     /**
-     * Verify the master key and set the HttpOnly session cookie.  The rate-limit check deliberately runs only after a failed verification, not before it: a pre-verification gate can\'t know whether *this* attempt would have succeeded, so once an IP has used up its failure quota it would end up blocking that IP\'s legitimate owner too, not just further attackers. The issue this implements explicitly rules that out. The DB/hash lookup this exposes to repeated attempts only runs when no fixed master_key is configured (the auto-generated bootstrap-key path); with a configured master_key, verification is a constant-time string compare, not a DB round trip.
+     * Verify a sign-in credential and set the HttpOnly session cookie.  The session is bound to the identity that authenticated, so every request it later authenticates resolves a user and that user\'s active organization rather than only \"a credential was presented once\". The response names both, so a client knows who it is signed in as without a second call.  The rate-limit check deliberately runs only after a failed verification, not before it: a pre-verification gate can\'t know whether *this* attempt would have succeeded, so once an IP has used up its failure quota it would end up blocking that IP\'s legitimate owner too, not just further attackers. Running after verification also means the throttle bounds how many verdicts an IP gets, not how much work it can cause: a password attempt pays for a bcrypt verification (cost 12, on the order of 200ms of CPU, and one is burned against a stand-in hash even for an address nobody holds) before the limit is consulted, so a 429 costs the same as a 401. A gateway exposed to the internet should rate-limit this path at the proxy as well.  The maintenance-mode check runs before either credential is verified, and refuses both. Before, because a frozen deployment should not spend a bcrypt verification per attempt and the refusal is not about the credential anyway; both, because the way back out is the master key against ``PATCH /v1/settings/maintenance-mode`` through the header, which never passes through this door. That is what keeps the way back out off the frozen path, and it is why no identity needs an exemption here; an operator who no longer holds the master key recovers by setting ``OTARI_MASTER_KEY`` and restarting, which is a restart rather than a click. It leaks nothing either: ``GET /v1/bootstrap`` already publishes the same flag unauthenticated, so the sign-in screen can render the right page.
      * Create Session
      */
     async createSessionV1AuthSessionPost(requestParameters: CreateSessionV1AuthSessionPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SessionResponse> {
         const response = await this.createSessionV1AuthSessionPostRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Creates request options for deletePasskeyV1AuthWebauthnCredentialsCredentialIdDelete without sending the request
+     */
+    async deletePasskeyV1AuthWebauthnCredentialsCredentialIdDeleteRequestOpts(requestParameters: DeletePasskeyV1AuthWebauthnCredentialsCredentialIdDeleteRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['credentialId'] == null) {
+            throw new runtime.RequiredError(
+                'credentialId',
+                'Required parameter "credentialId" was null or undefined when calling deletePasskeyV1AuthWebauthnCredentialsCredentialIdDelete().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/auth/webauthn/credentials/{credential_id}`;
+        urlPath = urlPath.replace('{credential_id}', encodeURIComponent(String(requestParameters['credentialId'])));
+
+        return {
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Remove one of the caller\'s passkeys.  Removing the last one is allowed: an email and password is still this deployment\'s login, so this is not a lockout, and refusing would strand whoever lost the authenticator.
+     * Delete Passkey
+     */
+    async deletePasskeyV1AuthWebauthnCredentialsCredentialIdDeleteRaw(requestParameters: DeletePasskeyV1AuthWebauthnCredentialsCredentialIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deletePasskeyV1AuthWebauthnCredentialsCredentialIdDeleteRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Remove one of the caller\'s passkeys.  Removing the last one is allowed: an email and password is still this deployment\'s login, so this is not a lockout, and refusing would strand whoever lost the authenticator.
+     * Delete Passkey
+     */
+    async deletePasskeyV1AuthWebauthnCredentialsCredentialIdDelete(requestParameters: DeletePasskeyV1AuthWebauthnCredentialsCredentialIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deletePasskeyV1AuthWebauthnCredentialsCredentialIdDeleteRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -123,6 +567,475 @@ export class AuthApi extends runtime.BaseAPI {
      */
     async deleteSessionV1AuthSessionDelete(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteSessionV1AuthSessionDeleteRaw(initOverrides);
+    }
+
+    /**
+     * Creates request options for listPasskeysV1AuthWebauthnCredentialsGet without sending the request
+     */
+    async listPasskeysV1AuthWebauthnCredentialsGetRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/auth/webauthn/credentials`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * The caller\'s own passkeys. Never anybody else\'s, and never key material.  Deliberately *not* behind ``require_passkey_support``, and not filtered to the current relying-party ID. A deployment that has changed or lost that ID still holds the rows registered under the old one, and refusing to list them would leave somebody looking at an empty page with no way to clean up and no hint as to why. Each row carries ``is_usable`` instead, so an orphan is visible, explained, and deletable.
+     * List Passkeys
+     */
+    async listPasskeysV1AuthWebauthnCredentialsGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WebAuthnCredentialsPublic>> {
+        const requestOptions = await this.listPasskeysV1AuthWebauthnCredentialsGetRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => WebAuthnCredentialsPublicFromJSON(jsonValue));
+    }
+
+    /**
+     * The caller\'s own passkeys. Never anybody else\'s, and never key material.  Deliberately *not* behind ``require_passkey_support``, and not filtered to the current relying-party ID. A deployment that has changed or lost that ID still holds the rows registered under the old one, and refusing to list them would leave somebody looking at an empty page with no way to clean up and no hint as to why. Each row carries ``is_usable`` instead, so an orphan is visible, explained, and deletable.
+     * List Passkeys
+     */
+    async listPasskeysV1AuthWebauthnCredentialsGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WebAuthnCredentialsPublic> {
+        const response = await this.listPasskeysV1AuthWebauthnCredentialsGetRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for registerPasskeyV1AuthWebauthnRegisterPost without sending the request
+     */
+    async registerPasskeyV1AuthWebauthnRegisterPostRequestOpts(requestParameters: RegisterPasskeyV1AuthWebauthnRegisterPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['registerPasskeyRequest'] == null) {
+            throw new runtime.RequiredError(
+                'registerPasskeyRequest',
+                'Required parameter "registerPasskeyRequest" was null or undefined when calling registerPasskeyV1AuthWebauthnRegisterPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/auth/webauthn/register`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: RegisterPasskeyRequestToJSON(requestParameters['registerPasskeyRequest']),
+        };
+    }
+
+    /**
+     * Verify a registration ceremony and store the passkey it produced.
+     * Register Passkey
+     */
+    async registerPasskeyV1AuthWebauthnRegisterPostRaw(requestParameters: RegisterPasskeyV1AuthWebauthnRegisterPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WebAuthnCredentialPublic>> {
+        const requestOptions = await this.registerPasskeyV1AuthWebauthnRegisterPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => WebAuthnCredentialPublicFromJSON(jsonValue));
+    }
+
+    /**
+     * Verify a registration ceremony and store the passkey it produced.
+     * Register Passkey
+     */
+    async registerPasskeyV1AuthWebauthnRegisterPost(requestParameters: RegisterPasskeyV1AuthWebauthnRegisterPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WebAuthnCredentialPublic> {
+        const response = await this.registerPasskeyV1AuthWebauthnRegisterPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for registrationOptionsV1AuthWebauthnRegisterOptionsPost without sending the request
+     */
+    async registrationOptionsV1AuthWebauthnRegisterOptionsPostRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/auth/webauthn/register/options`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Start registering a passkey for the signed-in identity.  A POST rather than a GET even though it reads like one: it issues a server-side challenge and writes it, so it is not safe to repeat, cache, or prefetch.
+     * Registration Options
+     */
+    async registrationOptionsV1AuthWebauthnRegisterOptionsPostRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: any; }>> {
+        const requestOptions = await this.registrationOptionsV1AuthWebauthnRegisterOptionsPostRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Start registering a passkey for the signed-in identity.  A POST rather than a GET even though it reads like one: it issues a server-side challenge and writes it, so it is not safe to repeat, cache, or prefetch.
+     * Registration Options
+     */
+    async registrationOptionsV1AuthWebauthnRegisterOptionsPost(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: any; }> {
+        const response = await this.registrationOptionsV1AuthWebauthnRegisterOptionsPostRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for renamePasskeyV1AuthWebauthnCredentialsCredentialIdPatch without sending the request
+     */
+    async renamePasskeyV1AuthWebauthnCredentialsCredentialIdPatchRequestOpts(requestParameters: RenamePasskeyV1AuthWebauthnCredentialsCredentialIdPatchRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['credentialId'] == null) {
+            throw new runtime.RequiredError(
+                'credentialId',
+                'Required parameter "credentialId" was null or undefined when calling renamePasskeyV1AuthWebauthnCredentialsCredentialIdPatch().'
+            );
+        }
+
+        if (requestParameters['webAuthnCredentialUpdate'] == null) {
+            throw new runtime.RequiredError(
+                'webAuthnCredentialUpdate',
+                'Required parameter "webAuthnCredentialUpdate" was null or undefined when calling renamePasskeyV1AuthWebauthnCredentialsCredentialIdPatch().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/auth/webauthn/credentials/{credential_id}`;
+        urlPath = urlPath.replace('{credential_id}', encodeURIComponent(String(requestParameters['credentialId'])));
+
+        return {
+            path: urlPath,
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: WebAuthnCredentialUpdateToJSON(requestParameters['webAuthnCredentialUpdate']),
+        };
+    }
+
+    /**
+     * Relabel one of the caller\'s passkeys, which is all that is editable.  Ungated like the list, and for the same reason: naming an orphan before deleting it is not something a lost relying-party ID should prevent.
+     * Rename Passkey
+     */
+    async renamePasskeyV1AuthWebauthnCredentialsCredentialIdPatchRaw(requestParameters: RenamePasskeyV1AuthWebauthnCredentialsCredentialIdPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WebAuthnCredentialPublic>> {
+        const requestOptions = await this.renamePasskeyV1AuthWebauthnCredentialsCredentialIdPatchRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => WebAuthnCredentialPublicFromJSON(jsonValue));
+    }
+
+    /**
+     * Relabel one of the caller\'s passkeys, which is all that is editable.  Ungated like the list, and for the same reason: naming an orphan before deleting it is not something a lost relying-party ID should prevent.
+     * Rename Passkey
+     */
+    async renamePasskeyV1AuthWebauthnCredentialsCredentialIdPatch(requestParameters: RenamePasskeyV1AuthWebauthnCredentialsCredentialIdPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WebAuthnCredentialPublic> {
+        const response = await this.renamePasskeyV1AuthWebauthnCredentialsCredentialIdPatchRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for requestResetV1AuthPasswordResetPost without sending the request
+     */
+    async requestResetV1AuthPasswordResetPostRequestOpts(requestParameters: RequestResetV1AuthPasswordResetPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['requestPasswordResetRequest'] == null) {
+            throw new runtime.RequiredError(
+                'requestPasswordResetRequest',
+                'Required parameter "requestPasswordResetRequest" was null or undefined when calling requestResetV1AuthPasswordResetPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/v1/auth/password/reset`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: RequestPasswordResetRequestToJSON(requestParameters['requestPasswordResetRequest']),
+        };
+    }
+
+    /**
+     * Mail a password-reset link, or do nothing: the response never says which.
+     * Request Reset
+     */
+    async requestResetV1AuthPasswordResetPostRaw(requestParameters: RequestResetV1AuthPasswordResetPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestPasswordResetResponse>> {
+        const requestOptions = await this.requestResetV1AuthPasswordResetPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => RequestPasswordResetResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Mail a password-reset link, or do nothing: the response never says which.
+     * Request Reset
+     */
+    async requestResetV1AuthPasswordResetPost(requestParameters: RequestResetV1AuthPasswordResetPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestPasswordResetResponse> {
+        const response = await this.requestResetV1AuthPasswordResetPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for resendVerificationV1AuthResendVerificationPost without sending the request
+     */
+    async resendVerificationV1AuthResendVerificationPostRequestOpts(requestParameters: ResendVerificationV1AuthResendVerificationPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['resendVerificationRequest'] == null) {
+            throw new runtime.RequiredError(
+                'resendVerificationRequest',
+                'Required parameter "resendVerificationRequest" was null or undefined when calling resendVerificationV1AuthResendVerificationPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/v1/auth/resend-verification`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ResendVerificationRequestToJSON(requestParameters['resendVerificationRequest']),
+        };
+    }
+
+    /**
+     * Mail a fresh verification link, or do nothing: the response never says which.
+     * Resend Verification
+     */
+    async resendVerificationV1AuthResendVerificationPostRaw(requestParameters: ResendVerificationV1AuthResendVerificationPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResendVerificationResponse>> {
+        const requestOptions = await this.resendVerificationV1AuthResendVerificationPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ResendVerificationResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Mail a fresh verification link, or do nothing: the response never says which.
+     * Resend Verification
+     */
+    async resendVerificationV1AuthResendVerificationPost(requestParameters: ResendVerificationV1AuthResendVerificationPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResendVerificationResponse> {
+        const response = await this.resendVerificationV1AuthResendVerificationPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for setDashboardPasswordV1AuthPasswordPut without sending the request
+     */
+    async setDashboardPasswordV1AuthPasswordPutRequestOpts(requestParameters: SetDashboardPasswordV1AuthPasswordPutRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['setPasswordRequest'] == null) {
+            throw new runtime.RequiredError(
+                'setPasswordRequest',
+                'Required parameter "setPasswordRequest" was null or undefined when calling setDashboardPasswordV1AuthPasswordPut().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/auth/password`;
+
+        return {
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: SetPasswordRequestToJSON(requestParameters['setPasswordRequest']),
+        };
+    }
+
+    /**
+     * Set or change the password the caller signs in to the dashboard with.  Always the caller\'s own identity. Supply ``email`` when it has no sign-in address yet, which is the state first boot leaves the operator in, and ``current_password`` when it already has a password and the request is authenticated by the session cookie. The master key in a header is what excuses ``current_password``, which is how a forgotten password is recovered; it does not excuse ``email``, because an identity with no address has nothing to sign in with whoever is asking. The operator setting a password for the first time retires master-key sign-in on this deployment.  Every other session this identity holds ends, the caller\'s own excepted, so a cookie stolen before the change does not outlive it.
+     * Set Dashboard Password
+     */
+    async setDashboardPasswordV1AuthPasswordPutRaw(requestParameters: SetDashboardPasswordV1AuthPasswordPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PasswordResponse>> {
+        const requestOptions = await this.setDashboardPasswordV1AuthPasswordPutRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PasswordResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Set or change the password the caller signs in to the dashboard with.  Always the caller\'s own identity. Supply ``email`` when it has no sign-in address yet, which is the state first boot leaves the operator in, and ``current_password`` when it already has a password and the request is authenticated by the session cookie. The master key in a header is what excuses ``current_password``, which is how a forgotten password is recovered; it does not excuse ``email``, because an identity with no address has nothing to sign in with whoever is asking. The operator setting a password for the first time retires master-key sign-in on this deployment.  Every other session this identity holds ends, the caller\'s own excepted, so a cookie stolen before the change does not outlive it.
+     * Set Dashboard Password
+     */
+    async setDashboardPasswordV1AuthPasswordPut(requestParameters: SetDashboardPasswordV1AuthPasswordPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PasswordResponse> {
+        const response = await this.setDashboardPasswordV1AuthPasswordPutRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for signupV1AuthSignupPost without sending the request
+     */
+    async signupV1AuthSignupPostRequestOpts(requestParameters: SignupV1AuthSignupPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['signupRequest'] == null) {
+            throw new runtime.RequiredError(
+                'signupRequest',
+                'Required parameter "signupRequest" was null or undefined when calling signupV1AuthSignupPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/v1/auth/signup`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: SignupRequestToJSON(requestParameters['signupRequest']),
+        };
+    }
+
+    /**
+     * Claim a roster identity, or do nothing: the response never says which.  No session is minted. A newly claimed identity is hard-blocked from signing in until it verifies, so there is nothing yet to sign it into.
+     * Signup
+     */
+    async signupV1AuthSignupPostRaw(requestParameters: SignupV1AuthSignupPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SignupResponse>> {
+        const requestOptions = await this.signupV1AuthSignupPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => SignupResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Claim a roster identity, or do nothing: the response never says which.  No session is minted. A newly claimed identity is hard-blocked from signing in until it verifies, so there is nothing yet to sign it into.
+     * Signup
+     */
+    async signupV1AuthSignupPost(requestParameters: SignupV1AuthSignupPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SignupResponse> {
+        const response = await this.signupV1AuthSignupPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for verifyEmailRouteV1AuthVerifyEmailPost without sending the request
+     */
+    async verifyEmailRouteV1AuthVerifyEmailPostRequestOpts(requestParameters: VerifyEmailRouteV1AuthVerifyEmailPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['verifyEmailRequest'] == null) {
+            throw new runtime.RequiredError(
+                'verifyEmailRequest',
+                'Required parameter "verifyEmailRequest" was null or undefined when calling verifyEmailRouteV1AuthVerifyEmailPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/v1/auth/verify-email`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: VerifyEmailRequestToJSON(requestParameters['verifyEmailRequest']),
+        };
+    }
+
+    /**
+     * Confirm an address from its verification link, lifting the sign-in gate.
+     * Verify Email Route
+     */
+    async verifyEmailRouteV1AuthVerifyEmailPostRaw(requestParameters: VerifyEmailRouteV1AuthVerifyEmailPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VerifyEmailResponse>> {
+        const requestOptions = await this.verifyEmailRouteV1AuthVerifyEmailPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => VerifyEmailResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Confirm an address from its verification link, lifting the sign-in gate.
+     * Verify Email Route
+     */
+    async verifyEmailRouteV1AuthVerifyEmailPost(requestParameters: VerifyEmailRouteV1AuthVerifyEmailPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VerifyEmailResponse> {
+        const response = await this.verifyEmailRouteV1AuthVerifyEmailPostRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
 }

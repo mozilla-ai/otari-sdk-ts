@@ -13,34 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { MRBetaTextEditorCodeExecutionStrReplaceResultBlock } from './MRBetaTextEditorCodeExecutionStrReplaceResultBlock.js';
+import type { MRBetaTextBlock } from './MRBetaTextBlock.js';
 import {
-    MRBetaTextEditorCodeExecutionStrReplaceResultBlockFromJSON,
-    MRBetaTextEditorCodeExecutionStrReplaceResultBlockFromJSONTyped,
-    MRBetaTextEditorCodeExecutionStrReplaceResultBlockToJSON,
-    MRBetaTextEditorCodeExecutionStrReplaceResultBlockToJSONTyped,
-} from './MRBetaTextEditorCodeExecutionStrReplaceResultBlock.js';
-import type { MRBetaTextEditorCodeExecutionCreateResultBlock } from './MRBetaTextEditorCodeExecutionCreateResultBlock.js';
-import {
-    MRBetaTextEditorCodeExecutionCreateResultBlockFromJSON,
-    MRBetaTextEditorCodeExecutionCreateResultBlockFromJSONTyped,
-    MRBetaTextEditorCodeExecutionCreateResultBlockToJSON,
-    MRBetaTextEditorCodeExecutionCreateResultBlockToJSONTyped,
-} from './MRBetaTextEditorCodeExecutionCreateResultBlock.js';
-import type { MRBetaTextEditorCodeExecutionViewResultBlock } from './MRBetaTextEditorCodeExecutionViewResultBlock.js';
-import {
-    MRBetaTextEditorCodeExecutionViewResultBlockFromJSON,
-    MRBetaTextEditorCodeExecutionViewResultBlockFromJSONTyped,
-    MRBetaTextEditorCodeExecutionViewResultBlockToJSON,
-    MRBetaTextEditorCodeExecutionViewResultBlockToJSONTyped,
-} from './MRBetaTextEditorCodeExecutionViewResultBlock.js';
-import type { MRBetaTextEditorCodeExecutionToolResultError } from './MRBetaTextEditorCodeExecutionToolResultError.js';
-import {
-    MRBetaTextEditorCodeExecutionToolResultErrorFromJSON,
-    MRBetaTextEditorCodeExecutionToolResultErrorFromJSONTyped,
-    MRBetaTextEditorCodeExecutionToolResultErrorToJSON,
-    MRBetaTextEditorCodeExecutionToolResultErrorToJSONTyped,
-} from './MRBetaTextEditorCodeExecutionToolResultError.js';
+    MRBetaTextBlockFromJSON,
+    MRBetaTextBlockFromJSONTyped,
+    MRBetaTextBlockToJSON,
+    MRBetaTextBlockToJSONTyped,
+} from './MRBetaTextBlock.js';
 
 /**
  * 
@@ -48,136 +27,12 @@ import {
  * @interface Content7
  */
 export interface Content7 {
-    /**
-     * 
-     * @type {Content7ErrorCodeEnum}
-     * @memberof Content7
-     */
-    errorCode: Content7ErrorCodeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof Content7
-     */
-    errorMessage?: string;
-    /**
-     * 
-     * @type {Content7TypeEnum}
-     * @memberof Content7
-     */
-    type: Content7TypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof Content7
-     */
-    content: string;
-    /**
-     * 
-     * @type {Content7FileTypeEnum}
-     * @memberof Content7
-     */
-    fileType: Content7FileTypeEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content7
-     */
-    numLines?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content7
-     */
-    startLine?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content7
-     */
-    totalLines?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Content7
-     */
-    isFileUpdate: boolean;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof Content7
-     */
-    lines?: Array<string>;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content7
-     */
-    newLines?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content7
-     */
-    newStart?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content7
-     */
-    oldLines?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content7
-     */
-    oldStart?: number;
 }
-
-
-/**
- * @export
- */
-export const Content7ErrorCodeEnum = {
-    InvalidToolInput: 'invalid_tool_input',
-    Unavailable: 'unavailable',
-    TooManyRequests: 'too_many_requests',
-    ExecutionTimeExceeded: 'execution_time_exceeded',
-    FileNotFound: 'file_not_found'
-} as const;
-export type Content7ErrorCodeEnum = typeof Content7ErrorCodeEnum[keyof typeof Content7ErrorCodeEnum];
-
-/**
- * @export
- */
-export const Content7TypeEnum = {
-    TextEditorCodeExecutionToolResultError: 'text_editor_code_execution_tool_result_error',
-    TextEditorCodeExecutionViewResult: 'text_editor_code_execution_view_result',
-    TextEditorCodeExecutionCreateResult: 'text_editor_code_execution_create_result',
-    TextEditorCodeExecutionStrReplaceResult: 'text_editor_code_execution_str_replace_result'
-} as const;
-export type Content7TypeEnum = typeof Content7TypeEnum[keyof typeof Content7TypeEnum];
-
-/**
- * @export
- */
-export const Content7FileTypeEnum = {
-    Text: 'text',
-    Image: 'image',
-    Pdf: 'pdf'
-} as const;
-export type Content7FileTypeEnum = typeof Content7FileTypeEnum[keyof typeof Content7FileTypeEnum];
-
 
 /**
  * Check if a given object implements the Content7 interface.
  */
 export function instanceOfContent7(value: object): value is Content7 {
-    if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
-    if (!('type' in value) || value['type'] === undefined) return false;
-    if (!('content' in value) || value['content'] === undefined) return false;
-    if (!('fileType' in value) || value['fileType'] === undefined) return false;
-    if (!('isFileUpdate' in value) || value['isFileUpdate'] === undefined) return false;
     return true;
 }
 
@@ -186,26 +41,7 @@ export function Content7FromJSON(json: any): Content7 {
 }
 
 export function Content7FromJSONTyped(json: any, ignoreDiscriminator: boolean): Content7 {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-        'errorCode': json['error_code'],
-        'errorMessage': json['error_message'] == null ? undefined : json['error_message'],
-        'type': json['type'],
-        'content': json['content'],
-        'fileType': json['file_type'],
-        'numLines': json['num_lines'] == null ? undefined : json['num_lines'],
-        'startLine': json['start_line'] == null ? undefined : json['start_line'],
-        'totalLines': json['total_lines'] == null ? undefined : json['total_lines'],
-        'isFileUpdate': json['is_file_update'],
-        'lines': json['lines'] == null ? undefined : json['lines'],
-        'newLines': json['new_lines'] == null ? undefined : json['new_lines'],
-        'newStart': json['new_start'] == null ? undefined : json['new_start'],
-        'oldLines': json['old_lines'] == null ? undefined : json['old_lines'],
-        'oldStart': json['old_start'] == null ? undefined : json['old_start'],
-    };
+    return json;
 }
 
 export function Content7ToJSON(json: any): Content7 {
@@ -213,26 +49,6 @@ export function Content7ToJSON(json: any): Content7 {
 }
 
 export function Content7ToJSONTyped(value?: Content7 | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
-
-    return {
-        
-        'error_code': value['errorCode'],
-        'error_message': value['errorMessage'],
-        'type': value['type'],
-        'content': value['content'],
-        'file_type': value['fileType'],
-        'num_lines': value['numLines'],
-        'start_line': value['startLine'],
-        'total_lines': value['totalLines'],
-        'is_file_update': value['isFileUpdate'],
-        'lines': value['lines'],
-        'new_lines': value['newLines'],
-        'new_start': value['newStart'],
-        'old_lines': value['oldLines'],
-        'old_start': value['oldStart'],
-    };
+    return value;
 }
 

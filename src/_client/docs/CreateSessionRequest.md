@@ -1,13 +1,15 @@
 
 # CreateSessionRequest
 
-Sign in to the dashboard by proving possession of the master key.
+Sign in to the dashboard with exactly one credential.  A flat body with an optional field per credential, rather than a tagged union: it is one extra key on the wire, it generates a client type a hand-written form can fill in, and the validator below makes the two forms exclusive anyway.  The example carries one credential, because a generated example is a body somebody will post: the schema alone would produce every field at once, which is the one shape the validator below refuses.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
+`email` | string
 `masterKey` | string
+`password` | string
 
 ## Example
 
@@ -16,7 +18,9 @@ import type { CreateSessionRequest } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "email": null,
   "masterKey": null,
+  "password": null,
 } satisfies CreateSessionRequest
 
 console.log(example)

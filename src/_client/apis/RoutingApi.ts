@@ -54,13 +54,27 @@ import {
     RouterStatusToJSON,
 } from '../models/RouterStatus.js';
 
+export interface DeleteOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesNameDeleteRequest {
+    name: string;
+    workspaceId?: string | null;
+}
+
 export interface DeletePolicyV1RoutingPoliciesNameDeleteRequest {
     name: string;
     userId?: string | null;
+    workspaceId?: string | null;
 }
 
 export interface ExplainPolicyV1RoutingPoliciesExplainPostRequest {
     explainRequest: ExplainRequest;
+}
+
+export interface ListPoliciesV1RoutingPoliciesGetRequest {
+    workspaceId?: string | null;
+}
+
+export interface ListVisibleRoutingPoliciesV1OrganizationsMeRoutingPoliciesGetRequest {
+    limit?: number;
 }
 
 export interface RankCandidatesV1RoutingPreferencesRankPostRequest {
@@ -69,6 +83,11 @@ export interface RankCandidatesV1RoutingPreferencesRankPostRequest {
 
 export interface RoutingMemoryStatusV1RoutingStatusGetRequest {
     userId: string;
+    workspaceId?: string | null;
+}
+
+export interface SetOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesPostRequest {
+    policyRequest: PolicyRequest;
 }
 
 export interface SetPolicyV1RoutingPoliciesPostRequest {
@@ -79,6 +98,64 @@ export interface SetPolicyV1RoutingPoliciesPostRequest {
  * 
  */
 export class RoutingApi extends runtime.BaseAPI {
+
+    /**
+     * Creates request options for deleteOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesNameDelete without sending the request
+     */
+    async deleteOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesNameDeleteRequestOpts(requestParameters: DeleteOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesNameDeleteRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling deleteOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesNameDelete().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['workspaceId'] != null) {
+            queryParameters['workspace_id'] = requestParameters['workspaceId'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/organizations/me/routing-policies/{name}`;
+        urlPath = urlPath.replace('{name}', encodeURIComponent(String(requestParameters['name'])));
+
+        return {
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Delete a stored policy from one of the organization\'s workspaces. Owners and admins only.
+     * Delete Organization Routing Policy
+     */
+    async deleteOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesNameDeleteRaw(requestParameters: DeleteOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesNameDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesNameDeleteRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Delete a stored policy from one of the organization\'s workspaces. Owners and admins only.
+     * Delete Organization Routing Policy
+     */
+    async deleteOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesNameDelete(requestParameters: DeleteOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesNameDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesNameDeleteRaw(requestParameters, initOverrides);
+    }
 
     /**
      * Creates request options for deletePolicyV1RoutingPoliciesNameDelete without sending the request
@@ -95,6 +172,10 @@ export class RoutingApi extends runtime.BaseAPI {
 
         if (requestParameters['userId'] != null) {
             queryParameters['user_id'] = requestParameters['userId'];
+        }
+
+        if (requestParameters['workspaceId'] != null) {
+            queryParameters['workspace_id'] = requestParameters['workspaceId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -120,7 +201,7 @@ export class RoutingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a stored policy in one scope.  Scoped by ``user_id`` for the same reason the upsert is: deleting the global policy must not take a user\'s override with it, and deleting an override must leave the global one serving everyone else.
+     * Delete a stored policy in one scope.
      * Delete Policy
      */
     async deletePolicyV1RoutingPoliciesNameDeleteRaw(requestParameters: DeletePolicyV1RoutingPoliciesNameDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -131,7 +212,7 @@ export class RoutingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a stored policy in one scope.  Scoped by ``user_id`` for the same reason the upsert is: deleting the global policy must not take a user\'s override with it, and deleting an override must leave the global one serving everyone else.
+     * Delete a stored policy in one scope.
      * Delete Policy
      */
     async deletePolicyV1RoutingPoliciesNameDelete(requestParameters: DeletePolicyV1RoutingPoliciesNameDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
@@ -176,7 +257,7 @@ export class RoutingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Compile a policy and return the plan, without dispatching anything.  Master-key gated, and deliberately so: the response enumerates the policy\'s targets, which is exactly the information a policy exists to keep off the wire. It is a management surface, not a caller-facing one.  Accepts an unsaved ``spec`` as well as a saved ``name``, so a form can validate what the operator is about to save. The response includes dropped candidates with reasons, which is the part that catches a \"failover\" policy that has quietly compiled down to a single attempt.
+     * Compile a policy and return the plan, without dispatching anything.  Operator-gated, and deliberately so: the response enumerates the policy\'s targets, which is exactly the information a policy exists to keep off the wire. It is a management surface, not a caller-facing one.  Accepts an unsaved ``spec`` as well as a saved ``name``, so a form can validate what the operator is about to save. The response includes dropped candidates with reasons, which is the part that catches a \"failover\" policy that has quietly compiled down to a single attempt.
      * Explain Policy
      */
     async explainPolicyV1RoutingPoliciesExplainPostRaw(requestParameters: ExplainPolicyV1RoutingPoliciesExplainPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ExplainResponse>> {
@@ -187,7 +268,7 @@ export class RoutingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Compile a policy and return the plan, without dispatching anything.  Master-key gated, and deliberately so: the response enumerates the policy\'s targets, which is exactly the information a policy exists to keep off the wire. It is a management surface, not a caller-facing one.  Accepts an unsaved ``spec`` as well as a saved ``name``, so a form can validate what the operator is about to save. The response includes dropped candidates with reasons, which is the part that catches a \"failover\" policy that has quietly compiled down to a single attempt.
+     * Compile a policy and return the plan, without dispatching anything.  Operator-gated, and deliberately so: the response enumerates the policy\'s targets, which is exactly the information a policy exists to keep off the wire. It is a management surface, not a caller-facing one.  Accepts an unsaved ``spec`` as well as a saved ``name``, so a form can validate what the operator is about to save. The response includes dropped candidates with reasons, which is the part that catches a \"failover\" policy that has quietly compiled down to a single attempt.
      * Explain Policy
      */
     async explainPolicyV1RoutingPoliciesExplainPost(requestParameters: ExplainPolicyV1RoutingPoliciesExplainPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ExplainResponse> {
@@ -198,8 +279,12 @@ export class RoutingApi extends runtime.BaseAPI {
     /**
      * Creates request options for listPoliciesV1RoutingPoliciesGet without sending the request
      */
-    async listPoliciesV1RoutingPoliciesGetRequestOpts(): Promise<runtime.RequestOpts> {
+    async listPoliciesV1RoutingPoliciesGetRequestOpts(requestParameters: ListPoliciesV1RoutingPoliciesGetRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
+
+        if (requestParameters['workspaceId'] != null) {
+            queryParameters['workspace_id'] = requestParameters['workspaceId'];
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -223,22 +308,73 @@ export class RoutingApi extends runtime.BaseAPI {
     }
 
     /**
-     * List every routing policy in force, from config.yml and from storage.  Every scope at once, global and user-scoped alike: this is the master-key management view, not what any one caller resolves.
+     * List every routing policy in force, from config.yml and from storage.  Every scope at once, workspace-wide and user-scoped alike: this is the master-key management view, not what any one caller resolves.
      * List Policies
      */
-    async listPoliciesV1RoutingPoliciesGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<PolicyResponse>>> {
-        const requestOptions = await this.listPoliciesV1RoutingPoliciesGetRequestOpts();
+    async listPoliciesV1RoutingPoliciesGetRaw(requestParameters: ListPoliciesV1RoutingPoliciesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<PolicyResponse>>> {
+        const requestOptions = await this.listPoliciesV1RoutingPoliciesGetRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(PolicyResponseFromJSON));
     }
 
     /**
-     * List every routing policy in force, from config.yml and from storage.  Every scope at once, global and user-scoped alike: this is the master-key management view, not what any one caller resolves.
+     * List every routing policy in force, from config.yml and from storage.  Every scope at once, workspace-wide and user-scoped alike: this is the master-key management view, not what any one caller resolves.
      * List Policies
      */
-    async listPoliciesV1RoutingPoliciesGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<PolicyResponse>> {
-        const response = await this.listPoliciesV1RoutingPoliciesGetRaw(initOverrides);
+    async listPoliciesV1RoutingPoliciesGet(requestParameters: ListPoliciesV1RoutingPoliciesGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<PolicyResponse>> {
+        const response = await this.listPoliciesV1RoutingPoliciesGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for listVisibleRoutingPoliciesV1OrganizationsMeRoutingPoliciesGet without sending the request
+     */
+    async listVisibleRoutingPoliciesV1OrganizationsMeRoutingPoliciesGetRequestOpts(requestParameters: ListVisibleRoutingPoliciesV1OrganizationsMeRoutingPoliciesGetRequest): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/organizations/me/routing-policies`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * List the routing policies in force in the workspaces this caller may see.  Stored policies from the caller\'s visible workspaces plus the config-file policies, which are deployment-wide and resolve in every workspace. The response is the shape ``GET /v1/routing/policies`` answers, narrowed to the caller\'s own organization.
+     * List Visible Routing Policies
+     */
+    async listVisibleRoutingPoliciesV1OrganizationsMeRoutingPoliciesGetRaw(requestParameters: ListVisibleRoutingPoliciesV1OrganizationsMeRoutingPoliciesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<PolicyResponse>>> {
+        const requestOptions = await this.listVisibleRoutingPoliciesV1OrganizationsMeRoutingPoliciesGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(PolicyResponseFromJSON));
+    }
+
+    /**
+     * List the routing policies in force in the workspaces this caller may see.  Stored policies from the caller\'s visible workspaces plus the config-file policies, which are deployment-wide and resolve in every workspace. The response is the shape ``GET /v1/routing/policies`` answers, narrowed to the caller\'s own organization.
+     * List Visible Routing Policies
+     */
+    async listVisibleRoutingPoliciesV1OrganizationsMeRoutingPoliciesGet(requestParameters: ListVisibleRoutingPoliciesV1OrganizationsMeRoutingPoliciesGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<PolicyResponse>> {
+        const response = await this.listVisibleRoutingPoliciesV1OrganizationsMeRoutingPoliciesGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -316,6 +452,10 @@ export class RoutingApi extends runtime.BaseAPI {
             queryParameters['user_id'] = requestParameters['userId'];
         }
 
+        if (requestParameters['workspaceId'] != null) {
+            queryParameters['workspace_id'] = requestParameters['workspaceId'];
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -338,7 +478,7 @@ export class RoutingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Report how warm one user\'s routing memory is, per pool.  ``user_id`` is required rather than optional because there is no aggregate answer: warmth is per user, and a total across users would describe a pool that no request ever votes over.
+     * Report how warm one user\'s routing memory is in one workspace, per pool.  ``user_id`` is required rather than optional because there is no aggregate answer: warmth is per user, and a total across users would describe a pool that no request ever votes over. The same holds across workspaces, which is why ``workspace_id`` narrows rather than aggregating; it merely defaults instead of being required, because a single-workspace deployment has one answer.
      * Routing Memory Status
      */
     async routingMemoryStatusV1RoutingStatusGetRaw(requestParameters: RoutingMemoryStatusV1RoutingStatusGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RouterStatus>> {
@@ -349,11 +489,68 @@ export class RoutingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Report how warm one user\'s routing memory is, per pool.  ``user_id`` is required rather than optional because there is no aggregate answer: warmth is per user, and a total across users would describe a pool that no request ever votes over.
+     * Report how warm one user\'s routing memory is in one workspace, per pool.  ``user_id`` is required rather than optional because there is no aggregate answer: warmth is per user, and a total across users would describe a pool that no request ever votes over. The same holds across workspaces, which is why ``workspace_id`` narrows rather than aggregating; it merely defaults instead of being required, because a single-workspace deployment has one answer.
      * Routing Memory Status
      */
     async routingMemoryStatusV1RoutingStatusGet(requestParameters: RoutingMemoryStatusV1RoutingStatusGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RouterStatus> {
         const response = await this.routingMemoryStatusV1RoutingStatusGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for setOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesPost without sending the request
+     */
+    async setOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesPostRequestOpts(requestParameters: SetOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['policyRequest'] == null) {
+            throw new runtime.RequiredError(
+                'policyRequest',
+                'Required parameter "policyRequest" was null or undefined when calling setOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/organizations/me/routing-policies`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PolicyRequestToJSON(requestParameters['policyRequest']),
+        };
+    }
+
+    /**
+     * Create or update a stored policy in one of the organization\'s workspaces.  Organization owners and admins only. ``workspace_id`` is required and must name a workspace of the caller\'s own organization; ``user_id`` is not accepted here.
+     * Set Organization Routing Policy
+     */
+    async setOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesPostRaw(requestParameters: SetOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PolicyResponse>> {
+        const requestOptions = await this.setOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PolicyResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Create or update a stored policy in one of the organization\'s workspaces.  Organization owners and admins only. ``workspace_id`` is required and must name a workspace of the caller\'s own organization; ``user_id`` is not accepted here.
+     * Set Organization Routing Policy
+     */
+    async setOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesPost(requestParameters: SetOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PolicyResponse> {
+        const response = await this.setOrganizationRoutingPolicyV1OrganizationsMeRoutingPoliciesPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -395,7 +592,7 @@ export class RoutingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create or update a stored policy, global or scoped to one user.  The spec is validated here and stored as given, so a row can never contain a body this build would refuse at load. The cache is refreshed twice: once before validating (so the shadowing checks see other writers\' policies) and once after committing (so this worker serves the new policy immediately).  ``rename_from`` renames the row instead of keying on ``name``. It is part of this write rather than an endpoint of its own so that an edit which both renames a policy and re-targets it cannot land half-applied, leaving the old name serving the new spec. The new name is validated exactly as a fresh one is, because a rename can walk a policy into every collision a create can. Sending the field asserts the named policy is stored, so it never falls back to creating one.
+     * Create or update a stored policy in one workspace, optionally for one user.  Omitting ``workspace_id`` means the deployment\'s default workspace, which is where an operator acting deployment-wide writes.
      * Set Policy
      */
     async setPolicyV1RoutingPoliciesPostRaw(requestParameters: SetPolicyV1RoutingPoliciesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PolicyResponse>> {
@@ -406,7 +603,7 @@ export class RoutingApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create or update a stored policy, global or scoped to one user.  The spec is validated here and stored as given, so a row can never contain a body this build would refuse at load. The cache is refreshed twice: once before validating (so the shadowing checks see other writers\' policies) and once after committing (so this worker serves the new policy immediately).  ``rename_from`` renames the row instead of keying on ``name``. It is part of this write rather than an endpoint of its own so that an edit which both renames a policy and re-targets it cannot land half-applied, leaving the old name serving the new spec. The new name is validated exactly as a fresh one is, because a rename can walk a policy into every collision a create can. Sending the field asserts the named policy is stored, so it never falls back to creating one.
+     * Create or update a stored policy in one workspace, optionally for one user.  Omitting ``workspace_id`` means the deployment\'s default workspace, which is where an operator acting deployment-wide writes.
      * Set Policy
      */
     async setPolicyV1RoutingPoliciesPost(requestParameters: SetPolicyV1RoutingPoliciesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PolicyResponse> {

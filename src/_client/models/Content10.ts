@@ -13,20 +13,27 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { MRBetaWebSearchResultBlock } from './MRBetaWebSearchResultBlock.js';
+import type { MRBetaWebFetchBlock } from './MRBetaWebFetchBlock.js';
 import {
-    MRBetaWebSearchResultBlockFromJSON,
-    MRBetaWebSearchResultBlockFromJSONTyped,
-    MRBetaWebSearchResultBlockToJSON,
-    MRBetaWebSearchResultBlockToJSONTyped,
-} from './MRBetaWebSearchResultBlock.js';
-import type { MRBetaWebSearchToolResultError } from './MRBetaWebSearchToolResultError.js';
+    MRBetaWebFetchBlockFromJSON,
+    MRBetaWebFetchBlockFromJSONTyped,
+    MRBetaWebFetchBlockToJSON,
+    MRBetaWebFetchBlockToJSONTyped,
+} from './MRBetaWebFetchBlock.js';
+import type { MRBetaDocumentBlock } from './MRBetaDocumentBlock.js';
 import {
-    MRBetaWebSearchToolResultErrorFromJSON,
-    MRBetaWebSearchToolResultErrorFromJSONTyped,
-    MRBetaWebSearchToolResultErrorToJSON,
-    MRBetaWebSearchToolResultErrorToJSONTyped,
-} from './MRBetaWebSearchToolResultError.js';
+    MRBetaDocumentBlockFromJSON,
+    MRBetaDocumentBlockFromJSONTyped,
+    MRBetaDocumentBlockToJSON,
+    MRBetaDocumentBlockToJSONTyped,
+} from './MRBetaDocumentBlock.js';
+import type { MRBetaWebFetchToolResultErrorBlock } from './MRBetaWebFetchToolResultErrorBlock.js';
+import {
+    MRBetaWebFetchToolResultErrorBlockFromJSON,
+    MRBetaWebFetchToolResultErrorBlockFromJSONTyped,
+    MRBetaWebFetchToolResultErrorBlockToJSON,
+    MRBetaWebFetchToolResultErrorBlockToJSONTyped,
+} from './MRBetaWebFetchToolResultErrorBlock.js';
 
 /**
  * 
@@ -46,6 +53,24 @@ export interface Content10 {
      * @memberof Content10
      */
     type: Content10TypeEnum;
+    /**
+     * 
+     * @type {MRBetaDocumentBlock}
+     * @memberof Content10
+     */
+    content: MRBetaDocumentBlock;
+    /**
+     * 
+     * @type {string}
+     * @memberof Content10
+     */
+    retrievedAt?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Content10
+     */
+    url: string;
 }
 
 
@@ -54,11 +79,14 @@ export interface Content10 {
  */
 export const Content10ErrorCodeEnum = {
     InvalidToolInput: 'invalid_tool_input',
-    Unavailable: 'unavailable',
-    MaxUsesExceeded: 'max_uses_exceeded',
+    UrlTooLong: 'url_too_long',
+    UrlNotAllowed: 'url_not_allowed',
+    UrlNotInPriorContext: 'url_not_in_prior_context',
+    UrlNotAccessible: 'url_not_accessible',
+    UnsupportedContentType: 'unsupported_content_type',
     TooManyRequests: 'too_many_requests',
-    QueryTooLong: 'query_too_long',
-    RequestTooLarge: 'request_too_large'
+    MaxUsesExceeded: 'max_uses_exceeded',
+    Unavailable: 'unavailable'
 } as const;
 export type Content10ErrorCodeEnum = typeof Content10ErrorCodeEnum[keyof typeof Content10ErrorCodeEnum];
 
@@ -66,7 +94,8 @@ export type Content10ErrorCodeEnum = typeof Content10ErrorCodeEnum[keyof typeof 
  * @export
  */
 export const Content10TypeEnum = {
-    WebSearchToolResultError: 'web_search_tool_result_error'
+    WebFetchToolResultError: 'web_fetch_tool_result_error',
+    WebFetchResult: 'web_fetch_result'
 } as const;
 export type Content10TypeEnum = typeof Content10TypeEnum[keyof typeof Content10TypeEnum];
 
@@ -77,6 +106,8 @@ export type Content10TypeEnum = typeof Content10TypeEnum[keyof typeof Content10T
 export function instanceOfContent10(value: object): value is Content10 {
     if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('content' in value) || value['content'] === undefined) return false;
+    if (!('url' in value) || value['url'] === undefined) return false;
     return true;
 }
 
@@ -92,6 +123,9 @@ export function Content10FromJSONTyped(json: any, ignoreDiscriminator: boolean):
         
         'errorCode': json['error_code'],
         'type': json['type'],
+        'content': MRBetaDocumentBlockFromJSON(json['content']),
+        'retrievedAt': json['retrieved_at'] == null ? undefined : json['retrieved_at'],
+        'url': json['url'],
     };
 }
 
@@ -108,6 +142,9 @@ export function Content10ToJSONTyped(value?: Content10 | null, ignoreDiscriminat
         
         'error_code': value['errorCode'],
         'type': value['type'],
+        'content': MRBetaDocumentBlockToJSON(value['content']),
+        'retrieved_at': value['retrievedAt'],
+        'url': value['url'],
     };
 }
 

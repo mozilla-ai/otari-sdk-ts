@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `betas` | Array&lt;string&gt;
 `cacheControl` | { [key: string]: any; }
+`container` | string
 `contextManagement` | { [key: string]: any; }
 `guardrails` | [Array&lt;GuardrailConfig&gt;](GuardrailConfig.md)
 `maxTokens` | number
@@ -19,6 +20,8 @@ Name | Type
 `metadata` | { [key: string]: any; }
 `model` | string
 `outputFormat` | { [key: string]: any; }
+`promptCacheKey` | string
+`serviceTier` | string
 `sessionLabel` | string
 `stopSequences` | Array&lt;string&gt;
 `stream` | boolean
@@ -40,6 +43,7 @@ import type { MessagesRequest } from ''
 const example = {
   "betas": null,
   "cacheControl": null,
+  "container": null,
   "contextManagement": null,
   "guardrails": null,
   "maxTokens": null,
@@ -50,6 +54,8 @@ const example = {
   "metadata": null,
   "model": null,
   "outputFormat": null,
+  "promptCacheKey": null,
+  "serviceTier": null,
   "sessionLabel": null,
   "stopSequences": null,
   "stream": null,

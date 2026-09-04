@@ -37,6 +37,12 @@ export interface UpdateToolSettingsRequest {
      * @type {string}
      * @memberof UpdateToolSettingsRequest
      */
+    sandboxSessionImage?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateToolSettingsRequest
+     */
     sandboxUrl?: string | null;
     /**
      * 
@@ -95,6 +101,7 @@ export function UpdateToolSettingsRequestFromJSONTyped(json: any, ignoreDiscrimi
         
         'guardrailsUrl': json['guardrails_url'] == null ? undefined : json['guardrails_url'],
         'sandboxPurposeHint': json['sandbox_purpose_hint'] == null ? undefined : json['sandbox_purpose_hint'],
+        'sandboxSessionImage': json['sandbox_session_image'] == null ? undefined : json['sandbox_session_image'],
         'sandboxUrl': json['sandbox_url'] == null ? undefined : json['sandbox_url'],
         'webSearchEngines': json['web_search_engines'] == null ? undefined : json['web_search_engines'],
         'webSearchExtract': json['web_search_extract'] == null ? undefined : json['web_search_extract'],
@@ -118,6 +125,7 @@ export function UpdateToolSettingsRequestToJSONTyped(value?: UpdateToolSettingsR
         
         'guardrails_url': value['guardrailsUrl'],
         'sandbox_purpose_hint': value['sandboxPurposeHint'],
+        'sandbox_session_image': value['sandboxSessionImage'],
         'sandbox_url': value['sandboxUrl'],
         'web_search_engines': value['webSearchEngines'],
         'web_search_extract': value['webSearchExtract'],

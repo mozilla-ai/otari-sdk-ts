@@ -46,7 +46,10 @@ export interface MRRefusalStopDetails {
  */
 export const MRRefusalStopDetailsCategoryEnum = {
     Cyber: 'cyber',
-    Bio: 'bio'
+    Bio: 'bio',
+    FrontierLlm: 'frontier_llm',
+    ReasoningExtraction: 'reasoning_extraction',
+    GeneralHarms: 'general_harms'
 } as const;
 export type MRRefusalStopDetailsCategoryEnum = typeof MRRefusalStopDetailsCategoryEnum[keyof typeof MRRefusalStopDetailsCategoryEnum];
 

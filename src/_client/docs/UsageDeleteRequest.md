@@ -21,6 +21,7 @@ Name | Type
 `status` | string
 `tool` | string
 `userId` | [UserId](UserId.md)
+`workspaceId` | string
 
 ## Example
 
@@ -43,6 +44,7 @@ const example = {
   "status": null,
   "tool": null,
   "userId": null,
+  "workspaceId": null,
 } satisfies UsageDeleteRequest
 
 console.log(example)

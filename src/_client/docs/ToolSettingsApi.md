@@ -16,7 +16,7 @@ All URIs are relative to *http://localhost*
 
 Get Tool Settings
 
-Return the effective tool/guardrail settings for the dashboard.
+Return the effective tool/guardrail settings for the dashboard.  Authentication only on the router: the role decides *how much* rather than whether, so this is not the deployment-wide gate &#x60;&#x60;require_deployment_operator&#x60;&#x60; names. A header master key is the deployment credential and reads everything; a session reads everything only while it operates the deployment, and otherwise gets the fields without the service endpoints in them.
 
 ### Example
 
@@ -158,7 +158,7 @@ example().catch(console.error);
 
 Update Tool Settings
 
-Persist and apply tool/guardrail setting changes.  Uses &#x60;&#x60;model_fields_set&#x60;&#x60; so an explicit &#x60;&#x60;null&#x60;&#x60; clears a field while an omitted field is left unchanged. Master-key gated and standalone-only.
+Persist and apply tool/guardrail setting changes.  Uses &#x60;&#x60;model_fields_set&#x60;&#x60; so an explicit &#x60;&#x60;null&#x60;&#x60; clears a field while an omitted field is left unchanged. Operator-gated and standalone-only.
 
 ### Example
 

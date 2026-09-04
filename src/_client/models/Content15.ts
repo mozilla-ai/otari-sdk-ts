@@ -13,20 +13,27 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { MRWebSearchToolResultError } from './MRWebSearchToolResultError.js';
+import type { MRDocumentBlock } from './MRDocumentBlock.js';
 import {
-    MRWebSearchToolResultErrorFromJSON,
-    MRWebSearchToolResultErrorFromJSONTyped,
-    MRWebSearchToolResultErrorToJSON,
-    MRWebSearchToolResultErrorToJSONTyped,
-} from './MRWebSearchToolResultError.js';
-import type { MRWebSearchResultBlock } from './MRWebSearchResultBlock.js';
+    MRDocumentBlockFromJSON,
+    MRDocumentBlockFromJSONTyped,
+    MRDocumentBlockToJSON,
+    MRDocumentBlockToJSONTyped,
+} from './MRDocumentBlock.js';
+import type { MRWebFetchToolResultErrorBlock } from './MRWebFetchToolResultErrorBlock.js';
 import {
-    MRWebSearchResultBlockFromJSON,
-    MRWebSearchResultBlockFromJSONTyped,
-    MRWebSearchResultBlockToJSON,
-    MRWebSearchResultBlockToJSONTyped,
-} from './MRWebSearchResultBlock.js';
+    MRWebFetchToolResultErrorBlockFromJSON,
+    MRWebFetchToolResultErrorBlockFromJSONTyped,
+    MRWebFetchToolResultErrorBlockToJSON,
+    MRWebFetchToolResultErrorBlockToJSONTyped,
+} from './MRWebFetchToolResultErrorBlock.js';
+import type { MRWebFetchBlock } from './MRWebFetchBlock.js';
+import {
+    MRWebFetchBlockFromJSON,
+    MRWebFetchBlockFromJSONTyped,
+    MRWebFetchBlockToJSON,
+    MRWebFetchBlockToJSONTyped,
+} from './MRWebFetchBlock.js';
 
 /**
  * 
@@ -46,6 +53,24 @@ export interface Content15 {
      * @memberof Content15
      */
     type: Content15TypeEnum;
+    /**
+     * 
+     * @type {MRDocumentBlock}
+     * @memberof Content15
+     */
+    content: MRDocumentBlock;
+    /**
+     * 
+     * @type {string}
+     * @memberof Content15
+     */
+    retrievedAt?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Content15
+     */
+    url: string;
 }
 
 
@@ -54,11 +79,14 @@ export interface Content15 {
  */
 export const Content15ErrorCodeEnum = {
     InvalidToolInput: 'invalid_tool_input',
-    Unavailable: 'unavailable',
-    MaxUsesExceeded: 'max_uses_exceeded',
+    UrlTooLong: 'url_too_long',
+    UrlNotAllowed: 'url_not_allowed',
+    UrlNotInPriorContext: 'url_not_in_prior_context',
+    UrlNotAccessible: 'url_not_accessible',
+    UnsupportedContentType: 'unsupported_content_type',
     TooManyRequests: 'too_many_requests',
-    QueryTooLong: 'query_too_long',
-    RequestTooLarge: 'request_too_large'
+    MaxUsesExceeded: 'max_uses_exceeded',
+    Unavailable: 'unavailable'
 } as const;
 export type Content15ErrorCodeEnum = typeof Content15ErrorCodeEnum[keyof typeof Content15ErrorCodeEnum];
 
@@ -66,7 +94,8 @@ export type Content15ErrorCodeEnum = typeof Content15ErrorCodeEnum[keyof typeof 
  * @export
  */
 export const Content15TypeEnum = {
-    WebSearchToolResultError: 'web_search_tool_result_error'
+    WebFetchToolResultError: 'web_fetch_tool_result_error',
+    WebFetchResult: 'web_fetch_result'
 } as const;
 export type Content15TypeEnum = typeof Content15TypeEnum[keyof typeof Content15TypeEnum];
 
@@ -77,6 +106,8 @@ export type Content15TypeEnum = typeof Content15TypeEnum[keyof typeof Content15T
 export function instanceOfContent15(value: object): value is Content15 {
     if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('content' in value) || value['content'] === undefined) return false;
+    if (!('url' in value) || value['url'] === undefined) return false;
     return true;
 }
 
@@ -92,6 +123,9 @@ export function Content15FromJSONTyped(json: any, ignoreDiscriminator: boolean):
         
         'errorCode': json['error_code'],
         'type': json['type'],
+        'content': MRDocumentBlockFromJSON(json['content']),
+        'retrievedAt': json['retrieved_at'] == null ? undefined : json['retrieved_at'],
+        'url': json['url'],
     };
 }
 
@@ -108,6 +142,9 @@ export function Content15ToJSONTyped(value?: Content15 | null, ignoreDiscriminat
         
         'error_code': value['errorCode'],
         'type': value['type'],
+        'content': MRDocumentBlockToJSON(value['content']),
+        'retrieved_at': value['retrievedAt'],
+        'url': value['url'],
     };
 }
 

@@ -24,15 +24,48 @@ import {
     HTTPValidationErrorToJSON,
 } from '../models/HTTPValidationError.js';
 import {
+    type MailSettings,
+    MailSettingsFromJSON,
+    MailSettingsToJSON,
+} from '../models/MailSettings.js';
+import {
+    type MaintenanceMode,
+    MaintenanceModeFromJSON,
+    MaintenanceModeToJSON,
+} from '../models/MaintenanceMode.js';
+import {
     type RotateMasterKeyResponse,
     RotateMasterKeyResponseFromJSON,
     RotateMasterKeyResponseToJSON,
 } from '../models/RotateMasterKeyResponse.js';
 import {
+    type SendTestMailRequest,
+    SendTestMailRequestFromJSON,
+    SendTestMailRequestToJSON,
+} from '../models/SendTestMailRequest.js';
+import {
+    type SendTestMailResponse,
+    SendTestMailResponseFromJSON,
+    SendTestMailResponseToJSON,
+} from '../models/SendTestMailResponse.js';
+import {
+    type UpdateMaintenanceModeRequest,
+    UpdateMaintenanceModeRequestFromJSON,
+    UpdateMaintenanceModeRequestToJSON,
+} from '../models/UpdateMaintenanceModeRequest.js';
+import {
     type UpdateSettingsRequest,
     UpdateSettingsRequestFromJSON,
     UpdateSettingsRequestToJSON,
 } from '../models/UpdateSettingsRequest.js';
+
+export interface SendTestMailV1SettingsMailTestPostRequest {
+    sendTestMailRequest: SendTestMailRequest;
+}
+
+export interface UpdateMaintenanceModeV1SettingsMaintenanceModePatchRequest {
+    updateMaintenanceModeRequest: UpdateMaintenanceModeRequest;
+}
 
 export interface UpdateSettingsV1SettingsPatchRequest {
     updateSettingsRequest: UpdateSettingsRequest;
@@ -42,6 +75,100 @@ export interface UpdateSettingsV1SettingsPatchRequest {
  * 
  */
 export class SettingsApi extends runtime.BaseAPI {
+
+    /**
+     * Creates request options for getMailSettingsV1SettingsMailGet without sending the request
+     */
+    async getMailSettingsV1SettingsMailGetRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/settings/mail`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Report the effective outgoing-mail configuration.
+     * Get Mail Settings
+     */
+    async getMailSettingsV1SettingsMailGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MailSettings>> {
+        const requestOptions = await this.getMailSettingsV1SettingsMailGetRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MailSettingsFromJSON(jsonValue));
+    }
+
+    /**
+     * Report the effective outgoing-mail configuration.
+     * Get Mail Settings
+     */
+    async getMailSettingsV1SettingsMailGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MailSettings> {
+        const response = await this.getMailSettingsV1SettingsMailGetRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for getMaintenanceModeV1SettingsMaintenanceModeGet without sending the request
+     */
+    async getMaintenanceModeV1SettingsMaintenanceModeGetRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/settings/maintenance-mode`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Report whether new dashboard sign-ins are frozen.
+     * Get Maintenance Mode
+     */
+    async getMaintenanceModeV1SettingsMaintenanceModeGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MaintenanceMode>> {
+        const requestOptions = await this.getMaintenanceModeV1SettingsMaintenanceModeGetRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MaintenanceModeFromJSON(jsonValue));
+    }
+
+    /**
+     * Report whether new dashboard sign-ins are frozen.
+     * Get Maintenance Mode
+     */
+    async getMaintenanceModeV1SettingsMaintenanceModeGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MaintenanceMode> {
+        const response = await this.getMaintenanceModeV1SettingsMaintenanceModeGetRaw(initOverrides);
+        return await response.value();
+    }
 
     /**
      * Creates request options for getSettingsV1SettingsGet without sending the request
@@ -118,7 +245,7 @@ export class SettingsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Regenerate the database-backed master key and invalidate the old one.  Only the first-run generated master key can be rotated here. When a master key is supplied through config or ``OTARI_MASTER_KEY``, the dashboard cannot invalidate it; the operator must change that value and restart instead.  Every dashboard session is revoked with the rotation (a session only proves possession of the now-dead key); the caller\'s own session is re-minted under the new key so the tab that performed the rotation stays signed in.
+     * Regenerate the database-backed master key and invalidate the old one.  Only the first-run generated master key can be rotated here. When a master key is supplied through config or ``OTARI_MASTER_KEY``, the dashboard cannot invalidate it; the operator must change that value and restart instead.  Every dashboard session is revoked with the rotation (a session only proves possession of the now-dead key); the caller\'s own session is re-minted under the new key, for the same identity it named, so the tab that performed the rotation stays signed in as who it was. A caller that authenticated with a header key has no session identity to re-mint for, so it is not handed one: it was not signed in to the dashboard to begin with.
      * Rotate Master Key
      */
     async rotateMasterKeyV1SettingsMasterKeyRotatePostRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RotateMasterKeyResponse>> {
@@ -129,11 +256,125 @@ export class SettingsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Regenerate the database-backed master key and invalidate the old one.  Only the first-run generated master key can be rotated here. When a master key is supplied through config or ``OTARI_MASTER_KEY``, the dashboard cannot invalidate it; the operator must change that value and restart instead.  Every dashboard session is revoked with the rotation (a session only proves possession of the now-dead key); the caller\'s own session is re-minted under the new key so the tab that performed the rotation stays signed in.
+     * Regenerate the database-backed master key and invalidate the old one.  Only the first-run generated master key can be rotated here. When a master key is supplied through config or ``OTARI_MASTER_KEY``, the dashboard cannot invalidate it; the operator must change that value and restart instead.  Every dashboard session is revoked with the rotation (a session only proves possession of the now-dead key); the caller\'s own session is re-minted under the new key, for the same identity it named, so the tab that performed the rotation stays signed in as who it was. A caller that authenticated with a header key has no session identity to re-mint for, so it is not handed one: it was not signed in to the dashboard to begin with.
      * Rotate Master Key
      */
     async rotateMasterKeyV1SettingsMasterKeyRotatePost(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RotateMasterKeyResponse> {
         const response = await this.rotateMasterKeyV1SettingsMasterKeyRotatePostRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for sendTestMailV1SettingsMailTestPost without sending the request
+     */
+    async sendTestMailV1SettingsMailTestPostRequestOpts(requestParameters: SendTestMailV1SettingsMailTestPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['sendTestMailRequest'] == null) {
+            throw new runtime.RequiredError(
+                'sendTestMailRequest',
+                'Required parameter "sendTestMailRequest" was null or undefined when calling sendTestMailV1SettingsMailTestPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/settings/mail/test`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: SendTestMailRequestToJSON(requestParameters['sendTestMailRequest']),
+        };
+    }
+
+    /**
+     * Send one templated test message to prove the configuration works.  Refuses with 503 when the deployment cannot send a linked message, naming the missing settings; the dashboard disables the control in that state, so reaching this is a direct API call or a race with a configuration change.  The recipient is the only caller-supplied value: the body is a fixed template, so this cannot be used to put chosen text in someone\'s inbox from the deployment\'s own address, and the message says outright that no account was created for whoever receives it.
+     * Send Test Mail
+     */
+    async sendTestMailV1SettingsMailTestPostRaw(requestParameters: SendTestMailV1SettingsMailTestPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SendTestMailResponse>> {
+        const requestOptions = await this.sendTestMailV1SettingsMailTestPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => SendTestMailResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Send one templated test message to prove the configuration works.  Refuses with 503 when the deployment cannot send a linked message, naming the missing settings; the dashboard disables the control in that state, so reaching this is a direct API call or a race with a configuration change.  The recipient is the only caller-supplied value: the body is a fixed template, so this cannot be used to put chosen text in someone\'s inbox from the deployment\'s own address, and the message says outright that no account was created for whoever receives it.
+     * Send Test Mail
+     */
+    async sendTestMailV1SettingsMailTestPost(requestParameters: SendTestMailV1SettingsMailTestPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SendTestMailResponse> {
+        const response = await this.sendTestMailV1SettingsMailTestPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for updateMaintenanceModeV1SettingsMaintenanceModePatch without sending the request
+     */
+    async updateMaintenanceModeV1SettingsMaintenanceModePatchRequestOpts(requestParameters: UpdateMaintenanceModeV1SettingsMaintenanceModePatchRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['updateMaintenanceModeRequest'] == null) {
+            throw new runtime.RequiredError(
+                'updateMaintenanceModeRequest',
+                'Required parameter "updateMaintenanceModeRequest" was null or undefined when calling updateMaintenanceModeV1SettingsMaintenanceModePatch().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/settings/maintenance-mode`;
+
+        return {
+            path: urlPath,
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateMaintenanceModeRequestToJSON(requestParameters['updateMaintenanceModeRequest']),
+        };
+    }
+
+    /**
+     * Freeze or unfreeze dashboard sign-ins, for this and every other replica.  The new state is persisted and nothing is applied to the running worker, because every reader goes back to the stored row. That is what makes one call enough for a deployment running more than one of them.
+     * Update Maintenance Mode
+     */
+    async updateMaintenanceModeV1SettingsMaintenanceModePatchRaw(requestParameters: UpdateMaintenanceModeV1SettingsMaintenanceModePatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MaintenanceMode>> {
+        const requestOptions = await this.updateMaintenanceModeV1SettingsMaintenanceModePatchRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MaintenanceModeFromJSON(jsonValue));
+    }
+
+    /**
+     * Freeze or unfreeze dashboard sign-ins, for this and every other replica.  The new state is persisted and nothing is applied to the running worker, because every reader goes back to the stored row. That is what makes one call enough for a deployment running more than one of them.
+     * Update Maintenance Mode
+     */
+    async updateMaintenanceModeV1SettingsMaintenanceModePatch(requestParameters: UpdateMaintenanceModeV1SettingsMaintenanceModePatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MaintenanceMode> {
+        const response = await this.updateMaintenanceModeV1SettingsMaintenanceModePatchRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -175,7 +416,7 @@ export class SettingsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Persist and apply runtime setting changes.  Each provided field is stored as an override (winning over config/env) and applied to the running gateway immediately. Master-key gated: these change how the gateway meters and lists models.
+     * Persist and apply runtime setting changes.  Each provided field is stored as an override (winning over config/env) and applied to the running gateway immediately. Operator-gated: these change how the gateway meters and lists models.
      * Update Settings
      */
     async updateSettingsV1SettingsPatchRaw(requestParameters: UpdateSettingsV1SettingsPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GatewaySettings>> {
@@ -186,7 +427,7 @@ export class SettingsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Persist and apply runtime setting changes.  Each provided field is stored as an override (winning over config/env) and applied to the running gateway immediately. Master-key gated: these change how the gateway meters and lists models.
+     * Persist and apply runtime setting changes.  Each provided field is stored as an override (winning over config/env) and applied to the running gateway immediately. Operator-gated: these change how the gateway meters and lists models.
      * Update Settings
      */
     async updateSettingsV1SettingsPatch(requestParameters: UpdateSettingsV1SettingsPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GatewaySettings> {

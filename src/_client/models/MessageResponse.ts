@@ -13,13 +13,6 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { Content16Inner } from './Content16Inner.js';
-import {
-    Content16InnerFromJSON,
-    Content16InnerFromJSONTyped,
-    Content16InnerToJSON,
-    Content16InnerToJSONTyped,
-} from './Content16Inner.js';
 import type { MRBetaContainer } from './MRBetaContainer.js';
 import {
     MRBetaContainerFromJSON,
@@ -34,6 +27,13 @@ import {
     MRRefusalStopDetailsToJSON,
     MRRefusalStopDetailsToJSONTyped,
 } from './MRRefusalStopDetails.js';
+import type { Content17Inner } from './Content17Inner.js';
+import {
+    Content17InnerFromJSON,
+    Content17InnerFromJSONTyped,
+    Content17InnerToJSON,
+    Content17InnerToJSONTyped,
+} from './Content17Inner.js';
 import type { Model1 } from './Model1.js';
 import {
     Model1FromJSON,
@@ -48,13 +48,6 @@ import {
     MRBetaContextManagementResponseToJSON,
     MRBetaContextManagementResponseToJSONTyped,
 } from './MRBetaContextManagementResponse.js';
-import type { MRBetaDiagnosticsFallback } from './MRBetaDiagnosticsFallback.js';
-import {
-    MRBetaDiagnosticsFallbackFromJSON,
-    MRBetaDiagnosticsFallbackFromJSONTyped,
-    MRBetaDiagnosticsFallbackToJSON,
-    MRBetaDiagnosticsFallbackToJSONTyped,
-} from './MRBetaDiagnosticsFallback.js';
 import type { MRMessageUsage } from './MRMessageUsage.js';
 import {
     MRMessageUsageFromJSON,
@@ -62,6 +55,13 @@ import {
     MRMessageUsageToJSON,
     MRMessageUsageToJSONTyped,
 } from './MRMessageUsage.js';
+import type { MRBetaDiagnostics } from './MRBetaDiagnostics.js';
+import {
+    MRBetaDiagnosticsFromJSON,
+    MRBetaDiagnosticsFromJSONTyped,
+    MRBetaDiagnosticsToJSON,
+    MRBetaDiagnosticsToJSONTyped,
+} from './MRBetaDiagnostics.js';
 
 /**
  * 
@@ -84,10 +84,10 @@ export interface MessageResponse {
     container?: MRBetaContainer | null;
     /**
      * 
-     * @type {Array<Content16Inner>}
+     * @type {Array<Content17Inner>}
      * @memberof MessageResponse
      */
-    content: Array<Content16Inner>;
+    content: Array<Content17Inner>;
     /**
      * 
      * @type {Model1}
@@ -131,6 +131,12 @@ export interface MessageResponse {
      */
     usage: MRMessageUsage;
     /**
+     * Filter to a single event type or metric name (e.g. 'tool_result', 'claude_code.commit.count')
+     * @type {string}
+     * @memberof MessageResponse
+     */
+    requestId?: string | null;
+    /**
      * 
      * @type {MRBetaContextManagementResponse}
      * @memberof MessageResponse
@@ -138,10 +144,10 @@ export interface MessageResponse {
     contextManagement?: MRBetaContextManagementResponse | null;
     /**
      * 
-     * @type {MRBetaDiagnosticsFallback}
+     * @type {MRBetaDiagnostics}
      * @memberof MessageResponse
      */
-    diagnostics?: MRBetaDiagnosticsFallback | null;
+    diagnostics?: MRBetaDiagnostics | null;
 }
 
 
@@ -203,7 +209,7 @@ export function MessageResponseFromJSONTyped(json: any, ignoreDiscriminator: boo
             ...json,
         'id': json['id'],
         'container': json['container'] == null ? undefined : MRBetaContainerFromJSON(json['container']),
-        'content': ((json['content'] as Array<any>).map(Content16InnerFromJSON)),
+        'content': ((json['content'] as Array<any>).map(Content17InnerFromJSON)),
         'model': Model1FromJSON(json['model']),
         'role': json['role'],
         'stopDetails': json['stop_details'] == null ? undefined : MRRefusalStopDetailsFromJSON(json['stop_details']),
@@ -211,8 +217,9 @@ export function MessageResponseFromJSONTyped(json: any, ignoreDiscriminator: boo
         'stopSequence': json['stop_sequence'] == null ? undefined : json['stop_sequence'],
         'type': json['type'],
         'usage': MRMessageUsageFromJSON(json['usage']),
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
         'contextManagement': json['context_management'] == null ? undefined : MRBetaContextManagementResponseFromJSON(json['context_management']),
-        'diagnostics': json['diagnostics'] == null ? undefined : MRBetaDiagnosticsFallbackFromJSON(json['diagnostics']),
+        'diagnostics': json['diagnostics'] == null ? undefined : MRBetaDiagnosticsFromJSON(json['diagnostics']),
     };
 }
 
@@ -230,7 +237,7 @@ export function MessageResponseToJSONTyped(value?: MessageResponse | null, ignor
             ...value,
         'id': value['id'],
         'container': MRBetaContainerToJSON(value['container']),
-        'content': ((value['content'] as Array<any>).map(Content16InnerToJSON)),
+        'content': ((value['content'] as Array<any>).map(Content17InnerToJSON)),
         'model': Model1ToJSON(value['model']),
         'role': value['role'],
         'stop_details': MRRefusalStopDetailsToJSON(value['stopDetails']),
@@ -238,8 +245,9 @@ export function MessageResponseToJSONTyped(value?: MessageResponse | null, ignor
         'stop_sequence': value['stopSequence'],
         'type': value['type'],
         'usage': MRMessageUsageToJSON(value['usage']),
+        'request_id': value['requestId'],
         'context_management': MRBetaContextManagementResponseToJSON(value['contextManagement']),
-        'diagnostics': MRBetaDiagnosticsFallbackToJSON(value['diagnostics']),
+        'diagnostics': MRBetaDiagnosticsToJSON(value['diagnostics']),
     };
 }
 

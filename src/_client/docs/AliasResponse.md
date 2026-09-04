@@ -13,6 +13,7 @@ Name | Type
 `target` | string
 `updatedAt` | string
 `userId` | string
+`workspaceId` | string
 
 ## Example
 
@@ -27,6 +28,7 @@ const example = {
   "target": null,
   "updatedAt": null,
   "userId": null,
+  "workspaceId": null,
 } satisfies AliasResponse
 
 console.log(example)

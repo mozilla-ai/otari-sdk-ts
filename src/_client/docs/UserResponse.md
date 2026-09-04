@@ -13,9 +13,13 @@ Name | Type
 `budgetId` | string
 `budgetStartedAt` | string
 `createdAt` | string
+`currentRequests` | number
+`currentTokens` | number
 `metadata` | { [key: string]: any; }
 `nextBudgetResetAt` | string
 `reserved` | number
+`reservedRequests` | number
+`reservedTokens` | number
 `spend` | number
 `updatedAt` | string
 `userId` | string
@@ -33,9 +37,13 @@ const example = {
   "budgetId": null,
   "budgetStartedAt": null,
   "createdAt": null,
+  "currentRequests": null,
+  "currentTokens": null,
   "metadata": null,
   "nextBudgetResetAt": null,
   "reserved": null,
+  "reservedRequests": null,
+  "reservedTokens": null,
   "spend": null,
   "updatedAt": null,
   "userId": null,

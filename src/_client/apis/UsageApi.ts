@@ -90,6 +90,7 @@ export interface CountUsageV1UsageCountGetRequest {
     tool?: CountUsageV1UsageCountGetToolEnum;
     countsTowardBudget?: boolean | null;
     requestGroupId?: Array<string> | null;
+    workspaceId?: string | null;
 }
 
 export interface DeleteUsageRowsV1UsageDeleteRequest {
@@ -116,6 +117,7 @@ export interface ListUsageV1UsageGetRequest {
     tool?: ListUsageV1UsageGetToolEnum;
     countsTowardBudget?: boolean | null;
     requestGroupId?: Array<string> | null;
+    workspaceId?: string | null;
     skip?: number;
     limit?: number;
 }
@@ -140,24 +142,8 @@ export interface UsageSeriesV1UsageSeriesGetRequest {
     priced?: boolean | null;
     tool?: UsageSeriesV1UsageSeriesGetToolEnum;
     countsTowardBudget?: boolean | null;
+    workspaceId?: string | null;
     bucket?: UsageSeriesV1UsageSeriesGetBucketEnum;
-}
-
-export interface UsageSummaryCsvV1UsageSummaryCsvGetRequest {
-    startDate?: Date | null;
-    endDate?: Date | null;
-    userId?: Array<string> | null;
-    status?: string | null;
-    statusCode?: number | null;
-    model?: Array<string> | null;
-    endpoint?: string | null;
-    provider?: string | null;
-    source?: string | null;
-    sourceLabel?: string | null;
-    apiKeyId?: Array<string> | null;
-    priced?: boolean | null;
-    tool?: UsageSummaryCsvV1UsageSummaryCsvGetToolEnum;
-    countsTowardBudget?: boolean | null;
 }
 
 export interface UsageSummaryV1UsageSummaryGetRequest {
@@ -175,6 +161,7 @@ export interface UsageSummaryV1UsageSummaryGetRequest {
     priced?: boolean | null;
     tool?: UsageSummaryV1UsageSummaryGetToolEnum;
     countsTowardBudget?: boolean | null;
+    workspaceId?: string | null;
     bucket?: UsageSummaryV1UsageSummaryGetBucketEnum;
     dimensions?: Array<UsageSummaryV1UsageSummaryGetDimensionsEnum>;
 }
@@ -250,6 +237,10 @@ export class UsageApi extends runtime.BaseAPI {
             queryParameters['request_group_id'] = requestParameters['requestGroupId'];
         }
 
+        if (requestParameters['workspaceId'] != null) {
+            queryParameters['workspace_id'] = requestParameters['workspaceId'];
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -272,7 +263,7 @@ export class UsageApi extends runtime.BaseAPI {
     }
 
     /**
-     * Total number of usage logs matching the given filters.  Serves the dashboard paginator\'s \"N of M\" total without changing the bare array contract of ``GET /v1/usage``. Runs only when the client asks (a separate request), so the ``COUNT(*)`` is not paid on every page load. With ``counts_toward_budget=false`` it also backs the \"select all N matching this filter\" affordance for bulk delete / set-price, which touch imported rows only.
+     * Total number of usage logs matching the given filters.  Serves the dashboard paginator\'s \"N of M\" total without changing the bare array contract of ``GET /v1/usage``. Runs only when the client asks (a separate request), so the ``COUNT(*)`` is not paid on every page load. With ``counts_toward_budget=false`` it also backs the \"select all N matching this filter\" affordance for bulk delete / set-price, which touch imported rows only.  That value is the one place this count is narrower than ``GET /v1/usage``: it also excludes rows this deployment served itself, so the number an operator confirms is the number the mutation can reach. The list still pages the budget-exempt gateway rows it omits.
      * Count Usage
      */
     async countUsageV1UsageCountGetRaw(requestParameters: CountUsageV1UsageCountGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UsageCount>> {
@@ -283,7 +274,7 @@ export class UsageApi extends runtime.BaseAPI {
     }
 
     /**
-     * Total number of usage logs matching the given filters.  Serves the dashboard paginator\'s \"N of M\" total without changing the bare array contract of ``GET /v1/usage``. Runs only when the client asks (a separate request), so the ``COUNT(*)`` is not paid on every page load. With ``counts_toward_budget=false`` it also backs the \"select all N matching this filter\" affordance for bulk delete / set-price, which touch imported rows only.
+     * Total number of usage logs matching the given filters.  Serves the dashboard paginator\'s \"N of M\" total without changing the bare array contract of ``GET /v1/usage``. Runs only when the client asks (a separate request), so the ``COUNT(*)`` is not paid on every page load. With ``counts_toward_budget=false`` it also backs the \"select all N matching this filter\" affordance for bulk delete / set-price, which touch imported rows only.  That value is the one place this count is narrower than ``GET /v1/usage``: it also excludes rows this deployment served itself, so the number an operator confirms is the number the mutation can reach. The list still pages the budget-exempt gateway rows it omits.
      * Count Usage
      */
     async countUsageV1UsageCountGet(requestParameters: CountUsageV1UsageCountGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UsageCount> {
@@ -518,6 +509,10 @@ export class UsageApi extends runtime.BaseAPI {
             queryParameters['request_group_id'] = requestParameters['requestGroupId'];
         }
 
+        if (requestParameters['workspaceId'] != null) {
+            queryParameters['workspace_id'] = requestParameters['workspaceId'];
+        }
+
         if (requestParameters['skip'] != null) {
             queryParameters['skip'] = requestParameters['skip'];
         }
@@ -697,6 +692,10 @@ export class UsageApi extends runtime.BaseAPI {
             queryParameters['counts_toward_budget'] = requestParameters['countsTowardBudget'];
         }
 
+        if (requestParameters['workspaceId'] != null) {
+            queryParameters['workspace_id'] = requestParameters['workspaceId'];
+        }
+
         if (requestParameters['bucket'] != null) {
             queryParameters['bucket'] = requestParameters['bucket'];
         }
@@ -739,113 +738,6 @@ export class UsageApi extends runtime.BaseAPI {
      */
     async usageSeriesV1UsageSeriesGet(requestParameters: UsageSeriesV1UsageSeriesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UsageGroupedSeries> {
         const response = await this.usageSeriesV1UsageSeriesGetRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Creates request options for usageSummaryCsvV1UsageSummaryCsvGet without sending the request
-     */
-    async usageSummaryCsvV1UsageSummaryCsvGetRequestOpts(requestParameters: UsageSummaryCsvV1UsageSummaryCsvGetRequest): Promise<runtime.RequestOpts> {
-        const queryParameters: any = {};
-
-        if (requestParameters['startDate'] != null) {
-            queryParameters['start_date'] = (requestParameters['startDate'] as any).toISOString();
-        }
-
-        if (requestParameters['endDate'] != null) {
-            queryParameters['end_date'] = (requestParameters['endDate'] as any).toISOString();
-        }
-
-        if (requestParameters['userId'] != null) {
-            queryParameters['user_id'] = requestParameters['userId'];
-        }
-
-        if (requestParameters['status'] != null) {
-            queryParameters['status'] = requestParameters['status'];
-        }
-
-        if (requestParameters['statusCode'] != null) {
-            queryParameters['status_code'] = requestParameters['statusCode'];
-        }
-
-        if (requestParameters['model'] != null) {
-            queryParameters['model'] = requestParameters['model'];
-        }
-
-        if (requestParameters['endpoint'] != null) {
-            queryParameters['endpoint'] = requestParameters['endpoint'];
-        }
-
-        if (requestParameters['provider'] != null) {
-            queryParameters['provider'] = requestParameters['provider'];
-        }
-
-        if (requestParameters['source'] != null) {
-            queryParameters['source'] = requestParameters['source'];
-        }
-
-        if (requestParameters['sourceLabel'] != null) {
-            queryParameters['source_label'] = requestParameters['sourceLabel'];
-        }
-
-        if (requestParameters['apiKeyId'] != null) {
-            queryParameters['api_key_id'] = requestParameters['apiKeyId'];
-        }
-
-        if (requestParameters['priced'] != null) {
-            queryParameters['priced'] = requestParameters['priced'];
-        }
-
-        if (requestParameters['tool'] != null) {
-            queryParameters['tool'] = requestParameters['tool'];
-        }
-
-        if (requestParameters['countsTowardBudget'] != null) {
-            queryParameters['counts_toward_budget'] = requestParameters['countsTowardBudget'];
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
-        }
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
-        }
-
-
-        let urlPath = `/v1/usage/summary.csv`;
-
-        return {
-            path: urlPath,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        };
-    }
-
-    /**
-     * Download every breakdown the summary reports, as one CSV.  One row per (dimension, key): model, user, API key, source, session (``source_label``), endpoint, and provider. A dedicated route rather than a ``format=csv`` flag on ``/summary`` so that endpoint keeps a single JSON response model and a clean OpenAPI schema. The export is **uncapped** (no top-N fold): finance wants every row. ``tokens`` is the billed total (fresh input, both cache buckets, and output), matching the dashboard\'s analytics. Kept separate from the bare-array ``/v1/usage`` contract, which is untouched.
-     * Usage Summary Csv
-     */
-    async usageSummaryCsvV1UsageSummaryCsvGetRaw(requestParameters: UsageSummaryCsvV1UsageSummaryCsvGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        const requestOptions = await this.usageSummaryCsvV1UsageSummaryCsvGetRequestOpts(requestParameters);
-        const response = await this.request(requestOptions, initOverrides);
-
-        if (this.isJsonMime(response.headers.get('content-type'))) {
-            return new runtime.JSONApiResponse<any>(response);
-        } else {
-            return new runtime.TextApiResponse(response) as any;
-        }
-    }
-
-    /**
-     * Download every breakdown the summary reports, as one CSV.  One row per (dimension, key): model, user, API key, source, session (``source_label``), endpoint, and provider. A dedicated route rather than a ``format=csv`` flag on ``/summary`` so that endpoint keeps a single JSON response model and a clean OpenAPI schema. The export is **uncapped** (no top-N fold): finance wants every row. ``tokens`` is the billed total (fresh input, both cache buckets, and output), matching the dashboard\'s analytics. Kept separate from the bare-array ``/v1/usage`` contract, which is untouched.
-     * Usage Summary Csv
-     */
-    async usageSummaryCsvV1UsageSummaryCsvGet(requestParameters: UsageSummaryCsvV1UsageSummaryCsvGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
-        const response = await this.usageSummaryCsvV1UsageSummaryCsvGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -909,6 +801,10 @@ export class UsageApi extends runtime.BaseAPI {
 
         if (requestParameters['countsTowardBudget'] != null) {
             queryParameters['counts_toward_budget'] = requestParameters['countsTowardBudget'];
+        }
+
+        if (requestParameters['workspaceId'] != null) {
+            queryParameters['workspace_id'] = requestParameters['workspaceId'];
         }
 
         if (requestParameters['bucket'] != null) {
@@ -1007,15 +903,6 @@ export const UsageSeriesV1UsageSeriesGetBucketEnum = {
     Day: 'day'
 } as const;
 export type UsageSeriesV1UsageSeriesGetBucketEnum = typeof UsageSeriesV1UsageSeriesGetBucketEnum[keyof typeof UsageSeriesV1UsageSeriesGetBucketEnum];
-/**
- * @export
- */
-export const UsageSummaryCsvV1UsageSummaryCsvGetToolEnum = {
-    Any: 'any',
-    WebSearch: 'web_search',
-    CodeExecution: 'code_execution'
-} as const;
-export type UsageSummaryCsvV1UsageSummaryCsvGetToolEnum = typeof UsageSummaryCsvV1UsageSummaryCsvGetToolEnum[keyof typeof UsageSummaryCsvV1UsageSummaryCsvGetToolEnum];
 /**
  * @export
  */
