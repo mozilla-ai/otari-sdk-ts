@@ -93,7 +93,7 @@ example().catch(console.error);
 
 Delete User
 
-Delete a user.
+Delete a user, and erase the telemetry captured under their name.
 
 ### Example
 

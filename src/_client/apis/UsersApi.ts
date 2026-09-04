@@ -165,7 +165,7 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a user.
+     * Delete a user, and erase the telemetry captured under their name.
      * Delete User
      */
     async deleteUserV1UsersUserIdDeleteRaw(requestParameters: DeleteUserV1UsersUserIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -176,7 +176,7 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a user.
+     * Delete a user, and erase the telemetry captured under their name.
      * Delete User
      */
     async deleteUserV1UsersUserIdDelete(requestParameters: DeleteUserV1UsersUserIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {

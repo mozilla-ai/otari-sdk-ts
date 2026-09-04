@@ -11,6 +11,7 @@ Name | Type
 `renameFrom` | string
 `spec` | { [key: string]: any; }
 `userId` | string
+`workspaceId` | string
 
 ## Example
 
@@ -23,6 +24,7 @@ const example = {
   "renameFrom": null,
   "spec": null,
   "userId": null,
+  "workspaceId": null,
 } satisfies PolicyRequest
 
 console.log(example)

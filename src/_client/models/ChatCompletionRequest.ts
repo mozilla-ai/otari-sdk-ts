@@ -63,10 +63,12 @@ import {
  * (see ``_schema_derive``) so the schema cannot silently drop a param any-llm
  * forwards. Fields below either tighten a derived field (``messages``,
  * ``response_format``), declare an OpenAI wire param ``CompletionParams`` does
- * not model (``service_tier``, forwarded as an any-llm ``**kwargs`` param), or
- * add gateway-internal behavior (``mcp_servers``, ``mcp_server_ids``,
+ * not model (``service_tier``, forwarded as an any-llm ``**kwargs`` param), add
+ * gateway-internal behavior (``mcp_servers``, ``mcp_server_ids``,
  * ``guardrails``, ``tools_header``, ``max_tool_iterations``) that is stripped
- * before the request is forwarded upstream.
+ * before the request is forwarded upstream, or restate a derived field
+ * unchanged to document it (``max_completion_tokens``), which is only worth
+ * doing where the wire contract is not guessable from the field itself.
  * @export
  * @interface ChatCompletionRequest
  */
@@ -96,7 +98,7 @@ export interface ChatCompletionRequest {
      */
     logprobs?: boolean | null;
     /**
-     * 
+     * Upper bound on generated tokens. OpenAI's current name for the cap `max_tokens` used to carry; either field is accepted, and this one wins when a request sends both.
      * @type {number}
      * @memberof ChatCompletionRequest
      */
@@ -157,6 +159,12 @@ export interface ChatCompletionRequest {
     presencePenalty?: number | null;
     /**
      * 
+     * @type {string}
+     * @memberof ChatCompletionRequest
+     */
+    promptCacheKey?: string | null;
+    /**
+     * 
      * @type {ChatCompletionRequestReasoningEffortEnum}
      * @memberof ChatCompletionRequest
      */
@@ -198,7 +206,7 @@ export interface ChatCompletionRequest {
      */
     stream?: boolean;
     /**
-     * An unsaved policy body to explain.
+     * Provider-native request fields used as defaults (e.g. exa's 'type', searxng's 'engines').
      * @type {{ [key: string]: any; }}
      * @memberof ChatCompletionRequest
      */
@@ -297,6 +305,7 @@ export function ChatCompletionRequestFromJSONTyped(json: any, ignoreDiscriminato
         'n': json['n'] == null ? undefined : json['n'],
         'parallelToolCalls': json['parallel_tool_calls'] == null ? undefined : json['parallel_tool_calls'],
         'presencePenalty': json['presence_penalty'] == null ? undefined : json['presence_penalty'],
+        'promptCacheKey': json['prompt_cache_key'] == null ? undefined : json['prompt_cache_key'],
         'reasoningEffort': json['reasoning_effort'] == null ? undefined : json['reasoning_effort'],
         'responseFormat': json['response_format'] == null ? undefined : json['response_format'],
         'seed': json['seed'] == null ? undefined : json['seed'],
@@ -340,6 +349,7 @@ export function ChatCompletionRequestToJSONTyped(value?: ChatCompletionRequest |
         'n': value['n'],
         'parallel_tool_calls': value['parallelToolCalls'],
         'presence_penalty': value['presencePenalty'],
+        'prompt_cache_key': value['promptCacheKey'],
         'reasoning_effort': value['reasoningEffort'],
         'response_format': value['responseFormat'],
         'seed': value['seed'],

@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { Content15 } from './Content15.js';
+import type { Content16 } from './Content16.js';
 import {
-    Content15FromJSON,
-    Content15FromJSONTyped,
-    Content15ToJSON,
-    Content15ToJSONTyped,
-} from './Content15.js';
+    Content16FromJSON,
+    Content16FromJSONTyped,
+    Content16ToJSON,
+    Content16ToJSONTyped,
+} from './Content16.js';
 import type { Caller1 } from './Caller1.js';
 import {
     Caller1FromJSON,
@@ -43,10 +43,10 @@ export interface MRWebSearchToolResultBlock {
     caller?: Caller1 | null;
     /**
      * 
-     * @type {Content15}
+     * @type {Content16}
      * @memberof MRWebSearchToolResultBlock
      */
-    content: Content15;
+    content: Content16;
     /**
      * 
      * @type {string}
@@ -93,7 +93,7 @@ export function MRWebSearchToolResultBlockFromJSONTyped(json: any, ignoreDiscrim
         
             ...json,
         'caller': json['caller'] == null ? undefined : Caller1FromJSON(json['caller']),
-        'content': Content15FromJSON(json['content']),
+        'content': Content16FromJSON(json['content']),
         'toolUseId': json['tool_use_id'],
         'type': json['type'],
     };
@@ -112,7 +112,7 @@ export function MRWebSearchToolResultBlockToJSONTyped(value?: MRWebSearchToolRes
         
             ...value,
         'caller': Caller1ToJSON(value['caller']),
-        'content': Content15ToJSON(value['content']),
+        'content': Content16ToJSON(value['content']),
         'tool_use_id': value['toolUseId'],
         'type': value['type'],
     };

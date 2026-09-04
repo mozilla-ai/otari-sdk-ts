@@ -9,7 +9,17 @@ Name | Type
 `errorCode` | string
 `errorMessage` | string
 `type` | string
-`toolReferences` | [Array&lt;MRBetaToolReferenceBlock&gt;](MRBetaToolReferenceBlock.md)
+`content` | string
+`fileType` | string
+`numLines` | number
+`startLine` | number
+`totalLines` | number
+`isFileUpdate` | boolean
+`lines` | Array&lt;string&gt;
+`newLines` | number
+`newStart` | number
+`oldLines` | number
+`oldStart` | number
 
 ## Example
 
@@ -21,7 +31,17 @@ const example = {
   "errorCode": null,
   "errorMessage": null,
   "type": null,
-  "toolReferences": null,
+  "content": null,
+  "fileType": null,
+  "numLines": null,
+  "startLine": null,
+  "totalLines": null,
+  "isFileUpdate": null,
+  "lines": null,
+  "newLines": null,
+  "newStart": null,
+  "oldLines": null,
+  "oldStart": null,
 } satisfies Content8
 
 console.log(example)

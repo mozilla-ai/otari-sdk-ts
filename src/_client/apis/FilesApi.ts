@@ -43,6 +43,7 @@ export interface GetFileV1FilesFileIdGetRequest {
 export interface ListFilesV1FilesGetRequest {
     user?: string | null;
     purpose?: string | null;
+    workspaceId?: string | null;
 }
 
 /**
@@ -326,6 +327,10 @@ export class FilesApi extends runtime.BaseAPI {
             queryParameters['purpose'] = requestParameters['purpose'];
         }
 
+        if (requestParameters['workspaceId'] != null) {
+            queryParameters['workspace_id'] = requestParameters['workspaceId'];
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -348,7 +353,7 @@ export class FilesApi extends runtime.BaseAPI {
     }
 
     /**
-     * List the authenticated user\'s uploaded files.
+     * List the authenticated user\'s uploaded files in the request\'s workspace.  ``workspace_id`` narrows a master-key listing to one workspace; a keyed request is already confined to its key\'s own and cannot widen or move it.
      * List Files
      */
     async listFilesV1FilesGetRaw(requestParameters: ListFilesV1FilesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: any; }>> {
@@ -359,7 +364,7 @@ export class FilesApi extends runtime.BaseAPI {
     }
 
     /**
-     * List the authenticated user\'s uploaded files.
+     * List the authenticated user\'s uploaded files in the request\'s workspace.  ``workspace_id`` narrows a master-key listing to one workspace; a keyed request is already confined to its key\'s own and cannot widen or move it.
      * List Files
      */
     async listFilesV1FilesGet(requestParameters: ListFilesV1FilesGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: any; }> {

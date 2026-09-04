@@ -81,7 +81,7 @@ export class ToolSettingsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Return the effective tool/guardrail settings for the dashboard.
+     * Return the effective tool/guardrail settings for the dashboard.  Authentication only on the router: the role decides *how much* rather than whether, so this is not the deployment-wide gate ``require_deployment_operator`` names. A header master key is the deployment credential and reads everything; a session reads everything only while it operates the deployment, and otherwise gets the fields without the service endpoints in them.
      * Get Tool Settings
      */
     async getToolSettingsV1ToolSettingsGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ToolSettingsResponse>> {
@@ -92,7 +92,7 @@ export class ToolSettingsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Return the effective tool/guardrail settings for the dashboard.
+     * Return the effective tool/guardrail settings for the dashboard.  Authentication only on the router: the role decides *how much* rather than whether, so this is not the deployment-wide gate ``require_deployment_operator`` names. A header master key is the deployment credential and reads everything; a session reads everything only while it operates the deployment, and otherwise gets the fields without the service endpoints in them.
      * Get Tool Settings
      */
     async getToolSettingsV1ToolSettingsGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ToolSettingsResponse> {
@@ -203,7 +203,7 @@ export class ToolSettingsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Persist and apply tool/guardrail setting changes.  Uses ``model_fields_set`` so an explicit ``null`` clears a field while an omitted field is left unchanged. Master-key gated and standalone-only.
+     * Persist and apply tool/guardrail setting changes.  Uses ``model_fields_set`` so an explicit ``null`` clears a field while an omitted field is left unchanged. Operator-gated and standalone-only.
      * Update Tool Settings
      */
     async updateToolSettingsV1ToolSettingsPatchRaw(requestParameters: UpdateToolSettingsV1ToolSettingsPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ToolSettingsResponse>> {
@@ -214,7 +214,7 @@ export class ToolSettingsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Persist and apply tool/guardrail setting changes.  Uses ``model_fields_set`` so an explicit ``null`` clears a field while an omitted field is left unchanged. Master-key gated and standalone-only.
+     * Persist and apply tool/guardrail setting changes.  Uses ``model_fields_set`` so an explicit ``null`` clears a field while an omitted field is left unchanged. Operator-gated and standalone-only.
      * Update Tool Settings
      */
     async updateToolSettingsV1ToolSettingsPatch(requestParameters: UpdateToolSettingsV1ToolSettingsPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ToolSettingsResponse> {

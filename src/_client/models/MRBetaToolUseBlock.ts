@@ -58,6 +58,12 @@ export interface MRBetaToolUseBlock {
      * @memberof MRBetaToolUseBlock
      */
     caller?: Caller | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MRBetaToolUseBlock
+     */
+    toolsetName?: string | null;
 }
 
 
@@ -97,6 +103,7 @@ export function MRBetaToolUseBlockFromJSONTyped(json: any, ignoreDiscriminator: 
         'name': json['name'],
         'type': json['type'],
         'caller': json['caller'] == null ? undefined : CallerFromJSON(json['caller']),
+        'toolsetName': json['toolset_name'] == null ? undefined : json['toolset_name'],
     };
 }
 
@@ -117,6 +124,7 @@ export function MRBetaToolUseBlockToJSONTyped(value?: MRBetaToolUseBlock | null,
         'name': value['name'],
         'type': value['type'],
         'caller': CallerToJSON(value['caller']),
+        'toolset_name': value['toolsetName'],
     };
 }
 

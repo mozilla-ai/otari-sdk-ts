@@ -20,6 +20,13 @@ import {
     MRBetaCacheCreationToJSON,
     MRBetaCacheCreationToJSONTyped,
 } from './MRBetaCacheCreation.js';
+import type { Model1 } from './Model1.js';
+import {
+    Model1FromJSON,
+    Model1FromJSONTyped,
+    Model1ToJSON,
+    Model1ToJSONTyped,
+} from './Model1.js';
 
 /**
  * Token usage for a sampling iteration.
@@ -54,6 +61,12 @@ export interface MRBetaMessageIterationUsage {
     inputTokens: number;
     /**
      * 
+     * @type {Model1}
+     * @memberof MRBetaMessageIterationUsage
+     */
+    model: Model1;
+    /**
+     * 
      * @type {number}
      * @memberof MRBetaMessageIterationUsage
      */
@@ -83,6 +96,7 @@ export function instanceOfMRBetaMessageIterationUsage(value: object): value is M
     if (!('cacheCreationInputTokens' in value) || value['cacheCreationInputTokens'] === undefined) return false;
     if (!('cacheReadInputTokens' in value) || value['cacheReadInputTokens'] === undefined) return false;
     if (!('inputTokens' in value) || value['inputTokens'] === undefined) return false;
+    if (!('model' in value) || value['model'] === undefined) return false;
     if (!('outputTokens' in value) || value['outputTokens'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     return true;
@@ -103,6 +117,7 @@ export function MRBetaMessageIterationUsageFromJSONTyped(json: any, ignoreDiscri
         'cacheCreationInputTokens': json['cache_creation_input_tokens'],
         'cacheReadInputTokens': json['cache_read_input_tokens'],
         'inputTokens': json['input_tokens'],
+        'model': Model1FromJSON(json['model']),
         'outputTokens': json['output_tokens'],
         'type': json['type'],
     };
@@ -124,6 +139,7 @@ export function MRBetaMessageIterationUsageToJSONTyped(value?: MRBetaMessageIter
         'cache_creation_input_tokens': value['cacheCreationInputTokens'],
         'cache_read_input_tokens': value['cacheReadInputTokens'],
         'input_tokens': value['inputTokens'],
+        'model': Model1ToJSON(value['model']),
         'output_tokens': value['outputTokens'],
         'type': value['type'],
     };

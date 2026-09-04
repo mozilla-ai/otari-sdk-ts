@@ -20,13 +20,13 @@ import {
     CallerToJSON,
     CallerToJSONTyped,
 } from './Caller.js';
-import type { Content9 } from './Content9.js';
+import type { Content10 } from './Content10.js';
 import {
-    Content9FromJSON,
-    Content9FromJSONTyped,
-    Content9ToJSON,
-    Content9ToJSONTyped,
-} from './Content9.js';
+    Content10FromJSON,
+    Content10FromJSONTyped,
+    Content10ToJSON,
+    Content10ToJSONTyped,
+} from './Content10.js';
 
 /**
  * 
@@ -37,10 +37,10 @@ export interface MRBetaWebFetchToolResultBlock {
     [key: string]: any | any;
     /**
      * 
-     * @type {Content9}
+     * @type {Content10}
      * @memberof MRBetaWebFetchToolResultBlock
      */
-    content: Content9;
+    content: Content10;
     /**
      * 
      * @type {string}
@@ -92,7 +92,7 @@ export function MRBetaWebFetchToolResultBlockFromJSONTyped(json: any, ignoreDisc
     return {
         
             ...json,
-        'content': Content9FromJSON(json['content']),
+        'content': Content10FromJSON(json['content']),
         'toolUseId': json['tool_use_id'],
         'type': json['type'],
         'caller': json['caller'] == null ? undefined : CallerFromJSON(json['caller']),
@@ -111,7 +111,7 @@ export function MRBetaWebFetchToolResultBlockToJSONTyped(value?: MRBetaWebFetchT
     return {
         
             ...value,
-        'content': Content9ToJSON(value['content']),
+        'content': Content10ToJSON(value['content']),
         'tool_use_id': value['toolUseId'],
         'type': value['type'],
         'caller': CallerToJSON(value['caller']),

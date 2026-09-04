@@ -125,6 +125,12 @@ export interface UsageDeleteRequest {
      * @memberof UsageDeleteRequest
      */
     userId?: UserId | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UsageDeleteRequest
+     */
+    workspaceId?: string | null;
 }
 
 /**
@@ -158,6 +164,7 @@ export function UsageDeleteRequestFromJSONTyped(json: any, ignoreDiscriminator: 
         'status': json['status'] == null ? undefined : json['status'],
         'tool': json['tool'] == null ? undefined : json['tool'],
         'userId': json['user_id'] == null ? undefined : UserIdFromJSON(json['user_id']),
+        'workspaceId': json['workspace_id'] == null ? undefined : json['workspace_id'],
     };
 }
 
@@ -186,6 +193,7 @@ export function UsageDeleteRequestToJSONTyped(value?: UsageDeleteRequest | null,
         'status': value['status'],
         'tool': value['tool'],
         'user_id': UserIdToJSON(value['userId']),
+        'workspace_id': value['workspaceId'],
     };
 }
 

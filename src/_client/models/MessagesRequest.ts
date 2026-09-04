@@ -63,6 +63,12 @@ export interface MessagesRequest {
     cacheControl?: { [key: string]: any; } | null;
     /**
      * 
+     * @type {string}
+     * @memberof MessagesRequest
+     */
+    container?: string | null;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof MessagesRequest
      */
@@ -116,11 +122,23 @@ export interface MessagesRequest {
      */
     model: string;
     /**
-     * An unsaved policy body to explain.
+     * Provider-native request fields used as defaults (e.g. exa's 'type', searxng's 'engines').
      * @type {{ [key: string]: any; }}
      * @memberof MessagesRequest
      */
     outputFormat?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessagesRequest
+     */
+    promptCacheKey?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof MessagesRequest
+     */
+    serviceTier?: string | null;
     /**
      * Optional caller-supplied label for cost attribution (per run, experiment, or conversation). In hybrid mode it is forwarded onto the platform usage report so spend can be sliced by session without standing up OpenTelemetry. Stripped before the request is forwarded upstream to the provider. Has no effect in standalone mode, where there is no platform to report it to.
      * @type {string}
@@ -211,6 +229,7 @@ export function MessagesRequestFromJSONTyped(json: any, ignoreDiscriminator: boo
         
         'betas': json['betas'] == null ? undefined : json['betas'],
         'cacheControl': json['cache_control'] == null ? undefined : json['cache_control'],
+        'container': json['container'] == null ? undefined : json['container'],
         'contextManagement': json['context_management'] == null ? undefined : json['context_management'],
         'guardrails': json['guardrails'] == null ? undefined : ((json['guardrails'] as Array<any>).map(GuardrailConfigFromJSON)),
         'maxTokens': json['max_tokens'],
@@ -221,6 +240,8 @@ export function MessagesRequestFromJSONTyped(json: any, ignoreDiscriminator: boo
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'model': json['model'],
         'outputFormat': json['output_format'] == null ? undefined : json['output_format'],
+        'promptCacheKey': json['prompt_cache_key'] == null ? undefined : json['prompt_cache_key'],
+        'serviceTier': json['service_tier'] == null ? undefined : json['service_tier'],
         'sessionLabel': json['session_label'] == null ? undefined : json['session_label'],
         'stopSequences': json['stop_sequences'] == null ? undefined : json['stop_sequences'],
         'stream': json['stream'] == null ? undefined : json['stream'],
@@ -248,6 +269,7 @@ export function MessagesRequestToJSONTyped(value?: MessagesRequest | null, ignor
         
         'betas': value['betas'],
         'cache_control': value['cacheControl'],
+        'container': value['container'],
         'context_management': value['contextManagement'],
         'guardrails': value['guardrails'] == null ? undefined : ((value['guardrails'] as Array<any>).map(GuardrailConfigToJSON)),
         'max_tokens': value['maxTokens'],
@@ -258,6 +280,8 @@ export function MessagesRequestToJSONTyped(value?: MessagesRequest | null, ignor
         'metadata': value['metadata'],
         'model': value['model'],
         'output_format': value['outputFormat'],
+        'prompt_cache_key': value['promptCacheKey'],
+        'service_tier': value['serviceTier'],
         'session_label': value['sessionLabel'],
         'stop_sequences': value['stopSequences'],
         'stream': value['stream'],

@@ -12,7 +12,7 @@ Name | Type
 `cacheWritePricePerMillion` | number
 `inputPricePerMillion` | number
 `outputPricePerMillion` | number
-`pricingTiers` | Array&lt;{ [key: string]: PricingTiersInnerValue; }&gt;
+`pricingTiers` | [Array&lt;PricingTiersInner&gt;](PricingTiersInner.md)
 
 ## Example
 

@@ -19,7 +19,7 @@ All URIs are relative to *http://localhost*
 
 Create Key
 
-Create a new API key.  Requires master key authentication.  If user_id is provided, the key will be associated with that user (creates user if it doesn\&#39;t exist). If user_id is not provided, the key is associated with the shared \&quot;default\&quot; user, which is created on first use. Keys without an explicit owner therefore share one identity, and so share budget, usage, and files.
+Create a new API key in the caller\&#39;s organization.  Requires master key authentication.  If user_id is provided, the key will be associated with that user (creates user if it doesn\&#39;t exist). If user_id is not provided, the key is associated with the shared \&quot;default\&quot; user, which is created on first use. Keys without an explicit owner therefore share one identity, and so share budget, usage, and files.  &#x60;&#x60;workspace_id&#x60;&#x60; names a workspace in the caller\&#39;s organization, and omitting it mints into that organization\&#39;s default workspace. A key resolves that organization\&#39;s provider credentials and bills there, so minting into another organization\&#39;s workspace would spend its budget on its credentials.
 
 ### Example
 
@@ -93,7 +93,7 @@ example().catch(console.error);
 
 Delete Key
 
-Delete (revoke) an API key.  Requires master key authentication.
+Delete (revoke) an API key in the caller\&#39;s organization.  Requires master key authentication.
 
 ### Example
 
@@ -167,7 +167,7 @@ example().catch(console.error);
 
 Get Key
 
-Get details of a specific API key.  Requires master key authentication.
+Get details of a specific API key in the caller\&#39;s organization.  Requires master key authentication.
 
 ### Example
 
@@ -237,11 +237,11 @@ example().catch(console.error);
 
 ## listKeysV1KeysGet
 
-> Array&lt;KeyInfo&gt; listKeysV1KeysGet(skip, limit)
+> Array&lt;KeyInfo&gt; listKeysV1KeysGet(skip, limit, workspaceId)
 
 List Keys
 
-List all API keys.  Requires master key authentication.
+List the API keys in the caller\&#39;s organization.  Requires master key authentication. An unset &#x60;&#x60;workspace_id&#x60;&#x60; lists every key in that organization; naming a workspace in another one lists nothing rather than refusing, so the filter reports no more than the unfiltered read does.
 
 ### Example
 
@@ -267,6 +267,8 @@ async function example() {
     skip: 56,
     // number (optional)
     limit: 56,
+    // string | Only keys in this workspace. (optional)
+    workspaceId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
   } satisfies ListKeysV1KeysGetRequest;
 
   try {
@@ -288,6 +290,7 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **skip** | `number` |  | [Optional] [Defaults to `0`] |
 | **limit** | `number` |  | [Optional] [Defaults to `100`] |
+| **workspaceId** | `string` | Only keys in this workspace. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -318,7 +321,7 @@ example().catch(console.error);
 
 Rotate Key
 
-Rotate an API key\&#39;s secret in place.  Requires master key authentication.  Generates a new secret for the same key row (id, user, name, expiry, and metadata are preserved) and returns the new raw key once, using the same response shape as key creation. The previous secret stops authenticating immediately; there is no grace window.
+Rotate an API key\&#39;s secret in place, within the caller\&#39;s organization.  Requires master key authentication.  Generates a new secret for the same key row (id, user, name, expiry, and metadata are preserved) and returns the new raw key once, using the same response shape as key creation. The previous secret stops authenticating immediately; there is no grace window.
 
 ### Example
 
@@ -392,7 +395,7 @@ example().catch(console.error);
 
 Update Key
 
-Update an API key.  Requires master key authentication.
+Update an API key in the caller\&#39;s organization.  Requires master key authentication.
 
 ### Example
 

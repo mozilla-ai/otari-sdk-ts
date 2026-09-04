@@ -91,7 +91,7 @@ example().catch(console.error);
 
 List Discoverable Models
 
-List every model the configured provider credentials can reach.  Operator-facing counterpart to GET /v1/models, which serves a curated catalog to API callers. This reports each provider separately and keeps its error, so a provider with a bad key is distinguishable from one with no models. It is master-key gated because a provider error message describes the gateway\&#39;s own configuration.  Answers from the discovery cache, which a background refresher keeps warm, so the call does not wait on a slow or unreachable provider. Each provider carries the &#x60;&#x60;checked_at&#x60;&#x60; its result was produced at; a null one has not been dialed yet. Pass &#x60;&#x60;refresh&#x3D;true&#x60;&#x60; to force a live re-dial of every provider.
+List every model the configured provider credentials can reach.  Operator-facing counterpart to GET /v1/models, which serves a curated catalog to API callers. This reports each provider separately and keeps its error, so a provider with a bad key is distinguishable from one with no models. It is operator-gated because a provider error message describes the gateway\&#39;s own configuration.  Answers from the discovery cache, which a background refresher keeps warm, so the call does not wait on a slow or unreachable provider. Each provider carries the &#x60;&#x60;checked_at&#x60;&#x60; its result was produced at; a null one has not been dialed yet. Pass &#x60;&#x60;refresh&#x3D;true&#x60;&#x60; to force a live re-dial of every provider.
 
 ### Example
 
@@ -165,7 +165,7 @@ example().catch(console.error);
 
 List Model Metadata
 
-Per-model metadata for the dashboard\&#39;s detail view, from models.dev.  Covers every model models.dev lists under a configured provider, keyed by the &#x60;&#x60;instance:model&#x60;&#x60; selector the dashboard uses. &#x60;&#x60;available&#x60;&#x60; is false when enrichment is disabled (&#x60;&#x60;models_dev_metadata&#x60;&#x60;) or models.dev could not be reached; the response is then empty and the UI falls back to bundled data. Master-key gated: it describes the gateway\&#39;s configured providers.  Answers from the cached catalog, kept warm by a background refresher, so the dashboard never waits on the models.dev fetch timeout.
+Per-model metadata for the dashboard\&#39;s detail view, from models.dev.  Covers every model models.dev lists under a configured provider, keyed by the &#x60;&#x60;instance:model&#x60;&#x60; selector the dashboard uses. &#x60;&#x60;available&#x60;&#x60; is false when enrichment is disabled (&#x60;&#x60;models_dev_metadata&#x60;&#x60;) or models.dev could not be reached; the response is then empty and the UI falls back to bundled data. Operator-gated: it describes the gateway\&#39;s configured providers.  Answers from the cached catalog, kept warm by a background refresher, so the dashboard never waits on the models.dev fetch timeout.
 
 ### Example
 

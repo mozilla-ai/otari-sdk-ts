@@ -242,7 +242,7 @@ export class ProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * List static metadata for every configured provider.  Operator-facing: reports each provider\'s capabilities, documentation and pricing links, and display name from the bundled any-llm and genai-prices datasets. No provider is contacted, so this is cheap and always available. Master-key gated because it describes the gateway\'s own configuration.
+     * List static metadata for every configured provider.  Operator-facing: reports each provider\'s capabilities, documentation and pricing links, and display name from the bundled any-llm and genai-prices datasets. No provider is contacted, so this is cheap and always available.
      * List Providers
      */
     async listProvidersV1ProvidersGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProvidersResponse>> {
@@ -253,7 +253,7 @@ export class ProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * List static metadata for every configured provider.  Operator-facing: reports each provider\'s capabilities, documentation and pricing links, and display name from the bundled any-llm and genai-prices datasets. No provider is contacted, so this is cheap and always available. Master-key gated because it describes the gateway\'s own configuration.
+     * List static metadata for every configured provider.  Operator-facing: reports each provider\'s capabilities, documentation and pricing links, and display name from the bundled any-llm and genai-prices datasets. No provider is contacted, so this is cheap and always available.
      * List Providers
      */
     async listProvidersV1ProvidersGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProvidersResponse> {
@@ -344,7 +344,7 @@ export class ProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Autofill hints for one provider the add-provider form has selected.  Imports only the selected provider\'s any-llm module (not the whole catalog) to report its credential env var, default endpoint, whether a key is required, and whether that env var is already set on the server. Returns 404 for an unknown provider id. Master-key gated because it is operator-facing.  The SDK import is offloaded to a worker thread: the first fetch for a given provider imports that provider\'s module, which would otherwise block the event loop (and thus every concurrent request) for the import\'s duration.
+     * Autofill hints for one provider the add-provider form has selected.  Imports only the selected provider\'s any-llm module (not the whole catalog) to report its credential env var, default endpoint, whether a key is required, and whether that env var is already set on the server. Returns 404 for an unknown provider id.  The SDK import is offloaded to a worker thread: the first fetch for a given provider imports that provider\'s module, which would otherwise block the event loop (and thus every concurrent request) for the import\'s duration.
      * Provider Catalog Detail
      */
     async providerCatalogDetailV1ProvidersCatalogProviderIdGetRaw(requestParameters: ProviderCatalogDetailV1ProvidersCatalogProviderIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<KnownProviderSchema>> {
@@ -355,7 +355,7 @@ export class ProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Autofill hints for one provider the add-provider form has selected.  Imports only the selected provider\'s any-llm module (not the whole catalog) to report its credential env var, default endpoint, whether a key is required, and whether that env var is already set on the server. Returns 404 for an unknown provider id. Master-key gated because it is operator-facing.  The SDK import is offloaded to a worker thread: the first fetch for a given provider imports that provider\'s module, which would otherwise block the event loop (and thus every concurrent request) for the import\'s duration.
+     * Autofill hints for one provider the add-provider form has selected.  Imports only the selected provider\'s any-llm module (not the whole catalog) to report its credential env var, default endpoint, whether a key is required, and whether that env var is already set on the server. Returns 404 for an unknown provider id.  The SDK import is offloaded to a worker thread: the first fetch for a given provider imports that provider\'s module, which would otherwise block the event loop (and thus every concurrent request) for the import\'s duration.
      * Provider Catalog Detail
      */
     async providerCatalogDetailV1ProvidersCatalogProviderIdGet(requestParameters: ProviderCatalogDetailV1ProvidersCatalogProviderIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<KnownProviderSchema> {
@@ -391,7 +391,7 @@ export class ProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * List every known provider for the add-provider picker: id and name only.  Lightweight by design so the picker never lags: provider ids come from the any-llm registry and names from the bundled genai-prices dataset, so no provider SDK is imported. The autofill hints for a chosen provider come from GET /v1/providers/catalog/{provider_id}, which imports only that one SDK. Master-key gated because it is operator-facing dashboard data.
+     * List every known provider for the add-provider picker: id and name only.  Lightweight by design so the picker never lags: provider ids come from the any-llm registry and names from the bundled genai-prices dataset, so no provider SDK is imported. The autofill hints for a chosen provider come from GET /v1/providers/catalog/{provider_id}, which imports only that one SDK.
      * Provider Catalog
      */
     async providerCatalogV1ProvidersCatalogGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<KnownProviderSummarySchema>>> {
@@ -402,7 +402,7 @@ export class ProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * List every known provider for the add-provider picker: id and name only.  Lightweight by design so the picker never lags: provider ids come from the any-llm registry and names from the bundled genai-prices dataset, so no provider SDK is imported. The autofill hints for a chosen provider come from GET /v1/providers/catalog/{provider_id}, which imports only that one SDK. Master-key gated because it is operator-facing dashboard data.
+     * List every known provider for the add-provider picker: id and name only.  Lightweight by design so the picker never lags: provider ids come from the any-llm registry and names from the bundled genai-prices dataset, so no provider SDK is imported. The autofill hints for a chosen provider come from GET /v1/providers/catalog/{provider_id}, which imports only that one SDK.
      * Provider Catalog
      */
     async providerCatalogV1ProvidersCatalogGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<KnownProviderSummarySchema>> {
@@ -442,7 +442,7 @@ export class ProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Report every configured provider\'s reachability, with a last-checked time.  Reuses the per-provider model-discovery test path, so a provider is healthy when its credentials can list models. Results are served from the discovery cache (cheap enough to poll), so ``checked_at`` reflects when each provider was actually dialed. Pass ``refresh=true`` to force a live re-dial of every provider. Master-key gated because it describes the gateway\'s own providers.  A provider whose backend serves no model-listing endpoint cannot be verified this way, but it is not unreachable either: it is reported with ``discovery_unsupported`` and counted under ``degraded`` rather than as a reachability failure.
+     * Report every configured provider\'s reachability, with a last-checked time.  Reuses the per-provider model-discovery test path, so a provider is healthy when its credentials can list models. Results are served from the discovery cache (cheap enough to poll), so ``checked_at`` reflects when each provider was actually dialed. Pass ``refresh=true`` to force a live re-dial of every provider.  A provider whose backend serves no model-listing endpoint cannot be verified this way, but it is not unreachable either: it is reported with ``discovery_unsupported`` and counted under ``degraded`` rather than as a reachability failure.
      * Provider Health
      */
     async providerHealthV1ProvidersHealthGetRaw(requestParameters: ProviderHealthV1ProvidersHealthGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProviderHealthResponse>> {
@@ -453,7 +453,7 @@ export class ProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Report every configured provider\'s reachability, with a last-checked time.  Reuses the per-provider model-discovery test path, so a provider is healthy when its credentials can list models. Results are served from the discovery cache (cheap enough to poll), so ``checked_at`` reflects when each provider was actually dialed. Pass ``refresh=true`` to force a live re-dial of every provider. Master-key gated because it describes the gateway\'s own providers.  A provider whose backend serves no model-listing endpoint cannot be verified this way, but it is not unreachable either: it is reported with ``discovery_unsupported`` and counted under ``degraded`` rather than as a reachability failure.
+     * Report every configured provider\'s reachability, with a last-checked time.  Reuses the per-provider model-discovery test path, so a provider is healthy when its credentials can list models. Results are served from the discovery cache (cheap enough to poll), so ``checked_at`` reflects when each provider was actually dialed. Pass ``refresh=true`` to force a live re-dial of every provider.  A provider whose backend serves no model-listing endpoint cannot be verified this way, but it is not unreachable either: it is reported with ``discovery_unsupported`` and counted under ``degraded`` rather than as a reachability failure.
      * Provider Health
      */
     async providerHealthV1ProvidersHealthGet(requestParameters: ProviderHealthV1ProvidersHealthGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProviderHealthResponse> {

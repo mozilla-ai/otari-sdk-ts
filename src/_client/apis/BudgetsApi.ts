@@ -165,7 +165,7 @@ export class BudgetsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a budget.
+     * Delete a budget.  Refused with 409 while anything still names this budget: a workspace handing it to its members, or a scoped ceiling enforcing it. Both foreign keys are ``RESTRICT``, so the database would refuse either anyway, but as an ``IntegrityError`` reported as \"Database error\" with nothing naming what to go and change. Checked here so the refusal can say which, and where.
      * Delete Budget
      */
     async deleteBudgetV1BudgetsBudgetIdDeleteRaw(requestParameters: DeleteBudgetV1BudgetsBudgetIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -176,7 +176,7 @@ export class BudgetsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a budget.
+     * Delete a budget.  Refused with 409 while anything still names this budget: a workspace handing it to its members, or a scoped ceiling enforcing it. Both foreign keys are ``RESTRICT``, so the database would refuse either anyway, but as an ``IntegrityError`` reported as \"Database error\" with nothing naming what to go and change. Checked here so the refusal can say which, and where.
      * Delete Budget
      */
     async deleteBudgetV1BudgetsBudgetIdDelete(requestParameters: DeleteBudgetV1BudgetsBudgetIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {

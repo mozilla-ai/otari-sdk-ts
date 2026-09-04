@@ -65,6 +65,7 @@ export interface MRBetaServerToolUseBlock {
  * @export
  */
 export const MRBetaServerToolUseBlockNameEnum = {
+    Advisor: 'advisor',
     WebSearch: 'web_search',
     WebFetch: 'web_fetch',
     CodeExecution: 'code_execution',

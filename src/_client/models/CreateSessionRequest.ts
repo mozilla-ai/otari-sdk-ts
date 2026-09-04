@@ -14,24 +14,44 @@
 
 import { mapValues } from '../runtime.js';
 /**
- * Sign in to the dashboard by proving possession of the master key.
+ * Sign in to the dashboard with exactly one credential.
+ * 
+ * A flat body with an optional field per credential, rather than a tagged
+ * union: it is one extra key on the wire, it generates a client type a
+ * hand-written form can fill in, and the validator below makes the two forms
+ * exclusive anyway.
+ * 
+ * The example carries one credential, because a generated example is a body
+ * somebody will post: the schema alone would produce every field at once,
+ * which is the one shape the validator below refuses.
  * @export
  * @interface CreateSessionRequest
  */
 export interface CreateSessionRequest {
     /**
-     * The gateway master key; verified once and never stored by the browser.
+     * The identity's sign-in address.
      * @type {string}
      * @memberof CreateSessionRequest
      */
-    masterKey: string;
+    email?: string | null;
+    /**
+     * The gateway master key; verified once and never stored by the browser. Accepted only while the operator identity has no password, which is to say while nobody has claimed this deployment (see GET /v1/bootstrap).
+     * @type {string}
+     * @memberof CreateSessionRequest
+     */
+    masterKey?: string | null;
+    /**
+     * The identity's password.
+     * @type {string}
+     * @memberof CreateSessionRequest
+     */
+    password?: string | null;
 }
 
 /**
  * Check if a given object implements the CreateSessionRequest interface.
  */
 export function instanceOfCreateSessionRequest(value: object): value is CreateSessionRequest {
-    if (!('masterKey' in value) || value['masterKey'] === undefined) return false;
     return true;
 }
 
@@ -45,7 +65,9 @@ export function CreateSessionRequestFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
-        'masterKey': json['master_key'],
+        'email': json['email'] == null ? undefined : json['email'],
+        'masterKey': json['master_key'] == null ? undefined : json['master_key'],
+        'password': json['password'] == null ? undefined : json['password'],
     };
 }
 
@@ -60,7 +82,9 @@ export function CreateSessionRequestToJSONTyped(value?: CreateSessionRequest | n
 
     return {
         
+        'email': value['email'],
         'master_key': value['masterKey'],
+        'password': value['password'],
     };
 }
 

@@ -13,27 +13,34 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { MRBetaToolSearchToolSearchResultBlock } from './MRBetaToolSearchToolSearchResultBlock.js';
+import type { MRBetaTextEditorCodeExecutionStrReplaceResultBlock } from './MRBetaTextEditorCodeExecutionStrReplaceResultBlock.js';
 import {
-    MRBetaToolSearchToolSearchResultBlockFromJSON,
-    MRBetaToolSearchToolSearchResultBlockFromJSONTyped,
-    MRBetaToolSearchToolSearchResultBlockToJSON,
-    MRBetaToolSearchToolSearchResultBlockToJSONTyped,
-} from './MRBetaToolSearchToolSearchResultBlock.js';
-import type { MRBetaToolSearchToolResultError } from './MRBetaToolSearchToolResultError.js';
+    MRBetaTextEditorCodeExecutionStrReplaceResultBlockFromJSON,
+    MRBetaTextEditorCodeExecutionStrReplaceResultBlockFromJSONTyped,
+    MRBetaTextEditorCodeExecutionStrReplaceResultBlockToJSON,
+    MRBetaTextEditorCodeExecutionStrReplaceResultBlockToJSONTyped,
+} from './MRBetaTextEditorCodeExecutionStrReplaceResultBlock.js';
+import type { MRBetaTextEditorCodeExecutionCreateResultBlock } from './MRBetaTextEditorCodeExecutionCreateResultBlock.js';
 import {
-    MRBetaToolSearchToolResultErrorFromJSON,
-    MRBetaToolSearchToolResultErrorFromJSONTyped,
-    MRBetaToolSearchToolResultErrorToJSON,
-    MRBetaToolSearchToolResultErrorToJSONTyped,
-} from './MRBetaToolSearchToolResultError.js';
-import type { MRBetaToolReferenceBlock } from './MRBetaToolReferenceBlock.js';
+    MRBetaTextEditorCodeExecutionCreateResultBlockFromJSON,
+    MRBetaTextEditorCodeExecutionCreateResultBlockFromJSONTyped,
+    MRBetaTextEditorCodeExecutionCreateResultBlockToJSON,
+    MRBetaTextEditorCodeExecutionCreateResultBlockToJSONTyped,
+} from './MRBetaTextEditorCodeExecutionCreateResultBlock.js';
+import type { MRBetaTextEditorCodeExecutionViewResultBlock } from './MRBetaTextEditorCodeExecutionViewResultBlock.js';
 import {
-    MRBetaToolReferenceBlockFromJSON,
-    MRBetaToolReferenceBlockFromJSONTyped,
-    MRBetaToolReferenceBlockToJSON,
-    MRBetaToolReferenceBlockToJSONTyped,
-} from './MRBetaToolReferenceBlock.js';
+    MRBetaTextEditorCodeExecutionViewResultBlockFromJSON,
+    MRBetaTextEditorCodeExecutionViewResultBlockFromJSONTyped,
+    MRBetaTextEditorCodeExecutionViewResultBlockToJSON,
+    MRBetaTextEditorCodeExecutionViewResultBlockToJSONTyped,
+} from './MRBetaTextEditorCodeExecutionViewResultBlock.js';
+import type { MRBetaTextEditorCodeExecutionToolResultError } from './MRBetaTextEditorCodeExecutionToolResultError.js';
+import {
+    MRBetaTextEditorCodeExecutionToolResultErrorFromJSON,
+    MRBetaTextEditorCodeExecutionToolResultErrorFromJSONTyped,
+    MRBetaTextEditorCodeExecutionToolResultErrorToJSON,
+    MRBetaTextEditorCodeExecutionToolResultErrorToJSONTyped,
+} from './MRBetaTextEditorCodeExecutionToolResultError.js';
 
 /**
  * 
@@ -61,10 +68,70 @@ export interface Content8 {
     type: Content8TypeEnum;
     /**
      * 
-     * @type {Array<MRBetaToolReferenceBlock>}
+     * @type {string}
      * @memberof Content8
      */
-    toolReferences: Array<MRBetaToolReferenceBlock>;
+    content: string;
+    /**
+     * 
+     * @type {Content8FileTypeEnum}
+     * @memberof Content8
+     */
+    fileType: Content8FileTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content8
+     */
+    numLines?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content8
+     */
+    startLine?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content8
+     */
+    totalLines?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Content8
+     */
+    isFileUpdate: boolean;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Content8
+     */
+    lines?: Array<string>;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content8
+     */
+    newLines?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content8
+     */
+    newStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content8
+     */
+    oldLines?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content8
+     */
+    oldStart?: number;
 }
 
 
@@ -75,7 +142,8 @@ export const Content8ErrorCodeEnum = {
     InvalidToolInput: 'invalid_tool_input',
     Unavailable: 'unavailable',
     TooManyRequests: 'too_many_requests',
-    ExecutionTimeExceeded: 'execution_time_exceeded'
+    ExecutionTimeExceeded: 'execution_time_exceeded',
+    FileNotFound: 'file_not_found'
 } as const;
 export type Content8ErrorCodeEnum = typeof Content8ErrorCodeEnum[keyof typeof Content8ErrorCodeEnum];
 
@@ -83,10 +151,22 @@ export type Content8ErrorCodeEnum = typeof Content8ErrorCodeEnum[keyof typeof Co
  * @export
  */
 export const Content8TypeEnum = {
-    ToolSearchToolResultError: 'tool_search_tool_result_error',
-    ToolSearchToolSearchResult: 'tool_search_tool_search_result'
+    TextEditorCodeExecutionToolResultError: 'text_editor_code_execution_tool_result_error',
+    TextEditorCodeExecutionViewResult: 'text_editor_code_execution_view_result',
+    TextEditorCodeExecutionCreateResult: 'text_editor_code_execution_create_result',
+    TextEditorCodeExecutionStrReplaceResult: 'text_editor_code_execution_str_replace_result'
 } as const;
 export type Content8TypeEnum = typeof Content8TypeEnum[keyof typeof Content8TypeEnum];
+
+/**
+ * @export
+ */
+export const Content8FileTypeEnum = {
+    Text: 'text',
+    Image: 'image',
+    Pdf: 'pdf'
+} as const;
+export type Content8FileTypeEnum = typeof Content8FileTypeEnum[keyof typeof Content8FileTypeEnum];
 
 
 /**
@@ -95,7 +175,9 @@ export type Content8TypeEnum = typeof Content8TypeEnum[keyof typeof Content8Type
 export function instanceOfContent8(value: object): value is Content8 {
     if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
-    if (!('toolReferences' in value) || value['toolReferences'] === undefined) return false;
+    if (!('content' in value) || value['content'] === undefined) return false;
+    if (!('fileType' in value) || value['fileType'] === undefined) return false;
+    if (!('isFileUpdate' in value) || value['isFileUpdate'] === undefined) return false;
     return true;
 }
 
@@ -112,7 +194,17 @@ export function Content8FromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'errorCode': json['error_code'],
         'errorMessage': json['error_message'] == null ? undefined : json['error_message'],
         'type': json['type'],
-        'toolReferences': ((json['tool_references'] as Array<any>).map(MRBetaToolReferenceBlockFromJSON)),
+        'content': json['content'],
+        'fileType': json['file_type'],
+        'numLines': json['num_lines'] == null ? undefined : json['num_lines'],
+        'startLine': json['start_line'] == null ? undefined : json['start_line'],
+        'totalLines': json['total_lines'] == null ? undefined : json['total_lines'],
+        'isFileUpdate': json['is_file_update'],
+        'lines': json['lines'] == null ? undefined : json['lines'],
+        'newLines': json['new_lines'] == null ? undefined : json['new_lines'],
+        'newStart': json['new_start'] == null ? undefined : json['new_start'],
+        'oldLines': json['old_lines'] == null ? undefined : json['old_lines'],
+        'oldStart': json['old_start'] == null ? undefined : json['old_start'],
     };
 }
 
@@ -130,7 +222,17 @@ export function Content8ToJSONTyped(value?: Content8 | null, ignoreDiscriminator
         'error_code': value['errorCode'],
         'error_message': value['errorMessage'],
         'type': value['type'],
-        'tool_references': ((value['toolReferences'] as Array<any>).map(MRBetaToolReferenceBlockToJSON)),
+        'content': value['content'],
+        'file_type': value['fileType'],
+        'num_lines': value['numLines'],
+        'start_line': value['startLine'],
+        'total_lines': value['totalLines'],
+        'is_file_update': value['isFileUpdate'],
+        'lines': value['lines'],
+        'new_lines': value['newLines'],
+        'new_start': value['newStart'],
+        'old_lines': value['oldLines'],
+        'old_start': value['oldStart'],
     };
 }
 

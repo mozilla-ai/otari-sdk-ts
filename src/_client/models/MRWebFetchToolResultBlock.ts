@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { Content14 } from './Content14.js';
+import type { Content15 } from './Content15.js';
 import {
-    Content14FromJSON,
-    Content14FromJSONTyped,
-    Content14ToJSON,
-    Content14ToJSONTyped,
-} from './Content14.js';
+    Content15FromJSON,
+    Content15FromJSONTyped,
+    Content15ToJSON,
+    Content15ToJSONTyped,
+} from './Content15.js';
 import type { Caller1 } from './Caller1.js';
 import {
     Caller1FromJSON,
@@ -43,10 +43,10 @@ export interface MRWebFetchToolResultBlock {
     caller?: Caller1 | null;
     /**
      * 
-     * @type {Content14}
+     * @type {Content15}
      * @memberof MRWebFetchToolResultBlock
      */
-    content: Content14;
+    content: Content15;
     /**
      * 
      * @type {string}
@@ -93,7 +93,7 @@ export function MRWebFetchToolResultBlockFromJSONTyped(json: any, ignoreDiscrimi
         
             ...json,
         'caller': json['caller'] == null ? undefined : Caller1FromJSON(json['caller']),
-        'content': Content14FromJSON(json['content']),
+        'content': Content15FromJSON(json['content']),
         'toolUseId': json['tool_use_id'],
         'type': json['type'],
     };
@@ -112,7 +112,7 @@ export function MRWebFetchToolResultBlockToJSONTyped(value?: MRWebFetchToolResul
         
             ...value,
         'caller': Caller1ToJSON(value['caller']),
-        'content': Content14ToJSON(value['content']),
+        'content': Content15ToJSON(value['content']),
         'tool_use_id': value['toolUseId'],
         'type': value['type'],
     };

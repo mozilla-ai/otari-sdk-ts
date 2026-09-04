@@ -32,9 +32,27 @@ import {
 export interface DeleteAliasV1AliasesNameDeleteRequest {
     name: string;
     userId?: string | null;
+    workspaceId?: string | null;
+}
+
+export interface DeleteOrganizationAliasV1OrganizationsMeAliasesNameDeleteRequest {
+    name: string;
+    workspaceId?: string | null;
+}
+
+export interface ListAliasesV1AliasesGetRequest {
+    workspaceId?: string | null;
+}
+
+export interface ListVisibleAliasesV1OrganizationsMeAliasesGetRequest {
+    limit?: number;
 }
 
 export interface SetAliasV1AliasesPostRequest {
+    aliasRequest: AliasRequest;
+}
+
+export interface SetOrganizationAliasV1OrganizationsMeAliasesPostRequest {
     aliasRequest: AliasRequest;
 }
 
@@ -60,6 +78,10 @@ export class AliasesApi extends runtime.BaseAPI {
             queryParameters['user_id'] = requestParameters['userId'];
         }
 
+        if (requestParameters['workspaceId'] != null) {
+            queryParameters['workspace_id'] = requestParameters['workspaceId'];
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -83,7 +105,7 @@ export class AliasesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a stored alias in one scope.  Scoped by ``user_id`` for the same reason the upsert is: deleting the global alias must not take a user\'s override with it, and deleting an override must leave the global one serving everyone else.
+     * Delete a stored alias in one scope.
      * Delete Alias
      */
     async deleteAliasV1AliasesNameDeleteRaw(requestParameters: DeleteAliasV1AliasesNameDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -94,7 +116,7 @@ export class AliasesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a stored alias in one scope.  Scoped by ``user_id`` for the same reason the upsert is: deleting the global alias must not take a user\'s override with it, and deleting an override must leave the global one serving everyone else.
+     * Delete a stored alias in one scope.
      * Delete Alias
      */
     async deleteAliasV1AliasesNameDelete(requestParameters: DeleteAliasV1AliasesNameDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
@@ -102,10 +124,72 @@ export class AliasesApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for deleteOrganizationAliasV1OrganizationsMeAliasesNameDelete without sending the request
+     */
+    async deleteOrganizationAliasV1OrganizationsMeAliasesNameDeleteRequestOpts(requestParameters: DeleteOrganizationAliasV1OrganizationsMeAliasesNameDeleteRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['name'] == null) {
+            throw new runtime.RequiredError(
+                'name',
+                'Required parameter "name" was null or undefined when calling deleteOrganizationAliasV1OrganizationsMeAliasesNameDelete().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['workspaceId'] != null) {
+            queryParameters['workspace_id'] = requestParameters['workspaceId'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/organizations/me/aliases/{name}`;
+        urlPath = urlPath.replace('{name}', encodeURIComponent(String(requestParameters['name'])));
+
+        return {
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Delete a stored alias from one of the organization\'s workspaces. Owners and admins only.
+     * Delete Organization Alias
+     */
+    async deleteOrganizationAliasV1OrganizationsMeAliasesNameDeleteRaw(requestParameters: DeleteOrganizationAliasV1OrganizationsMeAliasesNameDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteOrganizationAliasV1OrganizationsMeAliasesNameDeleteRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Delete a stored alias from one of the organization\'s workspaces. Owners and admins only.
+     * Delete Organization Alias
+     */
+    async deleteOrganizationAliasV1OrganizationsMeAliasesNameDelete(requestParameters: DeleteOrganizationAliasV1OrganizationsMeAliasesNameDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteOrganizationAliasV1OrganizationsMeAliasesNameDeleteRaw(requestParameters, initOverrides);
+    }
+
+    /**
      * Creates request options for listAliasesV1AliasesGet without sending the request
      */
-    async listAliasesV1AliasesGetRequestOpts(): Promise<runtime.RequestOpts> {
+    async listAliasesV1AliasesGetRequestOpts(requestParameters: ListAliasesV1AliasesGetRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
+
+        if (requestParameters['workspaceId'] != null) {
+            queryParameters['workspace_id'] = requestParameters['workspaceId'];
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -129,22 +213,73 @@ export class AliasesApi extends runtime.BaseAPI {
     }
 
     /**
-     * List every alias in force, from config.yml and from storage.  Every scope at once, global and user-scoped alike: this is the master-key management view, not what any one caller resolves.
+     * List every alias in force, from config.yml and from storage.  Every scope at once, workspace-wide and user-scoped alike: this is the master-key management view, not what any one caller resolves.
      * List Aliases
      */
-    async listAliasesV1AliasesGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<AliasResponse>>> {
-        const requestOptions = await this.listAliasesV1AliasesGetRequestOpts();
+    async listAliasesV1AliasesGetRaw(requestParameters: ListAliasesV1AliasesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<AliasResponse>>> {
+        const requestOptions = await this.listAliasesV1AliasesGetRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(AliasResponseFromJSON));
     }
 
     /**
-     * List every alias in force, from config.yml and from storage.  Every scope at once, global and user-scoped alike: this is the master-key management view, not what any one caller resolves.
+     * List every alias in force, from config.yml and from storage.  Every scope at once, workspace-wide and user-scoped alike: this is the master-key management view, not what any one caller resolves.
      * List Aliases
      */
-    async listAliasesV1AliasesGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<AliasResponse>> {
-        const response = await this.listAliasesV1AliasesGetRaw(initOverrides);
+    async listAliasesV1AliasesGet(requestParameters: ListAliasesV1AliasesGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<AliasResponse>> {
+        const response = await this.listAliasesV1AliasesGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for listVisibleAliasesV1OrganizationsMeAliasesGet without sending the request
+     */
+    async listVisibleAliasesV1OrganizationsMeAliasesGetRequestOpts(requestParameters: ListVisibleAliasesV1OrganizationsMeAliasesGetRequest): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/organizations/me/aliases`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * List the aliases in force in the workspaces this caller may see.  The policies list\'s sibling, over ``model_aliases``, and scoped the same way: stored rows from the caller\'s visible workspaces, plus the config-file aliases, which are deployment-wide.
+     * List Visible Aliases
+     */
+    async listVisibleAliasesV1OrganizationsMeAliasesGetRaw(requestParameters: ListVisibleAliasesV1OrganizationsMeAliasesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<AliasResponse>>> {
+        const requestOptions = await this.listVisibleAliasesV1OrganizationsMeAliasesGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(AliasResponseFromJSON));
+    }
+
+    /**
+     * List the aliases in force in the workspaces this caller may see.  The policies list\'s sibling, over ``model_aliases``, and scoped the same way: stored rows from the caller\'s visible workspaces, plus the config-file aliases, which are deployment-wide.
+     * List Visible Aliases
+     */
+    async listVisibleAliasesV1OrganizationsMeAliasesGet(requestParameters: ListVisibleAliasesV1OrganizationsMeAliasesGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<AliasResponse>> {
+        const response = await this.listVisibleAliasesV1OrganizationsMeAliasesGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -186,7 +321,7 @@ export class AliasesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create or update a stored alias, global or scoped to one user.
+     * Create or update a stored alias in one workspace, optionally for one user.
      * Set Alias
      */
     async setAliasV1AliasesPostRaw(requestParameters: SetAliasV1AliasesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AliasResponse>> {
@@ -197,11 +332,68 @@ export class AliasesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create or update a stored alias, global or scoped to one user.
+     * Create or update a stored alias in one workspace, optionally for one user.
      * Set Alias
      */
     async setAliasV1AliasesPost(requestParameters: SetAliasV1AliasesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AliasResponse> {
         const response = await this.setAliasV1AliasesPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for setOrganizationAliasV1OrganizationsMeAliasesPost without sending the request
+     */
+    async setOrganizationAliasV1OrganizationsMeAliasesPostRequestOpts(requestParameters: SetOrganizationAliasV1OrganizationsMeAliasesPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['aliasRequest'] == null) {
+            throw new runtime.RequiredError(
+                'aliasRequest',
+                'Required parameter "aliasRequest" was null or undefined when calling setOrganizationAliasV1OrganizationsMeAliasesPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/v1/organizations/me/aliases`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: AliasRequestToJSON(requestParameters['aliasRequest']),
+        };
+    }
+
+    /**
+     * Create or update a stored alias in one of the organization\'s workspaces.  Organization owners and admins only, with the same two scope rules the policy write has: ``workspace_id`` is required and resolved inside the caller\'s organization, and ``user_id`` is not accepted.
+     * Set Organization Alias
+     */
+    async setOrganizationAliasV1OrganizationsMeAliasesPostRaw(requestParameters: SetOrganizationAliasV1OrganizationsMeAliasesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AliasResponse>> {
+        const requestOptions = await this.setOrganizationAliasV1OrganizationsMeAliasesPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AliasResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Create or update a stored alias in one of the organization\'s workspaces.  Organization owners and admins only, with the same two scope rules the policy write has: ``workspace_id`` is required and resolved inside the caller\'s organization, and ``user_id`` is not accepted.
+     * Set Organization Alias
+     */
+    async setOrganizationAliasV1OrganizationsMeAliasesPost(requestParameters: SetOrganizationAliasV1OrganizationsMeAliasesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AliasResponse> {
+        const response = await this.setOrganizationAliasV1OrganizationsMeAliasesPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

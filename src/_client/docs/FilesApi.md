@@ -325,11 +325,11 @@ example().catch(console.error);
 
 ## listFilesV1FilesGet
 
-> { [key: string]: any; } listFilesV1FilesGet(user, purpose)
+> { [key: string]: any; } listFilesV1FilesGet(user, purpose, workspaceId)
 
 List Files
 
-List the authenticated user\&#39;s uploaded files.
+List the authenticated user\&#39;s uploaded files in the request\&#39;s workspace.  &#x60;&#x60;workspace_id&#x60;&#x60; narrows a master-key listing to one workspace; a keyed request is already confined to its key\&#39;s own and cannot widen or move it.
 
 ### Example
 
@@ -355,6 +355,8 @@ async function example() {
     user: user_example,
     // string (optional)
     purpose: purpose_example,
+    // string (optional)
+    workspaceId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
   } satisfies ListFilesV1FilesGetRequest;
 
   try {
@@ -376,6 +378,7 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **user** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **purpose** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **workspaceId** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
