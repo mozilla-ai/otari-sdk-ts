@@ -6,6 +6,13 @@
 
 Name | Type
 ------------ | -------------
+`errorCode` | string
+`type` | string
+`content` | [Array&lt;MRBetaCodeExecutionOutputBlock&gt;](MRBetaCodeExecutionOutputBlock.md)
+`returnCode` | number
+`stderr` | string
+`stdout` | string
+`encryptedStdout` | string
 
 ## Example
 
@@ -14,6 +21,13 @@ import type { Content6 } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "errorCode": null,
+  "type": null,
+  "content": null,
+  "returnCode": null,
+  "stderr": null,
+  "stdout": null,
+  "encryptedStdout": null,
 } satisfies Content6
 
 console.log(example)

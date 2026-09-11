@@ -34,6 +34,13 @@ import {
     MRCacheCreationToJSON,
     MRCacheCreationToJSONTyped,
 } from './MRCacheCreation.js';
+import type { MROutputTokensDetails } from './MROutputTokensDetails.js';
+import {
+    MROutputTokensDetailsFromJSON,
+    MROutputTokensDetailsFromJSONTyped,
+    MROutputTokensDetailsToJSON,
+    MROutputTokensDetailsToJSONTyped,
+} from './MROutputTokensDetails.js';
 
 /**
  * 
@@ -78,6 +85,12 @@ export interface MRMessageUsage {
      * @memberof MRMessageUsage
      */
     outputTokens: number;
+    /**
+     * 
+     * @type {MROutputTokensDetails}
+     * @memberof MRMessageUsage
+     */
+    outputTokensDetails?: MROutputTokensDetails | null;
     /**
      * 
      * @type {MRServerToolUsage}
@@ -151,6 +164,7 @@ export function MRMessageUsageFromJSONTyped(json: any, ignoreDiscriminator: bool
         'inferenceGeo': json['inference_geo'] == null ? undefined : json['inference_geo'],
         'inputTokens': json['input_tokens'],
         'outputTokens': json['output_tokens'],
+        'outputTokensDetails': json['output_tokens_details'] == null ? undefined : MROutputTokensDetailsFromJSON(json['output_tokens_details']),
         'serverToolUse': json['server_tool_use'] == null ? undefined : MRServerToolUsageFromJSON(json['server_tool_use']),
         'serviceTier': json['service_tier'] == null ? undefined : json['service_tier'],
         'iterations': json['iterations'] == null ? undefined : ((json['iterations'] as Array<any>).map(MRMessageUsageIterationsInnerFromJSON)),
@@ -176,6 +190,7 @@ export function MRMessageUsageToJSONTyped(value?: MRMessageUsage | null, ignoreD
         'inference_geo': value['inferenceGeo'],
         'input_tokens': value['inputTokens'],
         'output_tokens': value['outputTokens'],
+        'output_tokens_details': MROutputTokensDetailsToJSON(value['outputTokensDetails']),
         'server_tool_use': MRServerToolUsageToJSON(value['serverToolUse']),
         'service_tier': value['serviceTier'],
         'iterations': value['iterations'] == null ? undefined : ((value['iterations'] as Array<any>).map(MRMessageUsageIterationsInnerToJSON)),

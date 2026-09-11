@@ -39,28 +39,29 @@ import {
     UpdateKeyRequestToJSON,
 } from '../models/UpdateKeyRequest.js';
 
-export interface CreateKeyV1KeysPostRequest {
+export interface KeysCreateKeyRequest {
     createKeyRequest: CreateKeyRequest;
 }
 
-export interface DeleteKeyV1KeysKeyIdDeleteRequest {
+export interface KeysDeleteKeyRequest {
     keyId: string;
 }
 
-export interface GetKeyV1KeysKeyIdGetRequest {
+export interface KeysGetKeyRequest {
     keyId: string;
 }
 
-export interface ListKeysV1KeysGetRequest {
+export interface KeysListKeysRequest {
     skip?: number;
     limit?: number;
+    workspaceId?: string | null;
 }
 
-export interface RotateKeyV1KeysKeyIdRotatePostRequest {
+export interface KeysRotateKeyRequest {
     keyId: string;
 }
 
-export interface UpdateKeyV1KeysKeyIdPatchRequest {
+export interface KeysUpdateKeyRequest {
     keyId: string;
     updateKeyRequest: UpdateKeyRequest;
 }
@@ -71,13 +72,13 @@ export interface UpdateKeyV1KeysKeyIdPatchRequest {
 export class KeysApi extends runtime.BaseAPI {
 
     /**
-     * Creates request options for createKeyV1KeysPost without sending the request
+     * Creates request options for keysCreateKey without sending the request
      */
-    async createKeyV1KeysPostRequestOpts(requestParameters: CreateKeyV1KeysPostRequest): Promise<runtime.RequestOpts> {
+    async keysCreateKeyRequestOpts(requestParameters: KeysCreateKeyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createKeyRequest'] == null) {
             throw new runtime.RequiredError(
                 'createKeyRequest',
-                'Required parameter "createKeyRequest" was null or undefined when calling createKeyV1KeysPost().'
+                'Required parameter "createKeyRequest" was null or undefined when calling keysCreateKey().'
             );
         }
 
@@ -96,7 +97,7 @@ export class KeysApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/keys`;
+        let urlPath = `/api/v1/keys`;
 
         return {
             path: urlPath,
@@ -108,33 +109,33 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new API key.  Requires master key authentication.  If user_id is provided, the key will be associated with that user (creates user if it doesn\'t exist). If user_id is not provided, the key is associated with the shared \"default\" user, which is created on first use. Keys without an explicit owner therefore share one identity, and so share budget, usage, and files.
+     * Create a new API key in the caller\'s organization.  Requires master key authentication.  If user_id is provided, the key will be associated with that user (creates user if it doesn\'t exist). If user_id is not provided, the key is associated with the shared \"default\" user, which is created on first use. Keys without an explicit owner therefore share one identity, and so share budget, usage, and files.  ``workspace_id`` names a workspace in the caller\'s organization, and omitting it mints into that organization\'s default workspace. A key resolves that organization\'s provider credentials and bills there, so minting into another organization\'s workspace would spend its budget on its credentials.
      * Create Key
      */
-    async createKeyV1KeysPostRaw(requestParameters: CreateKeyV1KeysPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateKeyResponse>> {
-        const requestOptions = await this.createKeyV1KeysPostRequestOpts(requestParameters);
+    async keysCreateKeyRaw(requestParameters: KeysCreateKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateKeyResponse>> {
+        const requestOptions = await this.keysCreateKeyRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => CreateKeyResponseFromJSON(jsonValue));
     }
 
     /**
-     * Create a new API key.  Requires master key authentication.  If user_id is provided, the key will be associated with that user (creates user if it doesn\'t exist). If user_id is not provided, the key is associated with the shared \"default\" user, which is created on first use. Keys without an explicit owner therefore share one identity, and so share budget, usage, and files.
+     * Create a new API key in the caller\'s organization.  Requires master key authentication.  If user_id is provided, the key will be associated with that user (creates user if it doesn\'t exist). If user_id is not provided, the key is associated with the shared \"default\" user, which is created on first use. Keys without an explicit owner therefore share one identity, and so share budget, usage, and files.  ``workspace_id`` names a workspace in the caller\'s organization, and omitting it mints into that organization\'s default workspace. A key resolves that organization\'s provider credentials and bills there, so minting into another organization\'s workspace would spend its budget on its credentials.
      * Create Key
      */
-    async createKeyV1KeysPost(requestParameters: CreateKeyV1KeysPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateKeyResponse> {
-        const response = await this.createKeyV1KeysPostRaw(requestParameters, initOverrides);
+    async keysCreateKey(requestParameters: KeysCreateKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateKeyResponse> {
+        const response = await this.keysCreateKeyRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for deleteKeyV1KeysKeyIdDelete without sending the request
+     * Creates request options for keysDeleteKey without sending the request
      */
-    async deleteKeyV1KeysKeyIdDeleteRequestOpts(requestParameters: DeleteKeyV1KeysKeyIdDeleteRequest): Promise<runtime.RequestOpts> {
+    async keysDeleteKeyRequestOpts(requestParameters: KeysDeleteKeyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['keyId'] == null) {
             throw new runtime.RequiredError(
                 'keyId',
-                'Required parameter "keyId" was null or undefined when calling deleteKeyV1KeysKeyIdDelete().'
+                'Required parameter "keyId" was null or undefined when calling keysDeleteKey().'
             );
         }
 
@@ -151,7 +152,7 @@ export class KeysApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/keys/{key_id}`;
+        let urlPath = `/api/v1/keys/{key_id}`;
         urlPath = urlPath.replace('{key_id}', encodeURIComponent(String(requestParameters['keyId'])));
 
         return {
@@ -163,32 +164,32 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete (revoke) an API key.  Requires master key authentication.
+     * Delete (revoke) an API key in the caller\'s organization.  Requires master key authentication.
      * Delete Key
      */
-    async deleteKeyV1KeysKeyIdDeleteRaw(requestParameters: DeleteKeyV1KeysKeyIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        const requestOptions = await this.deleteKeyV1KeysKeyIdDeleteRequestOpts(requestParameters);
+    async keysDeleteKeyRaw(requestParameters: KeysDeleteKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.keysDeleteKeyRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
 
     /**
-     * Delete (revoke) an API key.  Requires master key authentication.
+     * Delete (revoke) an API key in the caller\'s organization.  Requires master key authentication.
      * Delete Key
      */
-    async deleteKeyV1KeysKeyIdDelete(requestParameters: DeleteKeyV1KeysKeyIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteKeyV1KeysKeyIdDeleteRaw(requestParameters, initOverrides);
+    async keysDeleteKey(requestParameters: KeysDeleteKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.keysDeleteKeyRaw(requestParameters, initOverrides);
     }
 
     /**
-     * Creates request options for getKeyV1KeysKeyIdGet without sending the request
+     * Creates request options for keysGetKey without sending the request
      */
-    async getKeyV1KeysKeyIdGetRequestOpts(requestParameters: GetKeyV1KeysKeyIdGetRequest): Promise<runtime.RequestOpts> {
+    async keysGetKeyRequestOpts(requestParameters: KeysGetKeyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['keyId'] == null) {
             throw new runtime.RequiredError(
                 'keyId',
-                'Required parameter "keyId" was null or undefined when calling getKeyV1KeysKeyIdGet().'
+                'Required parameter "keyId" was null or undefined when calling keysGetKey().'
             );
         }
 
@@ -205,7 +206,7 @@ export class KeysApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/keys/{key_id}`;
+        let urlPath = `/api/v1/keys/{key_id}`;
         urlPath = urlPath.replace('{key_id}', encodeURIComponent(String(requestParameters['keyId'])));
 
         return {
@@ -217,29 +218,29 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get details of a specific API key.  Requires master key authentication.
+     * Get details of a specific API key in the caller\'s organization.  Requires master key authentication.
      * Get Key
      */
-    async getKeyV1KeysKeyIdGetRaw(requestParameters: GetKeyV1KeysKeyIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<KeyInfo>> {
-        const requestOptions = await this.getKeyV1KeysKeyIdGetRequestOpts(requestParameters);
+    async keysGetKeyRaw(requestParameters: KeysGetKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<KeyInfo>> {
+        const requestOptions = await this.keysGetKeyRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => KeyInfoFromJSON(jsonValue));
     }
 
     /**
-     * Get details of a specific API key.  Requires master key authentication.
+     * Get details of a specific API key in the caller\'s organization.  Requires master key authentication.
      * Get Key
      */
-    async getKeyV1KeysKeyIdGet(requestParameters: GetKeyV1KeysKeyIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<KeyInfo> {
-        const response = await this.getKeyV1KeysKeyIdGetRaw(requestParameters, initOverrides);
+    async keysGetKey(requestParameters: KeysGetKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<KeyInfo> {
+        const response = await this.keysGetKeyRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for listKeysV1KeysGet without sending the request
+     * Creates request options for keysListKeys without sending the request
      */
-    async listKeysV1KeysGetRequestOpts(requestParameters: ListKeysV1KeysGetRequest): Promise<runtime.RequestOpts> {
+    async keysListKeysRequestOpts(requestParameters: KeysListKeysRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['skip'] != null) {
@@ -248,6 +249,10 @@ export class KeysApi extends runtime.BaseAPI {
 
         if (requestParameters['limit'] != null) {
             queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        if (requestParameters['workspaceId'] != null) {
+            queryParameters['workspace_id'] = requestParameters['workspaceId'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -261,7 +266,7 @@ export class KeysApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/keys`;
+        let urlPath = `/api/v1/keys`;
 
         return {
             path: urlPath,
@@ -272,33 +277,33 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
-     * List all API keys.  Requires master key authentication.
+     * List the API keys in the caller\'s organization.  Requires master key authentication. An unset ``workspace_id`` lists every key in that organization; naming a workspace in another one lists nothing rather than refusing, so the filter reports no more than the unfiltered read does.
      * List Keys
      */
-    async listKeysV1KeysGetRaw(requestParameters: ListKeysV1KeysGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<KeyInfo>>> {
-        const requestOptions = await this.listKeysV1KeysGetRequestOpts(requestParameters);
+    async keysListKeysRaw(requestParameters: KeysListKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<KeyInfo>>> {
+        const requestOptions = await this.keysListKeysRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(KeyInfoFromJSON));
     }
 
     /**
-     * List all API keys.  Requires master key authentication.
+     * List the API keys in the caller\'s organization.  Requires master key authentication. An unset ``workspace_id`` lists every key in that organization; naming a workspace in another one lists nothing rather than refusing, so the filter reports no more than the unfiltered read does.
      * List Keys
      */
-    async listKeysV1KeysGet(requestParameters: ListKeysV1KeysGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<KeyInfo>> {
-        const response = await this.listKeysV1KeysGetRaw(requestParameters, initOverrides);
+    async keysListKeys(requestParameters: KeysListKeysRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<KeyInfo>> {
+        const response = await this.keysListKeysRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for rotateKeyV1KeysKeyIdRotatePost without sending the request
+     * Creates request options for keysRotateKey without sending the request
      */
-    async rotateKeyV1KeysKeyIdRotatePostRequestOpts(requestParameters: RotateKeyV1KeysKeyIdRotatePostRequest): Promise<runtime.RequestOpts> {
+    async keysRotateKeyRequestOpts(requestParameters: KeysRotateKeyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['keyId'] == null) {
             throw new runtime.RequiredError(
                 'keyId',
-                'Required parameter "keyId" was null or undefined when calling rotateKeyV1KeysKeyIdRotatePost().'
+                'Required parameter "keyId" was null or undefined when calling keysRotateKey().'
             );
         }
 
@@ -315,7 +320,7 @@ export class KeysApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/keys/{key_id}/rotate`;
+        let urlPath = `/api/v1/keys/{key_id}/rotate`;
         urlPath = urlPath.replace('{key_id}', encodeURIComponent(String(requestParameters['keyId'])));
 
         return {
@@ -327,40 +332,40 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
-     * Rotate an API key\'s secret in place.  Requires master key authentication.  Generates a new secret for the same key row (id, user, name, expiry, and metadata are preserved) and returns the new raw key once, using the same response shape as key creation. The previous secret stops authenticating immediately; there is no grace window.
+     * Rotate an API key\'s secret in place, within the caller\'s organization.  Requires master key authentication.  Generates a new secret for the same key row (id, user, name, expiry, and metadata are preserved) and returns the new raw key once, using the same response shape as key creation. The previous secret stops authenticating immediately; there is no grace window.
      * Rotate Key
      */
-    async rotateKeyV1KeysKeyIdRotatePostRaw(requestParameters: RotateKeyV1KeysKeyIdRotatePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateKeyResponse>> {
-        const requestOptions = await this.rotateKeyV1KeysKeyIdRotatePostRequestOpts(requestParameters);
+    async keysRotateKeyRaw(requestParameters: KeysRotateKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateKeyResponse>> {
+        const requestOptions = await this.keysRotateKeyRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => CreateKeyResponseFromJSON(jsonValue));
     }
 
     /**
-     * Rotate an API key\'s secret in place.  Requires master key authentication.  Generates a new secret for the same key row (id, user, name, expiry, and metadata are preserved) and returns the new raw key once, using the same response shape as key creation. The previous secret stops authenticating immediately; there is no grace window.
+     * Rotate an API key\'s secret in place, within the caller\'s organization.  Requires master key authentication.  Generates a new secret for the same key row (id, user, name, expiry, and metadata are preserved) and returns the new raw key once, using the same response shape as key creation. The previous secret stops authenticating immediately; there is no grace window.
      * Rotate Key
      */
-    async rotateKeyV1KeysKeyIdRotatePost(requestParameters: RotateKeyV1KeysKeyIdRotatePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateKeyResponse> {
-        const response = await this.rotateKeyV1KeysKeyIdRotatePostRaw(requestParameters, initOverrides);
+    async keysRotateKey(requestParameters: KeysRotateKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateKeyResponse> {
+        const response = await this.keysRotateKeyRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for updateKeyV1KeysKeyIdPatch without sending the request
+     * Creates request options for keysUpdateKey without sending the request
      */
-    async updateKeyV1KeysKeyIdPatchRequestOpts(requestParameters: UpdateKeyV1KeysKeyIdPatchRequest): Promise<runtime.RequestOpts> {
+    async keysUpdateKeyRequestOpts(requestParameters: KeysUpdateKeyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['keyId'] == null) {
             throw new runtime.RequiredError(
                 'keyId',
-                'Required parameter "keyId" was null or undefined when calling updateKeyV1KeysKeyIdPatch().'
+                'Required parameter "keyId" was null or undefined when calling keysUpdateKey().'
             );
         }
 
         if (requestParameters['updateKeyRequest'] == null) {
             throw new runtime.RequiredError(
                 'updateKeyRequest',
-                'Required parameter "updateKeyRequest" was null or undefined when calling updateKeyV1KeysKeyIdPatch().'
+                'Required parameter "updateKeyRequest" was null or undefined when calling keysUpdateKey().'
             );
         }
 
@@ -379,7 +384,7 @@ export class KeysApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/keys/{key_id}`;
+        let urlPath = `/api/v1/keys/{key_id}`;
         urlPath = urlPath.replace('{key_id}', encodeURIComponent(String(requestParameters['keyId'])));
 
         return {
@@ -392,22 +397,22 @@ export class KeysApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update an API key.  Requires master key authentication.
+     * Update an API key in the caller\'s organization.  Requires master key authentication.
      * Update Key
      */
-    async updateKeyV1KeysKeyIdPatchRaw(requestParameters: UpdateKeyV1KeysKeyIdPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<KeyInfo>> {
-        const requestOptions = await this.updateKeyV1KeysKeyIdPatchRequestOpts(requestParameters);
+    async keysUpdateKeyRaw(requestParameters: KeysUpdateKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<KeyInfo>> {
+        const requestOptions = await this.keysUpdateKeyRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => KeyInfoFromJSON(jsonValue));
     }
 
     /**
-     * Update an API key.  Requires master key authentication.
+     * Update an API key in the caller\'s organization.  Requires master key authentication.
      * Update Key
      */
-    async updateKeyV1KeysKeyIdPatch(requestParameters: UpdateKeyV1KeysKeyIdPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<KeyInfo> {
-        const response = await this.updateKeyV1KeysKeyIdPatchRaw(requestParameters, initOverrides);
+    async keysUpdateKey(requestParameters: KeysUpdateKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<KeyInfo> {
+        const response = await this.keysUpdateKeyRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

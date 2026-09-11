@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**createRerankV1RerankPost**](RerankApi.md#creatererankv1rerankpost) | **POST** /v1/rerank | Create Rerank |
+| [**rerankCreateRerank**](RerankApi.md#rerankcreatererank) | **POST** /api/v1/rerank | Create Rerank |
 
 
 
-## createRerankV1RerankPost
+## rerankCreateRerank
 
-> RerankResponse createRerankV1RerankPost(rerankRequest)
+> RerankResponse rerankCreateRerank(rerankRequest)
 
 Create Rerank
 
@@ -23,7 +23,7 @@ import {
   Configuration,
   RerankApi,
 } from '';
-import type { CreateRerankV1RerankPostRequest } from '';
+import type { RerankCreateRerankRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -38,10 +38,10 @@ async function example() {
   const body = {
     // RerankRequest
     rerankRequest: ...,
-  } satisfies CreateRerankV1RerankPostRequest;
+  } satisfies RerankCreateRerankRequest;
 
   try {
-    const data = await api.createRerankV1RerankPost(body);
+    const data = await api.rerankCreateRerank(body);
     console.log(data);
   } catch (error) {
     console.error(error);

@@ -10,6 +10,7 @@ Name | Type
 `name` | string
 `target` | string
 `userId` | string
+`workspaceId` | string
 
 ## Example
 
@@ -21,6 +22,7 @@ const example = {
   "name": null,
   "target": null,
   "userId": null,
+  "workspaceId": null,
 } satisfies AliasRequest
 
 console.log(example)

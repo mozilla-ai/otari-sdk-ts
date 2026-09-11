@@ -39,30 +39,30 @@ import {
     UpdateBudgetRequestToJSON,
 } from '../models/UpdateBudgetRequest.js';
 
-export interface CreateBudgetV1BudgetsPostRequest {
+export interface BudgetsCreateBudgetRequest {
     createBudgetRequest: CreateBudgetRequest;
 }
 
-export interface DeleteBudgetV1BudgetsBudgetIdDeleteRequest {
+export interface BudgetsDeleteBudgetRequest {
     budgetId: string;
 }
 
-export interface GetBudgetV1BudgetsBudgetIdGetRequest {
+export interface BudgetsGetBudgetRequest {
     budgetId: string;
 }
 
-export interface ListBudgetResetLogsV1BudgetsBudgetIdResetLogsGetRequest {
+export interface BudgetsListBudgetResetLogsRequest {
     budgetId: string;
     skip?: number;
     limit?: number;
 }
 
-export interface ListBudgetsV1BudgetsGetRequest {
+export interface BudgetsListBudgetsRequest {
     skip?: number;
     limit?: number;
 }
 
-export interface UpdateBudgetV1BudgetsBudgetIdPatchRequest {
+export interface BudgetsUpdateBudgetRequest {
     budgetId: string;
     updateBudgetRequest: UpdateBudgetRequest;
 }
@@ -73,13 +73,13 @@ export interface UpdateBudgetV1BudgetsBudgetIdPatchRequest {
 export class BudgetsApi extends runtime.BaseAPI {
 
     /**
-     * Creates request options for createBudgetV1BudgetsPost without sending the request
+     * Creates request options for budgetsCreateBudget without sending the request
      */
-    async createBudgetV1BudgetsPostRequestOpts(requestParameters: CreateBudgetV1BudgetsPostRequest): Promise<runtime.RequestOpts> {
+    async budgetsCreateBudgetRequestOpts(requestParameters: BudgetsCreateBudgetRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createBudgetRequest'] == null) {
             throw new runtime.RequiredError(
                 'createBudgetRequest',
-                'Required parameter "createBudgetRequest" was null or undefined when calling createBudgetV1BudgetsPost().'
+                'Required parameter "createBudgetRequest" was null or undefined when calling budgetsCreateBudget().'
             );
         }
 
@@ -98,7 +98,7 @@ export class BudgetsApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/budgets`;
+        let urlPath = `/api/v1/budgets`;
 
         return {
             path: urlPath,
@@ -113,8 +113,8 @@ export class BudgetsApi extends runtime.BaseAPI {
      * Create a new budget.
      * Create Budget
      */
-    async createBudgetV1BudgetsPostRaw(requestParameters: CreateBudgetV1BudgetsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BudgetResponse>> {
-        const requestOptions = await this.createBudgetV1BudgetsPostRequestOpts(requestParameters);
+    async budgetsCreateBudgetRaw(requestParameters: BudgetsCreateBudgetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BudgetResponse>> {
+        const requestOptions = await this.budgetsCreateBudgetRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => BudgetResponseFromJSON(jsonValue));
@@ -124,19 +124,19 @@ export class BudgetsApi extends runtime.BaseAPI {
      * Create a new budget.
      * Create Budget
      */
-    async createBudgetV1BudgetsPost(requestParameters: CreateBudgetV1BudgetsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BudgetResponse> {
-        const response = await this.createBudgetV1BudgetsPostRaw(requestParameters, initOverrides);
+    async budgetsCreateBudget(requestParameters: BudgetsCreateBudgetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BudgetResponse> {
+        const response = await this.budgetsCreateBudgetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for deleteBudgetV1BudgetsBudgetIdDelete without sending the request
+     * Creates request options for budgetsDeleteBudget without sending the request
      */
-    async deleteBudgetV1BudgetsBudgetIdDeleteRequestOpts(requestParameters: DeleteBudgetV1BudgetsBudgetIdDeleteRequest): Promise<runtime.RequestOpts> {
+    async budgetsDeleteBudgetRequestOpts(requestParameters: BudgetsDeleteBudgetRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['budgetId'] == null) {
             throw new runtime.RequiredError(
                 'budgetId',
-                'Required parameter "budgetId" was null or undefined when calling deleteBudgetV1BudgetsBudgetIdDelete().'
+                'Required parameter "budgetId" was null or undefined when calling budgetsDeleteBudget().'
             );
         }
 
@@ -153,7 +153,7 @@ export class BudgetsApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/budgets/{budget_id}`;
+        let urlPath = `/api/v1/budgets/{budget_id}`;
         urlPath = urlPath.replace('{budget_id}', encodeURIComponent(String(requestParameters['budgetId'])));
 
         return {
@@ -165,32 +165,32 @@ export class BudgetsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a budget.
+     * Delete a budget.  Refused with 409 while anything still names this budget: a workspace handing it to its members, or a scoped ceiling enforcing it. Both foreign keys are ``RESTRICT``, so the database would refuse either anyway, but as an ``IntegrityError`` reported as \"Database error\" with nothing naming what to go and change. Checked here so the refusal can say which, and where.
      * Delete Budget
      */
-    async deleteBudgetV1BudgetsBudgetIdDeleteRaw(requestParameters: DeleteBudgetV1BudgetsBudgetIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        const requestOptions = await this.deleteBudgetV1BudgetsBudgetIdDeleteRequestOpts(requestParameters);
+    async budgetsDeleteBudgetRaw(requestParameters: BudgetsDeleteBudgetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.budgetsDeleteBudgetRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
 
     /**
-     * Delete a budget.
+     * Delete a budget.  Refused with 409 while anything still names this budget: a workspace handing it to its members, or a scoped ceiling enforcing it. Both foreign keys are ``RESTRICT``, so the database would refuse either anyway, but as an ``IntegrityError`` reported as \"Database error\" with nothing naming what to go and change. Checked here so the refusal can say which, and where.
      * Delete Budget
      */
-    async deleteBudgetV1BudgetsBudgetIdDelete(requestParameters: DeleteBudgetV1BudgetsBudgetIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteBudgetV1BudgetsBudgetIdDeleteRaw(requestParameters, initOverrides);
+    async budgetsDeleteBudget(requestParameters: BudgetsDeleteBudgetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.budgetsDeleteBudgetRaw(requestParameters, initOverrides);
     }
 
     /**
-     * Creates request options for getBudgetV1BudgetsBudgetIdGet without sending the request
+     * Creates request options for budgetsGetBudget without sending the request
      */
-    async getBudgetV1BudgetsBudgetIdGetRequestOpts(requestParameters: GetBudgetV1BudgetsBudgetIdGetRequest): Promise<runtime.RequestOpts> {
+    async budgetsGetBudgetRequestOpts(requestParameters: BudgetsGetBudgetRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['budgetId'] == null) {
             throw new runtime.RequiredError(
                 'budgetId',
-                'Required parameter "budgetId" was null or undefined when calling getBudgetV1BudgetsBudgetIdGet().'
+                'Required parameter "budgetId" was null or undefined when calling budgetsGetBudget().'
             );
         }
 
@@ -207,7 +207,7 @@ export class BudgetsApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/budgets/{budget_id}`;
+        let urlPath = `/api/v1/budgets/{budget_id}`;
         urlPath = urlPath.replace('{budget_id}', encodeURIComponent(String(requestParameters['budgetId'])));
 
         return {
@@ -222,8 +222,8 @@ export class BudgetsApi extends runtime.BaseAPI {
      * Get details of a specific budget.
      * Get Budget
      */
-    async getBudgetV1BudgetsBudgetIdGetRaw(requestParameters: GetBudgetV1BudgetsBudgetIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BudgetResponse>> {
-        const requestOptions = await this.getBudgetV1BudgetsBudgetIdGetRequestOpts(requestParameters);
+    async budgetsGetBudgetRaw(requestParameters: BudgetsGetBudgetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BudgetResponse>> {
+        const requestOptions = await this.budgetsGetBudgetRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => BudgetResponseFromJSON(jsonValue));
@@ -233,19 +233,19 @@ export class BudgetsApi extends runtime.BaseAPI {
      * Get details of a specific budget.
      * Get Budget
      */
-    async getBudgetV1BudgetsBudgetIdGet(requestParameters: GetBudgetV1BudgetsBudgetIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BudgetResponse> {
-        const response = await this.getBudgetV1BudgetsBudgetIdGetRaw(requestParameters, initOverrides);
+    async budgetsGetBudget(requestParameters: BudgetsGetBudgetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BudgetResponse> {
+        const response = await this.budgetsGetBudgetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for listBudgetResetLogsV1BudgetsBudgetIdResetLogsGet without sending the request
+     * Creates request options for budgetsListBudgetResetLogs without sending the request
      */
-    async listBudgetResetLogsV1BudgetsBudgetIdResetLogsGetRequestOpts(requestParameters: ListBudgetResetLogsV1BudgetsBudgetIdResetLogsGetRequest): Promise<runtime.RequestOpts> {
+    async budgetsListBudgetResetLogsRequestOpts(requestParameters: BudgetsListBudgetResetLogsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['budgetId'] == null) {
             throw new runtime.RequiredError(
                 'budgetId',
-                'Required parameter "budgetId" was null or undefined when calling listBudgetResetLogsV1BudgetsBudgetIdResetLogsGet().'
+                'Required parameter "budgetId" was null or undefined when calling budgetsListBudgetResetLogs().'
             );
         }
 
@@ -270,7 +270,7 @@ export class BudgetsApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/budgets/{budget_id}/reset-logs`;
+        let urlPath = `/api/v1/budgets/{budget_id}/reset-logs`;
         urlPath = urlPath.replace('{budget_id}', encodeURIComponent(String(requestParameters['budgetId'])));
 
         return {
@@ -285,8 +285,8 @@ export class BudgetsApi extends runtime.BaseAPI {
      * List per-user reset events for a budget, newest first.
      * List Budget Reset Logs
      */
-    async listBudgetResetLogsV1BudgetsBudgetIdResetLogsGetRaw(requestParameters: ListBudgetResetLogsV1BudgetsBudgetIdResetLogsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<BudgetResetLogResponse>>> {
-        const requestOptions = await this.listBudgetResetLogsV1BudgetsBudgetIdResetLogsGetRequestOpts(requestParameters);
+    async budgetsListBudgetResetLogsRaw(requestParameters: BudgetsListBudgetResetLogsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<BudgetResetLogResponse>>> {
+        const requestOptions = await this.budgetsListBudgetResetLogsRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(BudgetResetLogResponseFromJSON));
@@ -296,15 +296,15 @@ export class BudgetsApi extends runtime.BaseAPI {
      * List per-user reset events for a budget, newest first.
      * List Budget Reset Logs
      */
-    async listBudgetResetLogsV1BudgetsBudgetIdResetLogsGet(requestParameters: ListBudgetResetLogsV1BudgetsBudgetIdResetLogsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<BudgetResetLogResponse>> {
-        const response = await this.listBudgetResetLogsV1BudgetsBudgetIdResetLogsGetRaw(requestParameters, initOverrides);
+    async budgetsListBudgetResetLogs(requestParameters: BudgetsListBudgetResetLogsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<BudgetResetLogResponse>> {
+        const response = await this.budgetsListBudgetResetLogsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for listBudgetsV1BudgetsGet without sending the request
+     * Creates request options for budgetsListBudgets without sending the request
      */
-    async listBudgetsV1BudgetsGetRequestOpts(requestParameters: ListBudgetsV1BudgetsGetRequest): Promise<runtime.RequestOpts> {
+    async budgetsListBudgetsRequestOpts(requestParameters: BudgetsListBudgetsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['skip'] != null) {
@@ -326,7 +326,7 @@ export class BudgetsApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/budgets`;
+        let urlPath = `/api/v1/budgets`;
 
         return {
             path: urlPath,
@@ -340,8 +340,8 @@ export class BudgetsApi extends runtime.BaseAPI {
      * List all budgets with pagination.
      * List Budgets
      */
-    async listBudgetsV1BudgetsGetRaw(requestParameters: ListBudgetsV1BudgetsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<BudgetResponse>>> {
-        const requestOptions = await this.listBudgetsV1BudgetsGetRequestOpts(requestParameters);
+    async budgetsListBudgetsRaw(requestParameters: BudgetsListBudgetsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<BudgetResponse>>> {
+        const requestOptions = await this.budgetsListBudgetsRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(BudgetResponseFromJSON));
@@ -351,26 +351,26 @@ export class BudgetsApi extends runtime.BaseAPI {
      * List all budgets with pagination.
      * List Budgets
      */
-    async listBudgetsV1BudgetsGet(requestParameters: ListBudgetsV1BudgetsGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<BudgetResponse>> {
-        const response = await this.listBudgetsV1BudgetsGetRaw(requestParameters, initOverrides);
+    async budgetsListBudgets(requestParameters: BudgetsListBudgetsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<BudgetResponse>> {
+        const response = await this.budgetsListBudgetsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for updateBudgetV1BudgetsBudgetIdPatch without sending the request
+     * Creates request options for budgetsUpdateBudget without sending the request
      */
-    async updateBudgetV1BudgetsBudgetIdPatchRequestOpts(requestParameters: UpdateBudgetV1BudgetsBudgetIdPatchRequest): Promise<runtime.RequestOpts> {
+    async budgetsUpdateBudgetRequestOpts(requestParameters: BudgetsUpdateBudgetRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['budgetId'] == null) {
             throw new runtime.RequiredError(
                 'budgetId',
-                'Required parameter "budgetId" was null or undefined when calling updateBudgetV1BudgetsBudgetIdPatch().'
+                'Required parameter "budgetId" was null or undefined when calling budgetsUpdateBudget().'
             );
         }
 
         if (requestParameters['updateBudgetRequest'] == null) {
             throw new runtime.RequiredError(
                 'updateBudgetRequest',
-                'Required parameter "updateBudgetRequest" was null or undefined when calling updateBudgetV1BudgetsBudgetIdPatch().'
+                'Required parameter "updateBudgetRequest" was null or undefined when calling budgetsUpdateBudget().'
             );
         }
 
@@ -389,7 +389,7 @@ export class BudgetsApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/budgets/{budget_id}`;
+        let urlPath = `/api/v1/budgets/{budget_id}`;
         urlPath = urlPath.replace('{budget_id}', encodeURIComponent(String(requestParameters['budgetId'])));
 
         return {
@@ -405,8 +405,8 @@ export class BudgetsApi extends runtime.BaseAPI {
      * Update a budget.
      * Update Budget
      */
-    async updateBudgetV1BudgetsBudgetIdPatchRaw(requestParameters: UpdateBudgetV1BudgetsBudgetIdPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BudgetResponse>> {
-        const requestOptions = await this.updateBudgetV1BudgetsBudgetIdPatchRequestOpts(requestParameters);
+    async budgetsUpdateBudgetRaw(requestParameters: BudgetsUpdateBudgetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BudgetResponse>> {
+        const requestOptions = await this.budgetsUpdateBudgetRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => BudgetResponseFromJSON(jsonValue));
@@ -416,8 +416,8 @@ export class BudgetsApi extends runtime.BaseAPI {
      * Update a budget.
      * Update Budget
      */
-    async updateBudgetV1BudgetsBudgetIdPatch(requestParameters: UpdateBudgetV1BudgetsBudgetIdPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BudgetResponse> {
-        const response = await this.updateBudgetV1BudgetsBudgetIdPatchRaw(requestParameters, initOverrides);
+    async budgetsUpdateBudget(requestParameters: BudgetsUpdateBudgetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BudgetResponse> {
+        const response = await this.budgetsUpdateBudgetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

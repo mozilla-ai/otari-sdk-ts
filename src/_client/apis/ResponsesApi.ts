@@ -24,7 +24,7 @@ import {
     ResponsesRequestToJSON,
 } from '../models/ResponsesRequest.js';
 
-export interface CreateResponseV1ResponsesPostRequest {
+export interface ResponsesCreateResponseRequest {
     responsesRequest: ResponsesRequest;
 }
 
@@ -34,13 +34,13 @@ export interface CreateResponseV1ResponsesPostRequest {
 export class ResponsesApi extends runtime.BaseAPI {
 
     /**
-     * Creates request options for createResponseV1ResponsesPost without sending the request
+     * Creates request options for responsesCreateResponse without sending the request
      */
-    async createResponseV1ResponsesPostRequestOpts(requestParameters: CreateResponseV1ResponsesPostRequest): Promise<runtime.RequestOpts> {
+    async responsesCreateResponseRequestOpts(requestParameters: ResponsesCreateResponseRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['responsesRequest'] == null) {
             throw new runtime.RequiredError(
                 'responsesRequest',
-                'Required parameter "responsesRequest" was null or undefined when calling createResponseV1ResponsesPost().'
+                'Required parameter "responsesRequest" was null or undefined when calling responsesCreateResponse().'
             );
         }
 
@@ -59,7 +59,7 @@ export class ResponsesApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/responses`;
+        let urlPath = `/api/v1/responses`;
 
         return {
             path: urlPath,
@@ -74,8 +74,8 @@ export class ResponsesApi extends runtime.BaseAPI {
      * OpenAI-compatible Responses endpoint.  Supports MCP tool-use loops, sandboxed code execution, and SearXNG web_search in both standalone mode and hybrid mode. Hybrid-mode requests resolve credentials via the platform service and get multi-attempt fallback across the resolved route, tool-loop requests included (fallback applies up to the pre-lock-in point, same as chat).
      * Create Response
      */
-    async createResponseV1ResponsesPostRaw(requestParameters: CreateResponseV1ResponsesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        const requestOptions = await this.createResponseV1ResponsesPostRequestOpts(requestParameters);
+    async responsesCreateResponseRaw(requestParameters: ResponsesCreateResponseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.responsesCreateResponseRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -89,8 +89,8 @@ export class ResponsesApi extends runtime.BaseAPI {
      * OpenAI-compatible Responses endpoint.  Supports MCP tool-use loops, sandboxed code execution, and SearXNG web_search in both standalone mode and hybrid mode. Hybrid-mode requests resolve credentials via the platform service and get multi-attempt fallback across the resolved route, tool-loop requests included (fallback applies up to the pre-lock-in point, same as chat).
      * Create Response
      */
-    async createResponseV1ResponsesPost(requestParameters: CreateResponseV1ResponsesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
-        const response = await this.createResponseV1ResponsesPostRaw(requestParameters, initOverrides);
+    async responsesCreateResponse(requestParameters: ResponsesCreateResponseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.responsesCreateResponseRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

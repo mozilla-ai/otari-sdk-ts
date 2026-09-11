@@ -29,7 +29,7 @@ import {
     RerankResponseToJSON,
 } from '../models/RerankResponse.js';
 
-export interface CreateRerankV1RerankPostRequest {
+export interface RerankCreateRerankRequest {
     rerankRequest: RerankRequest;
 }
 
@@ -39,13 +39,13 @@ export interface CreateRerankV1RerankPostRequest {
 export class RerankApi extends runtime.BaseAPI {
 
     /**
-     * Creates request options for createRerankV1RerankPost without sending the request
+     * Creates request options for rerankCreateRerank without sending the request
      */
-    async createRerankV1RerankPostRequestOpts(requestParameters: CreateRerankV1RerankPostRequest): Promise<runtime.RequestOpts> {
+    async rerankCreateRerankRequestOpts(requestParameters: RerankCreateRerankRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['rerankRequest'] == null) {
             throw new runtime.RequiredError(
                 'rerankRequest',
-                'Required parameter "rerankRequest" was null or undefined when calling createRerankV1RerankPost().'
+                'Required parameter "rerankRequest" was null or undefined when calling rerankCreateRerank().'
             );
         }
 
@@ -64,7 +64,7 @@ export class RerankApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/rerank`;
+        let urlPath = `/api/v1/rerank`;
 
         return {
             path: urlPath,
@@ -79,8 +79,8 @@ export class RerankApi extends runtime.BaseAPI {
      * Rerank documents by relevance to a query.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Create Rerank
      */
-    async createRerankV1RerankPostRaw(requestParameters: CreateRerankV1RerankPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RerankResponse>> {
-        const requestOptions = await this.createRerankV1RerankPostRequestOpts(requestParameters);
+    async rerankCreateRerankRaw(requestParameters: RerankCreateRerankRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RerankResponse>> {
+        const requestOptions = await this.rerankCreateRerankRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => RerankResponseFromJSON(jsonValue));
@@ -90,8 +90,8 @@ export class RerankApi extends runtime.BaseAPI {
      * Rerank documents by relevance to a query.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Create Rerank
      */
-    async createRerankV1RerankPost(requestParameters: CreateRerankV1RerankPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RerankResponse> {
-        const response = await this.createRerankV1RerankPostRaw(requestParameters, initOverrides);
+    async rerankCreateRerank(requestParameters: RerankCreateRerankRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RerankResponse> {
+        const response = await this.rerankCreateRerankRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

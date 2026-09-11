@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { Content8 } from './Content8.js';
+import type { Content9 } from './Content9.js';
 import {
-    Content8FromJSON,
-    Content8FromJSONTyped,
-    Content8ToJSON,
-    Content8ToJSONTyped,
-} from './Content8.js';
+    Content9FromJSON,
+    Content9FromJSONTyped,
+    Content9ToJSON,
+    Content9ToJSONTyped,
+} from './Content9.js';
 
 /**
  * 
@@ -30,10 +30,10 @@ export interface MRBetaToolSearchToolResultBlock {
     [key: string]: any | any;
     /**
      * 
-     * @type {Content8}
+     * @type {Content9}
      * @memberof MRBetaToolSearchToolResultBlock
      */
-    content: Content8;
+    content: Content9;
     /**
      * 
      * @type {string}
@@ -79,7 +79,7 @@ export function MRBetaToolSearchToolResultBlockFromJSONTyped(json: any, ignoreDi
     return {
         
             ...json,
-        'content': Content8FromJSON(json['content']),
+        'content': Content9FromJSON(json['content']),
         'toolUseId': json['tool_use_id'],
         'type': json['type'],
     };
@@ -97,7 +97,7 @@ export function MRBetaToolSearchToolResultBlockToJSONTyped(value?: MRBetaToolSea
     return {
         
             ...value,
-        'content': Content8ToJSON(value['content']),
+        'content': Content9ToJSON(value['content']),
         'tool_use_id': value['toolUseId'],
         'type': value['type'],
     };

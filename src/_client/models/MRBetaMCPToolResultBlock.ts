@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { Content6 } from './Content6.js';
+import type { Content7 } from './Content7.js';
 import {
-    Content6FromJSON,
-    Content6FromJSONTyped,
-    Content6ToJSON,
-    Content6ToJSONTyped,
-} from './Content6.js';
+    Content7FromJSON,
+    Content7FromJSONTyped,
+    Content7ToJSON,
+    Content7ToJSONTyped,
+} from './Content7.js';
 
 /**
  * 
@@ -30,10 +30,10 @@ export interface MRBetaMCPToolResultBlock {
     [key: string]: any | any;
     /**
      * 
-     * @type {Content6}
+     * @type {Content7}
      * @memberof MRBetaMCPToolResultBlock
      */
-    content: Content6;
+    content: Content7;
     /**
      * 
      * @type {boolean}
@@ -86,7 +86,7 @@ export function MRBetaMCPToolResultBlockFromJSONTyped(json: any, ignoreDiscrimin
     return {
         
             ...json,
-        'content': Content6FromJSON(json['content']),
+        'content': Content7FromJSON(json['content']),
         'isError': json['is_error'],
         'toolUseId': json['tool_use_id'],
         'type': json['type'],
@@ -105,7 +105,7 @@ export function MRBetaMCPToolResultBlockToJSONTyped(value?: MRBetaMCPToolResultB
     return {
         
             ...value,
-        'content': Content6ToJSON(value['content']),
+        'content': Content7ToJSON(value['content']),
         'is_error': value['isError'],
         'tool_use_id': value['toolUseId'],
         'type': value['type'],

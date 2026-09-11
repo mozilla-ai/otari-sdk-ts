@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**createSpeechV1AudioSpeechPost**](AudioApi.md#createspeechv1audiospeechpost) | **POST** /v1/audio/speech | Create Speech |
-| [**createTranscriptionV1AudioTranscriptionsPost**](AudioApi.md#createtranscriptionv1audiotranscriptionspost) | **POST** /v1/audio/transcriptions | Create Transcription |
+| [**audioCreateSpeech**](AudioApi.md#audiocreatespeech) | **POST** /api/v1/audio/speech | Create Speech |
+| [**audioCreateTranscription**](AudioApi.md#audiocreatetranscription) | **POST** /api/v1/audio/transcriptions | Create Transcription |
 
 
 
-## createSpeechV1AudioSpeechPost
+## audioCreateSpeech
 
-> any createSpeechV1AudioSpeechPost(audioSpeechRequest)
+> any audioCreateSpeech(audioSpeechRequest)
 
 Create Speech
 
@@ -24,7 +24,7 @@ import {
   Configuration,
   AudioApi,
 } from '';
-import type { CreateSpeechV1AudioSpeechPostRequest } from '';
+import type { AudioCreateSpeechRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -39,10 +39,10 @@ async function example() {
   const body = {
     // AudioSpeechRequest
     audioSpeechRequest: ...,
-  } satisfies CreateSpeechV1AudioSpeechPostRequest;
+  } satisfies AudioCreateSpeechRequest;
 
   try {
-    const data = await api.createSpeechV1AudioSpeechPost(body);
+    const data = await api.audioCreateSpeech(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -83,9 +83,9 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## createTranscriptionV1AudioTranscriptionsPost
+## audioCreateTranscription
 
-> any createTranscriptionV1AudioTranscriptionsPost(file, model, language, prompt, responseFormat, temperature, user)
+> any audioCreateTranscription(file, model, language, prompt, responseFormat, temperature, user)
 
 Create Transcription
 
@@ -98,7 +98,7 @@ import {
   Configuration,
   AudioApi,
 } from '';
-import type { CreateTranscriptionV1AudioTranscriptionsPostRequest } from '';
+import type { AudioCreateTranscriptionRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -125,10 +125,10 @@ async function example() {
     temperature: 8.14,
     // string (optional)
     user: user_example,
-  } satisfies CreateTranscriptionV1AudioTranscriptionsPostRequest;
+  } satisfies AudioCreateTranscriptionRequest;
 
   try {
-    const data = await api.createTranscriptionV1AudioTranscriptionsPost(body);
+    const data = await api.audioCreateTranscription(body);
     console.log(data);
   } catch (error) {
     console.error(error);

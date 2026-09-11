@@ -8,10 +8,9 @@ Name | Type
 ------------ | -------------
 `errorCode` | string
 `type` | string
-`content` | [Array&lt;MRBetaBashCodeExecutionOutputBlock&gt;](MRBetaBashCodeExecutionOutputBlock.md)
-`returnCode` | number
-`stderr` | string
-`stdout` | string
+`stopReason` | string
+`text` | string
+`encryptedContent` | string
 
 ## Example
 
@@ -22,10 +21,9 @@ import type { Content4 } from ''
 const example = {
   "errorCode": null,
   "type": null,
-  "content": null,
-  "returnCode": null,
-  "stderr": null,
-  "stdout": null,
+  "stopReason": null,
+  "text": null,
+  "encryptedContent": null,
 } satisfies Content4
 
 console.log(example)

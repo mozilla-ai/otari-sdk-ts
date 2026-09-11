@@ -1,7 +1,7 @@
 
 # RouterStatus
 
-How warm this user\'s routing memory is, and what depends on it.  Routing memory has no single warmth: it is a set of independent pools. ``default_pool`` is what a request with no ``Otari-Router-Task`` header votes over (every record the user has, labelled or not) and ``tasks`` lists each partition, which only requests carrying that label use. Each crosses ``seed_count`` on its own.
+How warm this user\'s routing memory is, and what depends on it.  Routing memory has no single warmth: it is a set of independent pools. ``default_pool`` is what a request with no ``Otari-Router-Task`` header votes over (every record the user has in this workspace, labeled or not) and ``tasks`` lists each partition, which only requests carrying that label use. Each crosses ``seed_count`` on its own.
 
 ## Properties
 
@@ -17,6 +17,7 @@ Name | Type
 `seedCount` | number
 `tasks` | [Array&lt;TaskPool&gt;](TaskPool.md)
 `userId` | string
+`workspaceId` | string
 
 ## Example
 
@@ -35,6 +36,7 @@ const example = {
   "seedCount": null,
   "tasks": null,
   "userId": null,
+  "workspaceId": null,
 } satisfies RouterStatus
 
 console.log(example)

@@ -13,27 +13,27 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { MRBetaBashCodeExecutionToolResultError } from './MRBetaBashCodeExecutionToolResultError.js';
+import type { MRBetaAdvisorToolResultError } from './MRBetaAdvisorToolResultError.js';
 import {
-    MRBetaBashCodeExecutionToolResultErrorFromJSON,
-    MRBetaBashCodeExecutionToolResultErrorFromJSONTyped,
-    MRBetaBashCodeExecutionToolResultErrorToJSON,
-    MRBetaBashCodeExecutionToolResultErrorToJSONTyped,
-} from './MRBetaBashCodeExecutionToolResultError.js';
-import type { MRBetaBashCodeExecutionResultBlock } from './MRBetaBashCodeExecutionResultBlock.js';
+    MRBetaAdvisorToolResultErrorFromJSON,
+    MRBetaAdvisorToolResultErrorFromJSONTyped,
+    MRBetaAdvisorToolResultErrorToJSON,
+    MRBetaAdvisorToolResultErrorToJSONTyped,
+} from './MRBetaAdvisorToolResultError.js';
+import type { MRBetaAdvisorRedactedResultBlock } from './MRBetaAdvisorRedactedResultBlock.js';
 import {
-    MRBetaBashCodeExecutionResultBlockFromJSON,
-    MRBetaBashCodeExecutionResultBlockFromJSONTyped,
-    MRBetaBashCodeExecutionResultBlockToJSON,
-    MRBetaBashCodeExecutionResultBlockToJSONTyped,
-} from './MRBetaBashCodeExecutionResultBlock.js';
-import type { MRBetaBashCodeExecutionOutputBlock } from './MRBetaBashCodeExecutionOutputBlock.js';
+    MRBetaAdvisorRedactedResultBlockFromJSON,
+    MRBetaAdvisorRedactedResultBlockFromJSONTyped,
+    MRBetaAdvisorRedactedResultBlockToJSON,
+    MRBetaAdvisorRedactedResultBlockToJSONTyped,
+} from './MRBetaAdvisorRedactedResultBlock.js';
+import type { MRBetaAdvisorResultBlock } from './MRBetaAdvisorResultBlock.js';
 import {
-    MRBetaBashCodeExecutionOutputBlockFromJSON,
-    MRBetaBashCodeExecutionOutputBlockFromJSONTyped,
-    MRBetaBashCodeExecutionOutputBlockToJSON,
-    MRBetaBashCodeExecutionOutputBlockToJSONTyped,
-} from './MRBetaBashCodeExecutionOutputBlock.js';
+    MRBetaAdvisorResultBlockFromJSON,
+    MRBetaAdvisorResultBlockFromJSONTyped,
+    MRBetaAdvisorResultBlockToJSON,
+    MRBetaAdvisorResultBlockToJSONTyped,
+} from './MRBetaAdvisorResultBlock.js';
 
 /**
  * 
@@ -55,28 +55,22 @@ export interface Content4 {
     type: Content4TypeEnum;
     /**
      * 
-     * @type {Array<MRBetaBashCodeExecutionOutputBlock>}
+     * @type {string}
      * @memberof Content4
      */
-    content: Array<MRBetaBashCodeExecutionOutputBlock>;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content4
-     */
-    returnCode: number;
+    stopReason?: string;
     /**
      * 
      * @type {string}
      * @memberof Content4
      */
-    stderr: string;
+    text: string;
     /**
      * 
      * @type {string}
      * @memberof Content4
      */
-    stdout: string;
+    encryptedContent: string;
 }
 
 
@@ -84,11 +78,13 @@ export interface Content4 {
  * @export
  */
 export const Content4ErrorCodeEnum = {
-    InvalidToolInput: 'invalid_tool_input',
-    Unavailable: 'unavailable',
+    MaxUsesExceeded: 'max_uses_exceeded',
+    PromptTooLong: 'prompt_too_long',
     TooManyRequests: 'too_many_requests',
+    Overloaded: 'overloaded',
+    Unavailable: 'unavailable',
     ExecutionTimeExceeded: 'execution_time_exceeded',
-    OutputFileTooLarge: 'output_file_too_large'
+    ModelNotFound: 'model_not_found'
 } as const;
 export type Content4ErrorCodeEnum = typeof Content4ErrorCodeEnum[keyof typeof Content4ErrorCodeEnum];
 
@@ -96,8 +92,9 @@ export type Content4ErrorCodeEnum = typeof Content4ErrorCodeEnum[keyof typeof Co
  * @export
  */
 export const Content4TypeEnum = {
-    BashCodeExecutionToolResultError: 'bash_code_execution_tool_result_error',
-    BashCodeExecutionResult: 'bash_code_execution_result'
+    AdvisorToolResultError: 'advisor_tool_result_error',
+    AdvisorResult: 'advisor_result',
+    AdvisorRedactedResult: 'advisor_redacted_result'
 } as const;
 export type Content4TypeEnum = typeof Content4TypeEnum[keyof typeof Content4TypeEnum];
 
@@ -108,10 +105,8 @@ export type Content4TypeEnum = typeof Content4TypeEnum[keyof typeof Content4Type
 export function instanceOfContent4(value: object): value is Content4 {
     if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
-    if (!('content' in value) || value['content'] === undefined) return false;
-    if (!('returnCode' in value) || value['returnCode'] === undefined) return false;
-    if (!('stderr' in value) || value['stderr'] === undefined) return false;
-    if (!('stdout' in value) || value['stdout'] === undefined) return false;
+    if (!('text' in value) || value['text'] === undefined) return false;
+    if (!('encryptedContent' in value) || value['encryptedContent'] === undefined) return false;
     return true;
 }
 
@@ -127,10 +122,9 @@ export function Content4FromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         
         'errorCode': json['error_code'],
         'type': json['type'],
-        'content': ((json['content'] as Array<any>).map(MRBetaBashCodeExecutionOutputBlockFromJSON)),
-        'returnCode': json['return_code'],
-        'stderr': json['stderr'],
-        'stdout': json['stdout'],
+        'stopReason': json['stop_reason'] == null ? undefined : json['stop_reason'],
+        'text': json['text'],
+        'encryptedContent': json['encrypted_content'],
     };
 }
 
@@ -147,10 +141,9 @@ export function Content4ToJSONTyped(value?: Content4 | null, ignoreDiscriminator
         
         'error_code': value['errorCode'],
         'type': value['type'],
-        'content': ((value['content'] as Array<any>).map(MRBetaBashCodeExecutionOutputBlockToJSON)),
-        'return_code': value['returnCode'],
-        'stderr': value['stderr'],
-        'stdout': value['stdout'],
+        'stop_reason': value['stopReason'],
+        'text': value['text'],
+        'encrypted_content': value['encryptedContent'],
     };
 }
 

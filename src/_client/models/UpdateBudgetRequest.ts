@@ -37,7 +37,37 @@ export interface UpdateBudgetRequest {
      * @memberof UpdateBudgetRequest
      */
     name?: string | null;
+    /**
+     * Maximum requests over the period. Independent of max_budget; null is unlimited
+     * @type {number}
+     * @memberof UpdateBudgetRequest
+     */
+    requestLimit?: number | null;
+    /**
+     * 
+     * @type {UpdateBudgetRequestResetAlignmentEnum}
+     * @memberof UpdateBudgetRequest
+     */
+    resetAlignment?: UpdateBudgetRequestResetAlignmentEnum | null;
+    /**
+     * Maximum tokens over the period. Independent of max_budget; null is unlimited
+     * @type {number}
+     * @memberof UpdateBudgetRequest
+     */
+    tokenLimit?: number | null;
 }
+
+
+/**
+ * @export
+ */
+export const UpdateBudgetRequestResetAlignmentEnum = {
+    CalendarDay: 'calendar_day',
+    CalendarWeek: 'calendar_week',
+    CalendarMonth: 'calendar_month'
+} as const;
+export type UpdateBudgetRequestResetAlignmentEnum = typeof UpdateBudgetRequestResetAlignmentEnum[keyof typeof UpdateBudgetRequestResetAlignmentEnum];
+
 
 /**
  * Check if a given object implements the UpdateBudgetRequest interface.
@@ -59,6 +89,9 @@ export function UpdateBudgetRequestFromJSONTyped(json: any, ignoreDiscriminator:
         'budgetDurationSec': json['budget_duration_sec'] == null ? undefined : json['budget_duration_sec'],
         'maxBudget': json['max_budget'] == null ? undefined : json['max_budget'],
         'name': json['name'] == null ? undefined : json['name'],
+        'requestLimit': json['request_limit'] == null ? undefined : json['request_limit'],
+        'resetAlignment': json['reset_alignment'] == null ? undefined : json['reset_alignment'],
+        'tokenLimit': json['token_limit'] == null ? undefined : json['token_limit'],
     };
 }
 
@@ -76,6 +109,9 @@ export function UpdateBudgetRequestToJSONTyped(value?: UpdateBudgetRequest | nul
         'budget_duration_sec': value['budgetDurationSec'],
         'max_budget': value['maxBudget'],
         'name': value['name'],
+        'request_limit': value['requestLimit'],
+        'reset_alignment': value['resetAlignment'],
+        'token_limit': value['tokenLimit'],
     };
 }
 

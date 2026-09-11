@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { Content7 } from './Content7.js';
+import type { Content8 } from './Content8.js';
 import {
-    Content7FromJSON,
-    Content7FromJSONTyped,
-    Content7ToJSON,
-    Content7ToJSONTyped,
-} from './Content7.js';
+    Content8FromJSON,
+    Content8FromJSONTyped,
+    Content8ToJSON,
+    Content8ToJSONTyped,
+} from './Content8.js';
 
 /**
  * 
@@ -30,10 +30,10 @@ export interface MRBetaTextEditorCodeExecutionToolResultBlock {
     [key: string]: any | any;
     /**
      * 
-     * @type {Content7}
+     * @type {Content8}
      * @memberof MRBetaTextEditorCodeExecutionToolResultBlock
      */
-    content: Content7;
+    content: Content8;
     /**
      * 
      * @type {string}
@@ -79,7 +79,7 @@ export function MRBetaTextEditorCodeExecutionToolResultBlockFromJSONTyped(json: 
     return {
         
             ...json,
-        'content': Content7FromJSON(json['content']),
+        'content': Content8FromJSON(json['content']),
         'toolUseId': json['tool_use_id'],
         'type': json['type'],
     };
@@ -97,7 +97,7 @@ export function MRBetaTextEditorCodeExecutionToolResultBlockToJSONTyped(value?: 
     return {
         
             ...value,
-        'content': Content7ToJSON(value['content']),
+        'content': Content8ToJSON(value['content']),
         'tool_use_id': value['toolUseId'],
         'type': value['type'],
     };

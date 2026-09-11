@@ -39,15 +39,15 @@ import {
     ModelObjectToJSON,
 } from '../models/ModelObject.js';
 
-export interface GetModelV1ModelsModelIdGetRequest {
+export interface ModelsGetModelRequest {
     modelId: string;
 }
 
-export interface ListDiscoverableModelsV1ModelsDiscoverableGetRequest {
+export interface ModelsListDiscoverableModelsRequest {
     refresh?: boolean;
 }
 
-export interface ListModelsV1ModelsGetRequest {
+export interface ModelsListModelsRequest {
     provider?: string | null;
 }
 
@@ -57,13 +57,13 @@ export interface ListModelsV1ModelsGetRequest {
 export class ModelsApi extends runtime.BaseAPI {
 
     /**
-     * Creates request options for getModelV1ModelsModelIdGet without sending the request
+     * Creates request options for modelsGetModel without sending the request
      */
-    async getModelV1ModelsModelIdGetRequestOpts(requestParameters: GetModelV1ModelsModelIdGetRequest): Promise<runtime.RequestOpts> {
+    async modelsGetModelRequestOpts(requestParameters: ModelsGetModelRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['modelId'] == null) {
             throw new runtime.RequiredError(
                 'modelId',
-                'Required parameter "modelId" was null or undefined when calling getModelV1ModelsModelIdGet().'
+                'Required parameter "modelId" was null or undefined when calling modelsGetModel().'
             );
         }
 
@@ -80,7 +80,7 @@ export class ModelsApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/models/{model_id}`;
+        let urlPath = `/api/v1/models/{model_id}`;
         urlPath = urlPath.replace('{model_id}', encodeURIComponent(String(requestParameters['modelId'])));
 
         return {
@@ -95,8 +95,8 @@ export class ModelsApi extends runtime.BaseAPI {
      * Get details for a specific model.
      * Get Model
      */
-    async getModelV1ModelsModelIdGetRaw(requestParameters: GetModelV1ModelsModelIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModelObject>> {
-        const requestOptions = await this.getModelV1ModelsModelIdGetRequestOpts(requestParameters);
+    async modelsGetModelRaw(requestParameters: ModelsGetModelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModelObject>> {
+        const requestOptions = await this.modelsGetModelRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ModelObjectFromJSON(jsonValue));
@@ -106,15 +106,15 @@ export class ModelsApi extends runtime.BaseAPI {
      * Get details for a specific model.
      * Get Model
      */
-    async getModelV1ModelsModelIdGet(requestParameters: GetModelV1ModelsModelIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ModelObject> {
-        const response = await this.getModelV1ModelsModelIdGetRaw(requestParameters, initOverrides);
+    async modelsGetModel(requestParameters: ModelsGetModelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ModelObject> {
+        const response = await this.modelsGetModelRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for listDiscoverableModelsV1ModelsDiscoverableGet without sending the request
+     * Creates request options for modelsListDiscoverableModels without sending the request
      */
-    async listDiscoverableModelsV1ModelsDiscoverableGetRequestOpts(requestParameters: ListDiscoverableModelsV1ModelsDiscoverableGetRequest): Promise<runtime.RequestOpts> {
+    async modelsListDiscoverableModelsRequestOpts(requestParameters: ModelsListDiscoverableModelsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['refresh'] != null) {
@@ -132,7 +132,7 @@ export class ModelsApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/models/discoverable`;
+        let urlPath = `/api/v1/models/discoverable`;
 
         return {
             path: urlPath,
@@ -143,29 +143,29 @@ export class ModelsApi extends runtime.BaseAPI {
     }
 
     /**
-     * List every model the configured provider credentials can reach.  Operator-facing counterpart to GET /v1/models, which serves a curated catalog to API callers. This reports each provider separately and keeps its error, so a provider with a bad key is distinguishable from one with no models. It is master-key gated because a provider error message describes the gateway\'s own configuration.  Answers from the discovery cache, which a background refresher keeps warm, so the call does not wait on a slow or unreachable provider. Each provider carries the ``checked_at`` its result was produced at; a null one has not been dialed yet. Pass ``refresh=true`` to force a live re-dial of every provider.
+     * List every model the configured provider credentials can reach.  Operator-facing counterpart to GET /api/v1/models, which serves a curated catalog to API callers. This reports each provider separately and keeps its error, so a provider with a bad key is distinguishable from one with no models. It is operator-gated because a provider error message describes the gateway\'s own configuration.  Answers from the discovery cache, which a background refresher keeps warm, so the call does not wait on a slow or unreachable provider. Each provider carries the ``checked_at`` its result was produced at; a null one has not been dialed yet. Pass ``refresh=true`` to force a live re-dial of every provider.
      * List Discoverable Models
      */
-    async listDiscoverableModelsV1ModelsDiscoverableGetRaw(requestParameters: ListDiscoverableModelsV1ModelsDiscoverableGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DiscoverableModelsResponse>> {
-        const requestOptions = await this.listDiscoverableModelsV1ModelsDiscoverableGetRequestOpts(requestParameters);
+    async modelsListDiscoverableModelsRaw(requestParameters: ModelsListDiscoverableModelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DiscoverableModelsResponse>> {
+        const requestOptions = await this.modelsListDiscoverableModelsRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => DiscoverableModelsResponseFromJSON(jsonValue));
     }
 
     /**
-     * List every model the configured provider credentials can reach.  Operator-facing counterpart to GET /v1/models, which serves a curated catalog to API callers. This reports each provider separately and keeps its error, so a provider with a bad key is distinguishable from one with no models. It is master-key gated because a provider error message describes the gateway\'s own configuration.  Answers from the discovery cache, which a background refresher keeps warm, so the call does not wait on a slow or unreachable provider. Each provider carries the ``checked_at`` its result was produced at; a null one has not been dialed yet. Pass ``refresh=true`` to force a live re-dial of every provider.
+     * List every model the configured provider credentials can reach.  Operator-facing counterpart to GET /api/v1/models, which serves a curated catalog to API callers. This reports each provider separately and keeps its error, so a provider with a bad key is distinguishable from one with no models. It is operator-gated because a provider error message describes the gateway\'s own configuration.  Answers from the discovery cache, which a background refresher keeps warm, so the call does not wait on a slow or unreachable provider. Each provider carries the ``checked_at`` its result was produced at; a null one has not been dialed yet. Pass ``refresh=true`` to force a live re-dial of every provider.
      * List Discoverable Models
      */
-    async listDiscoverableModelsV1ModelsDiscoverableGet(requestParameters: ListDiscoverableModelsV1ModelsDiscoverableGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DiscoverableModelsResponse> {
-        const response = await this.listDiscoverableModelsV1ModelsDiscoverableGetRaw(requestParameters, initOverrides);
+    async modelsListDiscoverableModels(requestParameters: ModelsListDiscoverableModelsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DiscoverableModelsResponse> {
+        const response = await this.modelsListDiscoverableModelsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for listModelMetadataV1ModelsMetadataGet without sending the request
+     * Creates request options for modelsListModelMetadata without sending the request
      */
-    async listModelMetadataV1ModelsMetadataGetRequestOpts(): Promise<runtime.RequestOpts> {
+    async modelsListModelMetadataRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -179,7 +179,7 @@ export class ModelsApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/models/metadata`;
+        let urlPath = `/api/v1/models/metadata`;
 
         return {
             path: urlPath,
@@ -190,29 +190,29 @@ export class ModelsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Per-model metadata for the dashboard\'s detail view, from models.dev.  Covers every model models.dev lists under a configured provider, keyed by the ``instance:model`` selector the dashboard uses. ``available`` is false when enrichment is disabled (``models_dev_metadata``) or models.dev could not be reached; the response is then empty and the UI falls back to bundled data. Master-key gated: it describes the gateway\'s configured providers.  Answers from the cached catalog, kept warm by a background refresher, so the dashboard never waits on the models.dev fetch timeout.
+     * Per-model metadata for the dashboard\'s detail view, from models.dev.  Covers every model models.dev lists under a configured provider, keyed by the ``instance:model`` selector the dashboard uses. ``available`` is false when enrichment is disabled (``models_dev_metadata``) or models.dev could not be reached; the response is then empty and the UI falls back to bundled data. Operator-gated: it describes the gateway\'s configured providers.  Answers from the cached catalog, kept warm by a background refresher, so the dashboard never waits on the models.dev fetch timeout.
      * List Model Metadata
      */
-    async listModelMetadataV1ModelsMetadataGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModelMetadataResponse>> {
-        const requestOptions = await this.listModelMetadataV1ModelsMetadataGetRequestOpts();
+    async modelsListModelMetadataRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModelMetadataResponse>> {
+        const requestOptions = await this.modelsListModelMetadataRequestOpts();
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ModelMetadataResponseFromJSON(jsonValue));
     }
 
     /**
-     * Per-model metadata for the dashboard\'s detail view, from models.dev.  Covers every model models.dev lists under a configured provider, keyed by the ``instance:model`` selector the dashboard uses. ``available`` is false when enrichment is disabled (``models_dev_metadata``) or models.dev could not be reached; the response is then empty and the UI falls back to bundled data. Master-key gated: it describes the gateway\'s configured providers.  Answers from the cached catalog, kept warm by a background refresher, so the dashboard never waits on the models.dev fetch timeout.
+     * Per-model metadata for the dashboard\'s detail view, from models.dev.  Covers every model models.dev lists under a configured provider, keyed by the ``instance:model`` selector the dashboard uses. ``available`` is false when enrichment is disabled (``models_dev_metadata``) or models.dev could not be reached; the response is then empty and the UI falls back to bundled data. Operator-gated: it describes the gateway\'s configured providers.  Answers from the cached catalog, kept warm by a background refresher, so the dashboard never waits on the models.dev fetch timeout.
      * List Model Metadata
      */
-    async listModelMetadataV1ModelsMetadataGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ModelMetadataResponse> {
-        const response = await this.listModelMetadataV1ModelsMetadataGetRaw(initOverrides);
+    async modelsListModelMetadata(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ModelMetadataResponse> {
+        const response = await this.modelsListModelMetadataRaw(initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for listModelsV1ModelsGet without sending the request
+     * Creates request options for modelsListModels without sending the request
      */
-    async listModelsV1ModelsGetRequestOpts(requestParameters: ListModelsV1ModelsGetRequest): Promise<runtime.RequestOpts> {
+    async modelsListModelsRequestOpts(requestParameters: ModelsListModelsRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['provider'] != null) {
@@ -230,7 +230,7 @@ export class ModelsApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/models`;
+        let urlPath = `/api/v1/models`;
 
         return {
             path: urlPath,
@@ -244,8 +244,8 @@ export class ModelsApi extends runtime.BaseAPI {
      * List all available models.  Returns models auto-discovered from configured providers, enriched with pricing data from the model_pricing table when available. Models that only exist in the pricing table are also included for backward compatibility.
      * List Models
      */
-    async listModelsV1ModelsGetRaw(requestParameters: ListModelsV1ModelsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModelListResponse>> {
-        const requestOptions = await this.listModelsV1ModelsGetRequestOpts(requestParameters);
+    async modelsListModelsRaw(requestParameters: ModelsListModelsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModelListResponse>> {
+        const requestOptions = await this.modelsListModelsRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ModelListResponseFromJSON(jsonValue));
@@ -255,8 +255,8 @@ export class ModelsApi extends runtime.BaseAPI {
      * List all available models.  Returns models auto-discovered from configured providers, enriched with pricing data from the model_pricing table when available. Models that only exist in the pricing table are also included for backward compatibility.
      * List Models
      */
-    async listModelsV1ModelsGet(requestParameters: ListModelsV1ModelsGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ModelListResponse> {
-        const response = await this.listModelsV1ModelsGetRaw(requestParameters, initOverrides);
+    async modelsListModels(requestParameters: ModelsListModelsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ModelListResponse> {
+        const response = await this.modelsListModelsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

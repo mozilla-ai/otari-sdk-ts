@@ -12,6 +12,7 @@ Name | Type
 `inferenceGeo` | string
 `inputTokens` | number
 `outputTokens` | number
+`outputTokensDetails` | [MROutputTokensDetails](MROutputTokensDetails.md)
 `serverToolUse` | [MRServerToolUsage](MRServerToolUsage.md)
 `serviceTier` | string
 `iterations` | [Array&lt;MRMessageUsageIterationsInner&gt;](MRMessageUsageIterationsInner.md)
@@ -30,6 +31,7 @@ const example = {
   "inferenceGeo": null,
   "inputTokens": null,
   "outputTokens": null,
+  "outputTokensDetails": null,
   "serverToolUse": null,
   "serviceTier": null,
   "iterations": null,

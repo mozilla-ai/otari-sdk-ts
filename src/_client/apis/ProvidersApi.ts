@@ -69,31 +69,31 @@ import {
     UpdateStoredProviderRequestToJSON,
 } from '../models/UpdateStoredProviderRequest.js';
 
-export interface CreateStoredProviderV1ProviderCredentialsPostRequest {
+export interface ProvidersCreateStoredProviderRequest {
     createStoredProviderRequest: CreateStoredProviderRequest;
 }
 
-export interface DeleteStoredProviderV1ProviderCredentialsInstanceDeleteRequest {
+export interface ProvidersDeleteStoredProviderRequest {
     instance: string;
 }
 
-export interface ProviderCatalogDetailV1ProvidersCatalogProviderIdGetRequest {
+export interface ProvidersProviderCatalogDetailRequest {
     providerId: string;
 }
 
-export interface ProviderHealthV1ProvidersHealthGetRequest {
+export interface ProvidersProviderHealthRequest {
     refresh?: boolean;
 }
 
-export interface TestProviderConnectionV1ProviderCredentialsTestPostRequest {
+export interface ProvidersTestProviderConnectionRequest {
     testProviderRequest: TestProviderRequest;
 }
 
-export interface TestStoredProviderV1ProviderCredentialsInstanceTestPostRequest {
+export interface ProvidersTestStoredProviderRequest {
     instance: string;
 }
 
-export interface UpdateStoredProviderV1ProviderCredentialsInstancePatchRequest {
+export interface ProvidersUpdateStoredProviderRequest {
     instance: string;
     updateStoredProviderRequest: UpdateStoredProviderRequest;
 }
@@ -104,13 +104,13 @@ export interface UpdateStoredProviderV1ProviderCredentialsInstancePatchRequest {
 export class ProvidersApi extends runtime.BaseAPI {
 
     /**
-     * Creates request options for createStoredProviderV1ProviderCredentialsPost without sending the request
+     * Creates request options for providersCreateStoredProvider without sending the request
      */
-    async createStoredProviderV1ProviderCredentialsPostRequestOpts(requestParameters: CreateStoredProviderV1ProviderCredentialsPostRequest): Promise<runtime.RequestOpts> {
+    async providersCreateStoredProviderRequestOpts(requestParameters: ProvidersCreateStoredProviderRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['createStoredProviderRequest'] == null) {
             throw new runtime.RequiredError(
                 'createStoredProviderRequest',
-                'Required parameter "createStoredProviderRequest" was null or undefined when calling createStoredProviderV1ProviderCredentialsPost().'
+                'Required parameter "createStoredProviderRequest" was null or undefined when calling providersCreateStoredProvider().'
             );
         }
 
@@ -129,7 +129,7 @@ export class ProvidersApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/provider-credentials`;
+        let urlPath = `/api/v1/provider-credentials`;
 
         return {
             path: urlPath,
@@ -144,8 +144,8 @@ export class ProvidersApi extends runtime.BaseAPI {
      * Add a provider at runtime. Storing a key requires OTARI_SECRET_KEY.
      * Create Stored Provider
      */
-    async createStoredProviderV1ProviderCredentialsPostRaw(requestParameters: CreateStoredProviderV1ProviderCredentialsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StoredProviderResponse>> {
-        const requestOptions = await this.createStoredProviderV1ProviderCredentialsPostRequestOpts(requestParameters);
+    async providersCreateStoredProviderRaw(requestParameters: ProvidersCreateStoredProviderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StoredProviderResponse>> {
+        const requestOptions = await this.providersCreateStoredProviderRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => StoredProviderResponseFromJSON(jsonValue));
@@ -155,19 +155,19 @@ export class ProvidersApi extends runtime.BaseAPI {
      * Add a provider at runtime. Storing a key requires OTARI_SECRET_KEY.
      * Create Stored Provider
      */
-    async createStoredProviderV1ProviderCredentialsPost(requestParameters: CreateStoredProviderV1ProviderCredentialsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StoredProviderResponse> {
-        const response = await this.createStoredProviderV1ProviderCredentialsPostRaw(requestParameters, initOverrides);
+    async providersCreateStoredProvider(requestParameters: ProvidersCreateStoredProviderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StoredProviderResponse> {
+        const response = await this.providersCreateStoredProviderRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for deleteStoredProviderV1ProviderCredentialsInstanceDelete without sending the request
+     * Creates request options for providersDeleteStoredProvider without sending the request
      */
-    async deleteStoredProviderV1ProviderCredentialsInstanceDeleteRequestOpts(requestParameters: DeleteStoredProviderV1ProviderCredentialsInstanceDeleteRequest): Promise<runtime.RequestOpts> {
+    async providersDeleteStoredProviderRequestOpts(requestParameters: ProvidersDeleteStoredProviderRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['instance'] == null) {
             throw new runtime.RequiredError(
                 'instance',
-                'Required parameter "instance" was null or undefined when calling deleteStoredProviderV1ProviderCredentialsInstanceDelete().'
+                'Required parameter "instance" was null or undefined when calling providersDeleteStoredProvider().'
             );
         }
 
@@ -184,7 +184,7 @@ export class ProvidersApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/provider-credentials/{instance}`;
+        let urlPath = `/api/v1/provider-credentials/{instance}`;
         urlPath = urlPath.replace('{instance}', encodeURIComponent(String(requestParameters['instance'])));
 
         return {
@@ -199,8 +199,8 @@ export class ProvidersApi extends runtime.BaseAPI {
      * Delete a stored provider. A config.yml provider cannot be deleted here.
      * Delete Stored Provider
      */
-    async deleteStoredProviderV1ProviderCredentialsInstanceDeleteRaw(requestParameters: DeleteStoredProviderV1ProviderCredentialsInstanceDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        const requestOptions = await this.deleteStoredProviderV1ProviderCredentialsInstanceDeleteRequestOpts(requestParameters);
+    async providersDeleteStoredProviderRaw(requestParameters: ProvidersDeleteStoredProviderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.providersDeleteStoredProviderRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -210,14 +210,14 @@ export class ProvidersApi extends runtime.BaseAPI {
      * Delete a stored provider. A config.yml provider cannot be deleted here.
      * Delete Stored Provider
      */
-    async deleteStoredProviderV1ProviderCredentialsInstanceDelete(requestParameters: DeleteStoredProviderV1ProviderCredentialsInstanceDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteStoredProviderV1ProviderCredentialsInstanceDeleteRaw(requestParameters, initOverrides);
+    async providersDeleteStoredProvider(requestParameters: ProvidersDeleteStoredProviderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.providersDeleteStoredProviderRaw(requestParameters, initOverrides);
     }
 
     /**
-     * Creates request options for listProvidersV1ProvidersGet without sending the request
+     * Creates request options for providersListProviders without sending the request
      */
-    async listProvidersV1ProvidersGetRequestOpts(): Promise<runtime.RequestOpts> {
+    async providersListProvidersRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -231,7 +231,7 @@ export class ProvidersApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/providers`;
+        let urlPath = `/api/v1/providers`;
 
         return {
             path: urlPath,
@@ -242,29 +242,29 @@ export class ProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * List static metadata for every configured provider.  Operator-facing: reports each provider\'s capabilities, documentation and pricing links, and display name from the bundled any-llm and genai-prices datasets. No provider is contacted, so this is cheap and always available. Master-key gated because it describes the gateway\'s own configuration.
+     * List static metadata for every configured provider.  Operator-facing: reports each provider\'s capabilities, documentation and pricing links, and display name from the bundled any-llm and genai-prices datasets. No provider is contacted, so this is cheap and always available.
      * List Providers
      */
-    async listProvidersV1ProvidersGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProvidersResponse>> {
-        const requestOptions = await this.listProvidersV1ProvidersGetRequestOpts();
+    async providersListProvidersRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProvidersResponse>> {
+        const requestOptions = await this.providersListProvidersRequestOpts();
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ProvidersResponseFromJSON(jsonValue));
     }
 
     /**
-     * List static metadata for every configured provider.  Operator-facing: reports each provider\'s capabilities, documentation and pricing links, and display name from the bundled any-llm and genai-prices datasets. No provider is contacted, so this is cheap and always available. Master-key gated because it describes the gateway\'s own configuration.
+     * List static metadata for every configured provider.  Operator-facing: reports each provider\'s capabilities, documentation and pricing links, and display name from the bundled any-llm and genai-prices datasets. No provider is contacted, so this is cheap and always available.
      * List Providers
      */
-    async listProvidersV1ProvidersGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProvidersResponse> {
-        const response = await this.listProvidersV1ProvidersGetRaw(initOverrides);
+    async providersListProviders(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProvidersResponse> {
+        const response = await this.providersListProvidersRaw(initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for listStoredProvidersV1ProviderCredentialsGet without sending the request
+     * Creates request options for providersListStoredProviders without sending the request
      */
-    async listStoredProvidersV1ProviderCredentialsGetRequestOpts(): Promise<runtime.RequestOpts> {
+    async providersListStoredProvidersRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -278,7 +278,7 @@ export class ProvidersApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/provider-credentials`;
+        let urlPath = `/api/v1/provider-credentials`;
 
         return {
             path: urlPath,
@@ -292,8 +292,8 @@ export class ProvidersApi extends runtime.BaseAPI {
      * List runtime-stored providers. Keys are never returned, only ``last4``.
      * List Stored Providers
      */
-    async listStoredProvidersV1ProviderCredentialsGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StoredProviderResponse>>> {
-        const requestOptions = await this.listStoredProvidersV1ProviderCredentialsGetRequestOpts();
+    async providersListStoredProvidersRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<StoredProviderResponse>>> {
+        const requestOptions = await this.providersListStoredProvidersRequestOpts();
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(StoredProviderResponseFromJSON));
@@ -303,19 +303,66 @@ export class ProvidersApi extends runtime.BaseAPI {
      * List runtime-stored providers. Keys are never returned, only ``last4``.
      * List Stored Providers
      */
-    async listStoredProvidersV1ProviderCredentialsGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StoredProviderResponse>> {
-        const response = await this.listStoredProvidersV1ProviderCredentialsGetRaw(initOverrides);
+    async providersListStoredProviders(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<StoredProviderResponse>> {
+        const response = await this.providersListStoredProvidersRaw(initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for providerCatalogDetailV1ProvidersCatalogProviderIdGet without sending the request
+     * Creates request options for providersProviderCatalog without sending the request
      */
-    async providerCatalogDetailV1ProvidersCatalogProviderIdGetRequestOpts(requestParameters: ProviderCatalogDetailV1ProvidersCatalogProviderIdGetRequest): Promise<runtime.RequestOpts> {
+    async providersProviderCatalogRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/api/v1/providers/catalog`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * List every known provider for the add-provider picker: id and name only.  Lightweight by design so the picker never lags: provider ids come from the any-llm registry and names from the bundled genai-prices dataset, so no provider SDK is imported. The autofill hints for a chosen provider come from GET /api/v1/providers/catalog/{provider_id}, which imports only that one SDK.
+     * Provider Catalog
+     */
+    async providersProviderCatalogRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<KnownProviderSummarySchema>>> {
+        const requestOptions = await this.providersProviderCatalogRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(KnownProviderSummarySchemaFromJSON));
+    }
+
+    /**
+     * List every known provider for the add-provider picker: id and name only.  Lightweight by design so the picker never lags: provider ids come from the any-llm registry and names from the bundled genai-prices dataset, so no provider SDK is imported. The autofill hints for a chosen provider come from GET /api/v1/providers/catalog/{provider_id}, which imports only that one SDK.
+     * Provider Catalog
+     */
+    async providersProviderCatalog(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<KnownProviderSummarySchema>> {
+        const response = await this.providersProviderCatalogRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for providersProviderCatalogDetail without sending the request
+     */
+    async providersProviderCatalogDetailRequestOpts(requestParameters: ProvidersProviderCatalogDetailRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['providerId'] == null) {
             throw new runtime.RequiredError(
                 'providerId',
-                'Required parameter "providerId" was null or undefined when calling providerCatalogDetailV1ProvidersCatalogProviderIdGet().'
+                'Required parameter "providerId" was null or undefined when calling providersProviderCatalogDetail().'
             );
         }
 
@@ -332,7 +379,7 @@ export class ProvidersApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/providers/catalog/{provider_id}`;
+        let urlPath = `/api/v1/providers/catalog/{provider_id}`;
         urlPath = urlPath.replace('{provider_id}', encodeURIComponent(String(requestParameters['providerId'])));
 
         return {
@@ -344,76 +391,29 @@ export class ProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Autofill hints for one provider the add-provider form has selected.  Imports only the selected provider\'s any-llm module (not the whole catalog) to report its credential env var, default endpoint, whether a key is required, and whether that env var is already set on the server. Returns 404 for an unknown provider id. Master-key gated because it is operator-facing.  The SDK import is offloaded to a worker thread: the first fetch for a given provider imports that provider\'s module, which would otherwise block the event loop (and thus every concurrent request) for the import\'s duration.
+     * Autofill hints for one provider the add-provider form has selected.  Imports only the selected provider\'s any-llm module (not the whole catalog) to report its credential env var, default endpoint, whether a key is required, and whether that env var is already set on the server. Returns 404 for an unknown provider id.  The SDK import is offloaded to a worker thread: the first fetch for a given provider imports that provider\'s module, which would otherwise block the event loop (and thus every concurrent request) for the import\'s duration.
      * Provider Catalog Detail
      */
-    async providerCatalogDetailV1ProvidersCatalogProviderIdGetRaw(requestParameters: ProviderCatalogDetailV1ProvidersCatalogProviderIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<KnownProviderSchema>> {
-        const requestOptions = await this.providerCatalogDetailV1ProvidersCatalogProviderIdGetRequestOpts(requestParameters);
+    async providersProviderCatalogDetailRaw(requestParameters: ProvidersProviderCatalogDetailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<KnownProviderSchema>> {
+        const requestOptions = await this.providersProviderCatalogDetailRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => KnownProviderSchemaFromJSON(jsonValue));
     }
 
     /**
-     * Autofill hints for one provider the add-provider form has selected.  Imports only the selected provider\'s any-llm module (not the whole catalog) to report its credential env var, default endpoint, whether a key is required, and whether that env var is already set on the server. Returns 404 for an unknown provider id. Master-key gated because it is operator-facing.  The SDK import is offloaded to a worker thread: the first fetch for a given provider imports that provider\'s module, which would otherwise block the event loop (and thus every concurrent request) for the import\'s duration.
+     * Autofill hints for one provider the add-provider form has selected.  Imports only the selected provider\'s any-llm module (not the whole catalog) to report its credential env var, default endpoint, whether a key is required, and whether that env var is already set on the server. Returns 404 for an unknown provider id.  The SDK import is offloaded to a worker thread: the first fetch for a given provider imports that provider\'s module, which would otherwise block the event loop (and thus every concurrent request) for the import\'s duration.
      * Provider Catalog Detail
      */
-    async providerCatalogDetailV1ProvidersCatalogProviderIdGet(requestParameters: ProviderCatalogDetailV1ProvidersCatalogProviderIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<KnownProviderSchema> {
-        const response = await this.providerCatalogDetailV1ProvidersCatalogProviderIdGetRaw(requestParameters, initOverrides);
+    async providersProviderCatalogDetail(requestParameters: ProvidersProviderCatalogDetailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<KnownProviderSchema> {
+        const response = await this.providersProviderCatalogDetailRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for providerCatalogV1ProvidersCatalogGet without sending the request
+     * Creates request options for providersProviderHealth without sending the request
      */
-    async providerCatalogV1ProvidersCatalogGetRequestOpts(): Promise<runtime.RequestOpts> {
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
-        }
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
-        }
-
-
-        let urlPath = `/v1/providers/catalog`;
-
-        return {
-            path: urlPath,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        };
-    }
-
-    /**
-     * List every known provider for the add-provider picker: id and name only.  Lightweight by design so the picker never lags: provider ids come from the any-llm registry and names from the bundled genai-prices dataset, so no provider SDK is imported. The autofill hints for a chosen provider come from GET /v1/providers/catalog/{provider_id}, which imports only that one SDK. Master-key gated because it is operator-facing dashboard data.
-     * Provider Catalog
-     */
-    async providerCatalogV1ProvidersCatalogGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<KnownProviderSummarySchema>>> {
-        const requestOptions = await this.providerCatalogV1ProvidersCatalogGetRequestOpts();
-        const response = await this.request(requestOptions, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(KnownProviderSummarySchemaFromJSON));
-    }
-
-    /**
-     * List every known provider for the add-provider picker: id and name only.  Lightweight by design so the picker never lags: provider ids come from the any-llm registry and names from the bundled genai-prices dataset, so no provider SDK is imported. The autofill hints for a chosen provider come from GET /v1/providers/catalog/{provider_id}, which imports only that one SDK. Master-key gated because it is operator-facing dashboard data.
-     * Provider Catalog
-     */
-    async providerCatalogV1ProvidersCatalogGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<KnownProviderSummarySchema>> {
-        const response = await this.providerCatalogV1ProvidersCatalogGetRaw(initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Creates request options for providerHealthV1ProvidersHealthGet without sending the request
-     */
-    async providerHealthV1ProvidersHealthGetRequestOpts(requestParameters: ProviderHealthV1ProvidersHealthGetRequest): Promise<runtime.RequestOpts> {
+    async providersProviderHealthRequestOpts(requestParameters: ProvidersProviderHealthRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['refresh'] != null) {
@@ -431,7 +431,7 @@ export class ProvidersApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/providers/health`;
+        let urlPath = `/api/v1/providers/health`;
 
         return {
             path: urlPath,
@@ -442,29 +442,29 @@ export class ProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Report every configured provider\'s reachability, with a last-checked time.  Reuses the per-provider model-discovery test path, so a provider is healthy when its credentials can list models. Results are served from the discovery cache (cheap enough to poll), so ``checked_at`` reflects when each provider was actually dialed. Pass ``refresh=true`` to force a live re-dial of every provider. Master-key gated because it describes the gateway\'s own providers.  A provider whose backend serves no model-listing endpoint cannot be verified this way, but it is not unreachable either: it is reported with ``discovery_unsupported`` and counted under ``degraded`` rather than as a reachability failure.
+     * Report every configured provider\'s reachability, with a last-checked time.  Reuses the per-provider model-discovery test path, so a provider is healthy when its credentials can list models. Results are served from the discovery cache (cheap enough to poll), so ``checked_at`` reflects when each provider was actually dialed. Pass ``refresh=true`` to force a live re-dial of every provider.  A provider whose backend serves no model-listing endpoint cannot be verified this way, but it is not unreachable either: it is reported with ``discovery_unsupported`` and counted under ``degraded`` rather than as a reachability failure.
      * Provider Health
      */
-    async providerHealthV1ProvidersHealthGetRaw(requestParameters: ProviderHealthV1ProvidersHealthGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProviderHealthResponse>> {
-        const requestOptions = await this.providerHealthV1ProvidersHealthGetRequestOpts(requestParameters);
+    async providersProviderHealthRaw(requestParameters: ProvidersProviderHealthRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProviderHealthResponse>> {
+        const requestOptions = await this.providersProviderHealthRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ProviderHealthResponseFromJSON(jsonValue));
     }
 
     /**
-     * Report every configured provider\'s reachability, with a last-checked time.  Reuses the per-provider model-discovery test path, so a provider is healthy when its credentials can list models. Results are served from the discovery cache (cheap enough to poll), so ``checked_at`` reflects when each provider was actually dialed. Pass ``refresh=true`` to force a live re-dial of every provider. Master-key gated because it describes the gateway\'s own providers.  A provider whose backend serves no model-listing endpoint cannot be verified this way, but it is not unreachable either: it is reported with ``discovery_unsupported`` and counted under ``degraded`` rather than as a reachability failure.
+     * Report every configured provider\'s reachability, with a last-checked time.  Reuses the per-provider model-discovery test path, so a provider is healthy when its credentials can list models. Results are served from the discovery cache (cheap enough to poll), so ``checked_at`` reflects when each provider was actually dialed. Pass ``refresh=true`` to force a live re-dial of every provider.  A provider whose backend serves no model-listing endpoint cannot be verified this way, but it is not unreachable either: it is reported with ``discovery_unsupported`` and counted under ``degraded`` rather than as a reachability failure.
      * Provider Health
      */
-    async providerHealthV1ProvidersHealthGet(requestParameters: ProviderHealthV1ProvidersHealthGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProviderHealthResponse> {
-        const response = await this.providerHealthV1ProvidersHealthGetRaw(requestParameters, initOverrides);
+    async providersProviderHealth(requestParameters: ProvidersProviderHealthRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProviderHealthResponse> {
+        const response = await this.providersProviderHealthRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for reencryptStoredProviderKeysV1ProviderCredentialsReencryptPost without sending the request
+     * Creates request options for providersReencryptStoredProviderKeys without sending the request
      */
-    async reencryptStoredProviderKeysV1ProviderCredentialsReencryptPostRequestOpts(): Promise<runtime.RequestOpts> {
+    async providersReencryptStoredProviderKeysRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -478,7 +478,7 @@ export class ProvidersApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/provider-credentials/reencrypt`;
+        let urlPath = `/api/v1/provider-credentials/reencrypt`;
 
         return {
             path: urlPath,
@@ -492,8 +492,8 @@ export class ProvidersApi extends runtime.BaseAPI {
      * Re-encrypt stored provider keys with the primary OTARI_SECRET_KEY.  Operators rotate ``OTARI_SECRET_KEY`` by setting it to ``new,old`` first, restarting, running this endpoint, then removing the old key and restarting again. Rows that cannot be decrypted are left untouched and must be recovered by replacing the affected provider keys.
      * Reencrypt Stored Provider Keys
      */
-    async reencryptStoredProviderKeysV1ProviderCredentialsReencryptPostRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ReencryptProviderCredentialsResponse>> {
-        const requestOptions = await this.reencryptStoredProviderKeysV1ProviderCredentialsReencryptPostRequestOpts();
+    async providersReencryptStoredProviderKeysRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ReencryptProviderCredentialsResponse>> {
+        const requestOptions = await this.providersReencryptStoredProviderKeysRequestOpts();
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ReencryptProviderCredentialsResponseFromJSON(jsonValue));
@@ -503,19 +503,19 @@ export class ProvidersApi extends runtime.BaseAPI {
      * Re-encrypt stored provider keys with the primary OTARI_SECRET_KEY.  Operators rotate ``OTARI_SECRET_KEY`` by setting it to ``new,old`` first, restarting, running this endpoint, then removing the old key and restarting again. Rows that cannot be decrypted are left untouched and must be recovered by replacing the affected provider keys.
      * Reencrypt Stored Provider Keys
      */
-    async reencryptStoredProviderKeysV1ProviderCredentialsReencryptPost(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ReencryptProviderCredentialsResponse> {
-        const response = await this.reencryptStoredProviderKeysV1ProviderCredentialsReencryptPostRaw(initOverrides);
+    async providersReencryptStoredProviderKeys(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ReencryptProviderCredentialsResponse> {
+        const response = await this.providersReencryptStoredProviderKeysRaw(initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for testProviderConnectionV1ProviderCredentialsTestPost without sending the request
+     * Creates request options for providersTestProviderConnection without sending the request
      */
-    async testProviderConnectionV1ProviderCredentialsTestPostRequestOpts(requestParameters: TestProviderConnectionV1ProviderCredentialsTestPostRequest): Promise<runtime.RequestOpts> {
+    async providersTestProviderConnectionRequestOpts(requestParameters: ProvidersTestProviderConnectionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['testProviderRequest'] == null) {
             throw new runtime.RequiredError(
                 'testProviderRequest',
-                'Required parameter "testProviderRequest" was null or undefined when calling testProviderConnectionV1ProviderCredentialsTestPost().'
+                'Required parameter "testProviderRequest" was null or undefined when calling providersTestProviderConnection().'
             );
         }
 
@@ -534,7 +534,7 @@ export class ProvidersApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/provider-credentials/test`;
+        let urlPath = `/api/v1/provider-credentials/test`;
 
         return {
             path: urlPath,
@@ -549,8 +549,8 @@ export class ProvidersApi extends runtime.BaseAPI {
      * Test provider credentials without storing them (for the add/edit form).  Resolves the implementation from ``provider_type`` (honoring the ``*-compatible`` aliases) or the ``instance`` name, then lists the provider\'s models with the supplied credentials. Nothing is persisted and the key is never echoed.
      * Test Provider Connection
      */
-    async testProviderConnectionV1ProviderCredentialsTestPostRaw(requestParameters: TestProviderConnectionV1ProviderCredentialsTestPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TestProviderResponse>> {
-        const requestOptions = await this.testProviderConnectionV1ProviderCredentialsTestPostRequestOpts(requestParameters);
+    async providersTestProviderConnectionRaw(requestParameters: ProvidersTestProviderConnectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TestProviderResponse>> {
+        const requestOptions = await this.providersTestProviderConnectionRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => TestProviderResponseFromJSON(jsonValue));
@@ -560,19 +560,19 @@ export class ProvidersApi extends runtime.BaseAPI {
      * Test provider credentials without storing them (for the add/edit form).  Resolves the implementation from ``provider_type`` (honoring the ``*-compatible`` aliases) or the ``instance`` name, then lists the provider\'s models with the supplied credentials. Nothing is persisted and the key is never echoed.
      * Test Provider Connection
      */
-    async testProviderConnectionV1ProviderCredentialsTestPost(requestParameters: TestProviderConnectionV1ProviderCredentialsTestPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TestProviderResponse> {
-        const response = await this.testProviderConnectionV1ProviderCredentialsTestPostRaw(requestParameters, initOverrides);
+    async providersTestProviderConnection(requestParameters: ProvidersTestProviderConnectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TestProviderResponse> {
+        const response = await this.providersTestProviderConnectionRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for testStoredProviderV1ProviderCredentialsInstanceTestPost without sending the request
+     * Creates request options for providersTestStoredProvider without sending the request
      */
-    async testStoredProviderV1ProviderCredentialsInstanceTestPostRequestOpts(requestParameters: TestStoredProviderV1ProviderCredentialsInstanceTestPostRequest): Promise<runtime.RequestOpts> {
+    async providersTestStoredProviderRequestOpts(requestParameters: ProvidersTestStoredProviderRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['instance'] == null) {
             throw new runtime.RequiredError(
                 'instance',
-                'Required parameter "instance" was null or undefined when calling testStoredProviderV1ProviderCredentialsInstanceTestPost().'
+                'Required parameter "instance" was null or undefined when calling providersTestStoredProvider().'
             );
         }
 
@@ -589,7 +589,7 @@ export class ProvidersApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/provider-credentials/{instance}/test`;
+        let urlPath = `/api/v1/provider-credentials/{instance}/test`;
         urlPath = urlPath.replace('{instance}', encodeURIComponent(String(requestParameters['instance'])));
 
         return {
@@ -604,8 +604,8 @@ export class ProvidersApi extends runtime.BaseAPI {
      * Verify a stored provider\'s key by listing its models, without exposing the key.
      * Test Stored Provider
      */
-    async testStoredProviderV1ProviderCredentialsInstanceTestPostRaw(requestParameters: TestStoredProviderV1ProviderCredentialsInstanceTestPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TestProviderResponse>> {
-        const requestOptions = await this.testStoredProviderV1ProviderCredentialsInstanceTestPostRequestOpts(requestParameters);
+    async providersTestStoredProviderRaw(requestParameters: ProvidersTestStoredProviderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TestProviderResponse>> {
+        const requestOptions = await this.providersTestStoredProviderRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => TestProviderResponseFromJSON(jsonValue));
@@ -615,26 +615,26 @@ export class ProvidersApi extends runtime.BaseAPI {
      * Verify a stored provider\'s key by listing its models, without exposing the key.
      * Test Stored Provider
      */
-    async testStoredProviderV1ProviderCredentialsInstanceTestPost(requestParameters: TestStoredProviderV1ProviderCredentialsInstanceTestPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TestProviderResponse> {
-        const response = await this.testStoredProviderV1ProviderCredentialsInstanceTestPostRaw(requestParameters, initOverrides);
+    async providersTestStoredProvider(requestParameters: ProvidersTestStoredProviderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TestProviderResponse> {
+        const response = await this.providersTestStoredProviderRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for updateStoredProviderV1ProviderCredentialsInstancePatch without sending the request
+     * Creates request options for providersUpdateStoredProvider without sending the request
      */
-    async updateStoredProviderV1ProviderCredentialsInstancePatchRequestOpts(requestParameters: UpdateStoredProviderV1ProviderCredentialsInstancePatchRequest): Promise<runtime.RequestOpts> {
+    async providersUpdateStoredProviderRequestOpts(requestParameters: ProvidersUpdateStoredProviderRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['instance'] == null) {
             throw new runtime.RequiredError(
                 'instance',
-                'Required parameter "instance" was null or undefined when calling updateStoredProviderV1ProviderCredentialsInstancePatch().'
+                'Required parameter "instance" was null or undefined when calling providersUpdateStoredProvider().'
             );
         }
 
         if (requestParameters['updateStoredProviderRequest'] == null) {
             throw new runtime.RequiredError(
                 'updateStoredProviderRequest',
-                'Required parameter "updateStoredProviderRequest" was null or undefined when calling updateStoredProviderV1ProviderCredentialsInstancePatch().'
+                'Required parameter "updateStoredProviderRequest" was null or undefined when calling providersUpdateStoredProvider().'
             );
         }
 
@@ -653,7 +653,7 @@ export class ProvidersApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/provider-credentials/{instance}`;
+        let urlPath = `/api/v1/provider-credentials/{instance}`;
         urlPath = urlPath.replace('{instance}', encodeURIComponent(String(requestParameters['instance'])));
 
         return {
@@ -669,8 +669,8 @@ export class ProvidersApi extends runtime.BaseAPI {
      * Update a stored provider. Omitted fields are left as-is; an explicit ``null`` clears them.  ``api_key`` follows the same rule: omit it to keep the stored key, send a new one to rotate, or send ``null`` to clear it. The row is locked ``FOR UPDATE`` so the ``expected_updated_at`` check and the write it guards are atomic.
      * Update Stored Provider
      */
-    async updateStoredProviderV1ProviderCredentialsInstancePatchRaw(requestParameters: UpdateStoredProviderV1ProviderCredentialsInstancePatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StoredProviderResponse>> {
-        const requestOptions = await this.updateStoredProviderV1ProviderCredentialsInstancePatchRequestOpts(requestParameters);
+    async providersUpdateStoredProviderRaw(requestParameters: ProvidersUpdateStoredProviderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StoredProviderResponse>> {
+        const requestOptions = await this.providersUpdateStoredProviderRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => StoredProviderResponseFromJSON(jsonValue));
@@ -680,8 +680,8 @@ export class ProvidersApi extends runtime.BaseAPI {
      * Update a stored provider. Omitted fields are left as-is; an explicit ``null`` clears them.  ``api_key`` follows the same rule: omit it to keep the stored key, send a new one to rotate, or send ``null`` to clear it. The row is locked ``FOR UPDATE`` so the ``expected_updated_at`` check and the write it guards are atomic.
      * Update Stored Provider
      */
-    async updateStoredProviderV1ProviderCredentialsInstancePatch(requestParameters: UpdateStoredProviderV1ProviderCredentialsInstancePatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StoredProviderResponse> {
-        const response = await this.updateStoredProviderV1ProviderCredentialsInstancePatchRaw(requestParameters, initOverrides);
+    async providersUpdateStoredProvider(requestParameters: ProvidersUpdateStoredProviderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StoredProviderResponse> {
+        const response = await this.providersUpdateStoredProviderRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

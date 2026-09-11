@@ -14,6 +14,11 @@
 
 import * as runtime from '../runtime.js';
 import {
+    type GuardrailCatalog,
+    GuardrailCatalogFromJSON,
+    GuardrailCatalogToJSON,
+} from '../models/GuardrailCatalog.js';
+import {
     type HTTPValidationError,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
@@ -39,12 +44,12 @@ import {
     UpdateToolSettingsRequestToJSON,
 } from '../models/UpdateToolSettingsRequest.js';
 
-export interface TestServiceV1ToolSettingsServiceTestPostRequest {
+export interface ToolSettingsTestServiceRequest {
     service: string;
     testServiceRequest: TestServiceRequest;
 }
 
-export interface UpdateToolSettingsV1ToolSettingsPatchRequest {
+export interface ToolSettingsUpdateToolSettingsRequest {
     updateToolSettingsRequest: UpdateToolSettingsRequest;
 }
 
@@ -54,9 +59,9 @@ export interface UpdateToolSettingsV1ToolSettingsPatchRequest {
 export class ToolSettingsApi extends runtime.BaseAPI {
 
     /**
-     * Creates request options for getToolSettingsV1ToolSettingsGet without sending the request
+     * Creates request options for toolSettingsGetToolSettings without sending the request
      */
-    async getToolSettingsV1ToolSettingsGetRequestOpts(): Promise<runtime.RequestOpts> {
+    async toolSettingsGetToolSettingsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -70,7 +75,7 @@ export class ToolSettingsApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/tool-settings`;
+        let urlPath = `/api/v1/tool-settings`;
 
         return {
             path: urlPath,
@@ -81,40 +86,87 @@ export class ToolSettingsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Return the effective tool/guardrail settings for the dashboard.
+     * Return the effective tool/guardrail settings for the dashboard.  Authentication only on the router: the role decides *how much* rather than whether, so this is not the deployment-wide gate ``require_deployment_operator`` names. A header master key is the deployment credential and reads everything; a session reads everything only while it operates the deployment, and otherwise gets the fields without the service endpoints in them.
      * Get Tool Settings
      */
-    async getToolSettingsV1ToolSettingsGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ToolSettingsResponse>> {
-        const requestOptions = await this.getToolSettingsV1ToolSettingsGetRequestOpts();
+    async toolSettingsGetToolSettingsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ToolSettingsResponse>> {
+        const requestOptions = await this.toolSettingsGetToolSettingsRequestOpts();
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ToolSettingsResponseFromJSON(jsonValue));
     }
 
     /**
-     * Return the effective tool/guardrail settings for the dashboard.
+     * Return the effective tool/guardrail settings for the dashboard.  Authentication only on the router: the role decides *how much* rather than whether, so this is not the deployment-wide gate ``require_deployment_operator`` names. A header master key is the deployment credential and reads everything; a session reads everything only while it operates the deployment, and otherwise gets the fields without the service endpoints in them.
      * Get Tool Settings
      */
-    async getToolSettingsV1ToolSettingsGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ToolSettingsResponse> {
-        const response = await this.getToolSettingsV1ToolSettingsGetRaw(initOverrides);
+    async toolSettingsGetToolSettings(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ToolSettingsResponse> {
+        const response = await this.toolSettingsGetToolSettingsRaw(initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for testServiceV1ToolSettingsServiceTestPost without sending the request
+     * Creates request options for toolSettingsListGuardrailProfiles without sending the request
      */
-    async testServiceV1ToolSettingsServiceTestPostRequestOpts(requestParameters: TestServiceV1ToolSettingsServiceTestPostRequest): Promise<runtime.RequestOpts> {
+    async toolSettingsListGuardrailProfilesRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/api/v1/tool-settings/guardrails/profiles`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * List the guardrail profiles this deployment\'s guardrails service has built.  What an organization guardrail\'s ``profile`` may name, with the ``validate_kwargs`` each one accepts, so the dashboard offers a picker and typed fields instead of a free-text box beside an unrendered dict. The profiles come from the service itself and the parameter schemas from the ``any_guardrail`` registry; neither is a list kept in this repository. See `gateway.services.guardrail_catalog`.  Reports ``available: false`` with a reason rather than an error when the service is unconfigured, unreachable, or older than its ``/profiles`` endpoint, because a guardrails outage must not also break the page that configures guardrails.  Read against ``guardrails_url``, which is the deployment\'s own service. An entry that carries an endpoint of its own is not probed: that URL is caller-supplied and fetching it here would make this a way to have the gateway request an address of the caller\'s choosing.  Not on ``verify_catalog_reader``, despite being a catalog read: that plane is the three deployment-describing reads a data-plane key may also make, and admitting a key here would let any workspace credential dial the deployment\'s guardrails service. This is a management read, so it takes the router\'s own gate.
+     * List Guardrail Profiles
+     */
+    async toolSettingsListGuardrailProfilesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GuardrailCatalog>> {
+        const requestOptions = await this.toolSettingsListGuardrailProfilesRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GuardrailCatalogFromJSON(jsonValue));
+    }
+
+    /**
+     * List the guardrail profiles this deployment\'s guardrails service has built.  What an organization guardrail\'s ``profile`` may name, with the ``validate_kwargs`` each one accepts, so the dashboard offers a picker and typed fields instead of a free-text box beside an unrendered dict. The profiles come from the service itself and the parameter schemas from the ``any_guardrail`` registry; neither is a list kept in this repository. See `gateway.services.guardrail_catalog`.  Reports ``available: false`` with a reason rather than an error when the service is unconfigured, unreachable, or older than its ``/profiles`` endpoint, because a guardrails outage must not also break the page that configures guardrails.  Read against ``guardrails_url``, which is the deployment\'s own service. An entry that carries an endpoint of its own is not probed: that URL is caller-supplied and fetching it here would make this a way to have the gateway request an address of the caller\'s choosing.  Not on ``verify_catalog_reader``, despite being a catalog read: that plane is the three deployment-describing reads a data-plane key may also make, and admitting a key here would let any workspace credential dial the deployment\'s guardrails service. This is a management read, so it takes the router\'s own gate.
+     * List Guardrail Profiles
+     */
+    async toolSettingsListGuardrailProfiles(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GuardrailCatalog> {
+        const response = await this.toolSettingsListGuardrailProfilesRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for toolSettingsTestService without sending the request
+     */
+    async toolSettingsTestServiceRequestOpts(requestParameters: ToolSettingsTestServiceRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['service'] == null) {
             throw new runtime.RequiredError(
                 'service',
-                'Required parameter "service" was null or undefined when calling testServiceV1ToolSettingsServiceTestPost().'
+                'Required parameter "service" was null or undefined when calling toolSettingsTestService().'
             );
         }
 
         if (requestParameters['testServiceRequest'] == null) {
             throw new runtime.RequiredError(
                 'testServiceRequest',
-                'Required parameter "testServiceRequest" was null or undefined when calling testServiceV1ToolSettingsServiceTestPost().'
+                'Required parameter "testServiceRequest" was null or undefined when calling toolSettingsTestService().'
             );
         }
 
@@ -133,7 +185,7 @@ export class ToolSettingsApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/tool-settings/{service}/test`;
+        let urlPath = `/api/v1/tool-settings/{service}/test`;
         urlPath = urlPath.replace('{service}', encodeURIComponent(String(requestParameters['service'])));
 
         return {
@@ -149,8 +201,8 @@ export class ToolSettingsApi extends runtime.BaseAPI {
      * Structurally validate a URL and probe it for reachability.  Tests the URL in the request body (typically unsaved), so an operator can verify before saving. The probe is a plain HTTP GET with a short timeout: any HTTP response means the host is reachable; a connection/timeout/DNS error means it is not. The operator is trusted (master key), so no SSRF deny-list applies; only the structural check (http/https + host) runs first.
      * Test Service
      */
-    async testServiceV1ToolSettingsServiceTestPostRaw(requestParameters: TestServiceV1ToolSettingsServiceTestPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TestServiceResponse>> {
-        const requestOptions = await this.testServiceV1ToolSettingsServiceTestPostRequestOpts(requestParameters);
+    async toolSettingsTestServiceRaw(requestParameters: ToolSettingsTestServiceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TestServiceResponse>> {
+        const requestOptions = await this.toolSettingsTestServiceRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => TestServiceResponseFromJSON(jsonValue));
@@ -160,19 +212,19 @@ export class ToolSettingsApi extends runtime.BaseAPI {
      * Structurally validate a URL and probe it for reachability.  Tests the URL in the request body (typically unsaved), so an operator can verify before saving. The probe is a plain HTTP GET with a short timeout: any HTTP response means the host is reachable; a connection/timeout/DNS error means it is not. The operator is trusted (master key), so no SSRF deny-list applies; only the structural check (http/https + host) runs first.
      * Test Service
      */
-    async testServiceV1ToolSettingsServiceTestPost(requestParameters: TestServiceV1ToolSettingsServiceTestPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TestServiceResponse> {
-        const response = await this.testServiceV1ToolSettingsServiceTestPostRaw(requestParameters, initOverrides);
+    async toolSettingsTestService(requestParameters: ToolSettingsTestServiceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TestServiceResponse> {
+        const response = await this.toolSettingsTestServiceRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for updateToolSettingsV1ToolSettingsPatch without sending the request
+     * Creates request options for toolSettingsUpdateToolSettings without sending the request
      */
-    async updateToolSettingsV1ToolSettingsPatchRequestOpts(requestParameters: UpdateToolSettingsV1ToolSettingsPatchRequest): Promise<runtime.RequestOpts> {
+    async toolSettingsUpdateToolSettingsRequestOpts(requestParameters: ToolSettingsUpdateToolSettingsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['updateToolSettingsRequest'] == null) {
             throw new runtime.RequiredError(
                 'updateToolSettingsRequest',
-                'Required parameter "updateToolSettingsRequest" was null or undefined when calling updateToolSettingsV1ToolSettingsPatch().'
+                'Required parameter "updateToolSettingsRequest" was null or undefined when calling toolSettingsUpdateToolSettings().'
             );
         }
 
@@ -191,7 +243,7 @@ export class ToolSettingsApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/tool-settings`;
+        let urlPath = `/api/v1/tool-settings`;
 
         return {
             path: urlPath,
@@ -203,22 +255,22 @@ export class ToolSettingsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Persist and apply tool/guardrail setting changes.  Uses ``model_fields_set`` so an explicit ``null`` clears a field while an omitted field is left unchanged. Master-key gated and standalone-only.
+     * Persist and apply tool/guardrail setting changes.  Uses ``model_fields_set`` so an explicit ``null`` clears a field while an omitted field is left unchanged. Operator-gated and standalone-only.
      * Update Tool Settings
      */
-    async updateToolSettingsV1ToolSettingsPatchRaw(requestParameters: UpdateToolSettingsV1ToolSettingsPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ToolSettingsResponse>> {
-        const requestOptions = await this.updateToolSettingsV1ToolSettingsPatchRequestOpts(requestParameters);
+    async toolSettingsUpdateToolSettingsRaw(requestParameters: ToolSettingsUpdateToolSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ToolSettingsResponse>> {
+        const requestOptions = await this.toolSettingsUpdateToolSettingsRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ToolSettingsResponseFromJSON(jsonValue));
     }
 
     /**
-     * Persist and apply tool/guardrail setting changes.  Uses ``model_fields_set`` so an explicit ``null`` clears a field while an omitted field is left unchanged. Master-key gated and standalone-only.
+     * Persist and apply tool/guardrail setting changes.  Uses ``model_fields_set`` so an explicit ``null`` clears a field while an omitted field is left unchanged. Operator-gated and standalone-only.
      * Update Tool Settings
      */
-    async updateToolSettingsV1ToolSettingsPatch(requestParameters: UpdateToolSettingsV1ToolSettingsPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ToolSettingsResponse> {
-        const response = await this.updateToolSettingsV1ToolSettingsPatchRaw(requestParameters, initOverrides);
+    async toolSettingsUpdateToolSettings(requestParameters: ToolSettingsUpdateToolSettingsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ToolSettingsResponse> {
+        const response = await this.toolSettingsUpdateToolSettingsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

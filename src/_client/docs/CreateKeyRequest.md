@@ -15,6 +15,7 @@ Name | Type
 `metadata` | { [key: string]: any; }
 `rejectUserMismatch` | boolean
 `userId` | string
+`workspaceId` | string
 
 ## Example
 
@@ -31,6 +32,7 @@ const example = {
   "metadata": null,
   "rejectUserMismatch": null,
   "userId": null,
+  "workspaceId": null,
 } satisfies CreateKeyRequest
 
 console.log(example)

@@ -29,7 +29,7 @@ import {
     ModerationResponseToJSON,
 } from '../models/ModerationResponse.js';
 
-export interface CreateModerationV1ModerationsPostRequest {
+export interface ModerationsCreateModerationRequest {
     moderationRequest: ModerationRequest;
     includeRaw?: boolean;
 }
@@ -40,13 +40,13 @@ export interface CreateModerationV1ModerationsPostRequest {
 export class ModerationsApi extends runtime.BaseAPI {
 
     /**
-     * Creates request options for createModerationV1ModerationsPost without sending the request
+     * Creates request options for moderationsCreateModeration without sending the request
      */
-    async createModerationV1ModerationsPostRequestOpts(requestParameters: CreateModerationV1ModerationsPostRequest): Promise<runtime.RequestOpts> {
+    async moderationsCreateModerationRequestOpts(requestParameters: ModerationsCreateModerationRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['moderationRequest'] == null) {
             throw new runtime.RequiredError(
                 'moderationRequest',
-                'Required parameter "moderationRequest" was null or undefined when calling createModerationV1ModerationsPost().'
+                'Required parameter "moderationRequest" was null or undefined when calling moderationsCreateModeration().'
             );
         }
 
@@ -69,7 +69,7 @@ export class ModerationsApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/moderations`;
+        let urlPath = `/api/v1/moderations`;
 
         return {
             path: urlPath,
@@ -84,8 +84,8 @@ export class ModerationsApi extends runtime.BaseAPI {
      * OpenAI-compatible moderations endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Create Moderation
      */
-    async createModerationV1ModerationsPostRaw(requestParameters: CreateModerationV1ModerationsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModerationResponse>> {
-        const requestOptions = await this.createModerationV1ModerationsPostRequestOpts(requestParameters);
+    async moderationsCreateModerationRaw(requestParameters: ModerationsCreateModerationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ModerationResponse>> {
+        const requestOptions = await this.moderationsCreateModerationRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ModerationResponseFromJSON(jsonValue));
@@ -95,8 +95,8 @@ export class ModerationsApi extends runtime.BaseAPI {
      * OpenAI-compatible moderations endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Create Moderation
      */
-    async createModerationV1ModerationsPost(requestParameters: CreateModerationV1ModerationsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ModerationResponse> {
-        const response = await this.createModerationV1ModerationsPostRaw(requestParameters, initOverrides);
+    async moderationsCreateModeration(requestParameters: ModerationsCreateModerationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ModerationResponse> {
+        const response = await this.moderationsCreateModerationRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

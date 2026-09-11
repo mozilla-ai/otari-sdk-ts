@@ -20,6 +20,13 @@ import {
     MRBetaCompactionIterationUsageToJSON,
     MRBetaCompactionIterationUsageToJSONTyped,
 } from './MRBetaCompactionIterationUsage.js';
+import type { MRBetaAdvisorMessageIterationUsage } from './MRBetaAdvisorMessageIterationUsage.js';
+import {
+    MRBetaAdvisorMessageIterationUsageFromJSON,
+    MRBetaAdvisorMessageIterationUsageFromJSONTyped,
+    MRBetaAdvisorMessageIterationUsageToJSON,
+    MRBetaAdvisorMessageIterationUsageToJSONTyped,
+} from './MRBetaAdvisorMessageIterationUsage.js';
 import type { MRBetaCacheCreation } from './MRBetaCacheCreation.js';
 import {
     MRBetaCacheCreationFromJSON,
@@ -27,6 +34,13 @@ import {
     MRBetaCacheCreationToJSON,
     MRBetaCacheCreationToJSONTyped,
 } from './MRBetaCacheCreation.js';
+import type { Model1 } from './Model1.js';
+import {
+    Model1FromJSON,
+    Model1FromJSONTyped,
+    Model1ToJSON,
+    Model1ToJSONTyped,
+} from './Model1.js';
 import type { MRBetaMessageIterationUsage } from './MRBetaMessageIterationUsage.js';
 import {
     MRBetaMessageIterationUsageFromJSON,
@@ -34,6 +48,13 @@ import {
     MRBetaMessageIterationUsageToJSON,
     MRBetaMessageIterationUsageToJSONTyped,
 } from './MRBetaMessageIterationUsage.js';
+import type { MRBetaFallbackMessageIterationUsage } from './MRBetaFallbackMessageIterationUsage.js';
+import {
+    MRBetaFallbackMessageIterationUsageFromJSON,
+    MRBetaFallbackMessageIterationUsageFromJSONTyped,
+    MRBetaFallbackMessageIterationUsageToJSON,
+    MRBetaFallbackMessageIterationUsageToJSONTyped,
+} from './MRBetaFallbackMessageIterationUsage.js';
 
 /**
  * 
@@ -67,6 +88,12 @@ export interface MRMessageUsageIterationsInner {
     inputTokens: number;
     /**
      * 
+     * @type {Model1}
+     * @memberof MRMessageUsageIterationsInner
+     */
+    model: Model1;
+    /**
+     * 
      * @type {number}
      * @memberof MRMessageUsageIterationsInner
      */
@@ -85,7 +112,9 @@ export interface MRMessageUsageIterationsInner {
  */
 export const MRMessageUsageIterationsInnerTypeEnum = {
     Message: 'message',
-    Compaction: 'compaction'
+    Compaction: 'compaction',
+    AdvisorMessage: 'advisor_message',
+    FallbackMessage: 'fallback_message'
 } as const;
 export type MRMessageUsageIterationsInnerTypeEnum = typeof MRMessageUsageIterationsInnerTypeEnum[keyof typeof MRMessageUsageIterationsInnerTypeEnum];
 
@@ -97,6 +126,7 @@ export function instanceOfMRMessageUsageIterationsInner(value: object): value is
     if (!('cacheCreationInputTokens' in value) || value['cacheCreationInputTokens'] === undefined) return false;
     if (!('cacheReadInputTokens' in value) || value['cacheReadInputTokens'] === undefined) return false;
     if (!('inputTokens' in value) || value['inputTokens'] === undefined) return false;
+    if (!('model' in value) || value['model'] === undefined) return false;
     if (!('outputTokens' in value) || value['outputTokens'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     return true;
@@ -116,6 +146,7 @@ export function MRMessageUsageIterationsInnerFromJSONTyped(json: any, ignoreDisc
         'cacheCreationInputTokens': json['cache_creation_input_tokens'],
         'cacheReadInputTokens': json['cache_read_input_tokens'],
         'inputTokens': json['input_tokens'],
+        'model': Model1FromJSON(json['model']),
         'outputTokens': json['output_tokens'],
         'type': json['type'],
     };
@@ -136,6 +167,7 @@ export function MRMessageUsageIterationsInnerToJSONTyped(value?: MRMessageUsageI
         'cache_creation_input_tokens': value['cacheCreationInputTokens'],
         'cache_read_input_tokens': value['cacheReadInputTokens'],
         'input_tokens': value['inputTokens'],
+        'model': Model1ToJSON(value['model']),
         'output_tokens': value['outputTokens'],
         'type': value['type'],
     };

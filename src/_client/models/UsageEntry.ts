@@ -13,13 +13,20 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { UsageEntryPricingBreakdownInnerValue } from './UsageEntryPricingBreakdownInnerValue.js';
+import type { UsageEntryPricingBreakdownInner } from './UsageEntryPricingBreakdownInner.js';
 import {
-    UsageEntryPricingBreakdownInnerValueFromJSON,
-    UsageEntryPricingBreakdownInnerValueFromJSONTyped,
-    UsageEntryPricingBreakdownInnerValueToJSON,
-    UsageEntryPricingBreakdownInnerValueToJSONTyped,
-} from './UsageEntryPricingBreakdownInnerValue.js';
+    UsageEntryPricingBreakdownInnerFromJSON,
+    UsageEntryPricingBreakdownInnerFromJSONTyped,
+    UsageEntryPricingBreakdownInnerToJSON,
+    UsageEntryPricingBreakdownInnerToJSONTyped,
+} from './UsageEntryPricingBreakdownInner.js';
+import type { BillingMeters } from './BillingMeters.js';
+import {
+    BillingMetersFromJSON,
+    BillingMetersFromJSONTyped,
+    BillingMetersToJSON,
+    BillingMetersToJSONTyped,
+} from './BillingMeters.js';
 
 /**
  * A single usage log entry.
@@ -52,11 +59,17 @@ export interface UsageEntry {
      */
     attemptPosition?: number | null;
     /**
-     * An unsaved policy body to explain.
-     * @type {{ [key: string]: any; }}
+     * 
+     * @type {BillingMeters}
      * @memberof UsageEntry
      */
-    billingMeters: { [key: string]: any; } | null;
+    billingMeters: BillingMeters | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UsageEntry
+     */
+    bulkEditable: boolean;
     /**
      * 
      * @type {number}
@@ -131,10 +144,10 @@ export interface UsageEntry {
     policyName?: string | null;
     /**
      * 
-     * @type {Array<{ [key: string]: UsageEntryPricingBreakdownInnerValue; }>}
+     * @type {Array<UsageEntryPricingBreakdownInner>}
      * @memberof UsageEntry
      */
-    pricingBreakdown: Array<{ [key: string]: UsageEntryPricingBreakdownInnerValue; }> | null;
+    pricingBreakdown: Array<UsageEntryPricingBreakdownInner> | null;
     /**
      * 
      * @type {number}
@@ -215,6 +228,7 @@ export interface UsageEntry {
 export function instanceOfUsageEntry(value: object): value is UsageEntry {
     if (!('apiKeyId' in value) || value['apiKeyId'] === undefined) return false;
     if (!('billingMeters' in value) || value['billingMeters'] === undefined) return false;
+    if (!('bulkEditable' in value) || value['bulkEditable'] === undefined) return false;
     if (!('cacheReadTokens' in value) || value['cacheReadTokens'] === undefined) return false;
     if (!('cacheWrite1hTokens' in value) || value['cacheWrite1hTokens'] === undefined) return false;
     if (!('cacheWriteTokens' in value) || value['cacheWriteTokens'] === undefined) return false;
@@ -253,7 +267,8 @@ export function UsageEntryFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'apiKeyName': json['api_key_name'] == null ? undefined : json['api_key_name'],
         'attemptCount': json['attempt_count'] == null ? undefined : json['attempt_count'],
         'attemptPosition': json['attempt_position'] == null ? undefined : json['attempt_position'],
-        'billingMeters': json['billing_meters'],
+        'billingMeters': BillingMetersFromJSON(json['billing_meters']),
+        'bulkEditable': json['bulk_editable'],
         'cacheReadTokens': json['cache_read_tokens'],
         'cacheWrite1hTokens': json['cache_write_1h_tokens'],
         'cacheWriteTokens': json['cache_write_tokens'],
@@ -266,7 +281,7 @@ export function UsageEntryFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'latencyMs': json['latency_ms'],
         'model': json['model'],
         'policyName': json['policy_name'] == null ? undefined : json['policy_name'],
-        'pricingBreakdown': json['pricing_breakdown'] == null ? null : json['pricing_breakdown'],
+        'pricingBreakdown': (json['pricing_breakdown'] == null ? null : (json['pricing_breakdown'] as Array<any>).map(UsageEntryPricingBreakdownInnerFromJSON)),
         'promptTokens': json['prompt_tokens'],
         'provider': json['provider'],
         'requestGroupId': json['request_group_id'] == null ? undefined : json['request_group_id'],
@@ -297,7 +312,8 @@ export function UsageEntryToJSONTyped(value?: UsageEntry | null, ignoreDiscrimin
         'api_key_name': value['apiKeyName'],
         'attempt_count': value['attemptCount'],
         'attempt_position': value['attemptPosition'],
-        'billing_meters': value['billingMeters'],
+        'billing_meters': BillingMetersToJSON(value['billingMeters']),
+        'bulk_editable': value['bulkEditable'],
         'cache_read_tokens': value['cacheReadTokens'],
         'cache_write_1h_tokens': value['cacheWrite1hTokens'],
         'cache_write_tokens': value['cacheWriteTokens'],
@@ -310,7 +326,7 @@ export function UsageEntryToJSONTyped(value?: UsageEntry | null, ignoreDiscrimin
         'latency_ms': value['latencyMs'],
         'model': value['model'],
         'policy_name': value['policyName'],
-        'pricing_breakdown': value['pricingBreakdown'],
+        'pricing_breakdown': (value['pricingBreakdown'] == null ? null : (value['pricingBreakdown'] as Array<any>).map(UsageEntryPricingBreakdownInnerToJSON)),
         'prompt_tokens': value['promptTokens'],
         'provider': value['provider'],
         'request_group_id': value['requestGroupId'],

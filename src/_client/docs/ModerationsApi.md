@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**createModerationV1ModerationsPost**](ModerationsApi.md#createmoderationv1moderationspost) | **POST** /v1/moderations | Create Moderation |
+| [**moderationsCreateModeration**](ModerationsApi.md#moderationscreatemoderation) | **POST** /api/v1/moderations | Create Moderation |
 
 
 
-## createModerationV1ModerationsPost
+## moderationsCreateModeration
 
-> ModerationResponse createModerationV1ModerationsPost(moderationRequest, includeRaw)
+> ModerationResponse moderationsCreateModeration(moderationRequest, includeRaw)
 
 Create Moderation
 
@@ -23,7 +23,7 @@ import {
   Configuration,
   ModerationsApi,
 } from '';
-import type { CreateModerationV1ModerationsPostRequest } from '';
+import type { ModerationsCreateModerationRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -40,10 +40,10 @@ async function example() {
     moderationRequest: ...,
     // boolean (optional)
     includeRaw: true,
-  } satisfies CreateModerationV1ModerationsPostRequest;
+  } satisfies ModerationsCreateModerationRequest;
 
   try {
-    const data = await api.createModerationV1ModerationsPost(body);
+    const data = await api.moderationsCreateModeration(body);
     console.log(data);
   } catch (error) {
     console.error(error);

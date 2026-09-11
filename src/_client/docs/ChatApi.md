@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**chatCompletionsV1ChatCompletionsPost**](ChatApi.md#chatcompletionsv1chatcompletionspost) | **POST** /v1/chat/completions | Chat Completions |
+| [**chatChatCompletions**](ChatApi.md#chatchatcompletions) | **POST** /api/v1/chat/completions | Chat Completions |
 
 
 
-## chatCompletionsV1ChatCompletionsPost
+## chatChatCompletions
 
-> ChatCompletion chatCompletionsV1ChatCompletionsPost(chatCompletionRequest)
+> ChatCompletion chatChatCompletions(chatCompletionRequest)
 
 Chat Completions
 
@@ -23,7 +23,7 @@ import {
   Configuration,
   ChatApi,
 } from '';
-import type { ChatCompletionsV1ChatCompletionsPostRequest } from '';
+import type { ChatChatCompletionsRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -38,10 +38,10 @@ async function example() {
   const body = {
     // ChatCompletionRequest
     chatCompletionRequest: ...,
-  } satisfies ChatCompletionsV1ChatCompletionsPostRequest;
+  } satisfies ChatChatCompletionsRequest;
 
   try {
-    const data = await api.chatCompletionsV1ChatCompletionsPost(body);
+    const data = await api.chatChatCompletions(body);
     console.log(data);
   } catch (error) {
     console.error(error);

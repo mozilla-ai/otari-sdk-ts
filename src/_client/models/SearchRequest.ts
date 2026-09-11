@@ -50,7 +50,7 @@ export interface SearchRequest {
      */
     searchDomainFilter?: Array<string> | null;
     /**
-     * Configured search tool to run against. Optional when exactly one tool is configured, and ignored on POST /v1/search/{search_tool_name}.
+     * Configured search tool to run against. Optional when exactly one tool is configured, and ignored on POST /api/v1/search/{search_tool_name}.
      * @type {string}
      * @memberof SearchRequest
      */

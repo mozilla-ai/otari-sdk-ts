@@ -14,7 +14,7 @@
 
 import { mapValues } from '../runtime.js';
 /**
- * Inline MCP server configuration accepted on the chat completions request.
+ * Inline MCP server configuration accepted by generation requests.
  * 
  * Streamable HTTP transport. The `url` must be reachable from the gateway process.
  * 

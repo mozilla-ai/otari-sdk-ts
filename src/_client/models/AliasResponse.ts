@@ -55,6 +55,12 @@ export interface AliasResponse {
      * @memberof AliasResponse
      */
     userId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AliasResponse
+     */
+    workspaceId?: string | null;
 }
 
 /**
@@ -83,6 +89,7 @@ export function AliasResponseFromJSONTyped(json: any, ignoreDiscriminator: boole
         'target': json['target'],
         'updatedAt': json['updated_at'] == null ? undefined : json['updated_at'],
         'userId': json['user_id'] == null ? undefined : json['user_id'],
+        'workspaceId': json['workspace_id'] == null ? undefined : json['workspace_id'],
     };
 }
 
@@ -103,6 +110,7 @@ export function AliasResponseToJSONTyped(value?: AliasResponse | null, ignoreDis
         'target': value['target'],
         'updated_at': value['updatedAt'],
         'user_id': value['userId'],
+        'workspace_id': value['workspaceId'],
     };
 }
 

@@ -20,9 +20,9 @@ import * as runtime from '../runtime.js';
 export class OtelApi extends runtime.BaseAPI {
 
     /**
-     * Creates request options for receiveLogsV1LogsPost without sending the request
+     * Creates request options for otelReceiveLogs without sending the request
      */
-    async receiveLogsV1LogsPostRequestOpts(): Promise<runtime.RequestOpts> {
+    async otelReceiveLogsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -36,7 +36,7 @@ export class OtelApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/logs`;
+        let urlPath = `/otlp/v1/logs`;
 
         return {
             path: urlPath,
@@ -50,8 +50,8 @@ export class OtelApi extends runtime.BaseAPI {
      * Ingest LLM usage from OTLP log events (Claude Code, Codex, or GenAI logs).
      * Receive Logs
      */
-    async receiveLogsV1LogsPostRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        const requestOptions = await this.receiveLogsV1LogsPostRequestOpts();
+    async otelReceiveLogsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.otelReceiveLogsRequestOpts();
         const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -65,15 +65,15 @@ export class OtelApi extends runtime.BaseAPI {
      * Ingest LLM usage from OTLP log events (Claude Code, Codex, or GenAI logs).
      * Receive Logs
      */
-    async receiveLogsV1LogsPost(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
-        const response = await this.receiveLogsV1LogsPostRaw(initOverrides);
+    async otelReceiveLogs(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.otelReceiveLogsRaw(initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for receiveMetricsV1MetricsPost without sending the request
+     * Creates request options for otelReceiveMetrics without sending the request
      */
-    async receiveMetricsV1MetricsPostRequestOpts(): Promise<runtime.RequestOpts> {
+    async otelReceiveMetricsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -87,7 +87,7 @@ export class OtelApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/metrics`;
+        let urlPath = `/otlp/v1/metrics`;
 
         return {
             path: urlPath,
@@ -101,8 +101,8 @@ export class OtelApi extends runtime.BaseAPI {
      * Ingest content-free coding-agent outcome metrics from OTLP metric points.  Records the outcome counters a coding agent reports on the metrics signal and that Otari has no other source for: lines of code changed, commits, pull requests, and active time. Points are stored exactly as reported, with their OTLP series identity, so a cumulative counter is turned into an increment at read time rather than re-counted on every export. Metrics that duplicate an already-recorded signal (token/cost usage, already billed; edit decisions, already captured as behavioral events) are skipped, as is any metric name this gateway does not know, so a newer agent version never breaks reception.  Outcome metrics are never billable: they touch no budget and no spend. Capture answers to the same ``capture_agent_telemetry`` toggle as behavioral events; with it off, the export still succeeds and simply stores nothing.
      * Receive Metrics
      */
-    async receiveMetricsV1MetricsPostRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        const requestOptions = await this.receiveMetricsV1MetricsPostRequestOpts();
+    async otelReceiveMetricsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.otelReceiveMetricsRequestOpts();
         const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -116,15 +116,15 @@ export class OtelApi extends runtime.BaseAPI {
      * Ingest content-free coding-agent outcome metrics from OTLP metric points.  Records the outcome counters a coding agent reports on the metrics signal and that Otari has no other source for: lines of code changed, commits, pull requests, and active time. Points are stored exactly as reported, with their OTLP series identity, so a cumulative counter is turned into an increment at read time rather than re-counted on every export. Metrics that duplicate an already-recorded signal (token/cost usage, already billed; edit decisions, already captured as behavioral events) are skipped, as is any metric name this gateway does not know, so a newer agent version never breaks reception.  Outcome metrics are never billable: they touch no budget and no spend. Capture answers to the same ``capture_agent_telemetry`` toggle as behavioral events; with it off, the export still succeeds and simply stores nothing.
      * Receive Metrics
      */
-    async receiveMetricsV1MetricsPost(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
-        const response = await this.receiveMetricsV1MetricsPostRaw(initOverrides);
+    async otelReceiveMetrics(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.otelReceiveMetricsRaw(initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for receiveTracesV1TracesPost without sending the request
+     * Creates request options for otelReceiveTraces without sending the request
      */
-    async receiveTracesV1TracesPostRequestOpts(): Promise<runtime.RequestOpts> {
+    async otelReceiveTracesRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -138,7 +138,7 @@ export class OtelApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/traces`;
+        let urlPath = `/otlp/v1/traces`;
 
         return {
             path: urlPath,
@@ -152,8 +152,8 @@ export class OtelApi extends runtime.BaseAPI {
      * Ingest LLM usage from OTLP spans (GenAI semantic conventions).
      * Receive Traces
      */
-    async receiveTracesV1TracesPostRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        const requestOptions = await this.receiveTracesV1TracesPostRequestOpts();
+    async otelReceiveTracesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.otelReceiveTracesRequestOpts();
         const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -167,8 +167,8 @@ export class OtelApi extends runtime.BaseAPI {
      * Ingest LLM usage from OTLP spans (GenAI semantic conventions).
      * Receive Traces
      */
-    async receiveTracesV1TracesPost(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
-        const response = await this.receiveTracesV1TracesPostRaw(initOverrides);
+    async otelReceiveTraces(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.otelReceiveTracesRaw(initOverrides);
         return await response.value();
     }
 

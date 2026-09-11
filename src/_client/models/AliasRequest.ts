@@ -32,11 +32,17 @@ export interface AliasRequest {
      */
     target: string;
     /**
-     * User this alias belongs to. Omit for a global alias every caller sees. A user-scoped alias resolves only for that user and shadows a global one of the same name.
+     * User this alias belongs to. Omit for an alias every caller in the workspace sees. A user-scoped alias resolves only for that user and shadows the workspace-wide one of the same name.
      * @type {string}
      * @memberof AliasRequest
      */
     userId?: string | null;
+    /**
+     * Workspace this alias belongs to. Omit for the deployment's default workspace. The alias resolves only for requests in that workspace, so two workspaces can each point the same name at a different model.
+     * @type {string}
+     * @memberof AliasRequest
+     */
+    workspaceId?: string | null;
 }
 
 /**
@@ -61,6 +67,7 @@ export function AliasRequestFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'name': json['name'],
         'target': json['target'],
         'userId': json['user_id'] == null ? undefined : json['user_id'],
+        'workspaceId': json['workspace_id'] == null ? undefined : json['workspace_id'],
     };
 }
 
@@ -78,6 +85,7 @@ export function AliasRequestToJSONTyped(value?: AliasRequest | null, ignoreDiscr
         'name': value['name'],
         'target': value['target'],
         'user_id': value['userId'],
+        'workspace_id': value['workspaceId'],
     };
 }
 

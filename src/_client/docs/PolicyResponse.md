@@ -14,6 +14,7 @@ Name | Type
 `spec` | { [key: string]: any; }
 `updatedAt` | string
 `userId` | string
+`workspaceId` | string
 
 ## Example
 
@@ -29,6 +30,7 @@ const example = {
   "spec": null,
   "updatedAt": null,
   "userId": null,
+  "workspaceId": null,
 } satisfies PolicyResponse
 
 console.log(example)

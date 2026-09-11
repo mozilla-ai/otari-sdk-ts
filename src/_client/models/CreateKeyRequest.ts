@@ -26,7 +26,7 @@ export interface CreateKeyRequest {
      */
     allowedModels?: Array<string> | null;
     /**
-     * Per-key override of the deployment-wide capture_agent_telemetry setting: null (default) inherits it, true always stores this key's coding-agent telemetry, false always discards it. Covers both behavioral events (tool_result, tool_decision, user_prompt, api_error) from POST /v1/logs and outcome-metric data points (lines of code, commits, pull requests, active time) from POST /v1/metrics. Usage capture and billing are unaffected either way.
+     * Per-key override of the deployment-wide capture_agent_telemetry setting: null (default) inherits it, true always stores this key's coding-agent telemetry, false always discards it. Covers both behavioral events (tool_result, tool_decision, user_prompt, api_error) from POST /otlp/v1/logs and outcome-metric data points (lines of code, commits, pull requests, active time) from POST /otlp/v1/metrics. Usage capture and billing are unaffected either way.
      * @type {boolean}
      * @memberof CreateKeyRequest
      */
@@ -67,6 +67,12 @@ export interface CreateKeyRequest {
      * @memberof CreateKeyRequest
      */
     userId?: string | null;
+    /**
+     * Workspace this key belongs to, which must be one in the caller's organization. Omitted means that organization's default workspace. A key belongs to exactly one workspace: requests on it are scoped and billed there, so the workspace is read off the key rather than off a request header.
+     * @type {string}
+     * @memberof CreateKeyRequest
+     */
+    workspaceId?: string | null;
 }
 
 /**
@@ -94,6 +100,7 @@ export function CreateKeyRequestFromJSONTyped(json: any, ignoreDiscriminator: bo
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
         'rejectUserMismatch': json['reject_user_mismatch'] == null ? undefined : json['reject_user_mismatch'],
         'userId': json['user_id'] == null ? undefined : json['user_id'],
+        'workspaceId': json['workspace_id'] == null ? undefined : json['workspace_id'],
     };
 }
 
@@ -116,6 +123,7 @@ export function CreateKeyRequestToJSONTyped(value?: CreateKeyRequest | null, ign
         'metadata': value['metadata'],
         'reject_user_mismatch': value['rejectUserMismatch'],
         'user_id': value['userId'],
+        'workspace_id': value['workspaceId'],
     };
 }
 

@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `examples` | [Array&lt;ScoredExample&gt;](ScoredExample.md)
 `userId` | string
+`workspaceId` | string
 
 ## Example
 
@@ -19,6 +20,7 @@ import type { RankRequest } from ''
 const example = {
   "examples": null,
   "userId": null,
+  "workspaceId": null,
 } satisfies RankRequest
 
 console.log(example)

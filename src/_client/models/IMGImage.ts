@@ -33,7 +33,7 @@ export interface IMGImage {
      */
     revisedPrompt?: string | null;
     /**
-     * Filter to a single event type or metric name (e.g. 'tool_result', 'claude_code.commit.count')
+     * 
      * @type {string}
      * @memberof IMGImage
      */

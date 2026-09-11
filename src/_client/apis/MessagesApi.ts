@@ -39,11 +39,11 @@ import {
     MessagesRequestToJSON,
 } from '../models/MessagesRequest.js';
 
-export interface CountMessageTokensV1MessagesCountTokensPostRequest {
+export interface MessagesCountMessageTokensRequest {
     countTokensRequest: CountTokensRequest;
 }
 
-export interface CreateMessageV1MessagesPostRequest {
+export interface MessagesCreateMessageRequest {
     messagesRequest: MessagesRequest;
 }
 
@@ -53,13 +53,13 @@ export interface CreateMessageV1MessagesPostRequest {
 export class MessagesApi extends runtime.BaseAPI {
 
     /**
-     * Creates request options for countMessageTokensV1MessagesCountTokensPost without sending the request
+     * Creates request options for messagesCountMessageTokens without sending the request
      */
-    async countMessageTokensV1MessagesCountTokensPostRequestOpts(requestParameters: CountMessageTokensV1MessagesCountTokensPostRequest): Promise<runtime.RequestOpts> {
+    async messagesCountMessageTokensRequestOpts(requestParameters: MessagesCountMessageTokensRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['countTokensRequest'] == null) {
             throw new runtime.RequiredError(
                 'countTokensRequest',
-                'Required parameter "countTokensRequest" was null or undefined when calling countMessageTokensV1MessagesCountTokensPost().'
+                'Required parameter "countTokensRequest" was null or undefined when calling messagesCountMessageTokens().'
             );
         }
 
@@ -78,7 +78,7 @@ export class MessagesApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/messages/count_tokens`;
+        let urlPath = `/api/v1/messages/count_tokens`;
 
         return {
             path: urlPath,
@@ -93,8 +93,8 @@ export class MessagesApi extends runtime.BaseAPI {
      * Anthropic ``/v1/messages/count_tokens``-compatible endpoint.  Returns ``{\"input_tokens\": N}`` without contacting an upstream provider: counting is local, so there is no budget reservation, pricing, or usage logging. Authentication mirrors :func:`create_message` — hybrid mode resolves the caller\'s token against the platform, standalone mode validates the API key — so the endpoint is not an open token-counting oracle.
      * Count Message Tokens
      */
-    async countMessageTokensV1MessagesCountTokensPostRaw(requestParameters: CountMessageTokensV1MessagesCountTokensPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CountTokensResponse>> {
-        const requestOptions = await this.countMessageTokensV1MessagesCountTokensPostRequestOpts(requestParameters);
+    async messagesCountMessageTokensRaw(requestParameters: MessagesCountMessageTokensRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CountTokensResponse>> {
+        const requestOptions = await this.messagesCountMessageTokensRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => CountTokensResponseFromJSON(jsonValue));
@@ -104,19 +104,19 @@ export class MessagesApi extends runtime.BaseAPI {
      * Anthropic ``/v1/messages/count_tokens``-compatible endpoint.  Returns ``{\"input_tokens\": N}`` without contacting an upstream provider: counting is local, so there is no budget reservation, pricing, or usage logging. Authentication mirrors :func:`create_message` — hybrid mode resolves the caller\'s token against the platform, standalone mode validates the API key — so the endpoint is not an open token-counting oracle.
      * Count Message Tokens
      */
-    async countMessageTokensV1MessagesCountTokensPost(requestParameters: CountMessageTokensV1MessagesCountTokensPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CountTokensResponse> {
-        const response = await this.countMessageTokensV1MessagesCountTokensPostRaw(requestParameters, initOverrides);
+    async messagesCountMessageTokens(requestParameters: MessagesCountMessageTokensRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CountTokensResponse> {
+        const response = await this.messagesCountMessageTokensRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for createMessageV1MessagesPost without sending the request
+     * Creates request options for messagesCreateMessage without sending the request
      */
-    async createMessageV1MessagesPostRequestOpts(requestParameters: CreateMessageV1MessagesPostRequest): Promise<runtime.RequestOpts> {
+    async messagesCreateMessageRequestOpts(requestParameters: MessagesCreateMessageRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['messagesRequest'] == null) {
             throw new runtime.RequiredError(
                 'messagesRequest',
-                'Required parameter "messagesRequest" was null or undefined when calling createMessageV1MessagesPost().'
+                'Required parameter "messagesRequest" was null or undefined when calling messagesCreateMessage().'
             );
         }
 
@@ -135,7 +135,7 @@ export class MessagesApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/messages`;
+        let urlPath = `/api/v1/messages`;
 
         return {
             path: urlPath,
@@ -150,8 +150,8 @@ export class MessagesApi extends runtime.BaseAPI {
      * Anthropic Messages API-compatible endpoint.  Supports MCP tool-use loops, sandboxed code execution, and SearXNG web_search in both standalone mode and hybrid mode. Hybrid-mode requests resolve credentials via the platform service and get multi-attempt fallback across the resolved route, tool-loop requests included (fallback applies up to the pre-lock-in point, same as chat).
      * Create Message
      */
-    async createMessageV1MessagesPostRaw(requestParameters: CreateMessageV1MessagesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageResponse>> {
-        const requestOptions = await this.createMessageV1MessagesPostRequestOpts(requestParameters);
+    async messagesCreateMessageRaw(requestParameters: MessagesCreateMessageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageResponse>> {
+        const requestOptions = await this.messagesCreateMessageRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => MessageResponseFromJSON(jsonValue));
@@ -161,8 +161,8 @@ export class MessagesApi extends runtime.BaseAPI {
      * Anthropic Messages API-compatible endpoint.  Supports MCP tool-use loops, sandboxed code execution, and SearXNG web_search in both standalone mode and hybrid mode. Hybrid-mode requests resolve credentials via the platform service and get multi-attempt fallback across the resolved route, tool-loop requests included (fallback applies up to the pre-lock-in point, same as chat).
      * Create Message
      */
-    async createMessageV1MessagesPost(requestParameters: CreateMessageV1MessagesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageResponse> {
-        const response = await this.createMessageV1MessagesPostRaw(requestParameters, initOverrides);
+    async messagesCreateMessage(requestParameters: MessagesCreateMessageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageResponse> {
+        const response = await this.messagesCreateMessageRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

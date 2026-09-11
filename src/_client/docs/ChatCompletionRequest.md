@@ -1,7 +1,7 @@
 
 # ChatCompletionRequest
 
-OpenAI-compatible chat completion request.  The completion-param fields are derived from any-llm\'s ``CompletionParams`` (see ``_schema_derive``) so the schema cannot silently drop a param any-llm forwards. Fields below either tighten a derived field (``messages``, ``response_format``), declare an OpenAI wire param ``CompletionParams`` does not model (``service_tier``, forwarded as an any-llm ``**kwargs`` param), or add gateway-internal behavior (``mcp_servers``, ``mcp_server_ids``, ``guardrails``, ``tools_header``, ``max_tool_iterations``) that is stripped before the request is forwarded upstream.
+OpenAI-compatible chat completion request.  The completion-param fields are derived from any-llm\'s ``CompletionParams`` (see ``_schema_derive``) so the schema cannot silently drop a param any-llm forwards. Fields below either tighten a derived field (``messages``, ``response_format``), declare an OpenAI wire param ``CompletionParams`` does not model (``service_tier``, forwarded as an any-llm ``**kwargs`` param), add gateway-internal behavior (``mcp_servers``, ``mcp_server_ids``, ``guardrails``, ``tools_header``, ``max_tool_iterations``) that is stripped before the request is forwarded upstream, or restate a derived field unchanged to document it (``max_completion_tokens``), which is only worth doing where the wire contract is not guessable from the field itself.
 
 ## Properties
 
@@ -21,6 +21,7 @@ Name | Type
 `n` | number
 `parallelToolCalls` | boolean
 `presencePenalty` | number
+`promptCacheKey` | string
 `reasoningEffort` | string
 `responseFormat` | { [key: string]: any; }
 `seed` | number
@@ -58,6 +59,7 @@ const example = {
   "n": null,
   "parallelToolCalls": null,
   "presencePenalty": null,
+  "promptCacheKey": null,
   "reasoningEffort": null,
   "responseFormat": null,
   "seed": null,

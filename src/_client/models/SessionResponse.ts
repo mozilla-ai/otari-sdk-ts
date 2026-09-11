@@ -20,18 +20,32 @@ import { mapValues } from '../runtime.js';
  */
 export interface SessionResponse {
     /**
+     * The organization that identity is acting in, which scopes every tenancy surface.
+     * @type {string}
+     * @memberof SessionResponse
+     */
+    activeOrganizationId: string;
+    /**
      * When the session cookie stops being accepted.
      * @type {Date}
      * @memberof SessionResponse
      */
     expiresAt: Date;
+    /**
+     * The identity this session speaks for.
+     * @type {string}
+     * @memberof SessionResponse
+     */
+    userId: string;
 }
 
 /**
  * Check if a given object implements the SessionResponse interface.
  */
 export function instanceOfSessionResponse(value: object): value is SessionResponse {
+    if (!('activeOrganizationId' in value) || value['activeOrganizationId'] === undefined) return false;
     if (!('expiresAt' in value) || value['expiresAt'] === undefined) return false;
+    if (!('userId' in value) || value['userId'] === undefined) return false;
     return true;
 }
 
@@ -45,7 +59,9 @@ export function SessionResponseFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
+        'activeOrganizationId': json['active_organization_id'],
         'expiresAt': (new Date(json['expires_at'])),
+        'userId': json['user_id'],
     };
 }
 
@@ -60,7 +76,9 @@ export function SessionResponseToJSONTyped(value?: SessionResponse | null, ignor
 
     return {
         
+        'active_organization_id': value['activeOrganizationId'],
         'expires_at': value['expiresAt'].toISOString(),
+        'user_id': value['userId'],
     };
 }
 

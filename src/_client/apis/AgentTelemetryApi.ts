@@ -44,26 +44,26 @@ import {
     HTTPValidationErrorToJSON,
 } from '../models/HTTPValidationError.js';
 
-export interface AgentTelemetrySeriesV1AgentTelemetrySeriesGetRequest {
-    groupBy: AgentTelemetrySeriesV1AgentTelemetrySeriesGetGroupByEnum;
+export interface AgentTelemetryAgentTelemetrySeriesRequest {
+    groupBy: AgentTelemetryAgentTelemetrySeriesGroupByEnum;
     startDate?: Date | null;
     endDate?: Date | null;
     userId?: Array<string> | null;
     apiKeyId?: Array<string> | null;
     name?: string | null;
-    bucket?: AgentTelemetrySeriesV1AgentTelemetrySeriesGetBucketEnum;
+    bucket?: AgentTelemetryAgentTelemetrySeriesBucketEnum;
 }
 
-export interface AgentTelemetrySummaryV1AgentTelemetrySummaryGetRequest {
+export interface AgentTelemetryAgentTelemetrySummaryRequest {
     startDate?: Date | null;
     endDate?: Date | null;
     userId?: Array<string> | null;
     apiKeyId?: Array<string> | null;
     sessionLabel?: string | null;
-    bucket?: AgentTelemetrySummaryV1AgentTelemetrySummaryGetBucketEnum;
+    bucket?: AgentTelemetryAgentTelemetrySummaryBucketEnum;
 }
 
-export interface CountAgentTelemetryV1AgentTelemetryCountGetRequest {
+export interface AgentTelemetryCountAgentTelemetryRequest {
     startDate?: Date | null;
     endDate?: Date | null;
     userId?: Array<string> | null;
@@ -71,7 +71,7 @@ export interface CountAgentTelemetryV1AgentTelemetryCountGetRequest {
     name?: string | null;
 }
 
-export interface DeleteAgentTelemetryRowsV1AgentTelemetryDeleteRequest {
+export interface AgentTelemetryDeleteAgentTelemetryRowsRequest {
     agentTelemetryDeleteRequest: AgentTelemetryDeleteRequest;
 }
 
@@ -81,13 +81,13 @@ export interface DeleteAgentTelemetryRowsV1AgentTelemetryDeleteRequest {
 export class AgentTelemetryApi extends runtime.BaseAPI {
 
     /**
-     * Creates request options for agentTelemetrySeriesV1AgentTelemetrySeriesGet without sending the request
+     * Creates request options for agentTelemetryAgentTelemetrySeries without sending the request
      */
-    async agentTelemetrySeriesV1AgentTelemetrySeriesGetRequestOpts(requestParameters: AgentTelemetrySeriesV1AgentTelemetrySeriesGetRequest): Promise<runtime.RequestOpts> {
+    async agentTelemetryAgentTelemetrySeriesRequestOpts(requestParameters: AgentTelemetryAgentTelemetrySeriesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['groupBy'] == null) {
             throw new runtime.RequiredError(
                 'groupBy',
-                'Required parameter "groupBy" was null or undefined when calling agentTelemetrySeriesV1AgentTelemetrySeriesGet().'
+                'Required parameter "groupBy" was null or undefined when calling agentTelemetryAgentTelemetrySeries().'
             );
         }
 
@@ -132,7 +132,7 @@ export class AgentTelemetryApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/agent-telemetry/series`;
+        let urlPath = `/api/v1/agent-telemetry/series`;
 
         return {
             path: urlPath,
@@ -143,29 +143,29 @@ export class AgentTelemetryApi extends runtime.BaseAPI {
     }
 
     /**
-     * Row volume over time, split by user or API key (standalone).  Mirrors `/v1/usage/series`: same window bounds and bucket-grid cap, the top groups as their own series with the remainder folded into a reconciling ``other``, and sparse points (populated cells only). Counts rows, not spend, so it charts telemetry volume rather than cost. Master-key only.
+     * Row volume over time, split by user or API key (standalone).  Mirrors `/api/v1/usage/series`: same window bounds and bucket-grid cap, the top groups as their own series with the remainder folded into a reconciling ``other``, and sparse points (populated cells only). Counts rows, not spend, so it charts telemetry volume rather than cost. Master-key only.
      * Agent Telemetry Series
      */
-    async agentTelemetrySeriesV1AgentTelemetrySeriesGetRaw(requestParameters: AgentTelemetrySeriesV1AgentTelemetrySeriesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AgentTelemetryGroupedSeries>> {
-        const requestOptions = await this.agentTelemetrySeriesV1AgentTelemetrySeriesGetRequestOpts(requestParameters);
+    async agentTelemetryAgentTelemetrySeriesRaw(requestParameters: AgentTelemetryAgentTelemetrySeriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AgentTelemetryGroupedSeries>> {
+        const requestOptions = await this.agentTelemetryAgentTelemetrySeriesRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AgentTelemetryGroupedSeriesFromJSON(jsonValue));
     }
 
     /**
-     * Row volume over time, split by user or API key (standalone).  Mirrors `/v1/usage/series`: same window bounds and bucket-grid cap, the top groups as their own series with the remainder folded into a reconciling ``other``, and sparse points (populated cells only). Counts rows, not spend, so it charts telemetry volume rather than cost. Master-key only.
+     * Row volume over time, split by user or API key (standalone).  Mirrors `/api/v1/usage/series`: same window bounds and bucket-grid cap, the top groups as their own series with the remainder folded into a reconciling ``other``, and sparse points (populated cells only). Counts rows, not spend, so it charts telemetry volume rather than cost. Master-key only.
      * Agent Telemetry Series
      */
-    async agentTelemetrySeriesV1AgentTelemetrySeriesGet(requestParameters: AgentTelemetrySeriesV1AgentTelemetrySeriesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AgentTelemetryGroupedSeries> {
-        const response = await this.agentTelemetrySeriesV1AgentTelemetrySeriesGetRaw(requestParameters, initOverrides);
+    async agentTelemetryAgentTelemetrySeries(requestParameters: AgentTelemetryAgentTelemetrySeriesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AgentTelemetryGroupedSeries> {
+        const response = await this.agentTelemetryAgentTelemetrySeriesRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for agentTelemetrySummaryV1AgentTelemetrySummaryGet without sending the request
+     * Creates request options for agentTelemetryAgentTelemetrySummary without sending the request
      */
-    async agentTelemetrySummaryV1AgentTelemetrySummaryGetRequestOpts(requestParameters: AgentTelemetrySummaryV1AgentTelemetrySummaryGetRequest): Promise<runtime.RequestOpts> {
+    async agentTelemetryAgentTelemetrySummaryRequestOpts(requestParameters: AgentTelemetryAgentTelemetrySummaryRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startDate'] != null) {
@@ -203,7 +203,7 @@ export class AgentTelemetryApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/agent-telemetry/summary`;
+        let urlPath = `/api/v1/agent-telemetry/summary`;
 
         return {
             path: urlPath,
@@ -214,29 +214,29 @@ export class AgentTelemetryApi extends runtime.BaseAPI {
     }
 
     /**
-     * What the coding agent produced in a window, and what it cost (standalone).  Range-bounded like `/v1/usage/summary` (default last 30 days, hard-capped), so the aggregates stay served by the timestamp index. Returns the outcome totals (commits, pull requests, lines changed, active time), the behavioral counts already captured from the logs signal (tool calls and their mix, tool accept/reject, turns, API errors), the recorded spend over the same scope, and the derived per-unit measures: cost per commit / pull request / line, spend per active hour, acceptance rate, turns per session, and error rate. Each measure is null rather than an error when its denominator is zero. Filterable by user, API key, and `session_label`, so cost per outcome can be read for one agent session as well as for a whole window.  The spend side is every usage row in scope, not only the agent\'s: unfiltered, that includes traffic from clients that never reported telemetry, so a per-outcome measure read over a whole deployment answers \"what did this deployment spend per commit\", not \"what did the agent spend per commit\". Filter by user, API key, or session to divide only the matching spend.  Outcome metrics are stored exactly as the agent reported them, so a cumulative counter is converted to a window increment here, at read time, diffed per series generation: a re-exported total adds nothing, and a counter reset never reads as negative work. Master-key only.
+     * What the coding agent produced in a window, and what it cost (standalone).  Range-bounded like `/api/v1/usage/summary` (default last 30 days, hard-capped), so the aggregates stay served by the timestamp index. Returns the outcome totals (commits, pull requests, lines changed, active time), the behavioral counts already captured from the logs signal (tool calls and their mix, tool accept/reject, turns, API errors), the recorded spend over the same scope, and the derived per-unit measures: cost per commit / pull request / line, spend per active hour, acceptance rate, turns per session, and error rate. Each measure is null rather than an error when its denominator is zero. Filterable by user, API key, and `session_label`, so cost per outcome can be read for one agent session as well as for a whole window.  The spend side is every usage row in scope, not only the agent\'s: unfiltered, that includes traffic from clients that never reported telemetry, so a per-outcome measure read over a whole deployment answers \"what did this deployment spend per commit\", not \"what did the agent spend per commit\". Filter by user, API key, or session to divide only the matching spend.  Outcome metrics are stored exactly as the agent reported them, so a cumulative counter is converted to a window increment here, at read time, diffed per series generation: a re-exported total adds nothing, and a counter reset never reads as negative work. Master-key only.
      * Agent Telemetry Summary
      */
-    async agentTelemetrySummaryV1AgentTelemetrySummaryGetRaw(requestParameters: AgentTelemetrySummaryV1AgentTelemetrySummaryGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AgentTelemetrySummary>> {
-        const requestOptions = await this.agentTelemetrySummaryV1AgentTelemetrySummaryGetRequestOpts(requestParameters);
+    async agentTelemetryAgentTelemetrySummaryRaw(requestParameters: AgentTelemetryAgentTelemetrySummaryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AgentTelemetrySummary>> {
+        const requestOptions = await this.agentTelemetryAgentTelemetrySummaryRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AgentTelemetrySummaryFromJSON(jsonValue));
     }
 
     /**
-     * What the coding agent produced in a window, and what it cost (standalone).  Range-bounded like `/v1/usage/summary` (default last 30 days, hard-capped), so the aggregates stay served by the timestamp index. Returns the outcome totals (commits, pull requests, lines changed, active time), the behavioral counts already captured from the logs signal (tool calls and their mix, tool accept/reject, turns, API errors), the recorded spend over the same scope, and the derived per-unit measures: cost per commit / pull request / line, spend per active hour, acceptance rate, turns per session, and error rate. Each measure is null rather than an error when its denominator is zero. Filterable by user, API key, and `session_label`, so cost per outcome can be read for one agent session as well as for a whole window.  The spend side is every usage row in scope, not only the agent\'s: unfiltered, that includes traffic from clients that never reported telemetry, so a per-outcome measure read over a whole deployment answers \"what did this deployment spend per commit\", not \"what did the agent spend per commit\". Filter by user, API key, or session to divide only the matching spend.  Outcome metrics are stored exactly as the agent reported them, so a cumulative counter is converted to a window increment here, at read time, diffed per series generation: a re-exported total adds nothing, and a counter reset never reads as negative work. Master-key only.
+     * What the coding agent produced in a window, and what it cost (standalone).  Range-bounded like `/api/v1/usage/summary` (default last 30 days, hard-capped), so the aggregates stay served by the timestamp index. Returns the outcome totals (commits, pull requests, lines changed, active time), the behavioral counts already captured from the logs signal (tool calls and their mix, tool accept/reject, turns, API errors), the recorded spend over the same scope, and the derived per-unit measures: cost per commit / pull request / line, spend per active hour, acceptance rate, turns per session, and error rate. Each measure is null rather than an error when its denominator is zero. Filterable by user, API key, and `session_label`, so cost per outcome can be read for one agent session as well as for a whole window.  The spend side is every usage row in scope, not only the agent\'s: unfiltered, that includes traffic from clients that never reported telemetry, so a per-outcome measure read over a whole deployment answers \"what did this deployment spend per commit\", not \"what did the agent spend per commit\". Filter by user, API key, or session to divide only the matching spend.  Outcome metrics are stored exactly as the agent reported them, so a cumulative counter is converted to a window increment here, at read time, diffed per series generation: a re-exported total adds nothing, and a counter reset never reads as negative work. Master-key only.
      * Agent Telemetry Summary
      */
-    async agentTelemetrySummaryV1AgentTelemetrySummaryGet(requestParameters: AgentTelemetrySummaryV1AgentTelemetrySummaryGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AgentTelemetrySummary> {
-        const response = await this.agentTelemetrySummaryV1AgentTelemetrySummaryGetRaw(requestParameters, initOverrides);
+    async agentTelemetryAgentTelemetrySummary(requestParameters: AgentTelemetryAgentTelemetrySummaryRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AgentTelemetrySummary> {
+        const response = await this.agentTelemetryAgentTelemetrySummaryRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for countAgentTelemetryV1AgentTelemetryCountGet without sending the request
+     * Creates request options for agentTelemetryCountAgentTelemetry without sending the request
      */
-    async countAgentTelemetryV1AgentTelemetryCountGetRequestOpts(requestParameters: CountAgentTelemetryV1AgentTelemetryCountGetRequest): Promise<runtime.RequestOpts> {
+    async agentTelemetryCountAgentTelemetryRequestOpts(requestParameters: AgentTelemetryCountAgentTelemetryRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['startDate'] != null) {
@@ -270,7 +270,7 @@ export class AgentTelemetryApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/agent-telemetry/count`;
+        let urlPath = `/api/v1/agent-telemetry/count`;
 
         return {
             path: urlPath,
@@ -284,8 +284,8 @@ export class AgentTelemetryApi extends runtime.BaseAPI {
      * Total agent_telemetry rows matching the given filters (standalone).  The filter set mirrors the purge endpoint\'s, so this sizes exactly what a \"delete all N matching\" would remove. Behavioral and metric rows are counted together: neither this nor the purge distinguishes them. Master-key only.
      * Count Agent Telemetry
      */
-    async countAgentTelemetryV1AgentTelemetryCountGetRaw(requestParameters: CountAgentTelemetryV1AgentTelemetryCountGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AgentTelemetryCount>> {
-        const requestOptions = await this.countAgentTelemetryV1AgentTelemetryCountGetRequestOpts(requestParameters);
+    async agentTelemetryCountAgentTelemetryRaw(requestParameters: AgentTelemetryCountAgentTelemetryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AgentTelemetryCount>> {
+        const requestOptions = await this.agentTelemetryCountAgentTelemetryRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AgentTelemetryCountFromJSON(jsonValue));
@@ -295,19 +295,19 @@ export class AgentTelemetryApi extends runtime.BaseAPI {
      * Total agent_telemetry rows matching the given filters (standalone).  The filter set mirrors the purge endpoint\'s, so this sizes exactly what a \"delete all N matching\" would remove. Behavioral and metric rows are counted together: neither this nor the purge distinguishes them. Master-key only.
      * Count Agent Telemetry
      */
-    async countAgentTelemetryV1AgentTelemetryCountGet(requestParameters: CountAgentTelemetryV1AgentTelemetryCountGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AgentTelemetryCount> {
-        const response = await this.countAgentTelemetryV1AgentTelemetryCountGetRaw(requestParameters, initOverrides);
+    async agentTelemetryCountAgentTelemetry(requestParameters: AgentTelemetryCountAgentTelemetryRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AgentTelemetryCount> {
+        const response = await this.agentTelemetryCountAgentTelemetryRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for deleteAgentTelemetryRowsV1AgentTelemetryDelete without sending the request
+     * Creates request options for agentTelemetryDeleteAgentTelemetryRows without sending the request
      */
-    async deleteAgentTelemetryRowsV1AgentTelemetryDeleteRequestOpts(requestParameters: DeleteAgentTelemetryRowsV1AgentTelemetryDeleteRequest): Promise<runtime.RequestOpts> {
+    async agentTelemetryDeleteAgentTelemetryRowsRequestOpts(requestParameters: AgentTelemetryDeleteAgentTelemetryRowsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['agentTelemetryDeleteRequest'] == null) {
             throw new runtime.RequiredError(
                 'agentTelemetryDeleteRequest',
-                'Required parameter "agentTelemetryDeleteRequest" was null or undefined when calling deleteAgentTelemetryRowsV1AgentTelemetryDelete().'
+                'Required parameter "agentTelemetryDeleteRequest" was null or undefined when calling agentTelemetryDeleteAgentTelemetryRows().'
             );
         }
 
@@ -326,7 +326,7 @@ export class AgentTelemetryApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/agent-telemetry`;
+        let urlPath = `/api/v1/agent-telemetry`;
 
         return {
             path: urlPath,
@@ -341,8 +341,8 @@ export class AgentTelemetryApi extends runtime.BaseAPI {
      * Delete agent_telemetry rows by explicit ids or by filter (standalone).  Target either an explicit selection (`ids`) or everything matching a filter (`by_filter: true` plus optional `user_id` / `api_key_id` / `name` / date range). A selection matching zero rows succeeds with `deleted: 0`. Master-key only.
      * Delete Agent Telemetry Rows
      */
-    async deleteAgentTelemetryRowsV1AgentTelemetryDeleteRaw(requestParameters: DeleteAgentTelemetryRowsV1AgentTelemetryDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AgentTelemetryDeleteResult>> {
-        const requestOptions = await this.deleteAgentTelemetryRowsV1AgentTelemetryDeleteRequestOpts(requestParameters);
+    async agentTelemetryDeleteAgentTelemetryRowsRaw(requestParameters: AgentTelemetryDeleteAgentTelemetryRowsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AgentTelemetryDeleteResult>> {
+        const requestOptions = await this.agentTelemetryDeleteAgentTelemetryRowsRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AgentTelemetryDeleteResultFromJSON(jsonValue));
@@ -352,8 +352,8 @@ export class AgentTelemetryApi extends runtime.BaseAPI {
      * Delete agent_telemetry rows by explicit ids or by filter (standalone).  Target either an explicit selection (`ids`) or everything matching a filter (`by_filter: true` plus optional `user_id` / `api_key_id` / `name` / date range). A selection matching zero rows succeeds with `deleted: 0`. Master-key only.
      * Delete Agent Telemetry Rows
      */
-    async deleteAgentTelemetryRowsV1AgentTelemetryDelete(requestParameters: DeleteAgentTelemetryRowsV1AgentTelemetryDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AgentTelemetryDeleteResult> {
-        const response = await this.deleteAgentTelemetryRowsV1AgentTelemetryDeleteRaw(requestParameters, initOverrides);
+    async agentTelemetryDeleteAgentTelemetryRows(requestParameters: AgentTelemetryDeleteAgentTelemetryRowsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AgentTelemetryDeleteResult> {
+        const response = await this.agentTelemetryDeleteAgentTelemetryRowsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -362,24 +362,24 @@ export class AgentTelemetryApi extends runtime.BaseAPI {
 /**
  * @export
  */
-export const AgentTelemetrySeriesV1AgentTelemetrySeriesGetGroupByEnum = {
+export const AgentTelemetryAgentTelemetrySeriesGroupByEnum = {
     UserId: 'user_id',
     ApiKeyId: 'api_key_id'
 } as const;
-export type AgentTelemetrySeriesV1AgentTelemetrySeriesGetGroupByEnum = typeof AgentTelemetrySeriesV1AgentTelemetrySeriesGetGroupByEnum[keyof typeof AgentTelemetrySeriesV1AgentTelemetrySeriesGetGroupByEnum];
+export type AgentTelemetryAgentTelemetrySeriesGroupByEnum = typeof AgentTelemetryAgentTelemetrySeriesGroupByEnum[keyof typeof AgentTelemetryAgentTelemetrySeriesGroupByEnum];
 /**
  * @export
  */
-export const AgentTelemetrySeriesV1AgentTelemetrySeriesGetBucketEnum = {
+export const AgentTelemetryAgentTelemetrySeriesBucketEnum = {
     Hour: 'hour',
     Day: 'day'
 } as const;
-export type AgentTelemetrySeriesV1AgentTelemetrySeriesGetBucketEnum = typeof AgentTelemetrySeriesV1AgentTelemetrySeriesGetBucketEnum[keyof typeof AgentTelemetrySeriesV1AgentTelemetrySeriesGetBucketEnum];
+export type AgentTelemetryAgentTelemetrySeriesBucketEnum = typeof AgentTelemetryAgentTelemetrySeriesBucketEnum[keyof typeof AgentTelemetryAgentTelemetrySeriesBucketEnum];
 /**
  * @export
  */
-export const AgentTelemetrySummaryV1AgentTelemetrySummaryGetBucketEnum = {
+export const AgentTelemetryAgentTelemetrySummaryBucketEnum = {
     Hour: 'hour',
     Day: 'day'
 } as const;
-export type AgentTelemetrySummaryV1AgentTelemetrySummaryGetBucketEnum = typeof AgentTelemetrySummaryV1AgentTelemetrySummaryGetBucketEnum[keyof typeof AgentTelemetrySummaryV1AgentTelemetrySummaryGetBucketEnum];
+export type AgentTelemetryAgentTelemetrySummaryBucketEnum = typeof AgentTelemetryAgentTelemetrySummaryBucketEnum[keyof typeof AgentTelemetryAgentTelemetrySummaryBucketEnum];

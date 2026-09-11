@@ -44,6 +44,12 @@ export interface RankRequest {
      * @memberof RankRequest
      */
     userId: string;
+    /**
+     * Which workspace's routing memory these examples belong to. Omit for the deployment's default workspace. Only requests billing to that workspace vote over them.
+     * @type {string}
+     * @memberof RankRequest
+     */
+    workspaceId?: string | null;
 }
 
 /**
@@ -67,6 +73,7 @@ export function RankRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean
         
         'examples': ((json['examples'] as Array<any>).map(ScoredExampleFromJSON)),
         'userId': json['user_id'],
+        'workspaceId': json['workspace_id'] == null ? undefined : json['workspace_id'],
     };
 }
 
@@ -83,6 +90,7 @@ export function RankRequestToJSONTyped(value?: RankRequest | null, ignoreDiscrim
         
         'examples': ((value['examples'] as Array<any>).map(ScoredExampleToJSON)),
         'user_id': value['userId'],
+        'workspace_id': value['workspaceId'],
     };
 }
 

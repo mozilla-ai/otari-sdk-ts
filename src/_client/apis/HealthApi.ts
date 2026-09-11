@@ -20,15 +20,15 @@ import * as runtime from '../runtime.js';
 export class HealthApi extends runtime.BaseAPI {
 
     /**
-     * Creates request options for healthCheckHealthGet without sending the request
+     * Creates request options for healthHealthCheck without sending the request
      */
-    async healthCheckHealthGetRequestOpts(): Promise<runtime.RequestOpts> {
+    async healthHealthCheckRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
 
-        let urlPath = `/health`;
+        let urlPath = `/api/v1/health`;
 
         return {
             path: urlPath,
@@ -42,8 +42,8 @@ export class HealthApi extends runtime.BaseAPI {
      * General health check endpoint.  Returns basic health status. For infrastructure monitoring, use /health/readiness or /health/liveness instead.
      * Health Check
      */
-    async healthCheckHealthGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: string; }>> {
-        const requestOptions = await this.healthCheckHealthGetRequestOpts();
+    async healthHealthCheckRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: string | null; }>> {
+        const requestOptions = await this.healthHealthCheckRequestOpts();
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse<any>(response);
@@ -53,21 +53,21 @@ export class HealthApi extends runtime.BaseAPI {
      * General health check endpoint.  Returns basic health status. For infrastructure monitoring, use /health/readiness or /health/liveness instead.
      * Health Check
      */
-    async healthCheckHealthGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: string; }> {
-        const response = await this.healthCheckHealthGetRaw(initOverrides);
+    async healthHealthCheck(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: string | null; }> {
+        const response = await this.healthHealthCheckRaw(initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for healthLivenessHealthLivenessGet without sending the request
+     * Creates request options for healthHealthLiveness without sending the request
      */
-    async healthLivenessHealthLivenessGetRequestOpts(): Promise<runtime.RequestOpts> {
+    async healthHealthLivenessRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
 
-        let urlPath = `/health/liveness`;
+        let urlPath = `/api/v1/health/liveness`;
 
         return {
             path: urlPath,
@@ -81,8 +81,8 @@ export class HealthApi extends runtime.BaseAPI {
      * Liveness probe endpoint.  Simple check to verify the process is alive and responding. Used by Kubernetes/container orchestrators for liveness probes.  Returns:     Plain text \"I\'m alive!\" message
      * Health Liveness
      */
-    async healthLivenessHealthLivenessGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
-        const requestOptions = await this.healthLivenessHealthLivenessGetRequestOpts();
+    async healthHealthLivenessRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+        const requestOptions = await this.healthHealthLivenessRequestOpts();
         const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -96,21 +96,21 @@ export class HealthApi extends runtime.BaseAPI {
      * Liveness probe endpoint.  Simple check to verify the process is alive and responding. Used by Kubernetes/container orchestrators for liveness probes.  Returns:     Plain text \"I\'m alive!\" message
      * Health Liveness
      */
-    async healthLivenessHealthLivenessGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
-        const response = await this.healthLivenessHealthLivenessGetRaw(initOverrides);
+    async healthHealthLiveness(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
+        const response = await this.healthHealthLivenessRaw(initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for healthReadinessHealthReadinessGet without sending the request
+     * Creates request options for healthHealthReadiness without sending the request
      */
-    async healthReadinessHealthReadinessGetRequestOpts(): Promise<runtime.RequestOpts> {
+    async healthHealthReadinessRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
 
-        let urlPath = `/health/readiness`;
+        let urlPath = `/api/v1/health/readiness`;
 
         return {
             path: urlPath,
@@ -124,8 +124,8 @@ export class HealthApi extends runtime.BaseAPI {
      * Readiness probe endpoint.  Checks if the gateway is ready to serve requests by validating: - Database connectivity - Service availability  Used by Kubernetes/container orchestrators for readiness probes. Returns HTTP 503 if any dependency is unavailable.  Returns:     dict: Status object with health details  Raises:     HTTPException: 503 if service is not ready
      * Health Readiness
      */
-    async healthReadinessHealthReadinessGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: any; }>> {
-        const requestOptions = await this.healthReadinessHealthReadinessGetRequestOpts();
+    async healthHealthReadinessRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: any; }>> {
+        const requestOptions = await this.healthHealthReadinessRequestOpts();
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse<any>(response);
@@ -135,8 +135,8 @@ export class HealthApi extends runtime.BaseAPI {
      * Readiness probe endpoint.  Checks if the gateway is ready to serve requests by validating: - Database connectivity - Service availability  Used by Kubernetes/container orchestrators for readiness probes. Returns HTTP 503 if any dependency is unavailable.  Returns:     dict: Status object with health details  Raises:     HTTPException: 503 if service is not ready
      * Health Readiness
      */
-    async healthReadinessHealthReadinessGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: any; }> {
-        const response = await this.healthReadinessHealthReadinessGetRaw(initOverrides);
+    async healthHealthReadiness(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: any; }> {
+        const response = await this.healthHealthReadinessRaw(initOverrides);
         return await response.value();
     }
 

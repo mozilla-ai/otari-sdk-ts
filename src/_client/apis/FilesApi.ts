@@ -19,30 +19,31 @@ import {
     HTTPValidationErrorToJSON,
 } from '../models/HTTPValidationError.js';
 
-export interface CreateFileV1FilesPostRequest {
+export interface FilesCreateFileRequest {
     file: string;
     purpose?: string;
     user?: string | null;
 }
 
-export interface DeleteFileV1FilesFileIdDeleteRequest {
+export interface FilesDeleteFileRequest {
     fileId: string;
     user?: string | null;
 }
 
-export interface GetFileContentV1FilesFileIdContentGetRequest {
+export interface FilesGetFileRequest {
     fileId: string;
     user?: string | null;
 }
 
-export interface GetFileV1FilesFileIdGetRequest {
+export interface FilesGetFileContentRequest {
     fileId: string;
     user?: string | null;
 }
 
-export interface ListFilesV1FilesGetRequest {
+export interface FilesListFilesRequest {
     user?: string | null;
     purpose?: string | null;
+    workspaceId?: string | null;
 }
 
 /**
@@ -51,13 +52,13 @@ export interface ListFilesV1FilesGetRequest {
 export class FilesApi extends runtime.BaseAPI {
 
     /**
-     * Creates request options for createFileV1FilesPost without sending the request
+     * Creates request options for filesCreateFile without sending the request
      */
-    async createFileV1FilesPostRequestOpts(requestParameters: CreateFileV1FilesPostRequest): Promise<runtime.RequestOpts> {
+    async filesCreateFileRequestOpts(requestParameters: FilesCreateFileRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['file'] == null) {
             throw new runtime.RequiredError(
                 'file',
-                'Required parameter "file" was null or undefined when calling createFileV1FilesPost().'
+                'Required parameter "file" was null or undefined when calling filesCreateFile().'
             );
         }
 
@@ -100,7 +101,7 @@ export class FilesApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/files`;
+        let urlPath = `/api/v1/files`;
 
         return {
             path: urlPath,
@@ -115,8 +116,8 @@ export class FilesApi extends runtime.BaseAPI {
      * OpenAI-compatible file upload endpoint.
      * Create File
      */
-    async createFileV1FilesPostRaw(requestParameters: CreateFileV1FilesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: any; }>> {
-        const requestOptions = await this.createFileV1FilesPostRequestOpts(requestParameters);
+    async filesCreateFileRaw(requestParameters: FilesCreateFileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: any; }>> {
+        const requestOptions = await this.filesCreateFileRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse<any>(response);
@@ -126,19 +127,19 @@ export class FilesApi extends runtime.BaseAPI {
      * OpenAI-compatible file upload endpoint.
      * Create File
      */
-    async createFileV1FilesPost(requestParameters: CreateFileV1FilesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: any; }> {
-        const response = await this.createFileV1FilesPostRaw(requestParameters, initOverrides);
+    async filesCreateFile(requestParameters: FilesCreateFileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: any; }> {
+        const response = await this.filesCreateFileRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for deleteFileV1FilesFileIdDelete without sending the request
+     * Creates request options for filesDeleteFile without sending the request
      */
-    async deleteFileV1FilesFileIdDeleteRequestOpts(requestParameters: DeleteFileV1FilesFileIdDeleteRequest): Promise<runtime.RequestOpts> {
+    async filesDeleteFileRequestOpts(requestParameters: FilesDeleteFileRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fileId'] == null) {
             throw new runtime.RequiredError(
                 'fileId',
-                'Required parameter "fileId" was null or undefined when calling deleteFileV1FilesFileIdDelete().'
+                'Required parameter "fileId" was null or undefined when calling filesDeleteFile().'
             );
         }
 
@@ -159,7 +160,7 @@ export class FilesApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/files/{file_id}`;
+        let urlPath = `/api/v1/files/{file_id}`;
         urlPath = urlPath.replace('{file_id}', encodeURIComponent(String(requestParameters['fileId'])));
 
         return {
@@ -174,8 +175,8 @@ export class FilesApi extends runtime.BaseAPI {
      * Soft-delete a file\'s metadata and remove its bytes from the backend.
      * Delete File
      */
-    async deleteFileV1FilesFileIdDeleteRaw(requestParameters: DeleteFileV1FilesFileIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: any; }>> {
-        const requestOptions = await this.deleteFileV1FilesFileIdDeleteRequestOpts(requestParameters);
+    async filesDeleteFileRaw(requestParameters: FilesDeleteFileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: any; }>> {
+        const requestOptions = await this.filesDeleteFileRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse<any>(response);
@@ -185,19 +186,19 @@ export class FilesApi extends runtime.BaseAPI {
      * Soft-delete a file\'s metadata and remove its bytes from the backend.
      * Delete File
      */
-    async deleteFileV1FilesFileIdDelete(requestParameters: DeleteFileV1FilesFileIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: any; }> {
-        const response = await this.deleteFileV1FilesFileIdDeleteRaw(requestParameters, initOverrides);
+    async filesDeleteFile(requestParameters: FilesDeleteFileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: any; }> {
+        const response = await this.filesDeleteFileRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for getFileContentV1FilesFileIdContentGet without sending the request
+     * Creates request options for filesGetFile without sending the request
      */
-    async getFileContentV1FilesFileIdContentGetRequestOpts(requestParameters: GetFileContentV1FilesFileIdContentGetRequest): Promise<runtime.RequestOpts> {
+    async filesGetFileRequestOpts(requestParameters: FilesGetFileRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['fileId'] == null) {
             throw new runtime.RequiredError(
                 'fileId',
-                'Required parameter "fileId" was null or undefined when calling getFileContentV1FilesFileIdContentGet().'
+                'Required parameter "fileId" was null or undefined when calling filesGetFile().'
             );
         }
 
@@ -218,70 +219,7 @@ export class FilesApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/files/{file_id}/content`;
-        urlPath = urlPath.replace('{file_id}', encodeURIComponent(String(requestParameters['fileId'])));
-
-        return {
-            path: urlPath,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        };
-    }
-
-    /**
-     * Download the raw bytes of a file, streamed rather than buffered whole.
-     * Get File Content
-     */
-    async getFileContentV1FilesFileIdContentGetRaw(requestParameters: GetFileContentV1FilesFileIdContentGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        const requestOptions = await this.getFileContentV1FilesFileIdContentGetRequestOpts(requestParameters);
-        const response = await this.request(requestOptions, initOverrides);
-
-        if (this.isJsonMime(response.headers.get('content-type'))) {
-            return new runtime.JSONApiResponse<any>(response);
-        } else {
-            return new runtime.TextApiResponse(response) as any;
-        }
-    }
-
-    /**
-     * Download the raw bytes of a file, streamed rather than buffered whole.
-     * Get File Content
-     */
-    async getFileContentV1FilesFileIdContentGet(requestParameters: GetFileContentV1FilesFileIdContentGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
-        const response = await this.getFileContentV1FilesFileIdContentGetRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Creates request options for getFileV1FilesFileIdGet without sending the request
-     */
-    async getFileV1FilesFileIdGetRequestOpts(requestParameters: GetFileV1FilesFileIdGetRequest): Promise<runtime.RequestOpts> {
-        if (requestParameters['fileId'] == null) {
-            throw new runtime.RequiredError(
-                'fileId',
-                'Required parameter "fileId" was null or undefined when calling getFileV1FilesFileIdGet().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters['user'] != null) {
-            queryParameters['user'] = requestParameters['user'];
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
-        }
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
-        }
-
-
-        let urlPath = `/v1/files/{file_id}`;
+        let urlPath = `/api/v1/files/{file_id}`;
         urlPath = urlPath.replace('{file_id}', encodeURIComponent(String(requestParameters['fileId'])));
 
         return {
@@ -296,8 +234,8 @@ export class FilesApi extends runtime.BaseAPI {
      * Retrieve metadata for a single file.
      * Get File
      */
-    async getFileV1FilesFileIdGetRaw(requestParameters: GetFileV1FilesFileIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: any; }>> {
-        const requestOptions = await this.getFileV1FilesFileIdGetRequestOpts(requestParameters);
+    async filesGetFileRaw(requestParameters: FilesGetFileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: any; }>> {
+        const requestOptions = await this.filesGetFileRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse<any>(response);
@@ -307,15 +245,74 @@ export class FilesApi extends runtime.BaseAPI {
      * Retrieve metadata for a single file.
      * Get File
      */
-    async getFileV1FilesFileIdGet(requestParameters: GetFileV1FilesFileIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: any; }> {
-        const response = await this.getFileV1FilesFileIdGetRaw(requestParameters, initOverrides);
+    async filesGetFile(requestParameters: FilesGetFileRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: any; }> {
+        const response = await this.filesGetFileRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for listFilesV1FilesGet without sending the request
+     * Creates request options for filesGetFileContent without sending the request
      */
-    async listFilesV1FilesGetRequestOpts(requestParameters: ListFilesV1FilesGetRequest): Promise<runtime.RequestOpts> {
+    async filesGetFileContentRequestOpts(requestParameters: FilesGetFileContentRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['fileId'] == null) {
+            throw new runtime.RequiredError(
+                'fileId',
+                'Required parameter "fileId" was null or undefined when calling filesGetFileContent().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['user'] != null) {
+            queryParameters['user'] = requestParameters['user'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/api/v1/files/{file_id}/content`;
+        urlPath = urlPath.replace('{file_id}', encodeURIComponent(String(requestParameters['fileId'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Download the raw bytes of a file, streamed rather than buffered whole.
+     * Get File Content
+     */
+    async filesGetFileContentRaw(requestParameters: FilesGetFileContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>> {
+        const requestOptions = await this.filesGetFileContentRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.BlobApiResponse(response);
+    }
+
+    /**
+     * Download the raw bytes of a file, streamed rather than buffered whole.
+     * Get File Content
+     */
+    async filesGetFileContent(requestParameters: FilesGetFileContentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob> {
+        const response = await this.filesGetFileContentRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for filesListFiles without sending the request
+     */
+    async filesListFilesRequestOpts(requestParameters: FilesListFilesRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['user'] != null) {
@@ -326,6 +323,10 @@ export class FilesApi extends runtime.BaseAPI {
             queryParameters['purpose'] = requestParameters['purpose'];
         }
 
+        if (requestParameters['workspaceId'] != null) {
+            queryParameters['workspace_id'] = requestParameters['workspaceId'];
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -337,7 +338,7 @@ export class FilesApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/files`;
+        let urlPath = `/api/v1/files`;
 
         return {
             path: urlPath,
@@ -348,22 +349,22 @@ export class FilesApi extends runtime.BaseAPI {
     }
 
     /**
-     * List the authenticated user\'s uploaded files.
+     * List the authenticated user\'s uploaded files in the request\'s workspace.  ``workspace_id`` narrows a master-key listing to one workspace; a keyed request is already confined to its key\'s own and cannot widen or move it.
      * List Files
      */
-    async listFilesV1FilesGetRaw(requestParameters: ListFilesV1FilesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: any; }>> {
-        const requestOptions = await this.listFilesV1FilesGetRequestOpts(requestParameters);
+    async filesListFilesRaw(requestParameters: FilesListFilesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: any; }>> {
+        const requestOptions = await this.filesListFilesRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse<any>(response);
     }
 
     /**
-     * List the authenticated user\'s uploaded files.
+     * List the authenticated user\'s uploaded files in the request\'s workspace.  ``workspace_id`` narrows a master-key listing to one workspace; a keyed request is already confined to its key\'s own and cannot widen or move it.
      * List Files
      */
-    async listFilesV1FilesGet(requestParameters: ListFilesV1FilesGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: any; }> {
-        const response = await this.listFilesV1FilesGetRaw(requestParameters, initOverrides);
+    async filesListFiles(requestParameters: FilesListFilesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: any; }> {
+        const response = await this.filesListFilesRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

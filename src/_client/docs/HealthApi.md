@@ -4,15 +4,15 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**healthCheckHealthGet**](HealthApi.md#healthcheckhealthget) | **GET** /health | Health Check |
-| [**healthLivenessHealthLivenessGet**](HealthApi.md#healthlivenesshealthlivenessget) | **GET** /health/liveness | Health Liveness |
-| [**healthReadinessHealthReadinessGet**](HealthApi.md#healthreadinesshealthreadinessget) | **GET** /health/readiness | Health Readiness |
+| [**healthHealthCheck**](HealthApi.md#healthhealthcheck) | **GET** /api/v1/health | Health Check |
+| [**healthHealthLiveness**](HealthApi.md#healthhealthliveness) | **GET** /api/v1/health/liveness | Health Liveness |
+| [**healthHealthReadiness**](HealthApi.md#healthhealthreadiness) | **GET** /api/v1/health/readiness | Health Readiness |
 
 
 
-## healthCheckHealthGet
+## healthHealthCheck
 
-> { [key: string]: string; } healthCheckHealthGet()
+> { [key: string]: string | null; } healthHealthCheck()
 
 Health Check
 
@@ -25,14 +25,14 @@ import {
   Configuration,
   HealthApi,
 } from '';
-import type { HealthCheckHealthGetRequest } from '';
+import type { HealthHealthCheckRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
   const api = new HealthApi();
 
   try {
-    const data = await api.healthCheckHealthGet();
+    const data = await api.healthHealthCheck();
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -49,7 +49,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**{ [key: string]: string; }**
+**{ [key: string]: string | null; }**
 
 ### Authorization
 
@@ -69,9 +69,9 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## healthLivenessHealthLivenessGet
+## healthHealthLiveness
 
-> string healthLivenessHealthLivenessGet()
+> string healthHealthLiveness()
 
 Health Liveness
 
@@ -84,14 +84,14 @@ import {
   Configuration,
   HealthApi,
 } from '';
-import type { HealthLivenessHealthLivenessGetRequest } from '';
+import type { HealthHealthLivenessRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
   const api = new HealthApi();
 
   try {
-    const data = await api.healthLivenessHealthLivenessGet();
+    const data = await api.healthHealthLiveness();
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -128,9 +128,9 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## healthReadinessHealthReadinessGet
+## healthHealthReadiness
 
-> { [key: string]: any; } healthReadinessHealthReadinessGet()
+> { [key: string]: any; } healthHealthReadiness()
 
 Health Readiness
 
@@ -143,14 +143,14 @@ import {
   Configuration,
   HealthApi,
 } from '';
-import type { HealthReadinessHealthReadinessGetRequest } from '';
+import type { HealthHealthReadinessRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
   const api = new HealthApi();
 
   try {
-    const data = await api.healthReadinessHealthReadinessGet();
+    const data = await api.healthHealthReadiness();
     console.log(data);
   } catch (error) {
     console.error(error);

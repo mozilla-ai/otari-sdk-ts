@@ -57,6 +57,18 @@ export interface UserResponse {
     createdAt: string;
     /**
      * 
+     * @type {number}
+     * @memberof UserResponse
+     */
+    currentRequests: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserResponse
+     */
+    currentTokens: number;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof UserResponse
      */
@@ -73,6 +85,18 @@ export interface UserResponse {
      * @memberof UserResponse
      */
     reserved: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserResponse
+     */
+    reservedRequests: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserResponse
+     */
+    reservedTokens: number;
     /**
      * 
      * @type {number}
@@ -103,9 +127,13 @@ export function instanceOfUserResponse(value: object): value is UserResponse {
     if (!('budgetId' in value) || value['budgetId'] === undefined) return false;
     if (!('budgetStartedAt' in value) || value['budgetStartedAt'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('currentRequests' in value) || value['currentRequests'] === undefined) return false;
+    if (!('currentTokens' in value) || value['currentTokens'] === undefined) return false;
     if (!('metadata' in value) || value['metadata'] === undefined) return false;
     if (!('nextBudgetResetAt' in value) || value['nextBudgetResetAt'] === undefined) return false;
     if (!('reserved' in value) || value['reserved'] === undefined) return false;
+    if (!('reservedRequests' in value) || value['reservedRequests'] === undefined) return false;
+    if (!('reservedTokens' in value) || value['reservedTokens'] === undefined) return false;
     if (!('spend' in value) || value['spend'] === undefined) return false;
     if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
     if (!('userId' in value) || value['userId'] === undefined) return false;
@@ -128,9 +156,13 @@ export function UserResponseFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'budgetId': json['budget_id'],
         'budgetStartedAt': json['budget_started_at'],
         'createdAt': json['created_at'],
+        'currentRequests': json['current_requests'],
+        'currentTokens': json['current_tokens'],
         'metadata': json['metadata'],
         'nextBudgetResetAt': json['next_budget_reset_at'],
         'reserved': json['reserved'],
+        'reservedRequests': json['reserved_requests'],
+        'reservedTokens': json['reserved_tokens'],
         'spend': json['spend'],
         'updatedAt': json['updated_at'],
         'userId': json['user_id'],
@@ -154,9 +186,13 @@ export function UserResponseToJSONTyped(value?: UserResponse | null, ignoreDiscr
         'budget_id': value['budgetId'],
         'budget_started_at': value['budgetStartedAt'],
         'created_at': value['createdAt'],
+        'current_requests': value['currentRequests'],
+        'current_tokens': value['currentTokens'],
         'metadata': value['metadata'],
         'next_budget_reset_at': value['nextBudgetResetAt'],
         'reserved': value['reserved'],
+        'reserved_requests': value['reservedRequests'],
+        'reserved_tokens': value['reservedTokens'],
         'spend': value['spend'],
         'updated_at': value['updatedAt'],
         'user_id': value['userId'],

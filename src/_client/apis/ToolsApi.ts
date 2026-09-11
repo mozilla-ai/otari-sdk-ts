@@ -25,9 +25,9 @@ import {
 export class ToolsApi extends runtime.BaseAPI {
 
     /**
-     * Creates request options for listToolsV1ToolsGet without sending the request
+     * Creates request options for toolsListTools without sending the request
      */
-    async listToolsV1ToolsGetRequestOpts(): Promise<runtime.RequestOpts> {
+    async toolsListToolsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -41,7 +41,7 @@ export class ToolsApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/tools`;
+        let urlPath = `/api/v1/tools`;
 
         return {
             path: urlPath,
@@ -55,8 +55,8 @@ export class ToolsApi extends runtime.BaseAPI {
      * List the tools Otari runs itself, with the declaration forms it accepts.  Every other `tools[]` entry, including provider-native keywords not listed here, is forwarded to the upstream provider untouched.
      * List Tools
      */
-    async listToolsV1ToolsGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ToolsResponse>> {
-        const requestOptions = await this.listToolsV1ToolsGetRequestOpts();
+    async toolsListToolsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ToolsResponse>> {
+        const requestOptions = await this.toolsListToolsRequestOpts();
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ToolsResponseFromJSON(jsonValue));
@@ -66,8 +66,8 @@ export class ToolsApi extends runtime.BaseAPI {
      * List the tools Otari runs itself, with the declaration forms it accepts.  Every other `tools[]` entry, including provider-native keywords not listed here, is forwarded to the upstream provider untouched.
      * List Tools
      */
-    async listToolsV1ToolsGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ToolsResponse> {
-        const response = await this.listToolsV1ToolsGetRaw(initOverrides);
+    async toolsListTools(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ToolsResponse> {
+        const response = await this.toolsListToolsRaw(initOverrides);
         return await response.value();
     }
 
