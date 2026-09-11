@@ -4,20 +4,20 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**agentTelemetrySeriesV1AgentTelemetrySeriesGet**](AgentTelemetryApi.md#agenttelemetryseriesv1agenttelemetryseriesget) | **GET** /v1/agent-telemetry/series | Agent Telemetry Series |
-| [**agentTelemetrySummaryV1AgentTelemetrySummaryGet**](AgentTelemetryApi.md#agenttelemetrysummaryv1agenttelemetrysummaryget) | **GET** /v1/agent-telemetry/summary | Agent Telemetry Summary |
-| [**countAgentTelemetryV1AgentTelemetryCountGet**](AgentTelemetryApi.md#countagenttelemetryv1agenttelemetrycountget) | **GET** /v1/agent-telemetry/count | Count Agent Telemetry |
-| [**deleteAgentTelemetryRowsV1AgentTelemetryDelete**](AgentTelemetryApi.md#deleteagenttelemetryrowsv1agenttelemetrydelete) | **DELETE** /v1/agent-telemetry | Delete Agent Telemetry Rows |
+| [**agentTelemetryAgentTelemetrySeries**](AgentTelemetryApi.md#agenttelemetryagenttelemetryseries) | **GET** /api/v1/agent-telemetry/series | Agent Telemetry Series |
+| [**agentTelemetryAgentTelemetrySummary**](AgentTelemetryApi.md#agenttelemetryagenttelemetrysummary) | **GET** /api/v1/agent-telemetry/summary | Agent Telemetry Summary |
+| [**agentTelemetryCountAgentTelemetry**](AgentTelemetryApi.md#agenttelemetrycountagenttelemetry) | **GET** /api/v1/agent-telemetry/count | Count Agent Telemetry |
+| [**agentTelemetryDeleteAgentTelemetryRows**](AgentTelemetryApi.md#agenttelemetrydeleteagenttelemetryrows) | **DELETE** /api/v1/agent-telemetry | Delete Agent Telemetry Rows |
 
 
 
-## agentTelemetrySeriesV1AgentTelemetrySeriesGet
+## agentTelemetryAgentTelemetrySeries
 
-> AgentTelemetryGroupedSeries agentTelemetrySeriesV1AgentTelemetrySeriesGet(groupBy, startDate, endDate, userId, apiKeyId, name, bucket)
+> AgentTelemetryGroupedSeries agentTelemetryAgentTelemetrySeries(groupBy, startDate, endDate, userId, apiKeyId, name, bucket)
 
 Agent Telemetry Series
 
-Row volume over time, split by user or API key (standalone).  Mirrors &#x60;/v1/usage/series&#x60;: same window bounds and bucket-grid cap, the top groups as their own series with the remainder folded into a reconciling &#x60;&#x60;other&#x60;&#x60;, and sparse points (populated cells only). Counts rows, not spend, so it charts telemetry volume rather than cost. Master-key only.
+Row volume over time, split by user or API key (standalone).  Mirrors &#x60;/api/v1/usage/series&#x60;: same window bounds and bucket-grid cap, the top groups as their own series with the remainder folded into a reconciling &#x60;&#x60;other&#x60;&#x60;, and sparse points (populated cells only). Counts rows, not spend, so it charts telemetry volume rather than cost. Master-key only.
 
 ### Example
 
@@ -26,7 +26,7 @@ import {
   Configuration,
   AgentTelemetryApi,
 } from '';
-import type { AgentTelemetrySeriesV1AgentTelemetrySeriesGetRequest } from '';
+import type { AgentTelemetryAgentTelemetrySeriesRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -53,10 +53,10 @@ async function example() {
     name: name_example,
     // 'hour' | 'day' | Time-series granularity: \'hour\' or \'day\' (optional)
     bucket: bucket_example,
-  } satisfies AgentTelemetrySeriesV1AgentTelemetrySeriesGetRequest;
+  } satisfies AgentTelemetryAgentTelemetrySeriesRequest;
 
   try {
-    const data = await api.agentTelemetrySeriesV1AgentTelemetrySeriesGet(body);
+    const data = await api.agentTelemetryAgentTelemetrySeries(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -103,13 +103,13 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## agentTelemetrySummaryV1AgentTelemetrySummaryGet
+## agentTelemetryAgentTelemetrySummary
 
-> AgentTelemetrySummary agentTelemetrySummaryV1AgentTelemetrySummaryGet(startDate, endDate, userId, apiKeyId, sessionLabel, bucket)
+> AgentTelemetrySummary agentTelemetryAgentTelemetrySummary(startDate, endDate, userId, apiKeyId, sessionLabel, bucket)
 
 Agent Telemetry Summary
 
-What the coding agent produced in a window, and what it cost (standalone).  Range-bounded like &#x60;/v1/usage/summary&#x60; (default last 30 days, hard-capped), so the aggregates stay served by the timestamp index. Returns the outcome totals (commits, pull requests, lines changed, active time), the behavioral counts already captured from the logs signal (tool calls and their mix, tool accept/reject, turns, API errors), the recorded spend over the same scope, and the derived per-unit measures: cost per commit / pull request / line, spend per active hour, acceptance rate, turns per session, and error rate. Each measure is null rather than an error when its denominator is zero. Filterable by user, API key, and &#x60;session_label&#x60;, so cost per outcome can be read for one agent session as well as for a whole window.  The spend side is every usage row in scope, not only the agent\&#39;s: unfiltered, that includes traffic from clients that never reported telemetry, so a per-outcome measure read over a whole deployment answers \&quot;what did this deployment spend per commit\&quot;, not \&quot;what did the agent spend per commit\&quot;. Filter by user, API key, or session to divide only the matching spend.  Outcome metrics are stored exactly as the agent reported them, so a cumulative counter is converted to a window increment here, at read time, diffed per series generation: a re-exported total adds nothing, and a counter reset never reads as negative work. Master-key only.
+What the coding agent produced in a window, and what it cost (standalone).  Range-bounded like &#x60;/api/v1/usage/summary&#x60; (default last 30 days, hard-capped), so the aggregates stay served by the timestamp index. Returns the outcome totals (commits, pull requests, lines changed, active time), the behavioral counts already captured from the logs signal (tool calls and their mix, tool accept/reject, turns, API errors), the recorded spend over the same scope, and the derived per-unit measures: cost per commit / pull request / line, spend per active hour, acceptance rate, turns per session, and error rate. Each measure is null rather than an error when its denominator is zero. Filterable by user, API key, and &#x60;session_label&#x60;, so cost per outcome can be read for one agent session as well as for a whole window.  The spend side is every usage row in scope, not only the agent\&#39;s: unfiltered, that includes traffic from clients that never reported telemetry, so a per-outcome measure read over a whole deployment answers \&quot;what did this deployment spend per commit\&quot;, not \&quot;what did the agent spend per commit\&quot;. Filter by user, API key, or session to divide only the matching spend.  Outcome metrics are stored exactly as the agent reported them, so a cumulative counter is converted to a window increment here, at read time, diffed per series generation: a re-exported total adds nothing, and a counter reset never reads as negative work. Master-key only.
 
 ### Example
 
@@ -118,7 +118,7 @@ import {
   Configuration,
   AgentTelemetryApi,
 } from '';
-import type { AgentTelemetrySummaryV1AgentTelemetrySummaryGetRequest } from '';
+import type { AgentTelemetryAgentTelemetrySummaryRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -139,14 +139,14 @@ async function example() {
     userId: ...,
     // Array<string> | Filter to one or more API key ids; repeatable (api_key_id=a&api_key_id=b). Several values match any of them. At most 50 per call. (optional)
     apiKeyId: ...,
-    // string | Filter to a single agent session. Matches agent_telemetry.session_label and, on the usage side of the join, the usage_logs.source_label that /v1/usage/summary filters on (optional)
+    // string | Filter to a single agent session. Matches agent_telemetry.session_label and, on the usage side of the join, the usage_logs.source_label that /api/v1/usage/summary filters on (optional)
     sessionLabel: sessionLabel_example,
     // 'hour' | 'day' | Time-series granularity: \'hour\' or \'day\' (optional)
     bucket: bucket_example,
-  } satisfies AgentTelemetrySummaryV1AgentTelemetrySummaryGetRequest;
+  } satisfies AgentTelemetryAgentTelemetrySummaryRequest;
 
   try {
-    const data = await api.agentTelemetrySummaryV1AgentTelemetrySummaryGet(body);
+    const data = await api.agentTelemetryAgentTelemetrySummary(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -166,7 +166,7 @@ example().catch(console.error);
 | **endDate** | `Date` | Return rows with timestamp &lt; end_date (ISO 8601 or Unix epoch seconds) | [Optional] [Defaults to `undefined`] |
 | **userId** | `Array<string>` | Filter to one or more users; repeatable (user_id&#x3D;a&amp;user_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **apiKeyId** | `Array<string>` | Filter to one or more API key ids; repeatable (api_key_id&#x3D;a&amp;api_key_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
-| **sessionLabel** | `string` | Filter to a single agent session. Matches agent_telemetry.session_label and, on the usage side of the join, the usage_logs.source_label that /v1/usage/summary filters on | [Optional] [Defaults to `undefined`] |
+| **sessionLabel** | `string` | Filter to a single agent session. Matches agent_telemetry.session_label and, on the usage side of the join, the usage_logs.source_label that /api/v1/usage/summary filters on | [Optional] [Defaults to `undefined`] |
 | **bucket** | `hour`, `day` | Time-series granularity: \&#39;hour\&#39; or \&#39;day\&#39; | [Optional] [Defaults to `&#39;day&#39;`] [Enum: hour, day] |
 
 ### Return type
@@ -192,9 +192,9 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## countAgentTelemetryV1AgentTelemetryCountGet
+## agentTelemetryCountAgentTelemetry
 
-> AgentTelemetryCount countAgentTelemetryV1AgentTelemetryCountGet(startDate, endDate, userId, apiKeyId, name)
+> AgentTelemetryCount agentTelemetryCountAgentTelemetry(startDate, endDate, userId, apiKeyId, name)
 
 Count Agent Telemetry
 
@@ -207,7 +207,7 @@ import {
   Configuration,
   AgentTelemetryApi,
 } from '';
-import type { CountAgentTelemetryV1AgentTelemetryCountGetRequest } from '';
+import type { AgentTelemetryCountAgentTelemetryRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -230,10 +230,10 @@ async function example() {
     apiKeyId: ...,
     // string | Filter to a single event type or metric name (e.g. \'tool_result\', \'claude_code.commit.count\') (optional)
     name: name_example,
-  } satisfies CountAgentTelemetryV1AgentTelemetryCountGetRequest;
+  } satisfies AgentTelemetryCountAgentTelemetryRequest;
 
   try {
-    const data = await api.countAgentTelemetryV1AgentTelemetryCountGet(body);
+    const data = await api.agentTelemetryCountAgentTelemetry(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -278,9 +278,9 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## deleteAgentTelemetryRowsV1AgentTelemetryDelete
+## agentTelemetryDeleteAgentTelemetryRows
 
-> AgentTelemetryDeleteResult deleteAgentTelemetryRowsV1AgentTelemetryDelete(agentTelemetryDeleteRequest)
+> AgentTelemetryDeleteResult agentTelemetryDeleteAgentTelemetryRows(agentTelemetryDeleteRequest)
 
 Delete Agent Telemetry Rows
 
@@ -293,7 +293,7 @@ import {
   Configuration,
   AgentTelemetryApi,
 } from '';
-import type { DeleteAgentTelemetryRowsV1AgentTelemetryDeleteRequest } from '';
+import type { AgentTelemetryDeleteAgentTelemetryRowsRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -308,10 +308,10 @@ async function example() {
   const body = {
     // AgentTelemetryDeleteRequest
     agentTelemetryDeleteRequest: ...,
-  } satisfies DeleteAgentTelemetryRowsV1AgentTelemetryDeleteRequest;
+  } satisfies AgentTelemetryDeleteAgentTelemetryRowsRequest;
 
   try {
-    const data = await api.deleteAgentTelemetryRowsV1AgentTelemetryDelete(body);
+    const data = await api.agentTelemetryDeleteAgentTelemetryRows(body);
     console.log(data);
   } catch (error) {
     console.error(error);

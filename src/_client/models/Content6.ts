@@ -13,13 +13,34 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { MRBetaTextBlock } from './MRBetaTextBlock.js';
+import type { MRBetaCodeExecutionToolResultError } from './MRBetaCodeExecutionToolResultError.js';
 import {
-    MRBetaTextBlockFromJSON,
-    MRBetaTextBlockFromJSONTyped,
-    MRBetaTextBlockToJSON,
-    MRBetaTextBlockToJSONTyped,
-} from './MRBetaTextBlock.js';
+    MRBetaCodeExecutionToolResultErrorFromJSON,
+    MRBetaCodeExecutionToolResultErrorFromJSONTyped,
+    MRBetaCodeExecutionToolResultErrorToJSON,
+    MRBetaCodeExecutionToolResultErrorToJSONTyped,
+} from './MRBetaCodeExecutionToolResultError.js';
+import type { MRBetaCodeExecutionOutputBlock } from './MRBetaCodeExecutionOutputBlock.js';
+import {
+    MRBetaCodeExecutionOutputBlockFromJSON,
+    MRBetaCodeExecutionOutputBlockFromJSONTyped,
+    MRBetaCodeExecutionOutputBlockToJSON,
+    MRBetaCodeExecutionOutputBlockToJSONTyped,
+} from './MRBetaCodeExecutionOutputBlock.js';
+import type { MRBetaEncryptedCodeExecutionResultBlock } from './MRBetaEncryptedCodeExecutionResultBlock.js';
+import {
+    MRBetaEncryptedCodeExecutionResultBlockFromJSON,
+    MRBetaEncryptedCodeExecutionResultBlockFromJSONTyped,
+    MRBetaEncryptedCodeExecutionResultBlockToJSON,
+    MRBetaEncryptedCodeExecutionResultBlockToJSONTyped,
+} from './MRBetaEncryptedCodeExecutionResultBlock.js';
+import type { MRBetaCodeExecutionResultBlock } from './MRBetaCodeExecutionResultBlock.js';
+import {
+    MRBetaCodeExecutionResultBlockFromJSON,
+    MRBetaCodeExecutionResultBlockFromJSONTyped,
+    MRBetaCodeExecutionResultBlockToJSON,
+    MRBetaCodeExecutionResultBlockToJSONTyped,
+} from './MRBetaCodeExecutionResultBlock.js';
 
 /**
  * 
@@ -27,12 +48,84 @@ import {
  * @interface Content6
  */
 export interface Content6 {
+    /**
+     * 
+     * @type {Content6ErrorCodeEnum}
+     * @memberof Content6
+     */
+    errorCode: Content6ErrorCodeEnum;
+    /**
+     * 
+     * @type {Content6TypeEnum}
+     * @memberof Content6
+     */
+    type: Content6TypeEnum;
+    /**
+     * 
+     * @type {Array<MRBetaCodeExecutionOutputBlock>}
+     * @memberof Content6
+     */
+    content: Array<MRBetaCodeExecutionOutputBlock>;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content6
+     */
+    returnCode: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Content6
+     */
+    stderr: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Content6
+     */
+    stdout: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Content6
+     */
+    encryptedStdout: string;
 }
+
+
+/**
+ * @export
+ */
+export const Content6ErrorCodeEnum = {
+    InvalidToolInput: 'invalid_tool_input',
+    Unavailable: 'unavailable',
+    TooManyRequests: 'too_many_requests',
+    ExecutionTimeExceeded: 'execution_time_exceeded'
+} as const;
+export type Content6ErrorCodeEnum = typeof Content6ErrorCodeEnum[keyof typeof Content6ErrorCodeEnum];
+
+/**
+ * @export
+ */
+export const Content6TypeEnum = {
+    CodeExecutionToolResultError: 'code_execution_tool_result_error',
+    CodeExecutionResult: 'code_execution_result',
+    EncryptedCodeExecutionResult: 'encrypted_code_execution_result'
+} as const;
+export type Content6TypeEnum = typeof Content6TypeEnum[keyof typeof Content6TypeEnum];
+
 
 /**
  * Check if a given object implements the Content6 interface.
  */
 export function instanceOfContent6(value: object): value is Content6 {
+    if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('content' in value) || value['content'] === undefined) return false;
+    if (!('returnCode' in value) || value['returnCode'] === undefined) return false;
+    if (!('stderr' in value) || value['stderr'] === undefined) return false;
+    if (!('stdout' in value) || value['stdout'] === undefined) return false;
+    if (!('encryptedStdout' in value) || value['encryptedStdout'] === undefined) return false;
     return true;
 }
 
@@ -41,7 +134,19 @@ export function Content6FromJSON(json: any): Content6 {
 }
 
 export function Content6FromJSONTyped(json: any, ignoreDiscriminator: boolean): Content6 {
-    return json;
+    if (json == null) {
+        return json;
+    }
+    return {
+        
+        'errorCode': json['error_code'],
+        'type': json['type'],
+        'content': ((json['content'] as Array<any>).map(MRBetaCodeExecutionOutputBlockFromJSON)),
+        'returnCode': json['return_code'],
+        'stderr': json['stderr'],
+        'stdout': json['stdout'],
+        'encryptedStdout': json['encrypted_stdout'],
+    };
 }
 
 export function Content6ToJSON(json: any): Content6 {
@@ -49,6 +154,19 @@ export function Content6ToJSON(json: any): Content6 {
 }
 
 export function Content6ToJSONTyped(value?: Content6 | null, ignoreDiscriminator: boolean = false): any {
-    return value;
+    if (value == null) {
+        return value;
+    }
+
+    return {
+        
+        'error_code': value['errorCode'],
+        'type': value['type'],
+        'content': ((value['content'] as Array<any>).map(MRBetaCodeExecutionOutputBlockToJSON)),
+        'return_code': value['returnCode'],
+        'stderr': value['stderr'],
+        'stdout': value['stdout'],
+        'encrypted_stdout': value['encryptedStdout'],
+    };
 }
 

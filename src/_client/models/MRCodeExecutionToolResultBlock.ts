@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { Content11 } from './Content11.js';
+import type { Content12 } from './Content12.js';
 import {
-    Content11FromJSON,
-    Content11FromJSONTyped,
-    Content11ToJSON,
-    Content11ToJSONTyped,
-} from './Content11.js';
+    Content12FromJSON,
+    Content12FromJSONTyped,
+    Content12ToJSON,
+    Content12ToJSONTyped,
+} from './Content12.js';
 
 /**
  * 
@@ -30,10 +30,10 @@ export interface MRCodeExecutionToolResultBlock {
     [key: string]: any | any;
     /**
      * 
-     * @type {Content11}
+     * @type {Content12}
      * @memberof MRCodeExecutionToolResultBlock
      */
-    content: Content11;
+    content: Content12;
     /**
      * 
      * @type {string}
@@ -79,7 +79,7 @@ export function MRCodeExecutionToolResultBlockFromJSONTyped(json: any, ignoreDis
     return {
         
             ...json,
-        'content': Content11FromJSON(json['content']),
+        'content': Content12FromJSON(json['content']),
         'toolUseId': json['tool_use_id'],
         'type': json['type'],
     };
@@ -97,7 +97,7 @@ export function MRCodeExecutionToolResultBlockToJSONTyped(value?: MRCodeExecutio
     return {
         
             ...value,
-        'content': Content11ToJSON(value['content']),
+        'content': Content12ToJSON(value['content']),
         'tool_use_id': value['toolUseId'],
         'type': value['type'],
     };

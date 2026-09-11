@@ -29,12 +29,12 @@ import {
     SearchResponseToJSON,
 } from '../models/SearchResponse.js';
 
-export interface CreateSearchForToolV1SearchSearchToolNamePostRequest {
-    searchToolName: string;
+export interface SearchCreateSearchRequest {
     searchRequest: SearchRequest;
 }
 
-export interface CreateSearchV1SearchPostRequest {
+export interface SearchCreateSearchForToolRequest {
+    searchToolName: string;
     searchRequest: SearchRequest;
 }
 
@@ -44,20 +44,13 @@ export interface CreateSearchV1SearchPostRequest {
 export class SearchApi extends runtime.BaseAPI {
 
     /**
-     * Creates request options for createSearchForToolV1SearchSearchToolNamePost without sending the request
+     * Creates request options for searchCreateSearch without sending the request
      */
-    async createSearchForToolV1SearchSearchToolNamePostRequestOpts(requestParameters: CreateSearchForToolV1SearchSearchToolNamePostRequest): Promise<runtime.RequestOpts> {
-        if (requestParameters['searchToolName'] == null) {
-            throw new runtime.RequiredError(
-                'searchToolName',
-                'Required parameter "searchToolName" was null or undefined when calling createSearchForToolV1SearchSearchToolNamePost().'
-            );
-        }
-
+    async searchCreateSearchRequestOpts(requestParameters: SearchCreateSearchRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['searchRequest'] == null) {
             throw new runtime.RequiredError(
                 'searchRequest',
-                'Required parameter "searchRequest" was null or undefined when calling createSearchForToolV1SearchSearchToolNamePost().'
+                'Required parameter "searchRequest" was null or undefined when calling searchCreateSearch().'
             );
         }
 
@@ -76,7 +69,71 @@ export class SearchApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/search/{search_tool_name}`;
+        let urlPath = `/api/v1/search`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: SearchRequestToJSON(requestParameters['searchRequest']),
+        };
+    }
+
+    /**
+     * Run a search against a configured search tool.  The tool is taken from ``search_tool_name``, which may be omitted when exactly one tool is configured.  Authentication modes: - Master key: the ``user`` field is required and may name any existing user. - API key: usage and spend always bind to the key\'s own user. A ``user``   field naming a different user is rejected with 403 (or ignored, when the   key\'s own ``reject_user_mismatch`` is false, or the deployment-wide   setting is disabled and the key does not override it); it is never billed   to that user.
+     * Create Search
+     */
+    async searchCreateSearchRaw(requestParameters: SearchCreateSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResponse>> {
+        const requestOptions = await this.searchCreateSearchRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => SearchResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Run a search against a configured search tool.  The tool is taken from ``search_tool_name``, which may be omitted when exactly one tool is configured.  Authentication modes: - Master key: the ``user`` field is required and may name any existing user. - API key: usage and spend always bind to the key\'s own user. A ``user``   field naming a different user is rejected with 403 (or ignored, when the   key\'s own ``reject_user_mismatch`` is false, or the deployment-wide   setting is disabled and the key does not override it); it is never billed   to that user.
+     * Create Search
+     */
+    async searchCreateSearch(requestParameters: SearchCreateSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SearchResponse> {
+        const response = await this.searchCreateSearchRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for searchCreateSearchForTool without sending the request
+     */
+    async searchCreateSearchForToolRequestOpts(requestParameters: SearchCreateSearchForToolRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['searchToolName'] == null) {
+            throw new runtime.RequiredError(
+                'searchToolName',
+                'Required parameter "searchToolName" was null or undefined when calling searchCreateSearchForTool().'
+            );
+        }
+
+        if (requestParameters['searchRequest'] == null) {
+            throw new runtime.RequiredError(
+                'searchRequest',
+                'Required parameter "searchRequest" was null or undefined when calling searchCreateSearchForTool().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/api/v1/search/{search_tool_name}`;
         urlPath = urlPath.replace('{search_tool_name}', encodeURIComponent(String(requestParameters['searchToolName'])));
 
         return {
@@ -89,79 +146,22 @@ export class SearchApi extends runtime.BaseAPI {
     }
 
     /**
-     * Run a search against the search tool named in the path.  Identical to ``POST /v1/search`` except that the path names the tool, which is the form LiteLLM clients use. Any ``search_tool_name`` in the body is ignored.  Authentication modes: - Master key: the ``user`` field is required and may name any existing user. - API key: usage and spend always bind to the key\'s own user. A ``user``   field naming a different user is rejected with 403 (or ignored, when the   key\'s own ``reject_user_mismatch`` is false, or the deployment-wide   setting is disabled and the key does not override it); it is never billed   to that user.
+     * Run a search against the search tool named in the path.  Identical to ``POST /api/v1/search`` except that the path names the tool, which is the form LiteLLM clients use. Any ``search_tool_name`` in the body is ignored.  Authentication modes: - Master key: the ``user`` field is required and may name any existing user. - API key: usage and spend always bind to the key\'s own user. A ``user``   field naming a different user is rejected with 403 (or ignored, when the   key\'s own ``reject_user_mismatch`` is false, or the deployment-wide   setting is disabled and the key does not override it); it is never billed   to that user.
      * Create Search For Tool
      */
-    async createSearchForToolV1SearchSearchToolNamePostRaw(requestParameters: CreateSearchForToolV1SearchSearchToolNamePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResponse>> {
-        const requestOptions = await this.createSearchForToolV1SearchSearchToolNamePostRequestOpts(requestParameters);
+    async searchCreateSearchForToolRaw(requestParameters: SearchCreateSearchForToolRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResponse>> {
+        const requestOptions = await this.searchCreateSearchForToolRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => SearchResponseFromJSON(jsonValue));
     }
 
     /**
-     * Run a search against the search tool named in the path.  Identical to ``POST /v1/search`` except that the path names the tool, which is the form LiteLLM clients use. Any ``search_tool_name`` in the body is ignored.  Authentication modes: - Master key: the ``user`` field is required and may name any existing user. - API key: usage and spend always bind to the key\'s own user. A ``user``   field naming a different user is rejected with 403 (or ignored, when the   key\'s own ``reject_user_mismatch`` is false, or the deployment-wide   setting is disabled and the key does not override it); it is never billed   to that user.
+     * Run a search against the search tool named in the path.  Identical to ``POST /api/v1/search`` except that the path names the tool, which is the form LiteLLM clients use. Any ``search_tool_name`` in the body is ignored.  Authentication modes: - Master key: the ``user`` field is required and may name any existing user. - API key: usage and spend always bind to the key\'s own user. A ``user``   field naming a different user is rejected with 403 (or ignored, when the   key\'s own ``reject_user_mismatch`` is false, or the deployment-wide   setting is disabled and the key does not override it); it is never billed   to that user.
      * Create Search For Tool
      */
-    async createSearchForToolV1SearchSearchToolNamePost(requestParameters: CreateSearchForToolV1SearchSearchToolNamePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SearchResponse> {
-        const response = await this.createSearchForToolV1SearchSearchToolNamePostRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Creates request options for createSearchV1SearchPost without sending the request
-     */
-    async createSearchV1SearchPostRequestOpts(requestParameters: CreateSearchV1SearchPostRequest): Promise<runtime.RequestOpts> {
-        if (requestParameters['searchRequest'] == null) {
-            throw new runtime.RequiredError(
-                'searchRequest',
-                'Required parameter "searchRequest" was null or undefined when calling createSearchV1SearchPost().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
-        }
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
-        }
-
-
-        let urlPath = `/v1/search`;
-
-        return {
-            path: urlPath,
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: SearchRequestToJSON(requestParameters['searchRequest']),
-        };
-    }
-
-    /**
-     * Run a search against a configured search tool.  The tool is taken from ``search_tool_name``, which may be omitted when exactly one tool is configured.  Authentication modes: - Master key: the ``user`` field is required and may name any existing user. - API key: usage and spend always bind to the key\'s own user. A ``user``   field naming a different user is rejected with 403 (or ignored, when the   key\'s own ``reject_user_mismatch`` is false, or the deployment-wide   setting is disabled and the key does not override it); it is never billed   to that user.
-     * Create Search
-     */
-    async createSearchV1SearchPostRaw(requestParameters: CreateSearchV1SearchPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResponse>> {
-        const requestOptions = await this.createSearchV1SearchPostRequestOpts(requestParameters);
-        const response = await this.request(requestOptions, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => SearchResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Run a search against a configured search tool.  The tool is taken from ``search_tool_name``, which may be omitted when exactly one tool is configured.  Authentication modes: - Master key: the ``user`` field is required and may name any existing user. - API key: usage and spend always bind to the key\'s own user. A ``user``   field naming a different user is rejected with 403 (or ignored, when the   key\'s own ``reject_user_mismatch`` is false, or the deployment-wide   setting is disabled and the key does not override it); it is never billed   to that user.
-     * Create Search
-     */
-    async createSearchV1SearchPost(requestParameters: CreateSearchV1SearchPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SearchResponse> {
-        const response = await this.createSearchV1SearchPostRaw(requestParameters, initOverrides);
+    async searchCreateSearchForTool(requestParameters: SearchCreateSearchForToolRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SearchResponse> {
+        const response = await this.searchCreateSearchForToolRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

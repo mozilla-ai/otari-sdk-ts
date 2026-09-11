@@ -29,7 +29,7 @@ import {
     HTTPValidationErrorToJSON,
 } from '../models/HTTPValidationError.js';
 
-export interface ChatCompletionsV1ChatCompletionsPostRequest {
+export interface ChatChatCompletionsRequest {
     chatCompletionRequest: ChatCompletionRequest;
 }
 
@@ -39,13 +39,13 @@ export interface ChatCompletionsV1ChatCompletionsPostRequest {
 export class ChatApi extends runtime.BaseAPI {
 
     /**
-     * Creates request options for chatCompletionsV1ChatCompletionsPost without sending the request
+     * Creates request options for chatChatCompletions without sending the request
      */
-    async chatCompletionsV1ChatCompletionsPostRequestOpts(requestParameters: ChatCompletionsV1ChatCompletionsPostRequest): Promise<runtime.RequestOpts> {
+    async chatChatCompletionsRequestOpts(requestParameters: ChatChatCompletionsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['chatCompletionRequest'] == null) {
             throw new runtime.RequiredError(
                 'chatCompletionRequest',
-                'Required parameter "chatCompletionRequest" was null or undefined when calling chatCompletionsV1ChatCompletionsPost().'
+                'Required parameter "chatCompletionRequest" was null or undefined when calling chatChatCompletions().'
             );
         }
 
@@ -64,7 +64,7 @@ export class ChatApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/chat/completions`;
+        let urlPath = `/api/v1/chat/completions`;
 
         return {
             path: urlPath,
@@ -79,8 +79,8 @@ export class ChatApi extends runtime.BaseAPI {
      * OpenAI-compatible chat completions endpoint.  Supports both streaming and non-streaming responses. Handles reasoning content from otari providers.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Chat Completions
      */
-    async chatCompletionsV1ChatCompletionsPostRaw(requestParameters: ChatCompletionsV1ChatCompletionsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ChatCompletion>> {
-        const requestOptions = await this.chatCompletionsV1ChatCompletionsPostRequestOpts(requestParameters);
+    async chatChatCompletionsRaw(requestParameters: ChatChatCompletionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ChatCompletion>> {
+        const requestOptions = await this.chatChatCompletionsRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ChatCompletionFromJSON(jsonValue));
@@ -90,8 +90,8 @@ export class ChatApi extends runtime.BaseAPI {
      * OpenAI-compatible chat completions endpoint.  Supports both streaming and non-streaming responses. Handles reasoning content from otari providers.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Chat Completions
      */
-    async chatCompletionsV1ChatCompletionsPost(requestParameters: ChatCompletionsV1ChatCompletionsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ChatCompletion> {
-        const response = await this.chatCompletionsV1ChatCompletionsPostRaw(requestParameters, initOverrides);
+    async chatChatCompletions(requestParameters: ChatChatCompletionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ChatCompletion> {
+        const response = await this.chatChatCompletionsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

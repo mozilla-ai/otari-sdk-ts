@@ -11,7 +11,8 @@ Name | Type
 `apiKeyName` | string
 `attemptCount` | number
 `attemptPosition` | number
-`billingMeters` | { [key: string]: any; }
+`billingMeters` | [BillingMeters](BillingMeters.md)
+`bulkEditable` | boolean
 `cacheReadTokens` | number
 `cacheWrite1hTokens` | number
 `cacheWriteTokens` | number
@@ -24,7 +25,7 @@ Name | Type
 `latencyMs` | number
 `model` | string
 `policyName` | string
-`pricingBreakdown` | Array&lt;{ [key: string]: UsageEntryPricingBreakdownInnerValue; }&gt;
+`pricingBreakdown` | [Array&lt;UsageEntryPricingBreakdownInner&gt;](UsageEntryPricingBreakdownInner.md)
 `promptTokens` | number
 `provider` | string
 `requestGroupId` | string
@@ -50,6 +51,7 @@ const example = {
   "attemptCount": null,
   "attemptPosition": null,
   "billingMeters": null,
+  "bulkEditable": null,
   "cacheReadTokens": null,
   "cacheWrite1hTokens": null,
   "cacheWriteTokens": null,

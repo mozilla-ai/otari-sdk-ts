@@ -4,23 +4,23 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**createStoredProviderV1ProviderCredentialsPost**](ProvidersApi.md#createstoredproviderv1providercredentialspost) | **POST** /v1/provider-credentials | Create Stored Provider |
-| [**deleteStoredProviderV1ProviderCredentialsInstanceDelete**](ProvidersApi.md#deletestoredproviderv1providercredentialsinstancedelete) | **DELETE** /v1/provider-credentials/{instance} | Delete Stored Provider |
-| [**listProvidersV1ProvidersGet**](ProvidersApi.md#listprovidersv1providersget) | **GET** /v1/providers | List Providers |
-| [**listStoredProvidersV1ProviderCredentialsGet**](ProvidersApi.md#liststoredprovidersv1providercredentialsget) | **GET** /v1/provider-credentials | List Stored Providers |
-| [**providerCatalogDetailV1ProvidersCatalogProviderIdGet**](ProvidersApi.md#providercatalogdetailv1providerscatalogprovideridget) | **GET** /v1/providers/catalog/{provider_id} | Provider Catalog Detail |
-| [**providerCatalogV1ProvidersCatalogGet**](ProvidersApi.md#providercatalogv1providerscatalogget) | **GET** /v1/providers/catalog | Provider Catalog |
-| [**providerHealthV1ProvidersHealthGet**](ProvidersApi.md#providerhealthv1providershealthget) | **GET** /v1/providers/health | Provider Health |
-| [**reencryptStoredProviderKeysV1ProviderCredentialsReencryptPost**](ProvidersApi.md#reencryptstoredproviderkeysv1providercredentialsreencryptpost) | **POST** /v1/provider-credentials/reencrypt | Reencrypt Stored Provider Keys |
-| [**testProviderConnectionV1ProviderCredentialsTestPost**](ProvidersApi.md#testproviderconnectionv1providercredentialstestpost) | **POST** /v1/provider-credentials/test | Test Provider Connection |
-| [**testStoredProviderV1ProviderCredentialsInstanceTestPost**](ProvidersApi.md#teststoredproviderv1providercredentialsinstancetestpost) | **POST** /v1/provider-credentials/{instance}/test | Test Stored Provider |
-| [**updateStoredProviderV1ProviderCredentialsInstancePatch**](ProvidersApi.md#updatestoredproviderv1providercredentialsinstancepatch) | **PATCH** /v1/provider-credentials/{instance} | Update Stored Provider |
+| [**providersCreateStoredProvider**](ProvidersApi.md#providerscreatestoredprovider) | **POST** /api/v1/provider-credentials | Create Stored Provider |
+| [**providersDeleteStoredProvider**](ProvidersApi.md#providersdeletestoredprovider) | **DELETE** /api/v1/provider-credentials/{instance} | Delete Stored Provider |
+| [**providersListProviders**](ProvidersApi.md#providerslistproviders) | **GET** /api/v1/providers | List Providers |
+| [**providersListStoredProviders**](ProvidersApi.md#providersliststoredproviders) | **GET** /api/v1/provider-credentials | List Stored Providers |
+| [**providersProviderCatalog**](ProvidersApi.md#providersprovidercatalog) | **GET** /api/v1/providers/catalog | Provider Catalog |
+| [**providersProviderCatalogDetail**](ProvidersApi.md#providersprovidercatalogdetail) | **GET** /api/v1/providers/catalog/{provider_id} | Provider Catalog Detail |
+| [**providersProviderHealth**](ProvidersApi.md#providersproviderhealth) | **GET** /api/v1/providers/health | Provider Health |
+| [**providersReencryptStoredProviderKeys**](ProvidersApi.md#providersreencryptstoredproviderkeys) | **POST** /api/v1/provider-credentials/reencrypt | Reencrypt Stored Provider Keys |
+| [**providersTestProviderConnection**](ProvidersApi.md#providerstestproviderconnection) | **POST** /api/v1/provider-credentials/test | Test Provider Connection |
+| [**providersTestStoredProvider**](ProvidersApi.md#providersteststoredprovider) | **POST** /api/v1/provider-credentials/{instance}/test | Test Stored Provider |
+| [**providersUpdateStoredProvider**](ProvidersApi.md#providersupdatestoredprovider) | **PATCH** /api/v1/provider-credentials/{instance} | Update Stored Provider |
 
 
 
-## createStoredProviderV1ProviderCredentialsPost
+## providersCreateStoredProvider
 
-> StoredProviderResponse createStoredProviderV1ProviderCredentialsPost(createStoredProviderRequest)
+> StoredProviderResponse providersCreateStoredProvider(createStoredProviderRequest)
 
 Create Stored Provider
 
@@ -33,7 +33,7 @@ import {
   Configuration,
   ProvidersApi,
 } from '';
-import type { CreateStoredProviderV1ProviderCredentialsPostRequest } from '';
+import type { ProvidersCreateStoredProviderRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -48,10 +48,10 @@ async function example() {
   const body = {
     // CreateStoredProviderRequest
     createStoredProviderRequest: ...,
-  } satisfies CreateStoredProviderV1ProviderCredentialsPostRequest;
+  } satisfies ProvidersCreateStoredProviderRequest;
 
   try {
-    const data = await api.createStoredProviderV1ProviderCredentialsPost(body);
+    const data = await api.providersCreateStoredProvider(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -92,9 +92,9 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## deleteStoredProviderV1ProviderCredentialsInstanceDelete
+## providersDeleteStoredProvider
 
-> deleteStoredProviderV1ProviderCredentialsInstanceDelete(instance)
+> providersDeleteStoredProvider(instance)
 
 Delete Stored Provider
 
@@ -107,7 +107,7 @@ import {
   Configuration,
   ProvidersApi,
 } from '';
-import type { DeleteStoredProviderV1ProviderCredentialsInstanceDeleteRequest } from '';
+import type { ProvidersDeleteStoredProviderRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -122,10 +122,10 @@ async function example() {
   const body = {
     // string
     instance: instance_example,
-  } satisfies DeleteStoredProviderV1ProviderCredentialsInstanceDeleteRequest;
+  } satisfies ProvidersDeleteStoredProviderRequest;
 
   try {
-    const data = await api.deleteStoredProviderV1ProviderCredentialsInstanceDelete(body);
+    const data = await api.providersDeleteStoredProvider(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -166,13 +166,13 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## listProvidersV1ProvidersGet
+## providersListProviders
 
-> ProvidersResponse listProvidersV1ProvidersGet()
+> ProvidersResponse providersListProviders()
 
 List Providers
 
-List static metadata for every configured provider.  Operator-facing: reports each provider\&#39;s capabilities, documentation and pricing links, and display name from the bundled any-llm and genai-prices datasets. No provider is contacted, so this is cheap and always available. Master-key gated because it describes the gateway\&#39;s own configuration.
+List static metadata for every configured provider.  Operator-facing: reports each provider\&#39;s capabilities, documentation and pricing links, and display name from the bundled any-llm and genai-prices datasets. No provider is contacted, so this is cheap and always available.
 
 ### Example
 
@@ -181,7 +181,7 @@ import {
   Configuration,
   ProvidersApi,
 } from '';
-import type { ListProvidersV1ProvidersGetRequest } from '';
+import type { ProvidersListProvidersRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -194,7 +194,7 @@ async function example() {
   const api = new ProvidersApi(config);
 
   try {
-    const data = await api.listProvidersV1ProvidersGet();
+    const data = await api.providersListProviders();
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -231,9 +231,9 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## listStoredProvidersV1ProviderCredentialsGet
+## providersListStoredProviders
 
-> Array&lt;StoredProviderResponse&gt; listStoredProvidersV1ProviderCredentialsGet()
+> Array&lt;StoredProviderResponse&gt; providersListStoredProviders()
 
 List Stored Providers
 
@@ -246,7 +246,7 @@ import {
   Configuration,
   ProvidersApi,
 } from '';
-import type { ListStoredProvidersV1ProviderCredentialsGetRequest } from '';
+import type { ProvidersListStoredProvidersRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -259,7 +259,7 @@ async function example() {
   const api = new ProvidersApi(config);
 
   try {
-    const data = await api.listStoredProvidersV1ProviderCredentialsGet();
+    const data = await api.providersListStoredProviders();
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -296,13 +296,13 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## providerCatalogDetailV1ProvidersCatalogProviderIdGet
+## providersProviderCatalog
 
-> KnownProviderSchema providerCatalogDetailV1ProvidersCatalogProviderIdGet(providerId)
+> Array&lt;KnownProviderSummarySchema&gt; providersProviderCatalog()
 
-Provider Catalog Detail
+Provider Catalog
 
-Autofill hints for one provider the add-provider form has selected.  Imports only the selected provider\&#39;s any-llm module (not the whole catalog) to report its credential env var, default endpoint, whether a key is required, and whether that env var is already set on the server. Returns 404 for an unknown provider id. Master-key gated because it is operator-facing.  The SDK import is offloaded to a worker thread: the first fetch for a given provider imports that provider\&#39;s module, which would otherwise block the event loop (and thus every concurrent request) for the import\&#39;s duration.
+List every known provider for the add-provider picker: id and name only.  Lightweight by design so the picker never lags: provider ids come from the any-llm registry and names from the bundled genai-prices dataset, so no provider SDK is imported. The autofill hints for a chosen provider come from GET /api/v1/providers/catalog/{provider_id}, which imports only that one SDK.
 
 ### Example
 
@@ -311,7 +311,72 @@ import {
   Configuration,
   ProvidersApi,
 } from '';
-import type { ProviderCatalogDetailV1ProvidersCatalogProviderIdGetRequest } from '';
+import type { ProvidersProviderCatalogRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new ProvidersApi(config);
+
+  try {
+    const data = await api.providersProviderCatalog();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**Array&lt;KnownProviderSummarySchema&gt;**](KnownProviderSummarySchema.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## providersProviderCatalogDetail
+
+> KnownProviderSchema providersProviderCatalogDetail(providerId)
+
+Provider Catalog Detail
+
+Autofill hints for one provider the add-provider form has selected.  Imports only the selected provider\&#39;s any-llm module (not the whole catalog) to report its credential env var, default endpoint, whether a key is required, and whether that env var is already set on the server. Returns 404 for an unknown provider id.  The SDK import is offloaded to a worker thread: the first fetch for a given provider imports that provider\&#39;s module, which would otherwise block the event loop (and thus every concurrent request) for the import\&#39;s duration.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ProvidersApi,
+} from '';
+import type { ProvidersProviderCatalogDetailRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -326,10 +391,10 @@ async function example() {
   const body = {
     // string
     providerId: providerId_example,
-  } satisfies ProviderCatalogDetailV1ProvidersCatalogProviderIdGetRequest;
+  } satisfies ProvidersProviderCatalogDetailRequest;
 
   try {
-    const data = await api.providerCatalogDetailV1ProvidersCatalogProviderIdGet(body);
+    const data = await api.providersProviderCatalogDetail(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -370,78 +435,13 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## providerCatalogV1ProvidersCatalogGet
+## providersProviderHealth
 
-> Array&lt;KnownProviderSummarySchema&gt; providerCatalogV1ProvidersCatalogGet()
-
-Provider Catalog
-
-List every known provider for the add-provider picker: id and name only.  Lightweight by design so the picker never lags: provider ids come from the any-llm registry and names from the bundled genai-prices dataset, so no provider SDK is imported. The autofill hints for a chosen provider come from GET /v1/providers/catalog/{provider_id}, which imports only that one SDK. Master-key gated because it is operator-facing dashboard data.
-
-### Example
-
-```ts
-import {
-  Configuration,
-  ProvidersApi,
-} from '';
-import type { ProviderCatalogV1ProvidersCatalogGetRequest } from '';
-
-async function example() {
-  console.log("🚀 Testing  SDK...");
-  const config = new Configuration({ 
-    // To configure API key authorization: XApiKeyAuth
-    apiKey: "YOUR API KEY",
-    // To configure API key authorization: ApiKeyAuth
-    apiKey: "YOUR API KEY",
-  });
-  const api = new ProvidersApi(config);
-
-  try {
-    const data = await api.providerCatalogV1ProvidersCatalogGet();
-    console.log(data);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// Run the test
-example().catch(console.error);
-```
-
-### Parameters
-
-This endpoint does not need any parameter.
-
-### Return type
-
-[**Array&lt;KnownProviderSummarySchema&gt;**](KnownProviderSummarySchema.md)
-
-### Authorization
-
-[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: `application/json`
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | Successful Response |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-
-## providerHealthV1ProvidersHealthGet
-
-> ProviderHealthResponse providerHealthV1ProvidersHealthGet(refresh)
+> ProviderHealthResponse providersProviderHealth(refresh)
 
 Provider Health
 
-Report every configured provider\&#39;s reachability, with a last-checked time.  Reuses the per-provider model-discovery test path, so a provider is healthy when its credentials can list models. Results are served from the discovery cache (cheap enough to poll), so &#x60;&#x60;checked_at&#x60;&#x60; reflects when each provider was actually dialed. Pass &#x60;&#x60;refresh&#x3D;true&#x60;&#x60; to force a live re-dial of every provider. Master-key gated because it describes the gateway\&#39;s own providers.  A provider whose backend serves no model-listing endpoint cannot be verified this way, but it is not unreachable either: it is reported with &#x60;&#x60;discovery_unsupported&#x60;&#x60; and counted under &#x60;&#x60;degraded&#x60;&#x60; rather than as a reachability failure.
+Report every configured provider\&#39;s reachability, with a last-checked time.  Reuses the per-provider model-discovery test path, so a provider is healthy when its credentials can list models. Results are served from the discovery cache (cheap enough to poll), so &#x60;&#x60;checked_at&#x60;&#x60; reflects when each provider was actually dialed. Pass &#x60;&#x60;refresh&#x3D;true&#x60;&#x60; to force a live re-dial of every provider.  A provider whose backend serves no model-listing endpoint cannot be verified this way, but it is not unreachable either: it is reported with &#x60;&#x60;discovery_unsupported&#x60;&#x60; and counted under &#x60;&#x60;degraded&#x60;&#x60; rather than as a reachability failure.
 
 ### Example
 
@@ -450,7 +450,7 @@ import {
   Configuration,
   ProvidersApi,
 } from '';
-import type { ProviderHealthV1ProvidersHealthGetRequest } from '';
+import type { ProvidersProviderHealthRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -465,10 +465,10 @@ async function example() {
   const body = {
     // boolean (optional)
     refresh: true,
-  } satisfies ProviderHealthV1ProvidersHealthGetRequest;
+  } satisfies ProvidersProviderHealthRequest;
 
   try {
-    const data = await api.providerHealthV1ProvidersHealthGet(body);
+    const data = await api.providersProviderHealth(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -509,9 +509,9 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## reencryptStoredProviderKeysV1ProviderCredentialsReencryptPost
+## providersReencryptStoredProviderKeys
 
-> ReencryptProviderCredentialsResponse reencryptStoredProviderKeysV1ProviderCredentialsReencryptPost()
+> ReencryptProviderCredentialsResponse providersReencryptStoredProviderKeys()
 
 Reencrypt Stored Provider Keys
 
@@ -524,7 +524,7 @@ import {
   Configuration,
   ProvidersApi,
 } from '';
-import type { ReencryptStoredProviderKeysV1ProviderCredentialsReencryptPostRequest } from '';
+import type { ProvidersReencryptStoredProviderKeysRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -537,7 +537,7 @@ async function example() {
   const api = new ProvidersApi(config);
 
   try {
-    const data = await api.reencryptStoredProviderKeysV1ProviderCredentialsReencryptPost();
+    const data = await api.providersReencryptStoredProviderKeys();
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -574,9 +574,9 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## testProviderConnectionV1ProviderCredentialsTestPost
+## providersTestProviderConnection
 
-> TestProviderResponse testProviderConnectionV1ProviderCredentialsTestPost(testProviderRequest)
+> TestProviderResponse providersTestProviderConnection(testProviderRequest)
 
 Test Provider Connection
 
@@ -589,7 +589,7 @@ import {
   Configuration,
   ProvidersApi,
 } from '';
-import type { TestProviderConnectionV1ProviderCredentialsTestPostRequest } from '';
+import type { ProvidersTestProviderConnectionRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -604,10 +604,10 @@ async function example() {
   const body = {
     // TestProviderRequest
     testProviderRequest: ...,
-  } satisfies TestProviderConnectionV1ProviderCredentialsTestPostRequest;
+  } satisfies ProvidersTestProviderConnectionRequest;
 
   try {
-    const data = await api.testProviderConnectionV1ProviderCredentialsTestPost(body);
+    const data = await api.providersTestProviderConnection(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -648,9 +648,9 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## testStoredProviderV1ProviderCredentialsInstanceTestPost
+## providersTestStoredProvider
 
-> TestProviderResponse testStoredProviderV1ProviderCredentialsInstanceTestPost(instance)
+> TestProviderResponse providersTestStoredProvider(instance)
 
 Test Stored Provider
 
@@ -663,7 +663,7 @@ import {
   Configuration,
   ProvidersApi,
 } from '';
-import type { TestStoredProviderV1ProviderCredentialsInstanceTestPostRequest } from '';
+import type { ProvidersTestStoredProviderRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -678,10 +678,10 @@ async function example() {
   const body = {
     // string
     instance: instance_example,
-  } satisfies TestStoredProviderV1ProviderCredentialsInstanceTestPostRequest;
+  } satisfies ProvidersTestStoredProviderRequest;
 
   try {
-    const data = await api.testStoredProviderV1ProviderCredentialsInstanceTestPost(body);
+    const data = await api.providersTestStoredProvider(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -722,9 +722,9 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## updateStoredProviderV1ProviderCredentialsInstancePatch
+## providersUpdateStoredProvider
 
-> StoredProviderResponse updateStoredProviderV1ProviderCredentialsInstancePatch(instance, updateStoredProviderRequest)
+> StoredProviderResponse providersUpdateStoredProvider(instance, updateStoredProviderRequest)
 
 Update Stored Provider
 
@@ -737,7 +737,7 @@ import {
   Configuration,
   ProvidersApi,
 } from '';
-import type { UpdateStoredProviderV1ProviderCredentialsInstancePatchRequest } from '';
+import type { ProvidersUpdateStoredProviderRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -754,10 +754,10 @@ async function example() {
     instance: instance_example,
     // UpdateStoredProviderRequest
     updateStoredProviderRequest: ...,
-  } satisfies UpdateStoredProviderV1ProviderCredentialsInstancePatchRequest;
+  } satisfies ProvidersUpdateStoredProviderRequest;
 
   try {
-    const data = await api.updateStoredProviderV1ProviderCredentialsInstancePatch(body);
+    const data = await api.providersUpdateStoredProvider(body);
     console.log(data);
   } catch (error) {
     console.error(error);

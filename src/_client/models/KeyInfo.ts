@@ -97,6 +97,12 @@ export interface KeyInfo {
      * @memberof KeyInfo
      */
     userId: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof KeyInfo
+     */
+    workspaceId: string;
 }
 
 /**
@@ -116,6 +122,7 @@ export function instanceOfKeyInfo(value: object): value is KeyInfo {
     if (!('metadata' in value) || value['metadata'] === undefined) return false;
     if (!('rejectUserMismatch' in value) || value['rejectUserMismatch'] === undefined) return false;
     if (!('userId' in value) || value['userId'] === undefined) return false;
+    if (!('workspaceId' in value) || value['workspaceId'] === undefined) return false;
     return true;
 }
 
@@ -142,6 +149,7 @@ export function KeyInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): K
         'metadata': json['metadata'],
         'rejectUserMismatch': json['reject_user_mismatch'],
         'userId': json['user_id'],
+        'workspaceId': json['workspace_id'],
     };
 }
 
@@ -169,6 +177,7 @@ export function KeyInfoToJSONTyped(value?: KeyInfo | null, ignoreDiscriminator: 
         'metadata': value['metadata'],
         'reject_user_mismatch': value['rejectUserMismatch'],
         'user_id': value['userId'],
+        'workspace_id': value['workspaceId'],
     };
 }
 

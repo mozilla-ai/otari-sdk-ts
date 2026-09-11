@@ -16,9 +16,11 @@ import { mapValues } from '../runtime.js';
 /**
  * Response model for budget information.
  * 
- * ``max_budget`` is the per-user spending limit, and multiple users can share
- * one budget, so the usage rollup is an aggregate over the users assigned to
- * this budget: how many there are and their combined ``spend`` / ``reserved``.
+ * ``max_budget``, ``token_limit`` and ``request_limit`` are the per-user
+ * ceilings, each independent and each unlimited when null, and multiple users
+ * can share one budget, so the usage rollup is an aggregate over the users
+ * assigned to this budget: how many there are and their combined ``spend`` /
+ * ``reserved``.
  * Assigning users to a budget is done through the users API (dashboard support
  * lands with user management), so a fresh gateway reports zeros here.
  * @export
@@ -57,6 +59,30 @@ export interface BudgetResponse {
     name: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof BudgetResponse
+     */
+    organizationId: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof BudgetResponse
+     */
+    requestLimit: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BudgetResponse
+     */
+    resetAlignment: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof BudgetResponse
+     */
+    tokenLimit: number | null;
+    /**
+     * 
      * @type {number}
      * @memberof BudgetResponse
      */
@@ -90,6 +116,10 @@ export function instanceOfBudgetResponse(value: object): value is BudgetResponse
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
     if (!('maxBudget' in value) || value['maxBudget'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('organizationId' in value) || value['organizationId'] === undefined) return false;
+    if (!('requestLimit' in value) || value['requestLimit'] === undefined) return false;
+    if (!('resetAlignment' in value) || value['resetAlignment'] === undefined) return false;
+    if (!('tokenLimit' in value) || value['tokenLimit'] === undefined) return false;
     if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
     return true;
 }
@@ -109,6 +139,10 @@ export function BudgetResponseFromJSONTyped(json: any, ignoreDiscriminator: bool
         'createdAt': json['created_at'],
         'maxBudget': json['max_budget'],
         'name': json['name'],
+        'organizationId': json['organization_id'],
+        'requestLimit': json['request_limit'],
+        'resetAlignment': json['reset_alignment'],
+        'tokenLimit': json['token_limit'],
         'totalReserved': json['total_reserved'] == null ? undefined : json['total_reserved'],
         'totalSpend': json['total_spend'] == null ? undefined : json['total_spend'],
         'updatedAt': json['updated_at'],
@@ -132,6 +166,10 @@ export function BudgetResponseToJSONTyped(value?: BudgetResponse | null, ignoreD
         'created_at': value['createdAt'],
         'max_budget': value['maxBudget'],
         'name': value['name'],
+        'organization_id': value['organizationId'],
+        'request_limit': value['requestLimit'],
+        'reset_alignment': value['resetAlignment'],
+        'token_limit': value['tokenLimit'],
         'total_reserved': value['totalReserved'],
         'total_spend': value['totalSpend'],
         'updated_at': value['updatedAt'],

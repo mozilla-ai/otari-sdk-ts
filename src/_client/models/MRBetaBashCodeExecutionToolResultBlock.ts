@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { Content4 } from './Content4.js';
+import type { Content5 } from './Content5.js';
 import {
-    Content4FromJSON,
-    Content4FromJSONTyped,
-    Content4ToJSON,
-    Content4ToJSONTyped,
-} from './Content4.js';
+    Content5FromJSON,
+    Content5FromJSONTyped,
+    Content5ToJSON,
+    Content5ToJSONTyped,
+} from './Content5.js';
 
 /**
  * 
@@ -30,10 +30,10 @@ export interface MRBetaBashCodeExecutionToolResultBlock {
     [key: string]: any | any;
     /**
      * 
-     * @type {Content4}
+     * @type {Content5}
      * @memberof MRBetaBashCodeExecutionToolResultBlock
      */
-    content: Content4;
+    content: Content5;
     /**
      * 
      * @type {string}
@@ -79,7 +79,7 @@ export function MRBetaBashCodeExecutionToolResultBlockFromJSONTyped(json: any, i
     return {
         
             ...json,
-        'content': Content4FromJSON(json['content']),
+        'content': Content5FromJSON(json['content']),
         'toolUseId': json['tool_use_id'],
         'type': json['type'],
     };
@@ -97,7 +97,7 @@ export function MRBetaBashCodeExecutionToolResultBlockToJSONTyped(value?: MRBeta
     return {
         
             ...value,
-        'content': Content4ToJSON(value['content']),
+        'content': Content5ToJSON(value['content']),
         'tool_use_id': value['toolUseId'],
         'type': value['type'],
     };

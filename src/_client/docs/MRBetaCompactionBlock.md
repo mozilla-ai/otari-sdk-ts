@@ -8,6 +8,7 @@ A compaction block returned when autocompact is triggered.  When content is None
 Name | Type
 ------------ | -------------
 `content` | string
+`encryptedContent` | string
 `type` | string
 
 ## Example
@@ -18,6 +19,7 @@ import type { MRBetaCompactionBlock } from ''
 // TODO: Update the object below with actual values
 const example = {
   "content": null,
+  "encryptedContent": null,
   "type": null,
 } satisfies MRBetaCompactionBlock
 

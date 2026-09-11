@@ -13,34 +13,34 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { MRTextEditorCodeExecutionViewResultBlock } from './MRTextEditorCodeExecutionViewResultBlock.js';
+import type { MRCodeExecutionResultBlock } from './MRCodeExecutionResultBlock.js';
 import {
-    MRTextEditorCodeExecutionViewResultBlockFromJSON,
-    MRTextEditorCodeExecutionViewResultBlockFromJSONTyped,
-    MRTextEditorCodeExecutionViewResultBlockToJSON,
-    MRTextEditorCodeExecutionViewResultBlockToJSONTyped,
-} from './MRTextEditorCodeExecutionViewResultBlock.js';
-import type { MRTextEditorCodeExecutionToolResultError } from './MRTextEditorCodeExecutionToolResultError.js';
+    MRCodeExecutionResultBlockFromJSON,
+    MRCodeExecutionResultBlockFromJSONTyped,
+    MRCodeExecutionResultBlockToJSON,
+    MRCodeExecutionResultBlockToJSONTyped,
+} from './MRCodeExecutionResultBlock.js';
+import type { MRCodeExecutionOutputBlock } from './MRCodeExecutionOutputBlock.js';
 import {
-    MRTextEditorCodeExecutionToolResultErrorFromJSON,
-    MRTextEditorCodeExecutionToolResultErrorFromJSONTyped,
-    MRTextEditorCodeExecutionToolResultErrorToJSON,
-    MRTextEditorCodeExecutionToolResultErrorToJSONTyped,
-} from './MRTextEditorCodeExecutionToolResultError.js';
-import type { MRTextEditorCodeExecutionStrReplaceResultBlock } from './MRTextEditorCodeExecutionStrReplaceResultBlock.js';
+    MRCodeExecutionOutputBlockFromJSON,
+    MRCodeExecutionOutputBlockFromJSONTyped,
+    MRCodeExecutionOutputBlockToJSON,
+    MRCodeExecutionOutputBlockToJSONTyped,
+} from './MRCodeExecutionOutputBlock.js';
+import type { MREncryptedCodeExecutionResultBlock } from './MREncryptedCodeExecutionResultBlock.js';
 import {
-    MRTextEditorCodeExecutionStrReplaceResultBlockFromJSON,
-    MRTextEditorCodeExecutionStrReplaceResultBlockFromJSONTyped,
-    MRTextEditorCodeExecutionStrReplaceResultBlockToJSON,
-    MRTextEditorCodeExecutionStrReplaceResultBlockToJSONTyped,
-} from './MRTextEditorCodeExecutionStrReplaceResultBlock.js';
-import type { MRTextEditorCodeExecutionCreateResultBlock } from './MRTextEditorCodeExecutionCreateResultBlock.js';
+    MREncryptedCodeExecutionResultBlockFromJSON,
+    MREncryptedCodeExecutionResultBlockFromJSONTyped,
+    MREncryptedCodeExecutionResultBlockToJSON,
+    MREncryptedCodeExecutionResultBlockToJSONTyped,
+} from './MREncryptedCodeExecutionResultBlock.js';
+import type { MRCodeExecutionToolResultError } from './MRCodeExecutionToolResultError.js';
 import {
-    MRTextEditorCodeExecutionCreateResultBlockFromJSON,
-    MRTextEditorCodeExecutionCreateResultBlockFromJSONTyped,
-    MRTextEditorCodeExecutionCreateResultBlockToJSON,
-    MRTextEditorCodeExecutionCreateResultBlockToJSONTyped,
-} from './MRTextEditorCodeExecutionCreateResultBlock.js';
+    MRCodeExecutionToolResultErrorFromJSON,
+    MRCodeExecutionToolResultErrorFromJSONTyped,
+    MRCodeExecutionToolResultErrorToJSON,
+    MRCodeExecutionToolResultErrorToJSONTyped,
+} from './MRCodeExecutionToolResultError.js';
 
 /**
  * 
@@ -56,82 +56,40 @@ export interface Content12 {
     errorCode: Content12ErrorCodeEnum;
     /**
      * 
-     * @type {string}
-     * @memberof Content12
-     */
-    errorMessage?: string;
-    /**
-     * 
      * @type {Content12TypeEnum}
      * @memberof Content12
      */
     type: Content12TypeEnum;
     /**
      * 
+     * @type {Array<MRCodeExecutionOutputBlock>}
+     * @memberof Content12
+     */
+    content: Array<MRCodeExecutionOutputBlock>;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content12
+     */
+    returnCode: number;
+    /**
+     * 
      * @type {string}
      * @memberof Content12
      */
-    content: string;
+    stderr: string;
     /**
      * 
-     * @type {Content12FileTypeEnum}
+     * @type {string}
      * @memberof Content12
      */
-    fileType: Content12FileTypeEnum;
+    stdout: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof Content12
      */
-    numLines?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content12
-     */
-    startLine?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content12
-     */
-    totalLines?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Content12
-     */
-    isFileUpdate: boolean;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof Content12
-     */
-    lines?: Array<string>;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content12
-     */
-    newLines?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content12
-     */
-    newStart?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content12
-     */
-    oldLines?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content12
-     */
-    oldStart?: number;
+    encryptedStdout: string;
 }
 
 
@@ -142,8 +100,7 @@ export const Content12ErrorCodeEnum = {
     InvalidToolInput: 'invalid_tool_input',
     Unavailable: 'unavailable',
     TooManyRequests: 'too_many_requests',
-    ExecutionTimeExceeded: 'execution_time_exceeded',
-    FileNotFound: 'file_not_found'
+    ExecutionTimeExceeded: 'execution_time_exceeded'
 } as const;
 export type Content12ErrorCodeEnum = typeof Content12ErrorCodeEnum[keyof typeof Content12ErrorCodeEnum];
 
@@ -151,22 +108,11 @@ export type Content12ErrorCodeEnum = typeof Content12ErrorCodeEnum[keyof typeof 
  * @export
  */
 export const Content12TypeEnum = {
-    TextEditorCodeExecutionToolResultError: 'text_editor_code_execution_tool_result_error',
-    TextEditorCodeExecutionViewResult: 'text_editor_code_execution_view_result',
-    TextEditorCodeExecutionCreateResult: 'text_editor_code_execution_create_result',
-    TextEditorCodeExecutionStrReplaceResult: 'text_editor_code_execution_str_replace_result'
+    CodeExecutionToolResultError: 'code_execution_tool_result_error',
+    CodeExecutionResult: 'code_execution_result',
+    EncryptedCodeExecutionResult: 'encrypted_code_execution_result'
 } as const;
 export type Content12TypeEnum = typeof Content12TypeEnum[keyof typeof Content12TypeEnum];
-
-/**
- * @export
- */
-export const Content12FileTypeEnum = {
-    Text: 'text',
-    Image: 'image',
-    Pdf: 'pdf'
-} as const;
-export type Content12FileTypeEnum = typeof Content12FileTypeEnum[keyof typeof Content12FileTypeEnum];
 
 
 /**
@@ -176,8 +122,10 @@ export function instanceOfContent12(value: object): value is Content12 {
     if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     if (!('content' in value) || value['content'] === undefined) return false;
-    if (!('fileType' in value) || value['fileType'] === undefined) return false;
-    if (!('isFileUpdate' in value) || value['isFileUpdate'] === undefined) return false;
+    if (!('returnCode' in value) || value['returnCode'] === undefined) return false;
+    if (!('stderr' in value) || value['stderr'] === undefined) return false;
+    if (!('stdout' in value) || value['stdout'] === undefined) return false;
+    if (!('encryptedStdout' in value) || value['encryptedStdout'] === undefined) return false;
     return true;
 }
 
@@ -192,19 +140,12 @@ export function Content12FromJSONTyped(json: any, ignoreDiscriminator: boolean):
     return {
         
         'errorCode': json['error_code'],
-        'errorMessage': json['error_message'] == null ? undefined : json['error_message'],
         'type': json['type'],
-        'content': json['content'],
-        'fileType': json['file_type'],
-        'numLines': json['num_lines'] == null ? undefined : json['num_lines'],
-        'startLine': json['start_line'] == null ? undefined : json['start_line'],
-        'totalLines': json['total_lines'] == null ? undefined : json['total_lines'],
-        'isFileUpdate': json['is_file_update'],
-        'lines': json['lines'] == null ? undefined : json['lines'],
-        'newLines': json['new_lines'] == null ? undefined : json['new_lines'],
-        'newStart': json['new_start'] == null ? undefined : json['new_start'],
-        'oldLines': json['old_lines'] == null ? undefined : json['old_lines'],
-        'oldStart': json['old_start'] == null ? undefined : json['old_start'],
+        'content': ((json['content'] as Array<any>).map(MRCodeExecutionOutputBlockFromJSON)),
+        'returnCode': json['return_code'],
+        'stderr': json['stderr'],
+        'stdout': json['stdout'],
+        'encryptedStdout': json['encrypted_stdout'],
     };
 }
 
@@ -220,19 +161,12 @@ export function Content12ToJSONTyped(value?: Content12 | null, ignoreDiscriminat
     return {
         
         'error_code': value['errorCode'],
-        'error_message': value['errorMessage'],
         'type': value['type'],
-        'content': value['content'],
-        'file_type': value['fileType'],
-        'num_lines': value['numLines'],
-        'start_line': value['startLine'],
-        'total_lines': value['totalLines'],
-        'is_file_update': value['isFileUpdate'],
-        'lines': value['lines'],
-        'new_lines': value['newLines'],
-        'new_start': value['newStart'],
-        'old_lines': value['oldLines'],
-        'old_start': value['oldStart'],
+        'content': ((value['content'] as Array<any>).map(MRCodeExecutionOutputBlockToJSON)),
+        'return_code': value['returnCode'],
+        'stderr': value['stderr'],
+        'stdout': value['stdout'],
+        'encrypted_stdout': value['encryptedStdout'],
     };
 }
 

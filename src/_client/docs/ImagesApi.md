@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**createImageV1ImagesGenerationsPost**](ImagesApi.md#createimagev1imagesgenerationspost) | **POST** /v1/images/generations | Create Image |
+| [**imagesCreateImage**](ImagesApi.md#imagescreateimage) | **POST** /api/v1/images/generations | Create Image |
 
 
 
-## createImageV1ImagesGenerationsPost
+## imagesCreateImage
 
-> ImagesResponse createImageV1ImagesGenerationsPost(imageGenerationRequest)
+> ImagesResponse imagesCreateImage(imageGenerationRequest)
 
 Create Image
 
@@ -23,7 +23,7 @@ import {
   Configuration,
   ImagesApi,
 } from '';
-import type { CreateImageV1ImagesGenerationsPostRequest } from '';
+import type { ImagesCreateImageRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -38,10 +38,10 @@ async function example() {
   const body = {
     // ImageGenerationRequest
     imageGenerationRequest: ...,
-  } satisfies CreateImageV1ImagesGenerationsPostRequest;
+  } satisfies ImagesCreateImageRequest;
 
   try {
-    const data = await api.createImageV1ImagesGenerationsPost(body);
+    const data = await api.imagesCreateImage(body);
     console.log(data);
   } catch (error) {
     console.error(error);

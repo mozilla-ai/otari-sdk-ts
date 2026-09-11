@@ -24,11 +24,11 @@ import {
     HTTPValidationErrorToJSON,
 } from '../models/HTTPValidationError.js';
 
-export interface CreateSpeechV1AudioSpeechPostRequest {
+export interface AudioCreateSpeechRequest {
     audioSpeechRequest: AudioSpeechRequest;
 }
 
-export interface CreateTranscriptionV1AudioTranscriptionsPostRequest {
+export interface AudioCreateTranscriptionRequest {
     file: string;
     model: string;
     language?: string | null;
@@ -44,13 +44,13 @@ export interface CreateTranscriptionV1AudioTranscriptionsPostRequest {
 export class AudioApi extends runtime.BaseAPI {
 
     /**
-     * Creates request options for createSpeechV1AudioSpeechPost without sending the request
+     * Creates request options for audioCreateSpeech without sending the request
      */
-    async createSpeechV1AudioSpeechPostRequestOpts(requestParameters: CreateSpeechV1AudioSpeechPostRequest): Promise<runtime.RequestOpts> {
+    async audioCreateSpeechRequestOpts(requestParameters: AudioCreateSpeechRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['audioSpeechRequest'] == null) {
             throw new runtime.RequiredError(
                 'audioSpeechRequest',
-                'Required parameter "audioSpeechRequest" was null or undefined when calling createSpeechV1AudioSpeechPost().'
+                'Required parameter "audioSpeechRequest" was null or undefined when calling audioCreateSpeech().'
             );
         }
 
@@ -69,7 +69,7 @@ export class AudioApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/audio/speech`;
+        let urlPath = `/api/v1/audio/speech`;
 
         return {
             path: urlPath,
@@ -84,8 +84,8 @@ export class AudioApi extends runtime.BaseAPI {
      * OpenAI-compatible audio speech (TTS) endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Create Speech
      */
-    async createSpeechV1AudioSpeechPostRaw(requestParameters: CreateSpeechV1AudioSpeechPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        const requestOptions = await this.createSpeechV1AudioSpeechPostRequestOpts(requestParameters);
+    async audioCreateSpeechRaw(requestParameters: AudioCreateSpeechRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.audioCreateSpeechRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -99,26 +99,26 @@ export class AudioApi extends runtime.BaseAPI {
      * OpenAI-compatible audio speech (TTS) endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Create Speech
      */
-    async createSpeechV1AudioSpeechPost(requestParameters: CreateSpeechV1AudioSpeechPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
-        const response = await this.createSpeechV1AudioSpeechPostRaw(requestParameters, initOverrides);
+    async audioCreateSpeech(requestParameters: AudioCreateSpeechRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.audioCreateSpeechRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for createTranscriptionV1AudioTranscriptionsPost without sending the request
+     * Creates request options for audioCreateTranscription without sending the request
      */
-    async createTranscriptionV1AudioTranscriptionsPostRequestOpts(requestParameters: CreateTranscriptionV1AudioTranscriptionsPostRequest): Promise<runtime.RequestOpts> {
+    async audioCreateTranscriptionRequestOpts(requestParameters: AudioCreateTranscriptionRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['file'] == null) {
             throw new runtime.RequiredError(
                 'file',
-                'Required parameter "file" was null or undefined when calling createTranscriptionV1AudioTranscriptionsPost().'
+                'Required parameter "file" was null or undefined when calling audioCreateTranscription().'
             );
         }
 
         if (requestParameters['model'] == null) {
             throw new runtime.RequiredError(
                 'model',
-                'Required parameter "model" was null or undefined when calling createTranscriptionV1AudioTranscriptionsPost().'
+                'Required parameter "model" was null or undefined when calling audioCreateTranscription().'
             );
         }
 
@@ -177,7 +177,7 @@ export class AudioApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/audio/transcriptions`;
+        let urlPath = `/api/v1/audio/transcriptions`;
 
         return {
             path: urlPath,
@@ -192,8 +192,8 @@ export class AudioApi extends runtime.BaseAPI {
      * OpenAI-compatible audio transcription endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Create Transcription
      */
-    async createTranscriptionV1AudioTranscriptionsPostRaw(requestParameters: CreateTranscriptionV1AudioTranscriptionsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        const requestOptions = await this.createTranscriptionV1AudioTranscriptionsPostRequestOpts(requestParameters);
+    async audioCreateTranscriptionRaw(requestParameters: AudioCreateTranscriptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.audioCreateTranscriptionRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -207,8 +207,8 @@ export class AudioApi extends runtime.BaseAPI {
      * OpenAI-compatible audio transcription endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Create Transcription
      */
-    async createTranscriptionV1AudioTranscriptionsPost(requestParameters: CreateTranscriptionV1AudioTranscriptionsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
-        const response = await this.createTranscriptionV1AudioTranscriptionsPostRaw(requestParameters, initOverrides);
+    async audioCreateTranscription(requestParameters: AudioCreateTranscriptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.audioCreateTranscriptionRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

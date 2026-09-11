@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**createEmbeddingV1EmbeddingsPost**](EmbeddingsApi.md#createembeddingv1embeddingspost) | **POST** /v1/embeddings | Create Embedding |
+| [**embeddingsCreateEmbedding**](EmbeddingsApi.md#embeddingscreateembedding) | **POST** /api/v1/embeddings | Create Embedding |
 
 
 
-## createEmbeddingV1EmbeddingsPost
+## embeddingsCreateEmbedding
 
-> CreateEmbeddingResponse createEmbeddingV1EmbeddingsPost(embeddingRequest)
+> CreateEmbeddingResponse embeddingsCreateEmbedding(embeddingRequest)
 
 Create Embedding
 
@@ -23,7 +23,7 @@ import {
   Configuration,
   EmbeddingsApi,
 } from '';
-import type { CreateEmbeddingV1EmbeddingsPostRequest } from '';
+import type { EmbeddingsCreateEmbeddingRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -38,10 +38,10 @@ async function example() {
   const body = {
     // EmbeddingRequest
     embeddingRequest: ...,
-  } satisfies CreateEmbeddingV1EmbeddingsPostRequest;
+  } satisfies EmbeddingsCreateEmbeddingRequest;
 
   try {
-    const data = await api.createEmbeddingV1EmbeddingsPost(body);
+    const data = await api.embeddingsCreateEmbedding(body);
     console.log(data);
   } catch (error) {
     console.error(error);

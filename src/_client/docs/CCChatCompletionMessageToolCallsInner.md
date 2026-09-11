@@ -9,6 +9,7 @@ Name | Type
 `id` | string
 `_function` | [CCFunction](CCFunction.md)
 `type` | string
+`extraContent` | { [key: string]: any; }
 `custom` | [CCCustom](CCCustom.md)
 
 ## Example
@@ -21,6 +22,7 @@ const example = {
   "id": null,
   "_function": null,
   "type": null,
+  "extraContent": null,
   "custom": null,
 } satisfies CCChatCompletionMessageToolCallsInner
 

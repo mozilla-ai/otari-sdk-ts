@@ -58,6 +58,12 @@ export interface MRToolUseBlock {
      * @memberof MRToolUseBlock
      */
     type: MRToolUseBlockTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof MRToolUseBlock
+     */
+    toolsetName?: string | null;
 }
 
 
@@ -97,6 +103,7 @@ export function MRToolUseBlockFromJSONTyped(json: any, ignoreDiscriminator: bool
         'input': json['input'],
         'name': json['name'],
         'type': json['type'],
+        'toolsetName': json['toolset_name'] == null ? undefined : json['toolset_name'],
     };
 }
 
@@ -117,6 +124,7 @@ export function MRToolUseBlockToJSONTyped(value?: MRToolUseBlock | null, ignoreD
         'input': value['input'],
         'name': value['name'],
         'type': value['type'],
+        'toolset_name': value['toolsetName'],
     };
 }
 

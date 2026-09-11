@@ -39,26 +39,26 @@ import {
     SetPricingRequestToJSON,
 } from '../models/SetPricingRequest.js';
 
-export interface DeletePricingV1PricingModelKeyDeleteRequest {
+export interface PricingDeletePricingRequest {
     modelKey: string;
     effectiveAt?: Date | null;
 }
 
-export interface GetPricingHistoryV1PricingModelKeyHistoryGetRequest {
-    modelKey: string;
-}
-
-export interface GetPricingV1PricingModelKeyGetRequest {
+export interface PricingGetPricingRequest {
     modelKey: string;
     asOf?: Date | null;
 }
 
-export interface ListPricingV1PricingGetRequest {
+export interface PricingGetPricingHistoryRequest {
+    modelKey: string;
+}
+
+export interface PricingListPricingRequest {
     skip?: number;
     limit?: number;
 }
 
-export interface SetPricingV1PricingPostRequest {
+export interface PricingSetPricingRequest {
     setPricingRequest: SetPricingRequest;
 }
 
@@ -68,9 +68,9 @@ export interface SetPricingV1PricingPostRequest {
 export class PricingApi extends runtime.BaseAPI {
 
     /**
-     * Creates request options for confirmPricingRefreshV1PricingRefreshConfirmPost without sending the request
+     * Creates request options for pricingConfirmPricingRefresh without sending the request
      */
-    async confirmPricingRefreshV1PricingRefreshConfirmPostRequestOpts(): Promise<runtime.RequestOpts> {
+    async pricingConfirmPricingRefreshRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -84,7 +84,7 @@ export class PricingApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/pricing/refresh/confirm`;
+        let urlPath = `/api/v1/pricing/refresh/confirm`;
 
         return {
             path: urlPath,
@@ -98,8 +98,8 @@ export class PricingApi extends runtime.BaseAPI {
      * Activate the latest reviewed default-price snapshot.
      * Confirm Pricing Refresh
      */
-    async confirmPricingRefreshV1PricingRefreshConfirmPostRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PricingRefreshConfirmationResponse>> {
-        const requestOptions = await this.confirmPricingRefreshV1PricingRefreshConfirmPostRequestOpts();
+    async pricingConfirmPricingRefreshRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PricingRefreshConfirmationResponse>> {
+        const requestOptions = await this.pricingConfirmPricingRefreshRequestOpts();
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => PricingRefreshConfirmationResponseFromJSON(jsonValue));
@@ -109,19 +109,19 @@ export class PricingApi extends runtime.BaseAPI {
      * Activate the latest reviewed default-price snapshot.
      * Confirm Pricing Refresh
      */
-    async confirmPricingRefreshV1PricingRefreshConfirmPost(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PricingRefreshConfirmationResponse> {
-        const response = await this.confirmPricingRefreshV1PricingRefreshConfirmPostRaw(initOverrides);
+    async pricingConfirmPricingRefresh(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PricingRefreshConfirmationResponse> {
+        const response = await this.pricingConfirmPricingRefreshRaw(initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for deletePricingV1PricingModelKeyDelete without sending the request
+     * Creates request options for pricingDeletePricing without sending the request
      */
-    async deletePricingV1PricingModelKeyDeleteRequestOpts(requestParameters: DeletePricingV1PricingModelKeyDeleteRequest): Promise<runtime.RequestOpts> {
+    async pricingDeletePricingRequestOpts(requestParameters: PricingDeletePricingRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['modelKey'] == null) {
             throw new runtime.RequiredError(
                 'modelKey',
-                'Required parameter "modelKey" was null or undefined when calling deletePricingV1PricingModelKeyDelete().'
+                'Required parameter "modelKey" was null or undefined when calling pricingDeletePricing().'
             );
         }
 
@@ -142,7 +142,7 @@ export class PricingApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/pricing/{model_key}`;
+        let urlPath = `/api/v1/pricing/{model_key}`;
         urlPath = urlPath.replace('{model_key}', encodeURIComponent(String(requestParameters['modelKey'])));
 
         return {
@@ -157,8 +157,8 @@ export class PricingApi extends runtime.BaseAPI {
      * Delete pricing entries for a model.
      * Delete Pricing
      */
-    async deletePricingV1PricingModelKeyDeleteRaw(requestParameters: DeletePricingV1PricingModelKeyDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        const requestOptions = await this.deletePricingV1PricingModelKeyDeleteRequestOpts(requestParameters);
+    async pricingDeletePricingRaw(requestParameters: PricingDeletePricingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.pricingDeletePricingRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -168,73 +168,18 @@ export class PricingApi extends runtime.BaseAPI {
      * Delete pricing entries for a model.
      * Delete Pricing
      */
-    async deletePricingV1PricingModelKeyDelete(requestParameters: DeletePricingV1PricingModelKeyDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deletePricingV1PricingModelKeyDeleteRaw(requestParameters, initOverrides);
+    async pricingDeletePricing(requestParameters: PricingDeletePricingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.pricingDeletePricingRaw(requestParameters, initOverrides);
     }
 
     /**
-     * Creates request options for getPricingHistoryV1PricingModelKeyHistoryGet without sending the request
+     * Creates request options for pricingGetPricing without sending the request
      */
-    async getPricingHistoryV1PricingModelKeyHistoryGetRequestOpts(requestParameters: GetPricingHistoryV1PricingModelKeyHistoryGetRequest): Promise<runtime.RequestOpts> {
+    async pricingGetPricingRequestOpts(requestParameters: PricingGetPricingRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['modelKey'] == null) {
             throw new runtime.RequiredError(
                 'modelKey',
-                'Required parameter "modelKey" was null or undefined when calling getPricingHistoryV1PricingModelKeyHistoryGet().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
-        }
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
-        }
-
-
-        let urlPath = `/v1/pricing/{model_key}/history`;
-        urlPath = urlPath.replace('{model_key}', encodeURIComponent(String(requestParameters['modelKey'])));
-
-        return {
-            path: urlPath,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        };
-    }
-
-    /**
-     * Return the full pricing history for a model.
-     * Get Pricing History
-     */
-    async getPricingHistoryV1PricingModelKeyHistoryGetRaw(requestParameters: GetPricingHistoryV1PricingModelKeyHistoryGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<PricingResponse>>> {
-        const requestOptions = await this.getPricingHistoryV1PricingModelKeyHistoryGetRequestOpts(requestParameters);
-        const response = await this.request(requestOptions, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(PricingResponseFromJSON));
-    }
-
-    /**
-     * Return the full pricing history for a model.
-     * Get Pricing History
-     */
-    async getPricingHistoryV1PricingModelKeyHistoryGet(requestParameters: GetPricingHistoryV1PricingModelKeyHistoryGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<PricingResponse>> {
-        const response = await this.getPricingHistoryV1PricingModelKeyHistoryGetRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Creates request options for getPricingV1PricingModelKeyGet without sending the request
-     */
-    async getPricingV1PricingModelKeyGetRequestOpts(requestParameters: GetPricingV1PricingModelKeyGetRequest): Promise<runtime.RequestOpts> {
-        if (requestParameters['modelKey'] == null) {
-            throw new runtime.RequiredError(
-                'modelKey',
-                'Required parameter "modelKey" was null or undefined when calling getPricingV1PricingModelKeyGet().'
+                'Required parameter "modelKey" was null or undefined when calling pricingGetPricing().'
             );
         }
 
@@ -255,7 +200,7 @@ export class PricingApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/pricing/{model_key}`;
+        let urlPath = `/api/v1/pricing/{model_key}`;
         urlPath = urlPath.replace('{model_key}', encodeURIComponent(String(requestParameters['modelKey'])));
 
         return {
@@ -270,8 +215,8 @@ export class PricingApi extends runtime.BaseAPI {
      * Get pricing for a specific model as of a timestamp.
      * Get Pricing
      */
-    async getPricingV1PricingModelKeyGetRaw(requestParameters: GetPricingV1PricingModelKeyGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PricingResponse>> {
-        const requestOptions = await this.getPricingV1PricingModelKeyGetRequestOpts(requestParameters);
+    async pricingGetPricingRaw(requestParameters: PricingGetPricingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PricingResponse>> {
+        const requestOptions = await this.pricingGetPricingRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => PricingResponseFromJSON(jsonValue));
@@ -281,15 +226,70 @@ export class PricingApi extends runtime.BaseAPI {
      * Get pricing for a specific model as of a timestamp.
      * Get Pricing
      */
-    async getPricingV1PricingModelKeyGet(requestParameters: GetPricingV1PricingModelKeyGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PricingResponse> {
-        const response = await this.getPricingV1PricingModelKeyGetRaw(requestParameters, initOverrides);
+    async pricingGetPricing(requestParameters: PricingGetPricingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PricingResponse> {
+        const response = await this.pricingGetPricingRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for listPricingV1PricingGet without sending the request
+     * Creates request options for pricingGetPricingHistory without sending the request
      */
-    async listPricingV1PricingGetRequestOpts(requestParameters: ListPricingV1PricingGetRequest): Promise<runtime.RequestOpts> {
+    async pricingGetPricingHistoryRequestOpts(requestParameters: PricingGetPricingHistoryRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['modelKey'] == null) {
+            throw new runtime.RequiredError(
+                'modelKey',
+                'Required parameter "modelKey" was null or undefined when calling pricingGetPricingHistory().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["x-api-key"] = await this.configuration.apiKey("x-api-key"); // XApiKeyAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Otari-Key"] = await this.configuration.apiKey("Otari-Key"); // ApiKeyAuth authentication
+        }
+
+
+        let urlPath = `/api/v1/pricing/{model_key}/history`;
+        urlPath = urlPath.replace('{model_key}', encodeURIComponent(String(requestParameters['modelKey'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Return the full pricing history for a model.
+     * Get Pricing History
+     */
+    async pricingGetPricingHistoryRaw(requestParameters: PricingGetPricingHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<PricingResponse>>> {
+        const requestOptions = await this.pricingGetPricingHistoryRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(PricingResponseFromJSON));
+    }
+
+    /**
+     * Return the full pricing history for a model.
+     * Get Pricing History
+     */
+    async pricingGetPricingHistory(requestParameters: PricingGetPricingHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<PricingResponse>> {
+        const response = await this.pricingGetPricingHistoryRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for pricingListPricing without sending the request
+     */
+    async pricingListPricingRequestOpts(requestParameters: PricingListPricingRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['skip'] != null) {
@@ -311,7 +311,7 @@ export class PricingApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/pricing`;
+        let urlPath = `/api/v1/pricing`;
 
         return {
             path: urlPath,
@@ -325,8 +325,8 @@ export class PricingApi extends runtime.BaseAPI {
      * List all model pricing.
      * List Pricing
      */
-    async listPricingV1PricingGetRaw(requestParameters: ListPricingV1PricingGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<PricingResponse>>> {
-        const requestOptions = await this.listPricingV1PricingGetRequestOpts(requestParameters);
+    async pricingListPricingRaw(requestParameters: PricingListPricingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<PricingResponse>>> {
+        const requestOptions = await this.pricingListPricingRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(PricingResponseFromJSON));
@@ -336,15 +336,15 @@ export class PricingApi extends runtime.BaseAPI {
      * List all model pricing.
      * List Pricing
      */
-    async listPricingV1PricingGet(requestParameters: ListPricingV1PricingGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<PricingResponse>> {
-        const response = await this.listPricingV1PricingGetRaw(requestParameters, initOverrides);
+    async pricingListPricing(requestParameters: PricingListPricingRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<PricingResponse>> {
+        const response = await this.pricingListPricingRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for previewPricingRefreshV1PricingRefreshPost without sending the request
+     * Creates request options for pricingPreviewPricingRefresh without sending the request
      */
-    async previewPricingRefreshV1PricingRefreshPostRequestOpts(): Promise<runtime.RequestOpts> {
+    async pricingPreviewPricingRefreshRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -358,7 +358,7 @@ export class PricingApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/pricing/refresh`;
+        let urlPath = `/api/v1/pricing/refresh`;
 
         return {
             path: urlPath,
@@ -372,8 +372,8 @@ export class PricingApi extends runtime.BaseAPI {
      * Fetch the latest defaults and hold them for operator review.
      * Preview Pricing Refresh
      */
-    async previewPricingRefreshV1PricingRefreshPostRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PricingRefreshPreviewResponse>> {
-        const requestOptions = await this.previewPricingRefreshV1PricingRefreshPostRequestOpts();
+    async pricingPreviewPricingRefreshRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PricingRefreshPreviewResponse>> {
+        const requestOptions = await this.pricingPreviewPricingRefreshRequestOpts();
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => PricingRefreshPreviewResponseFromJSON(jsonValue));
@@ -383,15 +383,15 @@ export class PricingApi extends runtime.BaseAPI {
      * Fetch the latest defaults and hold them for operator review.
      * Preview Pricing Refresh
      */
-    async previewPricingRefreshV1PricingRefreshPost(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PricingRefreshPreviewResponse> {
-        const response = await this.previewPricingRefreshV1PricingRefreshPostRaw(initOverrides);
+    async pricingPreviewPricingRefresh(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PricingRefreshPreviewResponse> {
+        const response = await this.pricingPreviewPricingRefreshRaw(initOverrides);
         return await response.value();
     }
 
     /**
-     * Creates request options for rejectPricingRefreshV1PricingRefreshRejectPost without sending the request
+     * Creates request options for pricingRejectPricingRefresh without sending the request
      */
-    async rejectPricingRefreshV1PricingRefreshRejectPostRequestOpts(): Promise<runtime.RequestOpts> {
+    async pricingRejectPricingRefreshRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -405,7 +405,7 @@ export class PricingApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/pricing/refresh/reject`;
+        let urlPath = `/api/v1/pricing/refresh/reject`;
 
         return {
             path: urlPath,
@@ -419,8 +419,8 @@ export class PricingApi extends runtime.BaseAPI {
      * Discard a reviewed default-price snapshot without applying it.
      * Reject Pricing Refresh
      */
-    async rejectPricingRefreshV1PricingRefreshRejectPostRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        const requestOptions = await this.rejectPricingRefreshV1PricingRefreshRejectPostRequestOpts();
+    async pricingRejectPricingRefreshRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.pricingRejectPricingRefreshRequestOpts();
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -430,18 +430,18 @@ export class PricingApi extends runtime.BaseAPI {
      * Discard a reviewed default-price snapshot without applying it.
      * Reject Pricing Refresh
      */
-    async rejectPricingRefreshV1PricingRefreshRejectPost(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.rejectPricingRefreshV1PricingRefreshRejectPostRaw(initOverrides);
+    async pricingRejectPricingRefresh(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.pricingRejectPricingRefreshRaw(initOverrides);
     }
 
     /**
-     * Creates request options for setPricingV1PricingPost without sending the request
+     * Creates request options for pricingSetPricing without sending the request
      */
-    async setPricingV1PricingPostRequestOpts(requestParameters: SetPricingV1PricingPostRequest): Promise<runtime.RequestOpts> {
+    async pricingSetPricingRequestOpts(requestParameters: PricingSetPricingRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['setPricingRequest'] == null) {
             throw new runtime.RequiredError(
                 'setPricingRequest',
-                'Required parameter "setPricingRequest" was null or undefined when calling setPricingV1PricingPost().'
+                'Required parameter "setPricingRequest" was null or undefined when calling pricingSetPricing().'
             );
         }
 
@@ -460,7 +460,7 @@ export class PricingApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/pricing`;
+        let urlPath = `/api/v1/pricing`;
 
         return {
             path: urlPath,
@@ -475,8 +475,8 @@ export class PricingApi extends runtime.BaseAPI {
      * Set or update pricing for a model.  Rejects an alias or a routing policy: pricing, budgets, and usage all key on the model a request resolves to, so a row stored under either name would never be read.
      * Set Pricing
      */
-    async setPricingV1PricingPostRaw(requestParameters: SetPricingV1PricingPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PricingResponse>> {
-        const requestOptions = await this.setPricingV1PricingPostRequestOpts(requestParameters);
+    async pricingSetPricingRaw(requestParameters: PricingSetPricingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PricingResponse>> {
+        const requestOptions = await this.pricingSetPricingRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => PricingResponseFromJSON(jsonValue));
@@ -486,8 +486,8 @@ export class PricingApi extends runtime.BaseAPI {
      * Set or update pricing for a model.  Rejects an alias or a routing policy: pricing, budgets, and usage all key on the model a request resolves to, so a row stored under either name would never be read.
      * Set Pricing
      */
-    async setPricingV1PricingPost(requestParameters: SetPricingV1PricingPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PricingResponse> {
-        const response = await this.setPricingV1PricingPostRaw(requestParameters, initOverrides);
+    async pricingSetPricing(requestParameters: PricingSetPricingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PricingResponse> {
+        const response = await this.pricingSetPricingRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

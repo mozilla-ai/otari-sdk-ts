@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**createUserV1UsersPost**](UsersApi.md#createuserv1userspost) | **POST** /v1/users | Create User |
-| [**deleteUserV1UsersUserIdDelete**](UsersApi.md#deleteuserv1usersuseriddelete) | **DELETE** /v1/users/{user_id} | Delete User |
-| [**getUserUsageV1UsersUserIdUsageGet**](UsersApi.md#getuserusagev1usersuseridusageget) | **GET** /v1/users/{user_id}/usage | Get User Usage |
-| [**getUserV1UsersUserIdGet**](UsersApi.md#getuserv1usersuseridget) | **GET** /v1/users/{user_id} | Get User |
-| [**listUsersV1UsersGet**](UsersApi.md#listusersv1usersget) | **GET** /v1/users | List Users |
-| [**updateUserV1UsersUserIdPatch**](UsersApi.md#updateuserv1usersuseridpatch) | **PATCH** /v1/users/{user_id} | Update User |
+| [**usersCreateUser**](UsersApi.md#userscreateuser) | **POST** /api/v1/users | Create User |
+| [**usersDeleteUser**](UsersApi.md#usersdeleteuser) | **DELETE** /api/v1/users/{user_id} | Delete User |
+| [**usersGetUser**](UsersApi.md#usersgetuser) | **GET** /api/v1/users/{user_id} | Get User |
+| [**usersGetUserUsage**](UsersApi.md#usersgetuserusage) | **GET** /api/v1/users/{user_id}/usage | Get User Usage |
+| [**usersListUsers**](UsersApi.md#userslistusers) | **GET** /api/v1/users | List Users |
+| [**usersUpdateUser**](UsersApi.md#usersupdateuser) | **PATCH** /api/v1/users/{user_id} | Update User |
 
 
 
-## createUserV1UsersPost
+## usersCreateUser
 
-> UserResponse createUserV1UsersPost(createUserRequest)
+> UserResponse usersCreateUser(createUserRequest)
 
 Create User
 
@@ -28,7 +28,7 @@ import {
   Configuration,
   UsersApi,
 } from '';
-import type { CreateUserV1UsersPostRequest } from '';
+import type { UsersCreateUserRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -43,10 +43,10 @@ async function example() {
   const body = {
     // CreateUserRequest
     createUserRequest: ...,
-  } satisfies CreateUserV1UsersPostRequest;
+  } satisfies UsersCreateUserRequest;
 
   try {
-    const data = await api.createUserV1UsersPost(body);
+    const data = await api.usersCreateUser(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -87,13 +87,13 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## deleteUserV1UsersUserIdDelete
+## usersDeleteUser
 
-> deleteUserV1UsersUserIdDelete(userId)
+> usersDeleteUser(userId)
 
 Delete User
 
-Delete a user.
+Delete a user, and erase the telemetry captured under their name.
 
 ### Example
 
@@ -102,7 +102,7 @@ import {
   Configuration,
   UsersApi,
 } from '';
-import type { DeleteUserV1UsersUserIdDeleteRequest } from '';
+import type { UsersDeleteUserRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -117,10 +117,10 @@ async function example() {
   const body = {
     // string
     userId: userId_example,
-  } satisfies DeleteUserV1UsersUserIdDeleteRequest;
+  } satisfies UsersDeleteUserRequest;
 
   try {
-    const data = await api.deleteUserV1UsersUserIdDelete(body);
+    const data = await api.usersDeleteUser(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -161,9 +161,83 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## getUserUsageV1UsersUserIdUsageGet
+## usersGetUser
 
-> Array&lt;UsageLogResponse&gt; getUserUsageV1UsersUserIdUsageGet(userId, skip, limit)
+> UserResponse usersGetUser(userId)
+
+Get User
+
+Get details of a specific user.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  UsersApi,
+} from '';
+import type { UsersGetUserRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new UsersApi(config);
+
+  const body = {
+    // string
+    userId: userId_example,
+  } satisfies UsersGetUserRequest;
+
+  try {
+    const data = await api.usersGetUser(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**UserResponse**](UserResponse.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## usersGetUserUsage
+
+> Array&lt;UsageLogResponse&gt; usersGetUserUsage(userId, skip, limit)
 
 Get User Usage
 
@@ -176,7 +250,7 @@ import {
   Configuration,
   UsersApi,
 } from '';
-import type { GetUserUsageV1UsersUserIdUsageGetRequest } from '';
+import type { UsersGetUserUsageRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -195,10 +269,10 @@ async function example() {
     skip: 56,
     // number (optional)
     limit: 56,
-  } satisfies GetUserUsageV1UsersUserIdUsageGetRequest;
+  } satisfies UsersGetUserUsageRequest;
 
   try {
-    const data = await api.getUserUsageV1UsersUserIdUsageGet(body);
+    const data = await api.usersGetUserUsage(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -241,83 +315,9 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## getUserV1UsersUserIdGet
+## usersListUsers
 
-> UserResponse getUserV1UsersUserIdGet(userId)
-
-Get User
-
-Get details of a specific user.
-
-### Example
-
-```ts
-import {
-  Configuration,
-  UsersApi,
-} from '';
-import type { GetUserV1UsersUserIdGetRequest } from '';
-
-async function example() {
-  console.log("🚀 Testing  SDK...");
-  const config = new Configuration({ 
-    // To configure API key authorization: XApiKeyAuth
-    apiKey: "YOUR API KEY",
-    // To configure API key authorization: ApiKeyAuth
-    apiKey: "YOUR API KEY",
-  });
-  const api = new UsersApi(config);
-
-  const body = {
-    // string
-    userId: userId_example,
-  } satisfies GetUserV1UsersUserIdGetRequest;
-
-  try {
-    const data = await api.getUserV1UsersUserIdGet(body);
-    console.log(data);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// Run the test
-example().catch(console.error);
-```
-
-### Parameters
-
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-
-### Return type
-
-[**UserResponse**](UserResponse.md)
-
-### Authorization
-
-[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: `application/json`
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | Successful Response |  -  |
-| **422** | Validation Error |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-
-## listUsersV1UsersGet
-
-> Array&lt;UserResponse&gt; listUsersV1UsersGet(skip, limit)
+> Array&lt;UserResponse&gt; usersListUsers(skip, limit)
 
 List Users
 
@@ -330,7 +330,7 @@ import {
   Configuration,
   UsersApi,
 } from '';
-import type { ListUsersV1UsersGetRequest } from '';
+import type { UsersListUsersRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -347,10 +347,10 @@ async function example() {
     skip: 56,
     // number (optional)
     limit: 56,
-  } satisfies ListUsersV1UsersGetRequest;
+  } satisfies UsersListUsersRequest;
 
   try {
-    const data = await api.listUsersV1UsersGet(body);
+    const data = await api.usersListUsers(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -392,9 +392,9 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## updateUserV1UsersUserIdPatch
+## usersUpdateUser
 
-> UserResponse updateUserV1UsersUserIdPatch(userId, updateUserRequest)
+> UserResponse usersUpdateUser(userId, updateUserRequest)
 
 Update User
 
@@ -407,7 +407,7 @@ import {
   Configuration,
   UsersApi,
 } from '';
-import type { UpdateUserV1UsersUserIdPatchRequest } from '';
+import type { UsersUpdateUserRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -424,10 +424,10 @@ async function example() {
     userId: userId_example,
     // UpdateUserRequest
     updateUserRequest: ...,
-  } satisfies UpdateUserV1UsersUserIdPatchRequest;
+  } satisfies UsersUpdateUserRequest;
 
   try {
-    const data = await api.updateUserV1UsersUserIdPatch(body);
+    const data = await api.usersUpdateUser(body);
     console.log(data);
   } catch (error) {
     console.error(error);

@@ -29,7 +29,7 @@ import {
     ImagesResponseToJSON,
 } from '../models/ImagesResponse.js';
 
-export interface CreateImageV1ImagesGenerationsPostRequest {
+export interface ImagesCreateImageRequest {
     imageGenerationRequest: ImageGenerationRequest;
 }
 
@@ -39,13 +39,13 @@ export interface CreateImageV1ImagesGenerationsPostRequest {
 export class ImagesApi extends runtime.BaseAPI {
 
     /**
-     * Creates request options for createImageV1ImagesGenerationsPost without sending the request
+     * Creates request options for imagesCreateImage without sending the request
      */
-    async createImageV1ImagesGenerationsPostRequestOpts(requestParameters: CreateImageV1ImagesGenerationsPostRequest): Promise<runtime.RequestOpts> {
+    async imagesCreateImageRequestOpts(requestParameters: ImagesCreateImageRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['imageGenerationRequest'] == null) {
             throw new runtime.RequiredError(
                 'imageGenerationRequest',
-                'Required parameter "imageGenerationRequest" was null or undefined when calling createImageV1ImagesGenerationsPost().'
+                'Required parameter "imageGenerationRequest" was null or undefined when calling imagesCreateImage().'
             );
         }
 
@@ -64,7 +64,7 @@ export class ImagesApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/images/generations`;
+        let urlPath = `/api/v1/images/generations`;
 
         return {
             path: urlPath,
@@ -79,8 +79,8 @@ export class ImagesApi extends runtime.BaseAPI {
      * OpenAI-compatible image generation endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Create Image
      */
-    async createImageV1ImagesGenerationsPostRaw(requestParameters: CreateImageV1ImagesGenerationsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ImagesResponse>> {
-        const requestOptions = await this.createImageV1ImagesGenerationsPostRequestOpts(requestParameters);
+    async imagesCreateImageRaw(requestParameters: ImagesCreateImageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ImagesResponse>> {
+        const requestOptions = await this.imagesCreateImageRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ImagesResponseFromJSON(jsonValue));
@@ -90,8 +90,8 @@ export class ImagesApi extends runtime.BaseAPI {
      * OpenAI-compatible image generation endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Create Image
      */
-    async createImageV1ImagesGenerationsPost(requestParameters: CreateImageV1ImagesGenerationsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ImagesResponse> {
-        const response = await this.createImageV1ImagesGenerationsPostRaw(requestParameters, initOverrides);
+    async imagesCreateImage(requestParameters: ImagesCreateImageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ImagesResponse> {
+        const response = await this.imagesCreateImageRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

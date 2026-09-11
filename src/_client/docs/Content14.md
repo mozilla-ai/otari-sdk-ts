@@ -7,10 +7,9 @@
 Name | Type
 ------------ | -------------
 `errorCode` | string
+`errorMessage` | string
 `type` | string
-`content` | [MRDocumentBlock](MRDocumentBlock.md)
-`retrievedAt` | string
-`url` | string
+`toolReferences` | [Array&lt;MRToolReferenceBlock&gt;](MRToolReferenceBlock.md)
 
 ## Example
 
@@ -20,10 +19,9 @@ import type { Content14 } from ''
 // TODO: Update the object below with actual values
 const example = {
   "errorCode": null,
+  "errorMessage": null,
   "type": null,
-  "content": null,
-  "retrievedAt": null,
-  "url": null,
+  "toolReferences": null,
 } satisfies Content14
 
 console.log(example)

@@ -1,7 +1,7 @@
 
 # BudgetResponse
 
-Response model for budget information.  ``max_budget`` is the per-user spending limit, and multiple users can share one budget, so the usage rollup is an aggregate over the users assigned to this budget: how many there are and their combined ``spend`` / ``reserved``. Assigning users to a budget is done through the users API (dashboard support lands with user management), so a fresh gateway reports zeros here.
+Response model for budget information.  ``max_budget``, ``token_limit`` and ``request_limit`` are the per-user ceilings, each independent and each unlimited when null, and multiple users can share one budget, so the usage rollup is an aggregate over the users assigned to this budget: how many there are and their combined ``spend`` / ``reserved``. Assigning users to a budget is done through the users API (dashboard support lands with user management), so a fresh gateway reports zeros here.
 
 ## Properties
 
@@ -12,6 +12,10 @@ Name | Type
 `createdAt` | string
 `maxBudget` | number
 `name` | string
+`organizationId` | string
+`requestLimit` | number
+`resetAlignment` | string
+`tokenLimit` | number
 `totalReserved` | number
 `totalSpend` | number
 `updatedAt` | string
@@ -29,6 +33,10 @@ const example = {
   "createdAt": null,
   "maxBudget": null,
   "name": null,
+  "organizationId": null,
+  "requestLimit": null,
+  "resetAlignment": null,
+  "tokenLimit": null,
   "totalReserved": null,
   "totalSpend": null,
   "updatedAt": null,

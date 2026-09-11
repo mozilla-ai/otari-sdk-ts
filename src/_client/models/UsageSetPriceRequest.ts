@@ -153,6 +153,12 @@ export interface UsageSetPriceRequest {
      * @memberof UsageSetPriceRequest
      */
     userId?: UserId | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UsageSetPriceRequest
+     */
+    workspaceId?: string | null;
 }
 
 /**
@@ -192,6 +198,7 @@ export function UsageSetPriceRequestFromJSONTyped(json: any, ignoreDiscriminator
         'status': json['status'] == null ? undefined : json['status'],
         'tool': json['tool'] == null ? undefined : json['tool'],
         'userId': json['user_id'] == null ? undefined : UserIdFromJSON(json['user_id']),
+        'workspaceId': json['workspace_id'] == null ? undefined : json['workspace_id'],
     };
 }
 
@@ -224,6 +231,7 @@ export function UsageSetPriceRequestToJSONTyped(value?: UsageSetPriceRequest | n
         'status': value['status'],
         'tool': value['tool'],
         'user_id': UserIdToJSON(value['userId']),
+        'workspace_id': value['workspaceId'],
     };
 }
 

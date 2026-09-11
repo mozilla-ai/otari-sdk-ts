@@ -41,13 +41,13 @@ export interface CountTokensRequest {
      */
     betas?: Array<string> | null;
     /**
-     * An unsaved policy body to explain.
+     * Provider-native request fields used as defaults (e.g. exa's 'type', searxng's 'engines').
      * @type {{ [key: string]: any; }}
      * @memberof CountTokensRequest
      */
     cacheControl?: { [key: string]: any; } | null;
     /**
-     * An unsaved policy body to explain.
+     * Provider-native request fields used as defaults (e.g. exa's 'type', searxng's 'engines').
      * @type {{ [key: string]: any; }}
      * @memberof CountTokensRequest
      */
@@ -59,7 +59,7 @@ export interface CountTokensRequest {
      */
     messages: Array<{ [key: string]: any; } | null>;
     /**
-     * An unsaved policy body to explain.
+     * Provider-native request fields used as defaults (e.g. exa's 'type', searxng's 'engines').
      * @type {{ [key: string]: any; }}
      * @memberof CountTokensRequest
      */
@@ -77,13 +77,13 @@ export interface CountTokensRequest {
      */
     system?: System | null;
     /**
-     * An unsaved policy body to explain.
+     * Provider-native request fields used as defaults (e.g. exa's 'type', searxng's 'engines').
      * @type {{ [key: string]: any; }}
      * @memberof CountTokensRequest
      */
     thinking?: { [key: string]: any; } | null;
     /**
-     * An unsaved policy body to explain.
+     * Provider-native request fields used as defaults (e.g. exa's 'type', searxng's 'engines').
      * @type {{ [key: string]: any; }}
      * @memberof CountTokensRequest
      */

@@ -13,34 +13,20 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { MRCodeExecutionResultBlock } from './MRCodeExecutionResultBlock.js';
+import type { MRBetaWebSearchResultBlock } from './MRBetaWebSearchResultBlock.js';
 import {
-    MRCodeExecutionResultBlockFromJSON,
-    MRCodeExecutionResultBlockFromJSONTyped,
-    MRCodeExecutionResultBlockToJSON,
-    MRCodeExecutionResultBlockToJSONTyped,
-} from './MRCodeExecutionResultBlock.js';
-import type { MRCodeExecutionOutputBlock } from './MRCodeExecutionOutputBlock.js';
+    MRBetaWebSearchResultBlockFromJSON,
+    MRBetaWebSearchResultBlockFromJSONTyped,
+    MRBetaWebSearchResultBlockToJSON,
+    MRBetaWebSearchResultBlockToJSONTyped,
+} from './MRBetaWebSearchResultBlock.js';
+import type { MRBetaWebSearchToolResultError } from './MRBetaWebSearchToolResultError.js';
 import {
-    MRCodeExecutionOutputBlockFromJSON,
-    MRCodeExecutionOutputBlockFromJSONTyped,
-    MRCodeExecutionOutputBlockToJSON,
-    MRCodeExecutionOutputBlockToJSONTyped,
-} from './MRCodeExecutionOutputBlock.js';
-import type { MREncryptedCodeExecutionResultBlock } from './MREncryptedCodeExecutionResultBlock.js';
-import {
-    MREncryptedCodeExecutionResultBlockFromJSON,
-    MREncryptedCodeExecutionResultBlockFromJSONTyped,
-    MREncryptedCodeExecutionResultBlockToJSON,
-    MREncryptedCodeExecutionResultBlockToJSONTyped,
-} from './MREncryptedCodeExecutionResultBlock.js';
-import type { MRCodeExecutionToolResultError } from './MRCodeExecutionToolResultError.js';
-import {
-    MRCodeExecutionToolResultErrorFromJSON,
-    MRCodeExecutionToolResultErrorFromJSONTyped,
-    MRCodeExecutionToolResultErrorToJSON,
-    MRCodeExecutionToolResultErrorToJSONTyped,
-} from './MRCodeExecutionToolResultError.js';
+    MRBetaWebSearchToolResultErrorFromJSON,
+    MRBetaWebSearchToolResultErrorFromJSONTyped,
+    MRBetaWebSearchToolResultErrorToJSON,
+    MRBetaWebSearchToolResultErrorToJSONTyped,
+} from './MRBetaWebSearchToolResultError.js';
 
 /**
  * 
@@ -60,36 +46,6 @@ export interface Content11 {
      * @memberof Content11
      */
     type: Content11TypeEnum;
-    /**
-     * 
-     * @type {Array<MRCodeExecutionOutputBlock>}
-     * @memberof Content11
-     */
-    content: Array<MRCodeExecutionOutputBlock>;
-    /**
-     * 
-     * @type {number}
-     * @memberof Content11
-     */
-    returnCode: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Content11
-     */
-    stderr: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Content11
-     */
-    stdout: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Content11
-     */
-    encryptedStdout: string;
 }
 
 
@@ -99,8 +55,10 @@ export interface Content11 {
 export const Content11ErrorCodeEnum = {
     InvalidToolInput: 'invalid_tool_input',
     Unavailable: 'unavailable',
+    MaxUsesExceeded: 'max_uses_exceeded',
     TooManyRequests: 'too_many_requests',
-    ExecutionTimeExceeded: 'execution_time_exceeded'
+    QueryTooLong: 'query_too_long',
+    RequestTooLarge: 'request_too_large'
 } as const;
 export type Content11ErrorCodeEnum = typeof Content11ErrorCodeEnum[keyof typeof Content11ErrorCodeEnum];
 
@@ -108,9 +66,7 @@ export type Content11ErrorCodeEnum = typeof Content11ErrorCodeEnum[keyof typeof 
  * @export
  */
 export const Content11TypeEnum = {
-    CodeExecutionToolResultError: 'code_execution_tool_result_error',
-    CodeExecutionResult: 'code_execution_result',
-    EncryptedCodeExecutionResult: 'encrypted_code_execution_result'
+    WebSearchToolResultError: 'web_search_tool_result_error'
 } as const;
 export type Content11TypeEnum = typeof Content11TypeEnum[keyof typeof Content11TypeEnum];
 
@@ -121,11 +77,6 @@ export type Content11TypeEnum = typeof Content11TypeEnum[keyof typeof Content11T
 export function instanceOfContent11(value: object): value is Content11 {
     if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
-    if (!('content' in value) || value['content'] === undefined) return false;
-    if (!('returnCode' in value) || value['returnCode'] === undefined) return false;
-    if (!('stderr' in value) || value['stderr'] === undefined) return false;
-    if (!('stdout' in value) || value['stdout'] === undefined) return false;
-    if (!('encryptedStdout' in value) || value['encryptedStdout'] === undefined) return false;
     return true;
 }
 
@@ -141,11 +92,6 @@ export function Content11FromJSONTyped(json: any, ignoreDiscriminator: boolean):
         
         'errorCode': json['error_code'],
         'type': json['type'],
-        'content': ((json['content'] as Array<any>).map(MRCodeExecutionOutputBlockFromJSON)),
-        'returnCode': json['return_code'],
-        'stderr': json['stderr'],
-        'stdout': json['stdout'],
-        'encryptedStdout': json['encrypted_stdout'],
     };
 }
 
@@ -162,11 +108,6 @@ export function Content11ToJSONTyped(value?: Content11 | null, ignoreDiscriminat
         
         'error_code': value['errorCode'],
         'type': value['type'],
-        'content': ((value['content'] as Array<any>).map(MRCodeExecutionOutputBlockToJSON)),
-        'return_code': value['returnCode'],
-        'stderr': value['stderr'],
-        'stdout': value['stdout'],
-        'encrypted_stdout': value['encryptedStdout'],
     };
 }
 

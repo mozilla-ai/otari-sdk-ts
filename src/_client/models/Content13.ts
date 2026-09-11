@@ -13,27 +13,34 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { MRToolSearchToolResultError } from './MRToolSearchToolResultError.js';
+import type { MRTextEditorCodeExecutionViewResultBlock } from './MRTextEditorCodeExecutionViewResultBlock.js';
 import {
-    MRToolSearchToolResultErrorFromJSON,
-    MRToolSearchToolResultErrorFromJSONTyped,
-    MRToolSearchToolResultErrorToJSON,
-    MRToolSearchToolResultErrorToJSONTyped,
-} from './MRToolSearchToolResultError.js';
-import type { MRToolSearchToolSearchResultBlock } from './MRToolSearchToolSearchResultBlock.js';
+    MRTextEditorCodeExecutionViewResultBlockFromJSON,
+    MRTextEditorCodeExecutionViewResultBlockFromJSONTyped,
+    MRTextEditorCodeExecutionViewResultBlockToJSON,
+    MRTextEditorCodeExecutionViewResultBlockToJSONTyped,
+} from './MRTextEditorCodeExecutionViewResultBlock.js';
+import type { MRTextEditorCodeExecutionToolResultError } from './MRTextEditorCodeExecutionToolResultError.js';
 import {
-    MRToolSearchToolSearchResultBlockFromJSON,
-    MRToolSearchToolSearchResultBlockFromJSONTyped,
-    MRToolSearchToolSearchResultBlockToJSON,
-    MRToolSearchToolSearchResultBlockToJSONTyped,
-} from './MRToolSearchToolSearchResultBlock.js';
-import type { MRToolReferenceBlock } from './MRToolReferenceBlock.js';
+    MRTextEditorCodeExecutionToolResultErrorFromJSON,
+    MRTextEditorCodeExecutionToolResultErrorFromJSONTyped,
+    MRTextEditorCodeExecutionToolResultErrorToJSON,
+    MRTextEditorCodeExecutionToolResultErrorToJSONTyped,
+} from './MRTextEditorCodeExecutionToolResultError.js';
+import type { MRTextEditorCodeExecutionStrReplaceResultBlock } from './MRTextEditorCodeExecutionStrReplaceResultBlock.js';
 import {
-    MRToolReferenceBlockFromJSON,
-    MRToolReferenceBlockFromJSONTyped,
-    MRToolReferenceBlockToJSON,
-    MRToolReferenceBlockToJSONTyped,
-} from './MRToolReferenceBlock.js';
+    MRTextEditorCodeExecutionStrReplaceResultBlockFromJSON,
+    MRTextEditorCodeExecutionStrReplaceResultBlockFromJSONTyped,
+    MRTextEditorCodeExecutionStrReplaceResultBlockToJSON,
+    MRTextEditorCodeExecutionStrReplaceResultBlockToJSONTyped,
+} from './MRTextEditorCodeExecutionStrReplaceResultBlock.js';
+import type { MRTextEditorCodeExecutionCreateResultBlock } from './MRTextEditorCodeExecutionCreateResultBlock.js';
+import {
+    MRTextEditorCodeExecutionCreateResultBlockFromJSON,
+    MRTextEditorCodeExecutionCreateResultBlockFromJSONTyped,
+    MRTextEditorCodeExecutionCreateResultBlockToJSON,
+    MRTextEditorCodeExecutionCreateResultBlockToJSONTyped,
+} from './MRTextEditorCodeExecutionCreateResultBlock.js';
 
 /**
  * 
@@ -61,10 +68,70 @@ export interface Content13 {
     type: Content13TypeEnum;
     /**
      * 
-     * @type {Array<MRToolReferenceBlock>}
+     * @type {string}
      * @memberof Content13
      */
-    toolReferences: Array<MRToolReferenceBlock>;
+    content: string;
+    /**
+     * 
+     * @type {Content13FileTypeEnum}
+     * @memberof Content13
+     */
+    fileType: Content13FileTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content13
+     */
+    numLines?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content13
+     */
+    startLine?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content13
+     */
+    totalLines?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Content13
+     */
+    isFileUpdate: boolean;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Content13
+     */
+    lines?: Array<string>;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content13
+     */
+    newLines?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content13
+     */
+    newStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content13
+     */
+    oldLines?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Content13
+     */
+    oldStart?: number;
 }
 
 
@@ -75,7 +142,8 @@ export const Content13ErrorCodeEnum = {
     InvalidToolInput: 'invalid_tool_input',
     Unavailable: 'unavailable',
     TooManyRequests: 'too_many_requests',
-    ExecutionTimeExceeded: 'execution_time_exceeded'
+    ExecutionTimeExceeded: 'execution_time_exceeded',
+    FileNotFound: 'file_not_found'
 } as const;
 export type Content13ErrorCodeEnum = typeof Content13ErrorCodeEnum[keyof typeof Content13ErrorCodeEnum];
 
@@ -83,10 +151,22 @@ export type Content13ErrorCodeEnum = typeof Content13ErrorCodeEnum[keyof typeof 
  * @export
  */
 export const Content13TypeEnum = {
-    ToolSearchToolResultError: 'tool_search_tool_result_error',
-    ToolSearchToolSearchResult: 'tool_search_tool_search_result'
+    TextEditorCodeExecutionToolResultError: 'text_editor_code_execution_tool_result_error',
+    TextEditorCodeExecutionViewResult: 'text_editor_code_execution_view_result',
+    TextEditorCodeExecutionCreateResult: 'text_editor_code_execution_create_result',
+    TextEditorCodeExecutionStrReplaceResult: 'text_editor_code_execution_str_replace_result'
 } as const;
 export type Content13TypeEnum = typeof Content13TypeEnum[keyof typeof Content13TypeEnum];
+
+/**
+ * @export
+ */
+export const Content13FileTypeEnum = {
+    Text: 'text',
+    Image: 'image',
+    Pdf: 'pdf'
+} as const;
+export type Content13FileTypeEnum = typeof Content13FileTypeEnum[keyof typeof Content13FileTypeEnum];
 
 
 /**
@@ -95,7 +175,9 @@ export type Content13TypeEnum = typeof Content13TypeEnum[keyof typeof Content13T
 export function instanceOfContent13(value: object): value is Content13 {
     if (!('errorCode' in value) || value['errorCode'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
-    if (!('toolReferences' in value) || value['toolReferences'] === undefined) return false;
+    if (!('content' in value) || value['content'] === undefined) return false;
+    if (!('fileType' in value) || value['fileType'] === undefined) return false;
+    if (!('isFileUpdate' in value) || value['isFileUpdate'] === undefined) return false;
     return true;
 }
 
@@ -112,7 +194,17 @@ export function Content13FromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'errorCode': json['error_code'],
         'errorMessage': json['error_message'] == null ? undefined : json['error_message'],
         'type': json['type'],
-        'toolReferences': ((json['tool_references'] as Array<any>).map(MRToolReferenceBlockFromJSON)),
+        'content': json['content'],
+        'fileType': json['file_type'],
+        'numLines': json['num_lines'] == null ? undefined : json['num_lines'],
+        'startLine': json['start_line'] == null ? undefined : json['start_line'],
+        'totalLines': json['total_lines'] == null ? undefined : json['total_lines'],
+        'isFileUpdate': json['is_file_update'],
+        'lines': json['lines'] == null ? undefined : json['lines'],
+        'newLines': json['new_lines'] == null ? undefined : json['new_lines'],
+        'newStart': json['new_start'] == null ? undefined : json['new_start'],
+        'oldLines': json['old_lines'] == null ? undefined : json['old_lines'],
+        'oldStart': json['old_start'] == null ? undefined : json['old_start'],
     };
 }
 
@@ -130,7 +222,17 @@ export function Content13ToJSONTyped(value?: Content13 | null, ignoreDiscriminat
         'error_code': value['errorCode'],
         'error_message': value['errorMessage'],
         'type': value['type'],
-        'tool_references': ((value['toolReferences'] as Array<any>).map(MRToolReferenceBlockToJSON)),
+        'content': value['content'],
+        'file_type': value['fileType'],
+        'num_lines': value['numLines'],
+        'start_line': value['startLine'],
+        'total_lines': value['totalLines'],
+        'is_file_update': value['isFileUpdate'],
+        'lines': value['lines'],
+        'new_lines': value['newLines'],
+        'new_start': value['newStart'],
+        'old_lines': value['oldLines'],
+        'old_start': value['oldStart'],
     };
 }
 

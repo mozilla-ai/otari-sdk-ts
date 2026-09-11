@@ -37,7 +37,37 @@ export interface CreateBudgetRequest {
      * @memberof CreateBudgetRequest
      */
     name?: string | null;
+    /**
+     * Maximum requests over the period. Independent of max_budget; null is unlimited
+     * @type {number}
+     * @memberof CreateBudgetRequest
+     */
+    requestLimit?: number | null;
+    /**
+     * Reset on a UTC calendar boundary instead of a fixed number of seconds, which is the only way to express a calendar month. Mutually exclusive with budget_duration_sec
+     * @type {CreateBudgetRequestResetAlignmentEnum}
+     * @memberof CreateBudgetRequest
+     */
+    resetAlignment?: CreateBudgetRequestResetAlignmentEnum | null;
+    /**
+     * Maximum tokens over the period. Independent of max_budget; null is unlimited
+     * @type {number}
+     * @memberof CreateBudgetRequest
+     */
+    tokenLimit?: number | null;
 }
+
+
+/**
+ * @export
+ */
+export const CreateBudgetRequestResetAlignmentEnum = {
+    CalendarDay: 'calendar_day',
+    CalendarWeek: 'calendar_week',
+    CalendarMonth: 'calendar_month'
+} as const;
+export type CreateBudgetRequestResetAlignmentEnum = typeof CreateBudgetRequestResetAlignmentEnum[keyof typeof CreateBudgetRequestResetAlignmentEnum];
+
 
 /**
  * Check if a given object implements the CreateBudgetRequest interface.
@@ -59,6 +89,9 @@ export function CreateBudgetRequestFromJSONTyped(json: any, ignoreDiscriminator:
         'budgetDurationSec': json['budget_duration_sec'] == null ? undefined : json['budget_duration_sec'],
         'maxBudget': json['max_budget'] == null ? undefined : json['max_budget'],
         'name': json['name'] == null ? undefined : json['name'],
+        'requestLimit': json['request_limit'] == null ? undefined : json['request_limit'],
+        'resetAlignment': json['reset_alignment'] == null ? undefined : json['reset_alignment'],
+        'tokenLimit': json['token_limit'] == null ? undefined : json['token_limit'],
     };
 }
 
@@ -76,6 +109,9 @@ export function CreateBudgetRequestToJSONTyped(value?: CreateBudgetRequest | nul
         'budget_duration_sec': value['budgetDurationSec'],
         'max_budget': value['maxBudget'],
         'name': value['name'],
+        'request_limit': value['requestLimit'],
+        'reset_alignment': value['resetAlignment'],
+        'token_limit': value['tokenLimit'],
     };
 }
 

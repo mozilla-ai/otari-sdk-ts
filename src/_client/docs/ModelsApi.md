@@ -4,16 +4,16 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**getModelV1ModelsModelIdGet**](ModelsApi.md#getmodelv1modelsmodelidget) | **GET** /v1/models/{model_id} | Get Model |
-| [**listDiscoverableModelsV1ModelsDiscoverableGet**](ModelsApi.md#listdiscoverablemodelsv1modelsdiscoverableget) | **GET** /v1/models/discoverable | List Discoverable Models |
-| [**listModelMetadataV1ModelsMetadataGet**](ModelsApi.md#listmodelmetadatav1modelsmetadataget) | **GET** /v1/models/metadata | List Model Metadata |
-| [**listModelsV1ModelsGet**](ModelsApi.md#listmodelsv1modelsget) | **GET** /v1/models | List Models |
+| [**modelsGetModel**](ModelsApi.md#modelsgetmodel) | **GET** /api/v1/models/{model_id} | Get Model |
+| [**modelsListDiscoverableModels**](ModelsApi.md#modelslistdiscoverablemodels) | **GET** /api/v1/models/discoverable | List Discoverable Models |
+| [**modelsListModelMetadata**](ModelsApi.md#modelslistmodelmetadata) | **GET** /api/v1/models/metadata | List Model Metadata |
+| [**modelsListModels**](ModelsApi.md#modelslistmodels) | **GET** /api/v1/models | List Models |
 
 
 
-## getModelV1ModelsModelIdGet
+## modelsGetModel
 
-> ModelObject getModelV1ModelsModelIdGet(modelId)
+> ModelObject modelsGetModel(modelId)
 
 Get Model
 
@@ -26,7 +26,7 @@ import {
   Configuration,
   ModelsApi,
 } from '';
-import type { GetModelV1ModelsModelIdGetRequest } from '';
+import type { ModelsGetModelRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -41,10 +41,10 @@ async function example() {
   const body = {
     // string
     modelId: modelId_example,
-  } satisfies GetModelV1ModelsModelIdGetRequest;
+  } satisfies ModelsGetModelRequest;
 
   try {
-    const data = await api.getModelV1ModelsModelIdGet(body);
+    const data = await api.modelsGetModel(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -85,13 +85,13 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## listDiscoverableModelsV1ModelsDiscoverableGet
+## modelsListDiscoverableModels
 
-> DiscoverableModelsResponse listDiscoverableModelsV1ModelsDiscoverableGet(refresh)
+> DiscoverableModelsResponse modelsListDiscoverableModels(refresh)
 
 List Discoverable Models
 
-List every model the configured provider credentials can reach.  Operator-facing counterpart to GET /v1/models, which serves a curated catalog to API callers. This reports each provider separately and keeps its error, so a provider with a bad key is distinguishable from one with no models. It is master-key gated because a provider error message describes the gateway\&#39;s own configuration.  Answers from the discovery cache, which a background refresher keeps warm, so the call does not wait on a slow or unreachable provider. Each provider carries the &#x60;&#x60;checked_at&#x60;&#x60; its result was produced at; a null one has not been dialed yet. Pass &#x60;&#x60;refresh&#x3D;true&#x60;&#x60; to force a live re-dial of every provider.
+List every model the configured provider credentials can reach.  Operator-facing counterpart to GET /api/v1/models, which serves a curated catalog to API callers. This reports each provider separately and keeps its error, so a provider with a bad key is distinguishable from one with no models. It is operator-gated because a provider error message describes the gateway\&#39;s own configuration.  Answers from the discovery cache, which a background refresher keeps warm, so the call does not wait on a slow or unreachable provider. Each provider carries the &#x60;&#x60;checked_at&#x60;&#x60; its result was produced at; a null one has not been dialed yet. Pass &#x60;&#x60;refresh&#x3D;true&#x60;&#x60; to force a live re-dial of every provider.
 
 ### Example
 
@@ -100,7 +100,7 @@ import {
   Configuration,
   ModelsApi,
 } from '';
-import type { ListDiscoverableModelsV1ModelsDiscoverableGetRequest } from '';
+import type { ModelsListDiscoverableModelsRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -115,10 +115,10 @@ async function example() {
   const body = {
     // boolean | Re-dial every provider instead of answering from the discovery cache. (optional)
     refresh: true,
-  } satisfies ListDiscoverableModelsV1ModelsDiscoverableGetRequest;
+  } satisfies ModelsListDiscoverableModelsRequest;
 
   try {
-    const data = await api.listDiscoverableModelsV1ModelsDiscoverableGet(body);
+    const data = await api.modelsListDiscoverableModels(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -159,13 +159,13 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## listModelMetadataV1ModelsMetadataGet
+## modelsListModelMetadata
 
-> ModelMetadataResponse listModelMetadataV1ModelsMetadataGet()
+> ModelMetadataResponse modelsListModelMetadata()
 
 List Model Metadata
 
-Per-model metadata for the dashboard\&#39;s detail view, from models.dev.  Covers every model models.dev lists under a configured provider, keyed by the &#x60;&#x60;instance:model&#x60;&#x60; selector the dashboard uses. &#x60;&#x60;available&#x60;&#x60; is false when enrichment is disabled (&#x60;&#x60;models_dev_metadata&#x60;&#x60;) or models.dev could not be reached; the response is then empty and the UI falls back to bundled data. Master-key gated: it describes the gateway\&#39;s configured providers.  Answers from the cached catalog, kept warm by a background refresher, so the dashboard never waits on the models.dev fetch timeout.
+Per-model metadata for the dashboard\&#39;s detail view, from models.dev.  Covers every model models.dev lists under a configured provider, keyed by the &#x60;&#x60;instance:model&#x60;&#x60; selector the dashboard uses. &#x60;&#x60;available&#x60;&#x60; is false when enrichment is disabled (&#x60;&#x60;models_dev_metadata&#x60;&#x60;) or models.dev could not be reached; the response is then empty and the UI falls back to bundled data. Operator-gated: it describes the gateway\&#39;s configured providers.  Answers from the cached catalog, kept warm by a background refresher, so the dashboard never waits on the models.dev fetch timeout.
 
 ### Example
 
@@ -174,7 +174,7 @@ import {
   Configuration,
   ModelsApi,
 } from '';
-import type { ListModelMetadataV1ModelsMetadataGetRequest } from '';
+import type { ModelsListModelMetadataRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -187,7 +187,7 @@ async function example() {
   const api = new ModelsApi(config);
 
   try {
-    const data = await api.listModelMetadataV1ModelsMetadataGet();
+    const data = await api.modelsListModelMetadata();
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -224,9 +224,9 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## listModelsV1ModelsGet
+## modelsListModels
 
-> ModelListResponse listModelsV1ModelsGet(provider)
+> ModelListResponse modelsListModels(provider)
 
 List Models
 
@@ -239,7 +239,7 @@ import {
   Configuration,
   ModelsApi,
 } from '';
-import type { ListModelsV1ModelsGetRequest } from '';
+import type { ModelsListModelsRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -254,10 +254,10 @@ async function example() {
   const body = {
     // string | Filter models by provider name (optional)
     provider: provider_example,
-  } satisfies ListModelsV1ModelsGetRequest;
+  } satisfies ModelsListModelsRequest;
 
   try {
-    const data = await api.listModelsV1ModelsGet(body);
+    const data = await api.modelsListModels(body);
     console.log(data);
   } catch (error) {
     console.error(error);

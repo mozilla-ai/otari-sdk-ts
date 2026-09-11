@@ -29,7 +29,7 @@ import {
     HTTPValidationErrorToJSON,
 } from '../models/HTTPValidationError.js';
 
-export interface CreateEmbeddingV1EmbeddingsPostRequest {
+export interface EmbeddingsCreateEmbeddingRequest {
     embeddingRequest: EmbeddingRequest;
 }
 
@@ -39,13 +39,13 @@ export interface CreateEmbeddingV1EmbeddingsPostRequest {
 export class EmbeddingsApi extends runtime.BaseAPI {
 
     /**
-     * Creates request options for createEmbeddingV1EmbeddingsPost without sending the request
+     * Creates request options for embeddingsCreateEmbedding without sending the request
      */
-    async createEmbeddingV1EmbeddingsPostRequestOpts(requestParameters: CreateEmbeddingV1EmbeddingsPostRequest): Promise<runtime.RequestOpts> {
+    async embeddingsCreateEmbeddingRequestOpts(requestParameters: EmbeddingsCreateEmbeddingRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['embeddingRequest'] == null) {
             throw new runtime.RequiredError(
                 'embeddingRequest',
-                'Required parameter "embeddingRequest" was null or undefined when calling createEmbeddingV1EmbeddingsPost().'
+                'Required parameter "embeddingRequest" was null or undefined when calling embeddingsCreateEmbedding().'
             );
         }
 
@@ -64,7 +64,7 @@ export class EmbeddingsApi extends runtime.BaseAPI {
         }
 
 
-        let urlPath = `/v1/embeddings`;
+        let urlPath = `/api/v1/embeddings`;
 
         return {
             path: urlPath,
@@ -79,8 +79,8 @@ export class EmbeddingsApi extends runtime.BaseAPI {
      * OpenAI-compatible embeddings endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Create Embedding
      */
-    async createEmbeddingV1EmbeddingsPostRaw(requestParameters: CreateEmbeddingV1EmbeddingsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateEmbeddingResponse>> {
-        const requestOptions = await this.createEmbeddingV1EmbeddingsPostRequestOpts(requestParameters);
+    async embeddingsCreateEmbeddingRaw(requestParameters: EmbeddingsCreateEmbeddingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateEmbeddingResponse>> {
+        const requestOptions = await this.embeddingsCreateEmbeddingRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => CreateEmbeddingResponseFromJSON(jsonValue));
@@ -90,8 +90,8 @@ export class EmbeddingsApi extends runtime.BaseAPI {
      * OpenAI-compatible embeddings endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \"default\" user
      * Create Embedding
      */
-    async createEmbeddingV1EmbeddingsPost(requestParameters: CreateEmbeddingV1EmbeddingsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateEmbeddingResponse> {
-        const response = await this.createEmbeddingV1EmbeddingsPostRaw(requestParameters, initOverrides);
+    async embeddingsCreateEmbedding(requestParameters: EmbeddingsCreateEmbeddingRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateEmbeddingResponse> {
+        const response = await this.embeddingsCreateEmbeddingRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

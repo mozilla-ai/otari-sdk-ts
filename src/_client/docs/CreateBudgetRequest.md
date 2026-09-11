@@ -10,6 +10,9 @@ Name | Type
 `budgetDurationSec` | number
 `maxBudget` | number
 `name` | string
+`requestLimit` | number
+`resetAlignment` | string
+`tokenLimit` | number
 
 ## Example
 
@@ -21,6 +24,9 @@ const example = {
   "budgetDurationSec": null,
   "maxBudget": null,
   "name": null,
+  "requestLimit": null,
+  "resetAlignment": null,
+  "tokenLimit": null,
 } satisfies CreateBudgetRequest
 
 console.log(example)
