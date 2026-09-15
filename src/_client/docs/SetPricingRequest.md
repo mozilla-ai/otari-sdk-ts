@@ -15,6 +15,7 @@ Name | Type
 `modelKey` | string
 `outputPricePerMillion` | number
 `pricingTiers` | [Array&lt;PricingTier&gt;](PricingTier.md)
+`unit` | string
 
 ## Example
 
@@ -31,6 +32,7 @@ const example = {
   "modelKey": null,
   "outputPricePerMillion": null,
   "pricingTiers": null,
+  "unit": null,
 } satisfies SetPricingRequest
 
 console.log(example)

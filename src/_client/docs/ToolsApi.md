@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**listToolsV1ToolsGet**](ToolsApi.md#listtoolsv1toolsget) | **GET** /v1/tools | List Tools |
+| [**toolsListTools**](ToolsApi.md#toolslisttools) | **GET** /api/v1/tools | List Tools |
 
 
 
-## listToolsV1ToolsGet
+## toolsListTools
 
-> ToolsResponse listToolsV1ToolsGet()
+> ToolsResponse toolsListTools()
 
 List Tools
 
@@ -23,7 +23,7 @@ import {
   Configuration,
   ToolsApi,
 } from '';
-import type { ListToolsV1ToolsGetRequest } from '';
+import type { ToolsListToolsRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -36,7 +36,7 @@ async function example() {
   const api = new ToolsApi(config);
 
   try {
-    const data = await api.listToolsV1ToolsGet();
+    const data = await api.toolsListTools();
     console.log(data);
   } catch (error) {
     console.error(error);

@@ -8,11 +8,10 @@ Name | Type
 ------------ | -------------
 `errorCode` | string
 `type` | string
-`content` | [Array&lt;MRBetaCodeExecutionOutputBlock&gt;](MRBetaCodeExecutionOutputBlock.md)
+`content` | [Array&lt;MRBetaBashCodeExecutionOutputBlock&gt;](MRBetaBashCodeExecutionOutputBlock.md)
 `returnCode` | number
 `stderr` | string
 `stdout` | string
-`encryptedStdout` | string
 
 ## Example
 
@@ -27,7 +26,6 @@ const example = {
   "returnCode": null,
   "stderr": null,
   "stdout": null,
-  "encryptedStdout": null,
 } satisfies Content5
 
 console.log(example)

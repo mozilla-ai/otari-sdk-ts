@@ -4,17 +4,17 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**cancelBatchV1BatchesBatchIdCancelPost**](BatchesApi.md#cancelbatchv1batchesbatchidcancelpost) | **POST** /v1/batches/{batch_id}/cancel | Cancel Batch |
-| [**createBatchV1BatchesPost**](BatchesApi.md#createbatchv1batchespost) | **POST** /v1/batches | Create Batch |
-| [**listBatchesV1BatchesGet**](BatchesApi.md#listbatchesv1batchesget) | **GET** /v1/batches | List Batches |
-| [**retrieveBatchResultsV1BatchesBatchIdResultsGet**](BatchesApi.md#retrievebatchresultsv1batchesbatchidresultsget) | **GET** /v1/batches/{batch_id}/results | Retrieve Batch Results |
-| [**retrieveBatchV1BatchesBatchIdGet**](BatchesApi.md#retrievebatchv1batchesbatchidget) | **GET** /v1/batches/{batch_id} | Retrieve Batch |
+| [**batchesCancelBatch**](BatchesApi.md#batchescancelbatch) | **POST** /api/v1/batches/{batch_id}/cancel | Cancel Batch |
+| [**batchesCreateBatch**](BatchesApi.md#batchescreatebatch) | **POST** /api/v1/batches | Create Batch |
+| [**batchesListBatches**](BatchesApi.md#batcheslistbatches) | **GET** /api/v1/batches | List Batches |
+| [**batchesRetrieveBatch**](BatchesApi.md#batchesretrievebatch) | **GET** /api/v1/batches/{batch_id} | Retrieve Batch |
+| [**batchesRetrieveBatchResults**](BatchesApi.md#batchesretrievebatchresults) | **GET** /api/v1/batches/{batch_id}/results | Retrieve Batch Results |
 
 
 
-## cancelBatchV1BatchesBatchIdCancelPost
+## batchesCancelBatch
 
-> any cancelBatchV1BatchesBatchIdCancelPost(batchId, provider)
+> any batchesCancelBatch(batchId, provider)
 
 Cancel Batch
 
@@ -27,7 +27,7 @@ import {
   Configuration,
   BatchesApi,
 } from '';
-import type { CancelBatchV1BatchesBatchIdCancelPostRequest } from '';
+import type { BatchesCancelBatchRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -44,10 +44,10 @@ async function example() {
     batchId: batchId_example,
     // string
     provider: provider_example,
-  } satisfies CancelBatchV1BatchesBatchIdCancelPostRequest;
+  } satisfies BatchesCancelBatchRequest;
 
   try {
-    const data = await api.cancelBatchV1BatchesBatchIdCancelPost(body);
+    const data = await api.batchesCancelBatch(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -89,9 +89,9 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## createBatchV1BatchesPost
+## batchesCreateBatch
 
-> any createBatchV1BatchesPost(createBatchRequest)
+> any batchesCreateBatch(createBatchRequest)
 
 Create Batch
 
@@ -104,7 +104,7 @@ import {
   Configuration,
   BatchesApi,
 } from '';
-import type { CreateBatchV1BatchesPostRequest } from '';
+import type { BatchesCreateBatchRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -119,10 +119,10 @@ async function example() {
   const body = {
     // CreateBatchRequest
     createBatchRequest: ...,
-  } satisfies CreateBatchV1BatchesPostRequest;
+  } satisfies BatchesCreateBatchRequest;
 
   try {
-    const data = await api.createBatchV1BatchesPost(body);
+    const data = await api.batchesCreateBatch(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -163,13 +163,13 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## listBatchesV1BatchesGet
+## batchesListBatches
 
-> any listBatchesV1BatchesGet(provider, after, limit)
+> any batchesListBatches(provider, after, limit)
 
 List Batches
 
-List batches for a provider.  Non-master keys only see batches they own (plus legacy batches without an ownership marker); the page is filtered after the provider call, so a page may contain fewer than &#x60;&#x60;limit&#x60;&#x60; items.
+List batches for a provider.  Non-master keys only see batches they own in their own workspace (plus legacy batches without an ownership marker, or without a recorded workspace); the page is filtered after the provider call, so a page may contain fewer than &#x60;&#x60;limit&#x60;&#x60; items.
 
 ### Example
 
@@ -178,7 +178,7 @@ import {
   Configuration,
   BatchesApi,
 } from '';
-import type { ListBatchesV1BatchesGetRequest } from '';
+import type { BatchesListBatchesRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -197,10 +197,10 @@ async function example() {
     after: after_example,
     // number (optional)
     limit: 56,
-  } satisfies ListBatchesV1BatchesGetRequest;
+  } satisfies BatchesListBatchesRequest;
 
   try {
-    const data = await api.listBatchesV1BatchesGet(body);
+    const data = await api.batchesListBatches(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -243,13 +243,13 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## retrieveBatchResultsV1BatchesBatchIdResultsGet
+## batchesRetrieveBatch
 
-> any retrieveBatchResultsV1BatchesBatchIdResultsGet(batchId, provider)
+> any batchesRetrieveBatch(batchId, provider)
 
-Retrieve Batch Results
+Retrieve Batch
 
-Retrieve the results of a completed batch.
+Retrieve the status of a batch.
 
 ### Example
 
@@ -258,7 +258,7 @@ import {
   Configuration,
   BatchesApi,
 } from '';
-import type { RetrieveBatchResultsV1BatchesBatchIdResultsGetRequest } from '';
+import type { BatchesRetrieveBatchRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -275,10 +275,87 @@ async function example() {
     batchId: batchId_example,
     // string
     provider: provider_example,
-  } satisfies RetrieveBatchResultsV1BatchesBatchIdResultsGetRequest;
+  } satisfies BatchesRetrieveBatchRequest;
 
   try {
-    const data = await api.retrieveBatchResultsV1BatchesBatchIdResultsGet(body);
+    const data = await api.batchesRetrieveBatch(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **batchId** | `string` |  | [Defaults to `undefined`] |
+| **provider** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## batchesRetrieveBatchResults
+
+> any batchesRetrieveBatchResults(batchId, provider)
+
+Retrieve Batch Results
+
+Retrieve the results of a completed batch.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  BatchesApi,
+} from '';
+import type { BatchesRetrieveBatchResultsRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new BatchesApi(config);
+
+  const body = {
+    // string
+    batchId: batchId_example,
+    // string
+    provider: provider_example,
+  } satisfies BatchesRetrieveBatchResultsRequest;
+
+  try {
+    const data = await api.batchesRetrieveBatchResults(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -318,83 +395,6 @@ example().catch(console.error);
 | **409** | Batch is not yet complete |  -  |
 | **422** | Validation Error |  -  |
 | **502** | LLM provider error |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-
-## retrieveBatchV1BatchesBatchIdGet
-
-> any retrieveBatchV1BatchesBatchIdGet(batchId, provider)
-
-Retrieve Batch
-
-Retrieve the status of a batch.
-
-### Example
-
-```ts
-import {
-  Configuration,
-  BatchesApi,
-} from '';
-import type { RetrieveBatchV1BatchesBatchIdGetRequest } from '';
-
-async function example() {
-  console.log("🚀 Testing  SDK...");
-  const config = new Configuration({ 
-    // To configure API key authorization: XApiKeyAuth
-    apiKey: "YOUR API KEY",
-    // To configure API key authorization: ApiKeyAuth
-    apiKey: "YOUR API KEY",
-  });
-  const api = new BatchesApi(config);
-
-  const body = {
-    // string
-    batchId: batchId_example,
-    // string
-    provider: provider_example,
-  } satisfies RetrieveBatchV1BatchesBatchIdGetRequest;
-
-  try {
-    const data = await api.retrieveBatchV1BatchesBatchIdGet(body);
-    console.log(data);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// Run the test
-example().catch(console.error);
-```
-
-### Parameters
-
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **batchId** | `string` |  | [Defaults to `undefined`] |
-| **provider** | `string` |  | [Defaults to `undefined`] |
-
-### Return type
-
-**any**
-
-### Authorization
-
-[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: `application/json`
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | Successful Response |  -  |
-| **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

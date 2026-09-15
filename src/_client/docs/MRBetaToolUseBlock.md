@@ -11,6 +11,7 @@ Name | Type
 `name` | string
 `type` | string
 `caller` | [Caller](Caller.md)
+`toolsetName` | string
 
 ## Example
 
@@ -24,6 +25,7 @@ const example = {
   "name": null,
   "type": null,
   "caller": null,
+  "toolsetName": null,
 } satisfies MRBetaToolUseBlock
 
 console.log(example)

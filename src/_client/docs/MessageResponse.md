@@ -8,7 +8,7 @@ Name | Type
 ------------ | -------------
 `id` | string
 `container` | [MRBetaContainer](MRBetaContainer.md)
-`content` | [Array&lt;Content16Inner&gt;](Content16Inner.md)
+`content` | [Array&lt;Content17Inner&gt;](Content17Inner.md)
 `model` | [Model1](Model1.md)
 `role` | string
 `stopDetails` | [MRRefusalStopDetails](MRRefusalStopDetails.md)
@@ -16,8 +16,9 @@ Name | Type
 `stopSequence` | string
 `type` | string
 `usage` | [MRMessageUsage](MRMessageUsage.md)
+`requestId` | string
 `contextManagement` | [MRBetaContextManagementResponse](MRBetaContextManagementResponse.md)
-`diagnostics` | [MRBetaDiagnosticsFallback](MRBetaDiagnosticsFallback.md)
+`diagnostics` | [MRBetaDiagnostics](MRBetaDiagnostics.md)
 
 ## Example
 
@@ -36,6 +37,7 @@ const example = {
   "stopSequence": null,
   "type": null,
   "usage": null,
+  "requestId": null,
   "contextManagement": null,
   "diagnostics": null,
 } satisfies MessageResponse

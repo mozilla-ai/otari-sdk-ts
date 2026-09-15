@@ -14,8 +14,10 @@ Name | Type
 `effectiveAt` | string
 `inputPricePerMillion` | number
 `modelKey` | string
+`origin` | string
 `outputPricePerMillion` | number
 `pricingTiers` | [Array&lt;PricingTier&gt;](PricingTier.md)
+`unit` | string
 `updatedAt` | string
 
 ## Example
@@ -32,8 +34,10 @@ const example = {
   "effectiveAt": null,
   "inputPricePerMillion": null,
   "modelKey": null,
+  "origin": null,
   "outputPricePerMillion": null,
   "pricingTiers": null,
+  "unit": null,
   "updatedAt": null,
 } satisfies PricingResponse
 

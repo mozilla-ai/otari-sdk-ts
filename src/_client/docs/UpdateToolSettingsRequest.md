@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `guardrailsUrl` | string
 `sandboxPurposeHint` | string
+`sandboxSessionImage` | string
 `sandboxUrl` | string
 `webSearchEngines` | string
 `webSearchExtract` | boolean
@@ -26,6 +27,7 @@ import type { UpdateToolSettingsRequest } from ''
 const example = {
   "guardrailsUrl": null,
   "sandboxPurposeHint": null,
+  "sandboxSessionImage": null,
   "sandboxUrl": null,
   "webSearchEngines": null,
   "webSearchExtract": null,

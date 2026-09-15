@@ -12,7 +12,8 @@ Name | Type
 `cacheWritePricePerMillion` | number
 `inputPricePerMillion` | number
 `outputPricePerMillion` | number
-`pricingTiers` | Array&lt;{ [key: string]: PricingTiersInnerValue; }&gt;
+`pricingTiers` | [Array&lt;PricingTiersInner&gt;](PricingTiersInner.md)
+`unit` | string
 
 ## Example
 
@@ -27,6 +28,7 @@ const example = {
   "inputPricePerMillion": null,
   "outputPricePerMillion": null,
   "pricingTiers": null,
+  "unit": null,
 } satisfies ModelPricingInfo
 
 console.log(example)

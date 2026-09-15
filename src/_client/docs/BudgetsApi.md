@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**createBudgetV1BudgetsPost**](BudgetsApi.md#createbudgetv1budgetspost) | **POST** /v1/budgets | Create Budget |
-| [**deleteBudgetV1BudgetsBudgetIdDelete**](BudgetsApi.md#deletebudgetv1budgetsbudgetiddelete) | **DELETE** /v1/budgets/{budget_id} | Delete Budget |
-| [**getBudgetV1BudgetsBudgetIdGet**](BudgetsApi.md#getbudgetv1budgetsbudgetidget) | **GET** /v1/budgets/{budget_id} | Get Budget |
-| [**listBudgetResetLogsV1BudgetsBudgetIdResetLogsGet**](BudgetsApi.md#listbudgetresetlogsv1budgetsbudgetidresetlogsget) | **GET** /v1/budgets/{budget_id}/reset-logs | List Budget Reset Logs |
-| [**listBudgetsV1BudgetsGet**](BudgetsApi.md#listbudgetsv1budgetsget) | **GET** /v1/budgets | List Budgets |
-| [**updateBudgetV1BudgetsBudgetIdPatch**](BudgetsApi.md#updatebudgetv1budgetsbudgetidpatch) | **PATCH** /v1/budgets/{budget_id} | Update Budget |
+| [**budgetsCreateBudget**](BudgetsApi.md#budgetscreatebudget) | **POST** /api/v1/budgets | Create Budget |
+| [**budgetsDeleteBudget**](BudgetsApi.md#budgetsdeletebudget) | **DELETE** /api/v1/budgets/{budget_id} | Delete Budget |
+| [**budgetsGetBudget**](BudgetsApi.md#budgetsgetbudget) | **GET** /api/v1/budgets/{budget_id} | Get Budget |
+| [**budgetsListBudgetResetLogs**](BudgetsApi.md#budgetslistbudgetresetlogs) | **GET** /api/v1/budgets/{budget_id}/reset-logs | List Budget Reset Logs |
+| [**budgetsListBudgets**](BudgetsApi.md#budgetslistbudgets) | **GET** /api/v1/budgets | List Budgets |
+| [**budgetsUpdateBudget**](BudgetsApi.md#budgetsupdatebudget) | **PATCH** /api/v1/budgets/{budget_id} | Update Budget |
 
 
 
-## createBudgetV1BudgetsPost
+## budgetsCreateBudget
 
-> BudgetResponse createBudgetV1BudgetsPost(createBudgetRequest)
+> BudgetResponse budgetsCreateBudget(createBudgetRequest)
 
 Create Budget
 
@@ -28,7 +28,7 @@ import {
   Configuration,
   BudgetsApi,
 } from '';
-import type { CreateBudgetV1BudgetsPostRequest } from '';
+import type { BudgetsCreateBudgetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -43,10 +43,10 @@ async function example() {
   const body = {
     // CreateBudgetRequest
     createBudgetRequest: ...,
-  } satisfies CreateBudgetV1BudgetsPostRequest;
+  } satisfies BudgetsCreateBudgetRequest;
 
   try {
-    const data = await api.createBudgetV1BudgetsPost(body);
+    const data = await api.budgetsCreateBudget(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -87,13 +87,13 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## deleteBudgetV1BudgetsBudgetIdDelete
+## budgetsDeleteBudget
 
-> deleteBudgetV1BudgetsBudgetIdDelete(budgetId)
+> budgetsDeleteBudget(budgetId)
 
 Delete Budget
 
-Delete a budget.
+Delete a budget.  Refused with 409 while anything still names this budget: a workspace handing it to its members, or a scoped ceiling enforcing it. Both foreign keys are &#x60;&#x60;RESTRICT&#x60;&#x60;, so the database would refuse either anyway, but as an &#x60;&#x60;IntegrityError&#x60;&#x60; reported as \&quot;Database error\&quot; with nothing naming what to go and change. Checked here so the refusal can say which, and where.
 
 ### Example
 
@@ -102,7 +102,7 @@ import {
   Configuration,
   BudgetsApi,
 } from '';
-import type { DeleteBudgetV1BudgetsBudgetIdDeleteRequest } from '';
+import type { BudgetsDeleteBudgetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -117,10 +117,10 @@ async function example() {
   const body = {
     // string
     budgetId: budgetId_example,
-  } satisfies DeleteBudgetV1BudgetsBudgetIdDeleteRequest;
+  } satisfies BudgetsDeleteBudgetRequest;
 
   try {
-    const data = await api.deleteBudgetV1BudgetsBudgetIdDelete(body);
+    const data = await api.budgetsDeleteBudget(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -161,9 +161,9 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## getBudgetV1BudgetsBudgetIdGet
+## budgetsGetBudget
 
-> BudgetResponse getBudgetV1BudgetsBudgetIdGet(budgetId)
+> BudgetResponse budgetsGetBudget(budgetId)
 
 Get Budget
 
@@ -176,7 +176,7 @@ import {
   Configuration,
   BudgetsApi,
 } from '';
-import type { GetBudgetV1BudgetsBudgetIdGetRequest } from '';
+import type { BudgetsGetBudgetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -191,10 +191,10 @@ async function example() {
   const body = {
     // string
     budgetId: budgetId_example,
-  } satisfies GetBudgetV1BudgetsBudgetIdGetRequest;
+  } satisfies BudgetsGetBudgetRequest;
 
   try {
-    const data = await api.getBudgetV1BudgetsBudgetIdGet(body);
+    const data = await api.budgetsGetBudget(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -235,9 +235,9 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## listBudgetResetLogsV1BudgetsBudgetIdResetLogsGet
+## budgetsListBudgetResetLogs
 
-> Array&lt;BudgetResetLogResponse&gt; listBudgetResetLogsV1BudgetsBudgetIdResetLogsGet(budgetId, skip, limit)
+> Array&lt;BudgetResetLogResponse&gt; budgetsListBudgetResetLogs(budgetId, skip, limit)
 
 List Budget Reset Logs
 
@@ -250,7 +250,7 @@ import {
   Configuration,
   BudgetsApi,
 } from '';
-import type { ListBudgetResetLogsV1BudgetsBudgetIdResetLogsGetRequest } from '';
+import type { BudgetsListBudgetResetLogsRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -269,10 +269,10 @@ async function example() {
     skip: 56,
     // number (optional)
     limit: 56,
-  } satisfies ListBudgetResetLogsV1BudgetsBudgetIdResetLogsGetRequest;
+  } satisfies BudgetsListBudgetResetLogsRequest;
 
   try {
-    const data = await api.listBudgetResetLogsV1BudgetsBudgetIdResetLogsGet(body);
+    const data = await api.budgetsListBudgetResetLogs(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -315,9 +315,9 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## listBudgetsV1BudgetsGet
+## budgetsListBudgets
 
-> Array&lt;BudgetResponse&gt; listBudgetsV1BudgetsGet(skip, limit)
+> Array&lt;BudgetResponse&gt; budgetsListBudgets(skip, limit)
 
 List Budgets
 
@@ -330,7 +330,7 @@ import {
   Configuration,
   BudgetsApi,
 } from '';
-import type { ListBudgetsV1BudgetsGetRequest } from '';
+import type { BudgetsListBudgetsRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -347,10 +347,10 @@ async function example() {
     skip: 56,
     // number (optional)
     limit: 56,
-  } satisfies ListBudgetsV1BudgetsGetRequest;
+  } satisfies BudgetsListBudgetsRequest;
 
   try {
-    const data = await api.listBudgetsV1BudgetsGet(body);
+    const data = await api.budgetsListBudgets(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -392,9 +392,9 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## updateBudgetV1BudgetsBudgetIdPatch
+## budgetsUpdateBudget
 
-> BudgetResponse updateBudgetV1BudgetsBudgetIdPatch(budgetId, updateBudgetRequest)
+> BudgetResponse budgetsUpdateBudget(budgetId, updateBudgetRequest)
 
 Update Budget
 
@@ -407,7 +407,7 @@ import {
   Configuration,
   BudgetsApi,
 } from '';
-import type { UpdateBudgetV1BudgetsBudgetIdPatchRequest } from '';
+import type { BudgetsUpdateBudgetRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -424,10 +424,10 @@ async function example() {
     budgetId: budgetId_example,
     // UpdateBudgetRequest
     updateBudgetRequest: ...,
-  } satisfies UpdateBudgetV1BudgetsBudgetIdPatchRequest;
+  } satisfies BudgetsUpdateBudgetRequest;
 
   try {
-    const data = await api.updateBudgetV1BudgetsBudgetIdPatch(body);
+    const data = await api.budgetsUpdateBudget(body);
     console.log(data);
   } catch (error) {
     console.error(error);

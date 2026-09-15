@@ -17,6 +17,7 @@ Name | Type
 `key` | string
 `keyName` | string
 `keyPrefix` | string
+`keySuffix` | string
 `metadata` | { [key: string]: any; }
 `rejectUserMismatch` | boolean
 `userId` | string
@@ -38,6 +39,7 @@ const example = {
   "key": null,
   "keyName": null,
   "keyPrefix": null,
+  "keySuffix": null,
   "metadata": null,
   "rejectUserMismatch": null,
   "userId": null,

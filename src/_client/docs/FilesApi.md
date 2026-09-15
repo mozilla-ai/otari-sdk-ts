@@ -4,17 +4,17 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**createFileV1FilesPost**](FilesApi.md#createfilev1filespost) | **POST** /v1/files | Create File |
-| [**deleteFileV1FilesFileIdDelete**](FilesApi.md#deletefilev1filesfileiddelete) | **DELETE** /v1/files/{file_id} | Delete File |
-| [**getFileContentV1FilesFileIdContentGet**](FilesApi.md#getfilecontentv1filesfileidcontentget) | **GET** /v1/files/{file_id}/content | Get File Content |
-| [**getFileV1FilesFileIdGet**](FilesApi.md#getfilev1filesfileidget) | **GET** /v1/files/{file_id} | Get File |
-| [**listFilesV1FilesGet**](FilesApi.md#listfilesv1filesget) | **GET** /v1/files | List Files |
+| [**filesCreateFile**](FilesApi.md#filescreatefile) | **POST** /api/v1/files | Create File |
+| [**filesDeleteFile**](FilesApi.md#filesdeletefile) | **DELETE** /api/v1/files/{file_id} | Delete File |
+| [**filesGetFile**](FilesApi.md#filesgetfile) | **GET** /api/v1/files/{file_id} | Get File |
+| [**filesGetFileContent**](FilesApi.md#filesgetfilecontent) | **GET** /api/v1/files/{file_id}/content | Get File Content |
+| [**filesListFiles**](FilesApi.md#fileslistfiles) | **GET** /api/v1/files | List Files |
 
 
 
-## createFileV1FilesPost
+## filesCreateFile
 
-> { [key: string]: any; } createFileV1FilesPost(file, purpose, user)
+> { [key: string]: any; } filesCreateFile(file, purpose, user)
 
 Create File
 
@@ -27,7 +27,7 @@ import {
   Configuration,
   FilesApi,
 } from '';
-import type { CreateFileV1FilesPostRequest } from '';
+import type { FilesCreateFileRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -46,10 +46,10 @@ async function example() {
     purpose: purpose_example,
     // string (optional)
     user: user_example,
-  } satisfies CreateFileV1FilesPostRequest;
+  } satisfies FilesCreateFileRequest;
 
   try {
-    const data = await api.createFileV1FilesPost(body);
+    const data = await api.filesCreateFile(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -92,9 +92,9 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## deleteFileV1FilesFileIdDelete
+## filesDeleteFile
 
-> { [key: string]: any; } deleteFileV1FilesFileIdDelete(fileId, user)
+> { [key: string]: any; } filesDeleteFile(fileId, user)
 
 Delete File
 
@@ -107,7 +107,7 @@ import {
   Configuration,
   FilesApi,
 } from '';
-import type { DeleteFileV1FilesFileIdDeleteRequest } from '';
+import type { FilesDeleteFileRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -124,10 +124,10 @@ async function example() {
     fileId: fileId_example,
     // string (optional)
     user: user_example,
-  } satisfies DeleteFileV1FilesFileIdDeleteRequest;
+  } satisfies FilesDeleteFileRequest;
 
   try {
-    const data = await api.deleteFileV1FilesFileIdDelete(body);
+    const data = await api.filesDeleteFile(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -169,86 +169,9 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## getFileContentV1FilesFileIdContentGet
+## filesGetFile
 
-> any getFileContentV1FilesFileIdContentGet(fileId, user)
-
-Get File Content
-
-Download the raw bytes of a file, streamed rather than buffered whole.
-
-### Example
-
-```ts
-import {
-  Configuration,
-  FilesApi,
-} from '';
-import type { GetFileContentV1FilesFileIdContentGetRequest } from '';
-
-async function example() {
-  console.log("🚀 Testing  SDK...");
-  const config = new Configuration({ 
-    // To configure API key authorization: XApiKeyAuth
-    apiKey: "YOUR API KEY",
-    // To configure API key authorization: ApiKeyAuth
-    apiKey: "YOUR API KEY",
-  });
-  const api = new FilesApi(config);
-
-  const body = {
-    // string
-    fileId: fileId_example,
-    // string (optional)
-    user: user_example,
-  } satisfies GetFileContentV1FilesFileIdContentGetRequest;
-
-  try {
-    const data = await api.getFileContentV1FilesFileIdContentGet(body);
-    console.log(data);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// Run the test
-example().catch(console.error);
-```
-
-### Parameters
-
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **fileId** | `string` |  | [Defaults to `undefined`] |
-| **user** | `string` |  | [Optional] [Defaults to `undefined`] |
-
-### Return type
-
-**any**
-
-### Authorization
-
-[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: `application/json`
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | Successful Response |  -  |
-| **422** | Validation Error |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-
-## getFileV1FilesFileIdGet
-
-> { [key: string]: any; } getFileV1FilesFileIdGet(fileId, user)
+> { [key: string]: any; } filesGetFile(fileId, user)
 
 Get File
 
@@ -261,7 +184,7 @@ import {
   Configuration,
   FilesApi,
 } from '';
-import type { GetFileV1FilesFileIdGetRequest } from '';
+import type { FilesGetFileRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -278,10 +201,10 @@ async function example() {
     fileId: fileId_example,
     // string (optional)
     user: user_example,
-  } satisfies GetFileV1FilesFileIdGetRequest;
+  } satisfies FilesGetFileRequest;
 
   try {
-    const data = await api.getFileV1FilesFileIdGet(body);
+    const data = await api.filesGetFile(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -323,13 +246,13 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## listFilesV1FilesGet
+## filesGetFileContent
 
-> { [key: string]: any; } listFilesV1FilesGet(user, purpose)
+> Blob filesGetFileContent(fileId, user)
 
-List Files
+Get File Content
 
-List the authenticated user\&#39;s uploaded files.
+Download the raw bytes of a file, streamed rather than buffered whole.
 
 ### Example
 
@@ -338,7 +261,84 @@ import {
   Configuration,
   FilesApi,
 } from '';
-import type { ListFilesV1FilesGetRequest } from '';
+import type { FilesGetFileContentRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new FilesApi(config);
+
+  const body = {
+    // string
+    fileId: fileId_example,
+    // string (optional)
+    user: user_example,
+  } satisfies FilesGetFileContentRequest;
+
+  try {
+    const data = await api.filesGetFileContent(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **fileId** | `string` |  | [Defaults to `undefined`] |
+| **user** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+**Blob**
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `*/*`, `application/octet-stream`, `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | File content. Content-Type reflects the stored media type; application/octet-stream is the fallback. |  * Content-Disposition - Attachment filename, with a UTF-8 filename* parameter for non-ASCII names. <br>  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## filesListFiles
+
+> { [key: string]: any; } filesListFiles(user, purpose, workspaceId)
+
+List Files
+
+List the authenticated user\&#39;s uploaded files in the request\&#39;s workspace.  &#x60;&#x60;workspace_id&#x60;&#x60; narrows a master-key listing to one workspace; a keyed request is already confined to its key\&#39;s own and cannot widen or move it.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  FilesApi,
+} from '';
+import type { FilesListFilesRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -355,10 +355,12 @@ async function example() {
     user: user_example,
     // string (optional)
     purpose: purpose_example,
-  } satisfies ListFilesV1FilesGetRequest;
+    // string (optional)
+    workspaceId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies FilesListFilesRequest;
 
   try {
-    const data = await api.listFilesV1FilesGet(body);
+    const data = await api.filesListFiles(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -376,6 +378,7 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **user** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **purpose** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **workspaceId** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

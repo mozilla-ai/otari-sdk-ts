@@ -4,15 +4,15 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**receiveLogsV1LogsPost**](OtelApi.md#receivelogsv1logspost) | **POST** /v1/logs | Receive Logs |
-| [**receiveMetricsV1MetricsPost**](OtelApi.md#receivemetricsv1metricspost) | **POST** /v1/metrics | Receive Metrics |
-| [**receiveTracesV1TracesPost**](OtelApi.md#receivetracesv1tracespost) | **POST** /v1/traces | Receive Traces |
+| [**otelReceiveLogs**](OtelApi.md#otelreceivelogs) | **POST** /otlp/v1/logs | Receive Logs |
+| [**otelReceiveMetrics**](OtelApi.md#otelreceivemetrics) | **POST** /otlp/v1/metrics | Receive Metrics |
+| [**otelReceiveTraces**](OtelApi.md#otelreceivetraces) | **POST** /otlp/v1/traces | Receive Traces |
 
 
 
-## receiveLogsV1LogsPost
+## otelReceiveLogs
 
-> any receiveLogsV1LogsPost()
+> any otelReceiveLogs()
 
 Receive Logs
 
@@ -25,7 +25,7 @@ import {
   Configuration,
   OtelApi,
 } from '';
-import type { ReceiveLogsV1LogsPostRequest } from '';
+import type { OtelReceiveLogsRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -38,7 +38,7 @@ async function example() {
   const api = new OtelApi(config);
 
   try {
-    const data = await api.receiveLogsV1LogsPost();
+    const data = await api.otelReceiveLogs();
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -75,9 +75,9 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## receiveMetricsV1MetricsPost
+## otelReceiveMetrics
 
-> any receiveMetricsV1MetricsPost()
+> any otelReceiveMetrics()
 
 Receive Metrics
 
@@ -90,7 +90,7 @@ import {
   Configuration,
   OtelApi,
 } from '';
-import type { ReceiveMetricsV1MetricsPostRequest } from '';
+import type { OtelReceiveMetricsRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -103,7 +103,7 @@ async function example() {
   const api = new OtelApi(config);
 
   try {
-    const data = await api.receiveMetricsV1MetricsPost();
+    const data = await api.otelReceiveMetrics();
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -140,9 +140,9 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## receiveTracesV1TracesPost
+## otelReceiveTraces
 
-> any receiveTracesV1TracesPost()
+> any otelReceiveTraces()
 
 Receive Traces
 
@@ -155,7 +155,7 @@ import {
   Configuration,
   OtelApi,
 } from '';
-import type { ReceiveTracesV1TracesPostRequest } from '';
+import type { OtelReceiveTracesRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -168,7 +168,7 @@ async function example() {
   const api = new OtelApi(config);
 
   try {
-    const data = await api.receiveTracesV1TracesPost();
+    const data = await api.otelReceiveTraces();
     console.log(data);
   } catch (error) {
     console.error(error);

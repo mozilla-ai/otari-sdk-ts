@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**countMessageTokensV1MessagesCountTokensPost**](MessagesApi.md#countmessagetokensv1messagescounttokenspost) | **POST** /v1/messages/count_tokens | Count Message Tokens |
-| [**createMessageV1MessagesPost**](MessagesApi.md#createmessagev1messagespost) | **POST** /v1/messages | Create Message |
+| [**messagesCountMessageTokens**](MessagesApi.md#messagescountmessagetokens) | **POST** /api/v1/messages/count_tokens | Count Message Tokens |
+| [**messagesCreateMessage**](MessagesApi.md#messagescreatemessage) | **POST** /api/v1/messages | Create Message |
 
 
 
-## countMessageTokensV1MessagesCountTokensPost
+## messagesCountMessageTokens
 
-> CountTokensResponse countMessageTokensV1MessagesCountTokensPost(countTokensRequest)
+> CountTokensResponse messagesCountMessageTokens(countTokensRequest)
 
 Count Message Tokens
 
@@ -24,7 +24,7 @@ import {
   Configuration,
   MessagesApi,
 } from '';
-import type { CountMessageTokensV1MessagesCountTokensPostRequest } from '';
+import type { MessagesCountMessageTokensRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -39,10 +39,10 @@ async function example() {
   const body = {
     // CountTokensRequest
     countTokensRequest: ...,
-  } satisfies CountMessageTokensV1MessagesCountTokensPostRequest;
+  } satisfies MessagesCountMessageTokensRequest;
 
   try {
-    const data = await api.countMessageTokensV1MessagesCountTokensPost(body);
+    const data = await api.messagesCountMessageTokens(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -83,9 +83,9 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## createMessageV1MessagesPost
+## messagesCreateMessage
 
-> MessageResponse createMessageV1MessagesPost(messagesRequest)
+> MessageResponse messagesCreateMessage(messagesRequest)
 
 Create Message
 
@@ -98,7 +98,7 @@ import {
   Configuration,
   MessagesApi,
 } from '';
-import type { CreateMessageV1MessagesPostRequest } from '';
+import type { MessagesCreateMessageRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -113,10 +113,10 @@ async function example() {
   const body = {
     // MessagesRequest
     messagesRequest: ...,
-  } satisfies CreateMessageV1MessagesPostRequest;
+  } satisfies MessagesCreateMessageRequest;
 
   try {
-    const data = await api.createMessageV1MessagesPost(body);
+    const data = await api.messagesCreateMessage(body);
     console.log(data);
   } catch (error) {
     console.error(error);

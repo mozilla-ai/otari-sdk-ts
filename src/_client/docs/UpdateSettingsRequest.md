@@ -16,6 +16,8 @@ Name | Type
 `modelDiscoveryTimeoutSeconds` | number
 `modelsDevCacheTtlSeconds` | number
 `modelsDevMetadata` | boolean
+`pricingRefresh` | string
+`publicCatalog` | boolean
 `rejectUserMismatch` | boolean
 `requirePricing` | boolean
 `streamMissingUsagePolicy` | string
@@ -39,6 +41,8 @@ const example = {
   "modelDiscoveryTimeoutSeconds": null,
   "modelsDevCacheTtlSeconds": null,
   "modelsDevMetadata": null,
+  "pricingRefresh": null,
+  "publicCatalog": null,
   "rejectUserMismatch": null,
   "requirePricing": null,
   "streamMissingUsagePolicy": null,

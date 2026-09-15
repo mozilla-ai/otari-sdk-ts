@@ -7,7 +7,9 @@ A freshly minted dashboard session (the token travels only in the cookie).
 
 Name | Type
 ------------ | -------------
+`activeOrganizationId` | string
 `expiresAt` | Date
+`userId` | string
 
 ## Example
 
@@ -16,7 +18,9 @@ import type { SessionResponse } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "activeOrganizationId": null,
   "expiresAt": null,
+  "userId": null,
 } satisfies SessionResponse
 
 console.log(example)

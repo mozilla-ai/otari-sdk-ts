@@ -6,7 +6,7 @@
 
 Name | Type
 ------------ | -------------
-`content` | [Content6](Content6.md)
+`content` | [Content7](Content7.md)
 `isError` | boolean
 `toolUseId` | string
 `type` | string

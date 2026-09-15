@@ -16,10 +16,12 @@ Name | Type
 `isActive` | boolean
 `keyName` | string
 `keyPrefix` | string
+`keySuffix` | string
 `lastUsedAt` | string
 `metadata` | { [key: string]: any; }
 `rejectUserMismatch` | boolean
 `userId` | string
+`workspaceId` | string
 
 ## Example
 
@@ -37,10 +39,12 @@ const example = {
   "isActive": null,
   "keyName": null,
   "keyPrefix": null,
+  "keySuffix": null,
   "lastUsedAt": null,
   "metadata": null,
   "rejectUserMismatch": null,
   "userId": null,
+  "workspaceId": null,
 } satisfies KeyInfo
 
 console.log(example)
