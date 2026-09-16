@@ -37,7 +37,7 @@ export type {
 /**
  * Batch response with the gateway-injected `provider` field.
  *
- * The gateway adds a `provider` string to the response on `POST /v1/batches`.
+ * The gateway adds a `provider` string to the response on `POST /api/v1/batches`.
  * The generated batch responses are untyped (`any`), so this captures the
  * provider field for callers who need it.
  */

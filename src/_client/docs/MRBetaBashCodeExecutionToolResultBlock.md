@@ -6,7 +6,7 @@
 
 Name | Type
 ------------ | -------------
-`content` | [Content4](Content4.md)
+`content` | [Content5](Content5.md)
 `toolUseId` | string
 `type` | string
 

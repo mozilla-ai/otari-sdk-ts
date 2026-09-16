@@ -8,6 +8,9 @@ Name | Type
 ------------ | -------------
 `errorCode` | string
 `type` | string
+`content` | [MRBetaDocumentBlock](MRBetaDocumentBlock.md)
+`retrievedAt` | string
+`url` | string
 
 ## Example
 
@@ -18,6 +21,9 @@ import type { Content10 } from ''
 const example = {
   "errorCode": null,
   "type": null,
+  "content": null,
+  "retrievedAt": null,
+  "url": null,
 } satisfies Content10
 
 console.log(example)

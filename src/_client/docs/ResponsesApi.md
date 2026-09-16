@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**createResponseV1ResponsesPost**](ResponsesApi.md#createresponsev1responsespost) | **POST** /v1/responses | Create Response |
+| [**responsesCreateResponse**](ResponsesApi.md#responsescreateresponse) | **POST** /api/v1/responses | Create Response |
 
 
 
-## createResponseV1ResponsesPost
+## responsesCreateResponse
 
-> any createResponseV1ResponsesPost(responsesRequest)
+> any responsesCreateResponse(responsesRequest)
 
 Create Response
 
@@ -23,7 +23,7 @@ import {
   Configuration,
   ResponsesApi,
 } from '';
-import type { CreateResponseV1ResponsesPostRequest } from '';
+import type { ResponsesCreateResponseRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -38,10 +38,10 @@ async function example() {
   const body = {
     // ResponsesRequest
     responsesRequest: ...,
-  } satisfies CreateResponseV1ResponsesPostRequest;
+  } satisfies ResponsesCreateResponseRequest;
 
   try {
-    const data = await api.createResponseV1ResponsesPost(body);
+    const data = await api.responsesCreateResponse(body);
     console.log(data);
   } catch (error) {
     console.error(error);

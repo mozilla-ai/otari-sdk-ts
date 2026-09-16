@@ -10,6 +10,7 @@ Name | Type
 `cacheCreationInputTokens` | number
 `cacheReadInputTokens` | number
 `inputTokens` | number
+`model` | [Model1](Model1.md)
 `outputTokens` | number
 `type` | string
 
@@ -24,6 +25,7 @@ const example = {
   "cacheCreationInputTokens": null,
   "cacheReadInputTokens": null,
   "inputTokens": null,
+  "model": null,
   "outputTokens": null,
   "type": null,
 } satisfies MRMessageUsageIterationsInner

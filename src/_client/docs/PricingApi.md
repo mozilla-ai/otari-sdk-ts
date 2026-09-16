@@ -4,20 +4,23 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**confirmPricingRefreshV1PricingRefreshConfirmPost**](PricingApi.md#confirmpricingrefreshv1pricingrefreshconfirmpost) | **POST** /v1/pricing/refresh/confirm | Confirm Pricing Refresh |
-| [**deletePricingV1PricingModelKeyDelete**](PricingApi.md#deletepricingv1pricingmodelkeydelete) | **DELETE** /v1/pricing/{model_key} | Delete Pricing |
-| [**getPricingHistoryV1PricingModelKeyHistoryGet**](PricingApi.md#getpricinghistoryv1pricingmodelkeyhistoryget) | **GET** /v1/pricing/{model_key}/history | Get Pricing History |
-| [**getPricingV1PricingModelKeyGet**](PricingApi.md#getpricingv1pricingmodelkeyget) | **GET** /v1/pricing/{model_key} | Get Pricing |
-| [**listPricingV1PricingGet**](PricingApi.md#listpricingv1pricingget) | **GET** /v1/pricing | List Pricing |
-| [**previewPricingRefreshV1PricingRefreshPost**](PricingApi.md#previewpricingrefreshv1pricingrefreshpost) | **POST** /v1/pricing/refresh | Preview Pricing Refresh |
-| [**rejectPricingRefreshV1PricingRefreshRejectPost**](PricingApi.md#rejectpricingrefreshv1pricingrefreshrejectpost) | **POST** /v1/pricing/refresh/reject | Reject Pricing Refresh |
-| [**setPricingV1PricingPost**](PricingApi.md#setpricingv1pricingpost) | **POST** /v1/pricing | Set Pricing |
+| [**pricingConfirmPricingRefresh**](PricingApi.md#pricingconfirmpricingrefresh) | **POST** /api/v1/pricing/refresh/confirm | Confirm Pricing Refresh |
+| [**pricingDeletePricing**](PricingApi.md#pricingdeletepricing) | **DELETE** /api/v1/pricing/{model_key} | Delete Pricing |
+| [**pricingGetPendingPricingRefresh**](PricingApi.md#pricinggetpendingpricingrefresh) | **GET** /api/v1/pricing/refresh/pending | Get Pending Pricing Refresh |
+| [**pricingGetPricing**](PricingApi.md#pricinggetpricing) | **GET** /api/v1/pricing/{model_key} | Get Pricing |
+| [**pricingGetPricingHistory**](PricingApi.md#pricinggetpricinghistory) | **GET** /api/v1/pricing/{model_key}/history | Get Pricing History |
+| [**pricingListPricing**](PricingApi.md#pricinglistpricing) | **GET** /api/v1/pricing | List Pricing |
+| [**pricingListPricingDrift**](PricingApi.md#pricinglistpricingdrift) | **GET** /api/v1/pricing/drift | List Pricing Drift |
+| [**pricingListPricingSnapshots**](PricingApi.md#pricinglistpricingsnapshots) | **GET** /api/v1/pricing/snapshots | List Pricing Snapshots |
+| [**pricingPreviewPricingRefresh**](PricingApi.md#pricingpreviewpricingrefresh) | **POST** /api/v1/pricing/refresh | Preview Pricing Refresh |
+| [**pricingRejectPricingRefresh**](PricingApi.md#pricingrejectpricingrefresh) | **POST** /api/v1/pricing/refresh/reject | Reject Pricing Refresh |
+| [**pricingSetPricing**](PricingApi.md#pricingsetpricing) | **POST** /api/v1/pricing | Set Pricing |
 
 
 
-## confirmPricingRefreshV1PricingRefreshConfirmPost
+## pricingConfirmPricingRefresh
 
-> PricingRefreshConfirmationResponse confirmPricingRefreshV1PricingRefreshConfirmPost()
+> PricingRefreshConfirmationResponse pricingConfirmPricingRefresh()
 
 Confirm Pricing Refresh
 
@@ -30,7 +33,7 @@ import {
   Configuration,
   PricingApi,
 } from '';
-import type { ConfirmPricingRefreshV1PricingRefreshConfirmPostRequest } from '';
+import type { PricingConfirmPricingRefreshRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -43,7 +46,7 @@ async function example() {
   const api = new PricingApi(config);
 
   try {
-    const data = await api.confirmPricingRefreshV1PricingRefreshConfirmPost();
+    const data = await api.pricingConfirmPricingRefresh();
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -80,9 +83,9 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## deletePricingV1PricingModelKeyDelete
+## pricingDeletePricing
 
-> deletePricingV1PricingModelKeyDelete(modelKey, effectiveAt)
+> pricingDeletePricing(modelKey, effectiveAt)
 
 Delete Pricing
 
@@ -95,7 +98,7 @@ import {
   Configuration,
   PricingApi,
 } from '';
-import type { DeletePricingV1PricingModelKeyDeleteRequest } from '';
+import type { PricingDeletePricingRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -112,10 +115,10 @@ async function example() {
     modelKey: modelKey_example,
     // Date | ISO datetime identifying a specific pricing row to delete (optional)
     effectiveAt: 2013-10-20T19:20:30+01:00,
-  } satisfies DeletePricingV1PricingModelKeyDeleteRequest;
+  } satisfies PricingDeletePricingRequest;
 
   try {
-    const data = await api.deletePricingV1PricingModelKeyDelete(body);
+    const data = await api.pricingDeletePricing(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -157,13 +160,13 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## getPricingHistoryV1PricingModelKeyHistoryGet
+## pricingGetPendingPricingRefresh
 
-> Array&lt;PricingResponse&gt; getPricingHistoryV1PricingModelKeyHistoryGet(modelKey)
+> PricingRefreshPreviewResponse pricingGetPendingPricingRefresh()
 
-Get Pricing History
+Get Pending Pricing Refresh
 
-Return the full pricing history for a model.
+The update the scheduled refresh has left waiting for review, if any.  What the dashboard\&#39;s notice reads. 404 when nothing is pending, so a page can ask on load without treating the common case as an error banner.
 
 ### Example
 
@@ -172,7 +175,7 @@ import {
   Configuration,
   PricingApi,
 } from '';
-import type { GetPricingHistoryV1PricingModelKeyHistoryGetRequest } from '';
+import type { PricingGetPendingPricingRefreshRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -184,13 +187,8 @@ async function example() {
   });
   const api = new PricingApi(config);
 
-  const body = {
-    // string
-    modelKey: modelKey_example,
-  } satisfies GetPricingHistoryV1PricingModelKeyHistoryGetRequest;
-
   try {
-    const data = await api.getPricingHistoryV1PricingModelKeyHistoryGet(body);
+    const data = await api.pricingGetPendingPricingRefresh();
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -203,14 +201,11 @@ example().catch(console.error);
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **modelKey** | `string` |  | [Defaults to `undefined`] |
+This endpoint does not need any parameter.
 
 ### Return type
 
-[**Array&lt;PricingResponse&gt;**](PricingResponse.md)
+[**PricingRefreshPreviewResponse**](PricingRefreshPreviewResponse.md)
 
 ### Authorization
 
@@ -226,14 +221,13 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
-| **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## getPricingV1PricingModelKeyGet
+## pricingGetPricing
 
-> PricingResponse getPricingV1PricingModelKeyGet(modelKey, asOf)
+> PricingResponse pricingGetPricing(modelKey, asOf)
 
 Get Pricing
 
@@ -246,7 +240,7 @@ import {
   Configuration,
   PricingApi,
 } from '';
-import type { GetPricingV1PricingModelKeyGetRequest } from '';
+import type { PricingGetPricingRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -263,10 +257,10 @@ async function example() {
     modelKey: modelKey_example,
     // Date | ISO datetime for effective lookup (optional)
     asOf: 2013-10-20T19:20:30+01:00,
-  } satisfies GetPricingV1PricingModelKeyGetRequest;
+  } satisfies PricingGetPricingRequest;
 
   try {
-    const data = await api.getPricingV1PricingModelKeyGet(body);
+    const data = await api.pricingGetPricing(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -308,9 +302,83 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## listPricingV1PricingGet
+## pricingGetPricingHistory
 
-> Array&lt;PricingResponse&gt; listPricingV1PricingGet(skip, limit)
+> Array&lt;PricingResponse&gt; pricingGetPricingHistory(modelKey)
+
+Get Pricing History
+
+Return the full pricing history for a model.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PricingApi,
+} from '';
+import type { PricingGetPricingHistoryRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PricingApi(config);
+
+  const body = {
+    // string
+    modelKey: modelKey_example,
+  } satisfies PricingGetPricingHistoryRequest;
+
+  try {
+    const data = await api.pricingGetPricingHistory(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **modelKey** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**Array&lt;PricingResponse&gt;**](PricingResponse.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## pricingListPricing
+
+> Array&lt;PricingResponse&gt; pricingListPricing(skip, limit)
 
 List Pricing
 
@@ -323,7 +391,7 @@ import {
   Configuration,
   PricingApi,
 } from '';
-import type { ListPricingV1PricingGetRequest } from '';
+import type { PricingListPricingRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -340,10 +408,10 @@ async function example() {
     skip: 56,
     // number (optional)
     limit: 56,
-  } satisfies ListPricingV1PricingGetRequest;
+  } satisfies PricingListPricingRequest;
 
   try {
-    const data = await api.listPricingV1PricingGet(body);
+    const data = await api.pricingListPricing(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -385,9 +453,157 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## previewPricingRefreshV1PricingRefreshPost
+## pricingListPricingDrift
 
-> PricingRefreshPreviewResponse previewPricingRefreshV1PricingRefreshPost()
+> Array&lt;PricingDriftRow&gt; pricingListPricingDrift(limit)
+
+List Pricing Drift
+
+Every stored deployment rate in force today, beside today\&#39;s default for it.  A stored row shadows the genai-prices default silently and forever, whether it was a deliberate override or a copy of a then-current default. This is what makes the difference visible: a row that matches the default is a row that could be deleted, and a row far from it is one worth a second look. Tool rows (&#x60;&#x60;otari:&#x60;&#x60;) are per request and have no default to drift from, so they are left out.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PricingApi,
+} from '';
+import type { PricingListPricingDriftRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PricingApi(config);
+
+  const body = {
+    // number (optional)
+    limit: 56,
+  } satisfies PricingListPricingDriftRequest;
+
+  try {
+    const data = await api.pricingListPricingDrift(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **limit** | `number` |  | [Optional] [Defaults to `200`] |
+
+### Return type
+
+[**Array&lt;PricingDriftRow&gt;**](PricingDriftRow.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## pricingListPricingSnapshots
+
+> Array&lt;AcceptedSnapshotResponse&gt; pricingListPricingSnapshots(limit)
+
+List Pricing Snapshots
+
+The accepted default-price snapshots, newest first.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PricingApi,
+} from '';
+import type { PricingListPricingSnapshotsRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PricingApi(config);
+
+  const body = {
+    // number (optional)
+    limit: 56,
+  } satisfies PricingListPricingSnapshotsRequest;
+
+  try {
+    const data = await api.pricingListPricingSnapshots(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **limit** | `number` |  | [Optional] [Defaults to `50`] |
+
+### Return type
+
+[**Array&lt;AcceptedSnapshotResponse&gt;**](AcceptedSnapshotResponse.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## pricingPreviewPricingRefresh
+
+> PricingRefreshPreviewResponse pricingPreviewPricingRefresh()
 
 Preview Pricing Refresh
 
@@ -400,7 +616,7 @@ import {
   Configuration,
   PricingApi,
 } from '';
-import type { PreviewPricingRefreshV1PricingRefreshPostRequest } from '';
+import type { PricingPreviewPricingRefreshRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -413,7 +629,7 @@ async function example() {
   const api = new PricingApi(config);
 
   try {
-    const data = await api.previewPricingRefreshV1PricingRefreshPost();
+    const data = await api.pricingPreviewPricingRefresh();
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -450,9 +666,9 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## rejectPricingRefreshV1PricingRefreshRejectPost
+## pricingRejectPricingRefresh
 
-> rejectPricingRefreshV1PricingRefreshRejectPost()
+> pricingRejectPricingRefresh()
 
 Reject Pricing Refresh
 
@@ -465,7 +681,7 @@ import {
   Configuration,
   PricingApi,
 } from '';
-import type { RejectPricingRefreshV1PricingRefreshRejectPostRequest } from '';
+import type { PricingRejectPricingRefreshRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -478,7 +694,7 @@ async function example() {
   const api = new PricingApi(config);
 
   try {
-    const data = await api.rejectPricingRefreshV1PricingRefreshRejectPost();
+    const data = await api.pricingRejectPricingRefresh();
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -515,9 +731,9 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## setPricingV1PricingPost
+## pricingSetPricing
 
-> PricingResponse setPricingV1PricingPost(setPricingRequest)
+> PricingResponse pricingSetPricing(setPricingRequest)
 
 Set Pricing
 
@@ -530,7 +746,7 @@ import {
   Configuration,
   PricingApi,
 } from '';
-import type { SetPricingV1PricingPostRequest } from '';
+import type { PricingSetPricingRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -545,10 +761,10 @@ async function example() {
   const body = {
     // SetPricingRequest
     setPricingRequest: ...,
-  } satisfies SetPricingV1PricingPostRequest;
+  } satisfies PricingSetPricingRequest;
 
   try {
-    const data = await api.setPricingV1PricingPost(body);
+    const data = await api.pricingSetPricing(body);
     console.log(data);
   } catch (error) {
     console.error(error);

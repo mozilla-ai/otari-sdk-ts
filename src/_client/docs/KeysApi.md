@@ -4,22 +4,22 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**createKeyV1KeysPost**](KeysApi.md#createkeyv1keyspost) | **POST** /v1/keys | Create Key |
-| [**deleteKeyV1KeysKeyIdDelete**](KeysApi.md#deletekeyv1keyskeyiddelete) | **DELETE** /v1/keys/{key_id} | Delete Key |
-| [**getKeyV1KeysKeyIdGet**](KeysApi.md#getkeyv1keyskeyidget) | **GET** /v1/keys/{key_id} | Get Key |
-| [**listKeysV1KeysGet**](KeysApi.md#listkeysv1keysget) | **GET** /v1/keys | List Keys |
-| [**rotateKeyV1KeysKeyIdRotatePost**](KeysApi.md#rotatekeyv1keyskeyidrotatepost) | **POST** /v1/keys/{key_id}/rotate | Rotate Key |
-| [**updateKeyV1KeysKeyIdPatch**](KeysApi.md#updatekeyv1keyskeyidpatch) | **PATCH** /v1/keys/{key_id} | Update Key |
+| [**keysCreateKey**](KeysApi.md#keyscreatekey) | **POST** /api/v1/keys | Create Key |
+| [**keysDeleteKey**](KeysApi.md#keysdeletekey) | **DELETE** /api/v1/keys/{key_id} | Delete Key |
+| [**keysGetKey**](KeysApi.md#keysgetkey) | **GET** /api/v1/keys/{key_id} | Get Key |
+| [**keysListKeys**](KeysApi.md#keyslistkeys) | **GET** /api/v1/keys | List Keys |
+| [**keysRotateKey**](KeysApi.md#keysrotatekey) | **POST** /api/v1/keys/{key_id}/rotate | Rotate Key |
+| [**keysUpdateKey**](KeysApi.md#keysupdatekey) | **PATCH** /api/v1/keys/{key_id} | Update Key |
 
 
 
-## createKeyV1KeysPost
+## keysCreateKey
 
-> CreateKeyResponse createKeyV1KeysPost(createKeyRequest)
+> CreateKeyResponse keysCreateKey(createKeyRequest)
 
 Create Key
 
-Create a new API key.  Requires master key authentication.  If user_id is provided, the key will be associated with that user (creates user if it doesn\&#39;t exist). If user_id is not provided, the key is associated with the shared \&quot;default\&quot; user, which is created on first use. Keys without an explicit owner therefore share one identity, and so share budget, usage, and files.
+Create a new API key in the caller\&#39;s organization.  Requires master key authentication.  If user_id is provided, the key will be associated with that user (creates user if it doesn\&#39;t exist). If user_id is not provided, the key is associated with the shared \&quot;default\&quot; user, which is created on first use. Keys without an explicit owner therefore share one identity, and so share budget, usage, and files.  &#x60;&#x60;workspace_id&#x60;&#x60; names a workspace in the caller\&#39;s organization, and omitting it mints into that organization\&#39;s default workspace. A key resolves that organization\&#39;s provider credentials and bills there, so minting into another organization\&#39;s workspace would spend its budget on its credentials.
 
 ### Example
 
@@ -28,7 +28,7 @@ import {
   Configuration,
   KeysApi,
 } from '';
-import type { CreateKeyV1KeysPostRequest } from '';
+import type { KeysCreateKeyRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -43,10 +43,10 @@ async function example() {
   const body = {
     // CreateKeyRequest
     createKeyRequest: ...,
-  } satisfies CreateKeyV1KeysPostRequest;
+  } satisfies KeysCreateKeyRequest;
 
   try {
-    const data = await api.createKeyV1KeysPost(body);
+    const data = await api.keysCreateKey(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -87,13 +87,13 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## deleteKeyV1KeysKeyIdDelete
+## keysDeleteKey
 
-> deleteKeyV1KeysKeyIdDelete(keyId)
+> keysDeleteKey(keyId)
 
 Delete Key
 
-Delete (revoke) an API key.  Requires master key authentication.
+Delete (revoke) an API key in the caller\&#39;s organization.  Requires master key authentication.
 
 ### Example
 
@@ -102,7 +102,7 @@ import {
   Configuration,
   KeysApi,
 } from '';
-import type { DeleteKeyV1KeysKeyIdDeleteRequest } from '';
+import type { KeysDeleteKeyRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -117,10 +117,10 @@ async function example() {
   const body = {
     // string
     keyId: keyId_example,
-  } satisfies DeleteKeyV1KeysKeyIdDeleteRequest;
+  } satisfies KeysDeleteKeyRequest;
 
   try {
-    const data = await api.deleteKeyV1KeysKeyIdDelete(body);
+    const data = await api.keysDeleteKey(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -161,13 +161,13 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## getKeyV1KeysKeyIdGet
+## keysGetKey
 
-> KeyInfo getKeyV1KeysKeyIdGet(keyId)
+> KeyInfo keysGetKey(keyId)
 
 Get Key
 
-Get details of a specific API key.  Requires master key authentication.
+Get details of a specific API key in the caller\&#39;s organization.  Requires master key authentication.
 
 ### Example
 
@@ -176,7 +176,7 @@ import {
   Configuration,
   KeysApi,
 } from '';
-import type { GetKeyV1KeysKeyIdGetRequest } from '';
+import type { KeysGetKeyRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -191,10 +191,10 @@ async function example() {
   const body = {
     // string
     keyId: keyId_example,
-  } satisfies GetKeyV1KeysKeyIdGetRequest;
+  } satisfies KeysGetKeyRequest;
 
   try {
-    const data = await api.getKeyV1KeysKeyIdGet(body);
+    const data = await api.keysGetKey(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -235,13 +235,13 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## listKeysV1KeysGet
+## keysListKeys
 
-> Array&lt;KeyInfo&gt; listKeysV1KeysGet(skip, limit)
+> Array&lt;KeyInfo&gt; keysListKeys(skip, limit, workspaceId)
 
 List Keys
 
-List all API keys.  Requires master key authentication.
+List the API keys in the caller\&#39;s organization.  Requires master key authentication. An unset &#x60;&#x60;workspace_id&#x60;&#x60; lists every key in that organization; naming a workspace in another one lists nothing rather than refusing, so the filter reports no more than the unfiltered read does.
 
 ### Example
 
@@ -250,7 +250,7 @@ import {
   Configuration,
   KeysApi,
 } from '';
-import type { ListKeysV1KeysGetRequest } from '';
+import type { KeysListKeysRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -267,10 +267,12 @@ async function example() {
     skip: 56,
     // number (optional)
     limit: 56,
-  } satisfies ListKeysV1KeysGetRequest;
+    // string | Only keys in this workspace. (optional)
+    workspaceId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies KeysListKeysRequest;
 
   try {
-    const data = await api.listKeysV1KeysGet(body);
+    const data = await api.keysListKeys(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -288,6 +290,7 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **skip** | `number` |  | [Optional] [Defaults to `0`] |
 | **limit** | `number` |  | [Optional] [Defaults to `100`] |
+| **workspaceId** | `string` | Only keys in this workspace. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -312,13 +315,13 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## rotateKeyV1KeysKeyIdRotatePost
+## keysRotateKey
 
-> CreateKeyResponse rotateKeyV1KeysKeyIdRotatePost(keyId)
+> CreateKeyResponse keysRotateKey(keyId)
 
 Rotate Key
 
-Rotate an API key\&#39;s secret in place.  Requires master key authentication.  Generates a new secret for the same key row (id, user, name, expiry, and metadata are preserved) and returns the new raw key once, using the same response shape as key creation. The previous secret stops authenticating immediately; there is no grace window.
+Rotate an API key\&#39;s secret in place, within the caller\&#39;s organization.  Requires master key authentication.  Generates a new secret for the same key row (id, user, name, expiry, and metadata are preserved) and returns the new raw key once, using the same response shape as key creation. The previous secret stops authenticating immediately; there is no grace window.
 
 ### Example
 
@@ -327,7 +330,7 @@ import {
   Configuration,
   KeysApi,
 } from '';
-import type { RotateKeyV1KeysKeyIdRotatePostRequest } from '';
+import type { KeysRotateKeyRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -342,10 +345,10 @@ async function example() {
   const body = {
     // string
     keyId: keyId_example,
-  } satisfies RotateKeyV1KeysKeyIdRotatePostRequest;
+  } satisfies KeysRotateKeyRequest;
 
   try {
-    const data = await api.rotateKeyV1KeysKeyIdRotatePost(body);
+    const data = await api.keysRotateKey(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -386,13 +389,13 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## updateKeyV1KeysKeyIdPatch
+## keysUpdateKey
 
-> KeyInfo updateKeyV1KeysKeyIdPatch(keyId, updateKeyRequest)
+> KeyInfo keysUpdateKey(keyId, updateKeyRequest)
 
 Update Key
 
-Update an API key.  Requires master key authentication.
+Update an API key in the caller\&#39;s organization.  Requires master key authentication.
 
 ### Example
 
@@ -401,7 +404,7 @@ import {
   Configuration,
   KeysApi,
 } from '';
-import type { UpdateKeyV1KeysKeyIdPatchRequest } from '';
+import type { KeysUpdateKeyRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -418,10 +421,10 @@ async function example() {
     keyId: keyId_example,
     // UpdateKeyRequest
     updateKeyRequest: ...,
-  } satisfies UpdateKeyV1KeysKeyIdPatchRequest;
+  } satisfies KeysUpdateKeyRequest;
 
   try {
-    const data = await api.updateKeyV1KeysKeyIdPatch(body);
+    const data = await api.keysUpdateKey(body);
     console.log(data);
   } catch (error) {
     console.error(error);

@@ -73,6 +73,9 @@ import type {
 const GATEWAY_HEADER_NAME = "Otari-Key";
 const DEFAULT_PLATFORM_API_BASE = "https://api.otari.ai";
 
+/** The gateway's canonical API prefix, owned here for the hand-written requests. */
+const API_ROOT = "/api/v1";
+
 const ENV_API_BASE = "GATEWAY_API_BASE";
 const ENV_API_KEY = "GATEWAY_API_KEY";
 const ENV_ADMIN_KEY = "GATEWAY_ADMIN_KEY";
@@ -99,10 +102,10 @@ export class OtariClient {
   /** Whether the client is operating in platform mode. */
   readonly platformMode: boolean;
 
-  /** Resolved gateway base URL (including the `/v1` suffix). */
+  /** Gateway origin plus `/api/v1`, used by the hand-written requests. */
   private readonly baseURL: string;
 
-  /** Gateway root URL (without `/v1`); the generated paths add `/v1` themselves. */
+  /** Gateway origin; the generated operation paths carry `/api/v1` themselves. */
   private readonly gatewayRoot: string;
 
   /** Per-mode auth + default headers, fed into the core and the streaming shim. */
@@ -150,12 +153,11 @@ export class OtariClient {
       );
     }
 
-    // Ensure the base URL includes /v1 since the gateway expects
-    // OpenAI-compatible paths like /v1/chat/completions.
-    const cleaned = rawBase.replace(/\/+$/, "");
-    const apiBase = cleaned.endsWith("/v1") ? cleaned : `${cleaned}/v1`;
-    this.baseURL = apiBase;
-    this.gatewayRoot = apiBase.replace(/\/v1$/, "");
+    // `apiBase` is an origin. The gateway's `/api/v1` prefix has a single owner:
+    // the generated operation paths carry it, and `API_ROOT` adds it for the
+    // hand-written requests. Nothing here rewrites what the caller passed.
+    this.gatewayRoot = rawBase.replace(/\/+$/, "");
+    this.baseURL = `${this.gatewayRoot}${API_ROOT}`;
 
     const headers: Record<string, string> = { ...options.defaultHeaders };
 
@@ -184,8 +186,8 @@ export class OtariClient {
     // shim, and the control-plane — the single seam tests mock.
     this.fetchApi = options.fetch ?? globalThis.fetch;
 
-    // The generated operation paths already include `/v1`, so the core's
-    // basePath is the gateway root. Per-mode auth + default headers are passed
+    // The generated operation paths already include `/api/v1`, so the core's
+    // basePath is the gateway origin. Per-mode auth + default headers are passed
     // through Configuration.headers (merged onto every request).
     const config = new Configuration({
       basePath: this.gatewayRoot,
@@ -294,7 +296,7 @@ export class OtariClient {
       return this.stream<unknown>("/messages", { ...params, stream: true }, "messages");
     }
     return this.call(() =>
-      this.messagesApi.createMessageV1MessagesPost({
+      this.messagesApi.messagesCreateMessage({
         messagesRequest: MessagesRequestFromJSON(params),
       }),
     );
@@ -302,7 +304,7 @@ export class OtariClient {
 
   /**
    * Count input tokens for an Anthropic-style message request via the gateway
-   * `/v1/messages/count_tokens` endpoint.
+   * `/api/v1/messages/count_tokens` endpoint.
    *
    * Counts the tokens a `/messages` request would consume without generating a
    * response, so `max_tokens` is not accepted. Returns a typed
@@ -315,7 +317,7 @@ export class OtariClient {
     } & Record<string, unknown>,
   ): Promise<CountTokensResponse> {
     return this.call(() =>
-      this.messagesApi.countMessageTokensV1MessagesCountTokensPost({
+      this.messagesApi.messagesCountMessageTokens({
         countTokensRequest: CountTokensRequestFromJSON(params),
       }),
     );
@@ -328,7 +330,7 @@ export class OtariClient {
     params: { model: string; input: string | string[] } & Record<string, unknown>,
   ): Promise<CreateEmbeddingResponse> {
     return this.call(() =>
-      this.embeddingsApi.createEmbeddingV1EmbeddingsPost({
+      this.embeddingsApi.embeddingsCreateEmbedding({
         embeddingRequest: EmbeddingRequestFromJSON(params),
       }),
     );
@@ -352,7 +354,7 @@ export class OtariClient {
   ): Promise<ModerationCreateResponse | ModerationResponseExt> {
     const { includeRaw, ...rest } = params;
     const result = (await this.call(() =>
-      this.moderationsApi.createModerationV1ModerationsPost({
+      this.moderationsApi.moderationsCreateModeration({
         moderationRequest: ModerationRequestFromJSON(rest),
         includeRaw: includeRaw || undefined,
       }),
@@ -365,7 +367,7 @@ export class OtariClient {
   /** Rerank `documents` by relevance to `query`. */
   async rerank(params: RerankParams): Promise<RerankResponse> {
     return this.call(() =>
-      this.rerankApi.createRerankV1RerankPost({
+      this.rerankApi.rerankCreateRerank({
         rerankRequest: RerankRequestFromJSON(params),
       }),
     );
@@ -383,7 +385,7 @@ export class OtariClient {
    */
   async imageGeneration(params: ImageGenerationParams): Promise<ImagesResponse> {
     return this.call(() =>
-      this.imagesApi.createImageV1ImagesGenerationsPost({
+      this.imagesApi.imagesCreateImage({
         imageGenerationRequest: ImageGenerationRequestFromJSON(params),
       }),
     );
@@ -438,7 +440,7 @@ export class OtariClient {
 
   /** List available models from the gateway. */
   async listModels(): Promise<ModelObject[]> {
-    const result = await this.call(() => this.modelsApi.listModelsV1ModelsGet());
+    const result = await this.call(() => this.modelsApi.modelsListModels());
     return [...result.data];
   }
 
@@ -447,7 +449,7 @@ export class OtariClient {
   /** Create a batch job. */
   async createBatch(params: CreateBatchParams): Promise<BatchWithProvider> {
     return this.call(() =>
-      this.batchesApi.createBatchV1BatchesPost({
+      this.batchesApi.batchesCreateBatch({
         createBatchRequest: CreateBatchRequestFromJSON(params),
       }),
     ) as Promise<BatchWithProvider>;
@@ -455,20 +457,18 @@ export class OtariClient {
 
   /** Retrieve the status of a batch job. */
   async retrieveBatch(batchId: string, provider: string): Promise<unknown> {
-    return this.call(() => this.batchesApi.retrieveBatchV1BatchesBatchIdGet({ batchId, provider }));
+    return this.call(() => this.batchesApi.batchesRetrieveBatch({ batchId, provider }));
   }
 
   /** Cancel a batch job. */
   async cancelBatch(batchId: string, provider: string): Promise<unknown> {
-    return this.call(() =>
-      this.batchesApi.cancelBatchV1BatchesBatchIdCancelPost({ batchId, provider }),
-    );
+    return this.call(() => this.batchesApi.batchesCancelBatch({ batchId, provider }));
   }
 
   /** List batch jobs for a provider. */
   async listBatches(provider: string, options?: ListBatchesOptions): Promise<unknown[]> {
     const result = (await this.call(() =>
-      this.batchesApi.listBatchesV1BatchesGet({
+      this.batchesApi.batchesListBatches({
         provider,
         after: options?.after,
         limit: options?.limit,
@@ -484,7 +484,7 @@ export class OtariClient {
    */
   async retrieveBatchResults(batchId: string, provider: string): Promise<BatchResult> {
     const data = (await this.call(() =>
-      this.batchesApi.retrieveBatchResultsV1BatchesBatchIdResultsGet({ batchId, provider }),
+      this.batchesApi.batchesRetrieveBatchResults({ batchId, provider }),
     )) as { results?: Array<{ custom_id: string; result?: unknown; error?: unknown }> };
     const results = Array.isArray(data?.results) ? data.results : [];
     return {

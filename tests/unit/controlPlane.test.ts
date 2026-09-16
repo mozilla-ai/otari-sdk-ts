@@ -24,113 +24,113 @@ const CASES: Case[] = [
   {
     resource: "keys",
     alias: "create",
-    generated: "createKeyV1KeysPost",
+    generated: "keysCreateKey",
     args: [{ createKeyRequest: {} }],
   },
-  { resource: "keys", alias: "get", generated: "getKeyV1KeysKeyIdGet", args: [{ keyId: "k1" }] },
+  { resource: "keys", alias: "get", generated: "keysGetKey", args: [{ keyId: "k1" }] },
   {
     resource: "keys",
     alias: "list",
-    generated: "listKeysV1KeysGet",
+    generated: "keysListKeys",
     args: [{ skip: 1, limit: 2 }],
   },
   {
     resource: "keys",
     alias: "update",
-    generated: "updateKeyV1KeysKeyIdPatch",
+    generated: "keysUpdateKey",
     args: [{ keyId: "k1", updateKeyRequest: {} }],
   },
   {
     resource: "keys",
     alias: "delete",
-    generated: "deleteKeyV1KeysKeyIdDelete",
+    generated: "keysDeleteKey",
     args: [{ keyId: "k1" }],
   },
   {
     resource: "users",
     alias: "create",
-    generated: "createUserV1UsersPost",
+    generated: "usersCreateUser",
     args: [{ createUserRequest: {} }],
   },
   {
     resource: "users",
     alias: "get",
-    generated: "getUserV1UsersUserIdGet",
+    generated: "usersGetUser",
     args: [{ userId: "u1" }],
   },
-  { resource: "users", alias: "list", generated: "listUsersV1UsersGet", args: [{}] },
+  { resource: "users", alias: "list", generated: "usersListUsers", args: [{}] },
   {
     resource: "users",
     alias: "update",
-    generated: "updateUserV1UsersUserIdPatch",
+    generated: "usersUpdateUser",
     args: [{ userId: "u1", updateUserRequest: {} }],
   },
   {
     resource: "users",
     alias: "delete",
-    generated: "deleteUserV1UsersUserIdDelete",
+    generated: "usersDeleteUser",
     args: [{ userId: "u1" }],
   },
   {
     resource: "users",
     alias: "getUsage",
-    generated: "getUserUsageV1UsersUserIdUsageGet",
+    generated: "usersGetUserUsage",
     args: [{ userId: "u1" }],
   },
   {
     resource: "budgets",
     alias: "create",
-    generated: "createBudgetV1BudgetsPost",
+    generated: "budgetsCreateBudget",
     args: [{ createBudgetRequest: {} }],
   },
   {
     resource: "budgets",
     alias: "get",
-    generated: "getBudgetV1BudgetsBudgetIdGet",
+    generated: "budgetsGetBudget",
     args: [{ budgetId: "b1" }],
   },
-  { resource: "budgets", alias: "list", generated: "listBudgetsV1BudgetsGet", args: [{}] },
+  { resource: "budgets", alias: "list", generated: "budgetsListBudgets", args: [{}] },
   {
     resource: "budgets",
     alias: "update",
-    generated: "updateBudgetV1BudgetsBudgetIdPatch",
+    generated: "budgetsUpdateBudget",
     args: [{ budgetId: "b1", updateBudgetRequest: {} }],
   },
   {
     resource: "budgets",
     alias: "delete",
-    generated: "deleteBudgetV1BudgetsBudgetIdDelete",
+    generated: "budgetsDeleteBudget",
     args: [{ budgetId: "b1" }],
   },
-  { resource: "pricing", alias: "list", generated: "listPricingV1PricingGet", args: [{}] },
+  { resource: "pricing", alias: "list", generated: "pricingListPricing", args: [{}] },
   {
     resource: "pricing",
     alias: "get",
-    generated: "getPricingV1PricingModelKeyGet",
+    generated: "pricingGetPricing",
     args: [{ modelKey: "m1" }],
   },
   {
     resource: "pricing",
     alias: "set",
-    generated: "setPricingV1PricingPost",
+    generated: "pricingSetPricing",
     args: [{ setPricingRequest: {} }],
   },
   {
     resource: "pricing",
     alias: "delete",
-    generated: "deletePricingV1PricingModelKeyDelete",
+    generated: "pricingDeletePricing",
     args: [{ modelKey: "m1" }],
   },
   {
     resource: "pricing",
     alias: "getHistory",
-    generated: "getPricingHistoryV1PricingModelKeyHistoryGet",
+    generated: "pricingGetPricingHistory",
     args: [{ modelKey: "m1" }],
   },
   {
     resource: "usage",
     alias: "list",
-    generated: "listUsageV1UsageGet",
+    generated: "usageListUsage",
     args: [{ userId: "u1", skip: 0, limit: 10 }],
   },
 ];
@@ -162,7 +162,7 @@ describe("ControlPlane ergonomic aliases", () => {
   it("forwards initOverrides through to the generated method", async () => {
     const cp = controlPlane();
     const spy = vi.fn().mockResolvedValue(undefined);
-    cp.keys.raw.getKeyV1KeysKeyIdGet = spy;
+    cp.keys.raw.keysGetKey = spy;
     const overrides = { headers: { "X-Test": "1" } };
 
     await cp.keys.get({ keyId: "k1" }, overrides);
@@ -172,11 +172,11 @@ describe("ControlPlane ergonomic aliases", () => {
 
   it("exposes the generated API via raw on every resource", () => {
     const cp = controlPlane();
-    expect(typeof cp.keys.raw.createKeyV1KeysPost).toBe("function");
-    expect(typeof cp.users.raw.listUsersV1UsersGet).toBe("function");
-    expect(typeof cp.budgets.raw.getBudgetV1BudgetsBudgetIdGet).toBe("function");
-    expect(typeof cp.pricing.raw.setPricingV1PricingPost).toBe("function");
-    expect(typeof cp.usage.raw.listUsageV1UsageGet).toBe("function");
+    expect(typeof cp.keys.raw.keysCreateKey).toBe("function");
+    expect(typeof cp.users.raw.usersListUsers).toBe("function");
+    expect(typeof cp.budgets.raw.budgetsGetBudget).toBe("function");
+    expect(typeof cp.pricing.raw.pricingSetPricing).toBe("function");
+    expect(typeof cp.usage.raw.usageListUsage).toBe("function");
   });
 });
 
@@ -202,29 +202,29 @@ function responseError(status: number, detail: string): Error {
 describe("ControlPlane error mapping", () => {
   // One representative alias per resource, covering all five resource classes.
   const ERROR_CASES: Case[] = [
-    { resource: "keys", alias: "get", generated: "getKeyV1KeysKeyIdGet", args: [{ keyId: "k1" }] },
+    { resource: "keys", alias: "get", generated: "keysGetKey", args: [{ keyId: "k1" }] },
     {
       resource: "users",
       alias: "get",
-      generated: "getUserV1UsersUserIdGet",
+      generated: "usersGetUser",
       args: [{ userId: "u1" }],
     },
     {
       resource: "budgets",
       alias: "get",
-      generated: "getBudgetV1BudgetsBudgetIdGet",
+      generated: "budgetsGetBudget",
       args: [{ budgetId: "b1" }],
     },
     {
       resource: "pricing",
       alias: "get",
-      generated: "getPricingV1PricingModelKeyGet",
+      generated: "pricingGetPricing",
       args: [{ modelKey: "m1" }],
     },
     {
       resource: "usage",
       alias: "list",
-      generated: "listUsageV1UsageGet",
+      generated: "usageListUsage",
       args: [{ userId: "u1" }],
     },
   ];
@@ -245,7 +245,7 @@ describe("ControlPlane error mapping", () => {
   it("propagates non-ResponseError failures unchanged", async () => {
     const cp = controlPlane();
     const boom = new Error("network down");
-    cp.keys.raw.getKeyV1KeysKeyIdGet = vi.fn().mockRejectedValue(boom);
+    cp.keys.raw.keysGetKey = vi.fn().mockRejectedValue(boom);
 
     await expect(cp.keys.get({ keyId: "k1" })).rejects.toBe(boom);
   });

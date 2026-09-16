@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `contextWindow` | number
 `created` | number
+`deploymentManaged` | boolean
 `id` | string
 `object` | string
 `ownedBy` | string
@@ -24,6 +25,7 @@ import type { ModelObject } from ''
 const example = {
   "contextWindow": null,
   "created": null,
+  "deploymentManaged": null,
   "id": null,
   "object": null,
   "ownedBy": null,

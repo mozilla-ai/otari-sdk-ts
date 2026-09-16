@@ -8,11 +8,6 @@ Name | Type
 ------------ | -------------
 `errorCode` | string
 `type` | string
-`content` | [Array&lt;MRCodeExecutionOutputBlock&gt;](MRCodeExecutionOutputBlock.md)
-`returnCode` | number
-`stderr` | string
-`stdout` | string
-`encryptedStdout` | string
 
 ## Example
 
@@ -23,11 +18,6 @@ import type { Content11 } from ''
 const example = {
   "errorCode": null,
   "type": null,
-  "content": null,
-  "returnCode": null,
-  "stderr": null,
-  "stdout": null,
-  "encryptedStdout": null,
 } satisfies Content11
 
 console.log(example)
