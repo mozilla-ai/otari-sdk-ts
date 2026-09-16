@@ -11,8 +11,8 @@
  * exposes ergonomic aliases (`create`, `get`, `list`, `update`, `delete`, ...)
  * that delegate to the generator-derived methods. The raw generated API stays
  * reachable via the `raw` property on each resource (for example
- * `controlPlane.keys.raw.createKeyV1KeysPost(...)`), so the full generated
- * surface remains available as an escape hatch.
+ * `controlPlane.keys.raw.keysCreateKey(...)`), so the full generated surface
+ * remains available as an escape hatch.
  */
 
 import {
@@ -43,24 +43,24 @@ async function translate<T>(p: Promise<T>): Promise<T> {
 export class KeysResource {
   constructor(readonly raw: KeysApi) {}
 
-  create(...args: Parameters<KeysApi["createKeyV1KeysPost"]>) {
-    return translate(this.raw.createKeyV1KeysPost(...args));
+  create(...args: Parameters<KeysApi["keysCreateKey"]>) {
+    return translate(this.raw.keysCreateKey(...args));
   }
 
-  get(...args: Parameters<KeysApi["getKeyV1KeysKeyIdGet"]>) {
-    return translate(this.raw.getKeyV1KeysKeyIdGet(...args));
+  get(...args: Parameters<KeysApi["keysGetKey"]>) {
+    return translate(this.raw.keysGetKey(...args));
   }
 
-  list(...args: Parameters<KeysApi["listKeysV1KeysGet"]>) {
-    return translate(this.raw.listKeysV1KeysGet(...args));
+  list(...args: Parameters<KeysApi["keysListKeys"]>) {
+    return translate(this.raw.keysListKeys(...args));
   }
 
-  update(...args: Parameters<KeysApi["updateKeyV1KeysKeyIdPatch"]>) {
-    return translate(this.raw.updateKeyV1KeysKeyIdPatch(...args));
+  update(...args: Parameters<KeysApi["keysUpdateKey"]>) {
+    return translate(this.raw.keysUpdateKey(...args));
   }
 
-  delete(...args: Parameters<KeysApi["deleteKeyV1KeysKeyIdDelete"]>) {
-    return translate(this.raw.deleteKeyV1KeysKeyIdDelete(...args));
+  delete(...args: Parameters<KeysApi["keysDeleteKey"]>) {
+    return translate(this.raw.keysDeleteKey(...args));
   }
 }
 
@@ -68,28 +68,28 @@ export class KeysResource {
 export class UsersResource {
   constructor(readonly raw: UsersApi) {}
 
-  create(...args: Parameters<UsersApi["createUserV1UsersPost"]>) {
-    return translate(this.raw.createUserV1UsersPost(...args));
+  create(...args: Parameters<UsersApi["usersCreateUser"]>) {
+    return translate(this.raw.usersCreateUser(...args));
   }
 
-  get(...args: Parameters<UsersApi["getUserV1UsersUserIdGet"]>) {
-    return translate(this.raw.getUserV1UsersUserIdGet(...args));
+  get(...args: Parameters<UsersApi["usersGetUser"]>) {
+    return translate(this.raw.usersGetUser(...args));
   }
 
-  list(...args: Parameters<UsersApi["listUsersV1UsersGet"]>) {
-    return translate(this.raw.listUsersV1UsersGet(...args));
+  list(...args: Parameters<UsersApi["usersListUsers"]>) {
+    return translate(this.raw.usersListUsers(...args));
   }
 
-  update(...args: Parameters<UsersApi["updateUserV1UsersUserIdPatch"]>) {
-    return translate(this.raw.updateUserV1UsersUserIdPatch(...args));
+  update(...args: Parameters<UsersApi["usersUpdateUser"]>) {
+    return translate(this.raw.usersUpdateUser(...args));
   }
 
-  delete(...args: Parameters<UsersApi["deleteUserV1UsersUserIdDelete"]>) {
-    return translate(this.raw.deleteUserV1UsersUserIdDelete(...args));
+  delete(...args: Parameters<UsersApi["usersDeleteUser"]>) {
+    return translate(this.raw.usersDeleteUser(...args));
   }
 
-  getUsage(...args: Parameters<UsersApi["getUserUsageV1UsersUserIdUsageGet"]>) {
-    return translate(this.raw.getUserUsageV1UsersUserIdUsageGet(...args));
+  getUsage(...args: Parameters<UsersApi["usersGetUserUsage"]>) {
+    return translate(this.raw.usersGetUserUsage(...args));
   }
 }
 
@@ -97,24 +97,24 @@ export class UsersResource {
 export class BudgetsResource {
   constructor(readonly raw: BudgetsApi) {}
 
-  create(...args: Parameters<BudgetsApi["createBudgetV1BudgetsPost"]>) {
-    return translate(this.raw.createBudgetV1BudgetsPost(...args));
+  create(...args: Parameters<BudgetsApi["budgetsCreateBudget"]>) {
+    return translate(this.raw.budgetsCreateBudget(...args));
   }
 
-  get(...args: Parameters<BudgetsApi["getBudgetV1BudgetsBudgetIdGet"]>) {
-    return translate(this.raw.getBudgetV1BudgetsBudgetIdGet(...args));
+  get(...args: Parameters<BudgetsApi["budgetsGetBudget"]>) {
+    return translate(this.raw.budgetsGetBudget(...args));
   }
 
-  list(...args: Parameters<BudgetsApi["listBudgetsV1BudgetsGet"]>) {
-    return translate(this.raw.listBudgetsV1BudgetsGet(...args));
+  list(...args: Parameters<BudgetsApi["budgetsListBudgets"]>) {
+    return translate(this.raw.budgetsListBudgets(...args));
   }
 
-  update(...args: Parameters<BudgetsApi["updateBudgetV1BudgetsBudgetIdPatch"]>) {
-    return translate(this.raw.updateBudgetV1BudgetsBudgetIdPatch(...args));
+  update(...args: Parameters<BudgetsApi["budgetsUpdateBudget"]>) {
+    return translate(this.raw.budgetsUpdateBudget(...args));
   }
 
-  delete(...args: Parameters<BudgetsApi["deleteBudgetV1BudgetsBudgetIdDelete"]>) {
-    return translate(this.raw.deleteBudgetV1BudgetsBudgetIdDelete(...args));
+  delete(...args: Parameters<BudgetsApi["budgetsDeleteBudget"]>) {
+    return translate(this.raw.budgetsDeleteBudget(...args));
   }
 }
 
@@ -122,24 +122,24 @@ export class BudgetsResource {
 export class PricingResource {
   constructor(readonly raw: PricingApi) {}
 
-  list(...args: Parameters<PricingApi["listPricingV1PricingGet"]>) {
-    return translate(this.raw.listPricingV1PricingGet(...args));
+  list(...args: Parameters<PricingApi["pricingListPricing"]>) {
+    return translate(this.raw.pricingListPricing(...args));
   }
 
-  get(...args: Parameters<PricingApi["getPricingV1PricingModelKeyGet"]>) {
-    return translate(this.raw.getPricingV1PricingModelKeyGet(...args));
+  get(...args: Parameters<PricingApi["pricingGetPricing"]>) {
+    return translate(this.raw.pricingGetPricing(...args));
   }
 
-  set(...args: Parameters<PricingApi["setPricingV1PricingPost"]>) {
-    return translate(this.raw.setPricingV1PricingPost(...args));
+  set(...args: Parameters<PricingApi["pricingSetPricing"]>) {
+    return translate(this.raw.pricingSetPricing(...args));
   }
 
-  delete(...args: Parameters<PricingApi["deletePricingV1PricingModelKeyDelete"]>) {
-    return translate(this.raw.deletePricingV1PricingModelKeyDelete(...args));
+  delete(...args: Parameters<PricingApi["pricingDeletePricing"]>) {
+    return translate(this.raw.pricingDeletePricing(...args));
   }
 
-  getHistory(...args: Parameters<PricingApi["getPricingHistoryV1PricingModelKeyHistoryGet"]>) {
-    return translate(this.raw.getPricingHistoryV1PricingModelKeyHistoryGet(...args));
+  getHistory(...args: Parameters<PricingApi["pricingGetPricingHistory"]>) {
+    return translate(this.raw.pricingGetPricingHistory(...args));
   }
 }
 
@@ -147,8 +147,8 @@ export class PricingResource {
 export class UsageResource {
   constructor(readonly raw: UsageApi) {}
 
-  list(...args: Parameters<UsageApi["listUsageV1UsageGet"]>) {
-    return translate(this.raw.listUsageV1UsageGet(...args));
+  list(...args: Parameters<UsageApi["usageListUsage"]>) {
+    return translate(this.raw.usageListUsage(...args));
   }
 }
 
@@ -161,8 +161,8 @@ export class ControlPlane {
 
   constructor(baseUrl: string, bearerToken: string, fetchApi?: typeof fetch) {
     const config = new Configuration({
-      // The generated operation paths already include the `/v1` prefix, so the
-      // control-plane targets the gateway root.
+      // The generated operation paths already include the `/api/v1` prefix, so the
+      // control-plane targets the gateway origin.
       basePath: baseUrl,
       headers: { Authorization: `Bearer ${bearerToken}` },
       fetchApi,

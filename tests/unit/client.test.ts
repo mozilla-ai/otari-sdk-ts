@@ -166,26 +166,35 @@ describe("OtariClient constructor", () => {
 
   it("uses apiBase from options", () => {
     const client = new OtariClient({ apiBase: "http://localhost:8000" });
-    expect((client as unknown as { baseURL: string }).baseURL).toBe("http://localhost:8000/v1");
+    expect((client as unknown as { baseURL: string }).baseURL).toBe("http://localhost:8000/api/v1");
     expect((client as unknown as { gatewayRoot: string }).gatewayRoot).toBe(
       "http://localhost:8000",
     );
   });
 
-  it("does not double-append /v1", () => {
-    const client = new OtariClient({ apiBase: "http://localhost:8000/v1" });
-    expect((client as unknown as { baseURL: string }).baseURL).toBe("http://localhost:8000/v1");
+  it("does not rewrite an apiBase that already carries the API prefix", () => {
+    // apiBase is an origin, so a value carrying the prefix is duplicated rather
+    // than silently corrected. Nothing in the client normalizes it away.
+    const client = new OtariClient({ apiBase: "http://localhost:8000/api/v1" });
+    expect((client as unknown as { gatewayRoot: string }).gatewayRoot).toBe(
+      "http://localhost:8000/api/v1",
+    );
+    expect((client as unknown as { baseURL: string }).baseURL).toBe(
+      "http://localhost:8000/api/v1/api/v1",
+    );
   });
 
   it("strips trailing slash", () => {
     const client = new OtariClient({ apiBase: "http://localhost:8000/" });
-    expect((client as unknown as { baseURL: string }).baseURL).toBe("http://localhost:8000/v1");
+    expect((client as unknown as { baseURL: string }).baseURL).toBe("http://localhost:8000/api/v1");
   });
 
   it("falls back to GATEWAY_API_BASE env var", () => {
     process.env.GATEWAY_API_BASE = "http://env-gateway:9000";
     const client = new OtariClient();
-    expect((client as unknown as { baseURL: string }).baseURL).toBe("http://env-gateway:9000/v1");
+    expect((client as unknown as { baseURL: string }).baseURL).toBe(
+      "http://env-gateway:9000/api/v1",
+    );
   });
 
   it("defaults to https://api.otari.ai in platform mode", () => {
@@ -193,7 +202,7 @@ describe("OtariClient constructor", () => {
     delete process.env.OTARI_AI_TOKEN;
     delete process.env.GATEWAY_PLATFORM_TOKEN;
     const client = new OtariClient({ platformToken: "tk_x" });
-    expect((client as unknown as { baseURL: string }).baseURL).toBe("https://api.otari.ai/v1");
+    expect((client as unknown as { baseURL: string }).baseURL).toBe("https://api.otari.ai/api/v1");
   });
 });
 
@@ -256,7 +265,7 @@ describe("OtariClient.completion", () => {
     });
     expect(result.choices?.[0]?.message?.content).toBe("Hi");
     expect(mock.last.method).toBe("POST");
-    expect(mock.last.url).toMatch(/\/v1\/chat\/completions$/);
+    expect(mock.last.url).toMatch(/\/api\/v1\/chat\/completions$/);
     expect((mock.last.body as Record<string, unknown>).model).toBe("openai:gpt-4o-mini");
     expect((mock.last.body as Record<string, unknown>).temperature).toBe(0.5);
     expect(mock.last.headers["otari-key"]).toBe("Bearer vk");
@@ -334,7 +343,7 @@ describe("OtariClient.embedding", () => {
       input: "hello",
     });
     expect(result.data?.[0]?.embedding).toEqual([0.1, 0.2]);
-    expect(mock.last.url).toMatch(/\/v1\/embeddings$/);
+    expect(mock.last.url).toMatch(/\/api\/v1\/embeddings$/);
     expect((mock.last.body as Record<string, unknown>).input).toBe("hello");
   });
 });
@@ -349,7 +358,7 @@ describe("OtariClient.rerank", () => {
     });
     const result = await client.rerank({ model: "m", query: "q", documents: ["a", "b"] });
     expect(result.results?.[0]?.relevanceScore).toBe(0.9);
-    expect(mock.last.url).toMatch(/\/v1\/rerank$/);
+    expect(mock.last.url).toMatch(/\/api\/v1\/rerank$/);
     expect((mock.last.body as Record<string, unknown>).documents).toEqual(["a", "b"]);
   });
 });
@@ -368,7 +377,7 @@ describe("OtariClient.message", () => {
       max_tokens: 64,
     })) as { id: string };
     expect(result.id).toBe("msg-1");
-    expect(mock.last.url).toMatch(/\/v1\/messages$/);
+    expect(mock.last.url).toMatch(/\/api\/v1\/messages$/);
     expect((mock.last.body as Record<string, unknown>).max_tokens).toBe(64);
     expect((mock.last.body as Record<string, unknown>).model).toBe("anthropic:claude-3-5-sonnet");
   });
@@ -387,7 +396,7 @@ describe("OtariClient.countTokens", () => {
       messages: [{ role: "user", content: "Hi" }],
     });
     expect(result.inputTokens).toBe(42);
-    expect(mock.last.url).toMatch(/\/v1\/messages\/count_tokens$/);
+    expect(mock.last.url).toMatch(/\/api\/v1\/messages\/count_tokens$/);
     expect((mock.last.body as Record<string, unknown>).model).toBe("anthropic:claude-3-5-sonnet");
     expect((mock.last.body as Record<string, unknown>).max_tokens).toBeUndefined();
   });
@@ -403,7 +412,7 @@ describe("OtariClient.moderation", () => {
     });
     const result = await client.moderation({ model: "m", input: "text" });
     expect(result.results[0].flagged).toBe(false);
-    expect(mock.last.url).toMatch(/\/v1\/moderations$/);
+    expect(mock.last.url).toMatch(/\/api\/v1\/moderations$/);
   });
 });
 
@@ -476,7 +485,7 @@ describe("OtariClient.imageGeneration", () => {
     expect(result.created).toBe(1);
     expect(result.data?.[0].url).toBe("https://example.com/cat.png");
     expect(mock.last.method).toBe("POST");
-    expect(mock.last.url).toMatch(/\/v1\/images\/generations$/);
+    expect(mock.last.url).toMatch(/\/api\/v1\/images\/generations$/);
     expect((mock.last.body as Record<string, unknown>).model).toBe("openai:dall-e-3");
     expect((mock.last.body as Record<string, unknown>).prompt).toBe("a cat");
     expect((mock.last.body as Record<string, unknown>).size).toBe("1024x1024");
@@ -513,7 +522,7 @@ describe("OtariClient.speech", () => {
     expect(result).toBeInstanceOf(Uint8Array);
     expect([...result]).toEqual([1, 2, 3, 4]);
     expect(mock.last.method).toBe("POST");
-    expect(mock.last.url).toMatch(/\/v1\/audio\/speech$/);
+    expect(mock.last.url).toMatch(/\/api\/v1\/audio\/speech$/);
     expect(mock.last.headers["otari-key"]).toBe("Bearer vk");
     expect(mock.last.headers["content-type"]).toBe("application/json");
     const sentBody = JSON.parse(mock.last.body as string) as Record<string, unknown>;
@@ -562,7 +571,7 @@ describe("OtariClient.transcription", () => {
     expect(result.json).toEqual({ text: "hello world" });
     expect(result.text).toBeUndefined();
     expect(mock.last.method).toBe("POST");
-    expect(mock.last.url).toMatch(/\/v1\/audio\/transcriptions$/);
+    expect(mock.last.url).toMatch(/\/api\/v1\/audio\/transcriptions$/);
     expect(mock.last.headers["otari-key"]).toBe("Bearer vk");
     // multipart: the body is a FormData instance and Content-Type is left unset
     // so fetch can attach the boundary.
@@ -630,7 +639,7 @@ describe("OtariClient.listModels", () => {
     });
     const models = await client.listModels();
     expect(models[0].id).toBe("openai:gpt-4o");
-    expect(mock.last.url).toMatch(/\/v1\/models$/);
+    expect(mock.last.url).toMatch(/\/api\/v1\/models$/);
   });
 });
 
@@ -826,7 +835,7 @@ describe("OtariClient batch methods", () => {
     provider: "openai",
   };
 
-  it("createBatch posts to /v1/batches and returns provider", async () => {
+  it("createBatch posts to /api/v1/batches and returns provider", async () => {
     const mock = jsonFetch(200, batchResponse);
     const client = new OtariClient({
       apiBase: "http://localhost:8000",
@@ -837,7 +846,7 @@ describe("OtariClient batch methods", () => {
       model: "openai:gpt-4o-mini",
       requests: [{ custom_id: "r1", body: {} }],
     });
-    expect(mock.last.url).toMatch(/\/v1\/batches$/);
+    expect(mock.last.url).toMatch(/\/api\/v1\/batches$/);
     expect(mock.last.method).toBe("POST");
     expect(result.provider).toBe("openai");
   });
@@ -850,7 +859,7 @@ describe("OtariClient batch methods", () => {
       fetch: mock.fetch,
     });
     await client.retrieveBatch("batch_abc123", "openai");
-    expect(mock.last.url).toContain("/v1/batches/batch_abc123");
+    expect(mock.last.url).toContain("/api/v1/batches/batch_abc123");
     expect(mock.last.url).toContain("provider=openai");
     expect(mock.last.method).toBe("GET");
   });
