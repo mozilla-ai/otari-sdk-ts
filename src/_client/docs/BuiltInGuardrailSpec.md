@@ -15,7 +15,6 @@ Name | Type
 `description` | string
 `displayName` | string
 `guardrailName` | string
-`missingExtra` | string
 `multilingual` | boolean
 `multimodal` | boolean
 `optionalValidateKwargs` | Array&lt;string&gt;
@@ -24,7 +23,6 @@ Name | Type
 `requiredValidateKwargs` | Array&lt;string&gt;
 `requirementGroups` | [Array&lt;RequirementGroup&gt;](RequirementGroup.md)
 `requiresApiKey` | boolean
-`runnable` | boolean
 `stages` | Array&lt;string&gt;
 `supportsBatch` | boolean
 `validateParameters` | [Array&lt;GuardrailParameterSpec&gt;](GuardrailParameterSpec.md)
@@ -46,7 +44,6 @@ const example = {
   "description": null,
   "displayName": null,
   "guardrailName": null,
-  "missingExtra": null,
   "multilingual": null,
   "multimodal": null,
   "optionalValidateKwargs": null,
@@ -55,7 +52,6 @@ const example = {
   "requiredValidateKwargs": null,
   "requirementGroups": null,
   "requiresApiKey": null,
-  "runnable": null,
   "stages": null,
   "supportsBatch": null,
   "validateParameters": null,

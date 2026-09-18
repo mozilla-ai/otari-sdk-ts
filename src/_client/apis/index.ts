@@ -13,6 +13,7 @@ export * from './ChatApi.js';
 export * from './EmbeddingsApi.js';
 export * from './FilesApi.js';
 export * from './HealthApi.js';
+export * from './HooksApi.js';
 export * from './ImagesApi.js';
 export * from './InvitationsApi.js';
 export * from './KeysApi.js';
