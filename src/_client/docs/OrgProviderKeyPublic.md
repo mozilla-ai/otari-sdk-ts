@@ -18,6 +18,7 @@ Name | Type
 `organizationId` | string
 `provider` | string
 `updatedAt` | Date
+`usable` | boolean
 
 ## Example
 
@@ -37,6 +38,7 @@ const example = {
   "organizationId": null,
   "provider": null,
   "updatedAt": null,
+  "usable": null,
 } satisfies OrgProviderKeyPublic
 
 console.log(example)

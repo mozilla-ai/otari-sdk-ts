@@ -12,6 +12,7 @@ apis/ChatApi.ts
 apis/EmbeddingsApi.ts
 apis/FilesApi.ts
 apis/HealthApi.ts
+apis/HooksApi.ts
 apis/ImagesApi.ts
 apis/InvitationsApi.ts
 apis/KeysApi.ts
@@ -135,6 +136,7 @@ docs/CallerWorkspaceMembershipPublic.md
 docs/CandidateResponse.md
 docs/CatalogApi.md
 docs/CatalogCapabilities.md
+docs/CatalogCredential.md
 docs/CatalogElsewhere.md
 docs/CatalogModelDetail.md
 docs/CatalogModelSummary.md
@@ -206,6 +208,7 @@ docs/ExternalIngestError.md
 docs/ExternalIngestResult.md
 docs/ExternalUsageEvent.md
 docs/FilesApi.md
+docs/GateResultResponse.md
 docs/GatewaySettings.md
 docs/GuardrailCatalog.md
 docs/GuardrailCategory.md
@@ -215,6 +218,7 @@ docs/GuardrailProfileSpec.md
 docs/GuardrailStage.md
 docs/HTTPValidationError.md
 docs/HealthApi.md
+docs/HooksApi.md
 docs/IMGImage.md
 docs/IMGUsage.md
 docs/IMGUsageInputTokensDetails.md
@@ -464,6 +468,8 @@ docs/PlaygroundMessagePublic.md
 docs/PlaygroundMessagesPublic.md
 docs/PlaygroundToolStatus.md
 docs/PlaygroundToolsResponse.md
+docs/PolicyCheckRequest.md
+docs/PolicyCheckResponse.md
 docs/PolicyRequest.md
 docs/PolicyResponse.md
 docs/PoolStatus.md
@@ -706,6 +712,7 @@ models/CallerOrganizationMembershipsPublic.ts
 models/CallerWorkspaceMembershipPublic.ts
 models/CandidateResponse.ts
 models/CatalogCapabilities.ts
+models/CatalogCredential.ts
 models/CatalogElsewhere.ts
 models/CatalogModelDetail.ts
 models/CatalogModelSummary.ts
@@ -774,6 +781,7 @@ models/ExternalEventsRequest.ts
 models/ExternalIngestError.ts
 models/ExternalIngestResult.ts
 models/ExternalUsageEvent.ts
+models/GateResultResponse.ts
 models/GatewaySettings.ts
 models/GuardrailCatalog.ts
 models/GuardrailCategory.ts
@@ -1015,6 +1023,8 @@ models/PlaygroundMessagePublic.ts
 models/PlaygroundMessagesPublic.ts
 models/PlaygroundToolStatus.ts
 models/PlaygroundToolsResponse.ts
+models/PolicyCheckRequest.ts
+models/PolicyCheckResponse.ts
 models/PolicyRequest.ts
 models/PolicyResponse.ts
 models/PoolStatus.ts

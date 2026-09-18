@@ -1,7 +1,7 @@
 
 # WorkspaceMcpServerCreate
 
-Request body for registering a server.  ``authorization_token`` is never stored as sent: it is encrypted with ``OTARI_SECRET_KEY`` and only the ciphertext is kept, the same convention `entities.ProviderCredential` and `OrgProviderKey` already use.
+Request body for registering a server.  ``authorization_token`` is never stored as sent: it is encrypted with ``OTARI_SECRET_KEY`` and only the ciphertext is kept, the same convention `providers.ProviderCredential` and `OrgProviderKey` already use.
 
 ## Properties
 

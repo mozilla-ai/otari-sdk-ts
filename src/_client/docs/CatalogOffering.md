@@ -8,7 +8,7 @@ One way this deployment can call a model: a selector on a provider.
 Name | Type
 ------------ | -------------
 `contextWindow` | number
-`credential` | string
+`credential` | [CatalogCredential](CatalogCredential.md)
 `discovered` | boolean
 `maxOutputTokens` | number
 `metadataInputPricePerMillion` | number

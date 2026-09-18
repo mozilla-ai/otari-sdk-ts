@@ -13,6 +13,7 @@ Name | Type
 `isEffectiveDefault` | boolean
 `isEffectiveEnabled` | boolean
 `orgProviderKeyId` | string
+`usable` | boolean
 `workspaceId` | string
 
 ## Example
@@ -28,6 +29,7 @@ const example = {
   "isEffectiveDefault": null,
   "isEffectiveEnabled": null,
   "orgProviderKeyId": null,
+  "usable": null,
   "workspaceId": null,
 } satisfies WorkspaceProviderKeyOverridePublic
 
