@@ -9,6 +9,7 @@ All URIs are relative to *http://localhost*
 | [**pricingGetPendingPricingRefresh**](PricingApi.md#pricinggetpendingpricingrefresh) | **GET** /api/v1/pricing/refresh/pending | Get Pending Pricing Refresh |
 | [**pricingGetPricing**](PricingApi.md#pricinggetpricing) | **GET** /api/v1/pricing/{model_key} | Get Pricing |
 | [**pricingGetPricingHistory**](PricingApi.md#pricinggetpricinghistory) | **GET** /api/v1/pricing/{model_key}/history | Get Pricing History |
+| [**pricingListCurrentPricing**](PricingApi.md#pricinglistcurrentpricing) | **GET** /api/v1/pricing/current | List Current Pricing |
 | [**pricingListPricing**](PricingApi.md#pricinglistpricing) | **GET** /api/v1/pricing | List Pricing |
 | [**pricingListPricingDrift**](PricingApi.md#pricinglistpricingdrift) | **GET** /api/v1/pricing/drift | List Pricing Drift |
 | [**pricingListPricingSnapshots**](PricingApi.md#pricinglistpricingsnapshots) | **GET** /api/v1/pricing/snapshots | List Pricing Snapshots |
@@ -356,6 +357,83 @@ example().catch(console.error);
 ### Return type
 
 [**Array&lt;PricingResponse&gt;**](PricingResponse.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## pricingListCurrentPricing
+
+> CurrentPricingPage pricingListCurrentPricing(skip, limit)
+
+List Current Pricing
+
+List the rate each priced model is metered at, one row per model key.  Listing prices answers the stored history, one row per &#x60;&#x60;effective_at&#x60;&#x60;, so a page of that is a page of revisions rather than a page of models. This answers one row per key: the newest rate that has taken effect, or the earliest scheduled rate for a key that has none yet. &#x60;&#x60;count&#x60;&#x60; is the number of priced models, so a caller can page without reading the collection to learn how long it is.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PricingApi,
+} from '';
+import type { PricingListCurrentPricingRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PricingApi(config);
+
+  const body = {
+    // number (optional)
+    skip: 56,
+    // number (optional)
+    limit: 56,
+  } satisfies PricingListCurrentPricingRequest;
+
+  try {
+    const data = await api.pricingListCurrentPricing(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **skip** | `number` |  | [Optional] [Defaults to `0`] |
+| **limit** | `number` |  | [Optional] [Defaults to `100`] |
+
+### Return type
+
+[**CurrentPricingPage**](CurrentPricingPage.md)
 
 ### Authorization
 

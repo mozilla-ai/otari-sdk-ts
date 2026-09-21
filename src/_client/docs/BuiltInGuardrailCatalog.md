@@ -1,7 +1,7 @@
 
 # BuiltInGuardrailCatalog
 
-Every guardrail this gateway ships, whether or not it can currently run it.
+The guardrails this gateway can build and call itself.
 
 ## Properties
 

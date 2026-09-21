@@ -7,6 +7,7 @@ A member row joined to the identity behind it, as the roster shows it.  Field-fo
 
 Name | Type
 ------------ | -------------
+`attribution` | [MemberAttributionPublic](MemberAttributionPublic.md)
 `attributionUserId` | string
 `createdAt` | Date
 `email` | string
@@ -17,6 +18,7 @@ Name | Type
 `status` | string
 `updatedAt` | Date
 `userId` | string
+`workspaces` | [Array&lt;MemberWorkspacePlacementPublic&gt;](MemberWorkspacePlacementPublic.md)
 
 ## Example
 
@@ -25,6 +27,7 @@ import type { ActiveOrganizationMemberPublic } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "attribution": null,
   "attributionUserId": null,
   "createdAt": null,
   "email": null,
@@ -35,6 +38,7 @@ const example = {
   "status": null,
   "updatedAt": null,
   "userId": null,
+  "workspaces": null,
 } satisfies ActiveOrganizationMemberPublic
 
 console.log(example)

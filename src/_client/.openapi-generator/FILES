@@ -12,6 +12,7 @@ apis/ChatApi.ts
 apis/EmbeddingsApi.ts
 apis/FilesApi.ts
 apis/HealthApi.ts
+apis/HooksApi.ts
 apis/ImagesApi.ts
 apis/InvitationsApi.ts
 apis/KeysApi.ts
@@ -27,6 +28,7 @@ apis/OrganizationPricingApi.ts
 apis/OrganizationUsageApi.ts
 apis/OrganizationsApi.ts
 apis/OtelApi.ts
+apis/OverviewApi.ts
 apis/PlaygroundApi.ts
 apis/PricingApi.ts
 apis/ProviderKeysApi.ts
@@ -78,6 +80,7 @@ docs/AgentTelemetryUsage.md
 docs/AliasRequest.md
 docs/AliasResponse.md
 docs/AliasesApi.md
+docs/AllocationHealthResponse.md
 docs/Annotations.md
 docs/ApiKeyId.md
 docs/AppliedEditsInner.md
@@ -135,6 +138,7 @@ docs/CallerWorkspaceMembershipPublic.md
 docs/CandidateResponse.md
 docs/CatalogApi.md
 docs/CatalogCapabilities.md
+docs/CatalogCredential.md
 docs/CatalogElsewhere.md
 docs/CatalogModelDetail.md
 docs/CatalogModelSummary.md
@@ -183,6 +187,7 @@ docs/CreateSearchToolRequest.md
 docs/CreateSessionRequest.md
 docs/CreateStoredProviderRequest.md
 docs/CreateUserRequest.md
+docs/CurrentPricingPage.md
 docs/DeploymentAdminAccessPublic.md
 docs/DeploymentBootstrap.md
 docs/DeploymentUserOrganizationPublic.md
@@ -206,6 +211,7 @@ docs/ExternalIngestError.md
 docs/ExternalIngestResult.md
 docs/ExternalUsageEvent.md
 docs/FilesApi.md
+docs/GateResultResponse.md
 docs/GatewaySettings.md
 docs/GuardrailCatalog.md
 docs/GuardrailCategory.md
@@ -215,6 +221,7 @@ docs/GuardrailProfileSpec.md
 docs/GuardrailStage.md
 docs/HTTPValidationError.md
 docs/HealthApi.md
+docs/HooksApi.md
 docs/IMGImage.md
 docs/IMGUsage.md
 docs/IMGUsageInputTokensDetails.md
@@ -232,6 +239,7 @@ docs/InvitationPreviewPublic.md
 docs/InvitationsApi.md
 docs/InviteOrganizationMemberRequest.md
 docs/InviteOrganizationMemberResultPublic.md
+docs/JudgeVerdictRequest.md
 docs/KeyInfo.md
 docs/KeysApi.md
 docs/KnownProviderSchema.md
@@ -389,6 +397,9 @@ docs/McpServersApi.md
 docs/McpToolDefinition.md
 docs/McpToolWarning.md
 docs/McpToolsResponse.md
+docs/MemberAttributionPublic.md
+docs/MemberCeilingPublic.md
+docs/MemberWorkspacePlacementPublic.md
 docs/Message.md
 docs/MessageResponse.md
 docs/MessagesApi.md
@@ -443,6 +454,8 @@ docs/OrganizationUsageApi.md
 docs/OrganizationsApi.md
 docs/OtelApi.md
 docs/OutputShape.md
+docs/OverviewApi.md
+docs/OverviewSummaryResponse.md
 docs/PasskeySessionResponse.md
 docs/PasswordResponse.md
 docs/PendingOrganizationInvitationPublic.md
@@ -464,6 +477,8 @@ docs/PlaygroundMessagePublic.md
 docs/PlaygroundMessagesPublic.md
 docs/PlaygroundToolStatus.md
 docs/PlaygroundToolsResponse.md
+docs/PolicyCheckRequest.md
+docs/PolicyCheckResponse.md
 docs/PolicyRequest.md
 docs/PolicyResponse.md
 docs/PoolStatus.md
@@ -628,6 +643,7 @@ docs/WorkspaceWebSearchConfigPublic.md
 docs/WorkspaceWebSearchConfigUpdate.md
 docs/WorkspacesApi.md
 docs/WorkspacesPublic.md
+docs/WorstAllocationResponse.md
 index.ts
 models/AcceptInvitationRequest.ts
 models/AcceptInvitationResultPublic.ts
@@ -655,6 +671,7 @@ models/AgentTelemetryToolRow.ts
 models/AgentTelemetryUsage.ts
 models/AliasRequest.ts
 models/AliasResponse.ts
+models/AllocationHealthResponse.ts
 models/Annotations.ts
 models/ApiKeyId.ts
 models/AppliedEditsInner.ts
@@ -706,6 +723,7 @@ models/CallerOrganizationMembershipsPublic.ts
 models/CallerWorkspaceMembershipPublic.ts
 models/CandidateResponse.ts
 models/CatalogCapabilities.ts
+models/CatalogCredential.ts
 models/CatalogElsewhere.ts
 models/CatalogModelDetail.ts
 models/CatalogModelSummary.ts
@@ -753,6 +771,7 @@ models/CreateSearchToolRequest.ts
 models/CreateSessionRequest.ts
 models/CreateStoredProviderRequest.ts
 models/CreateUserRequest.ts
+models/CurrentPricingPage.ts
 models/DeploymentAdminAccessPublic.ts
 models/DeploymentBootstrap.ts
 models/DeploymentUserOrganizationPublic.ts
@@ -774,6 +793,7 @@ models/ExternalEventsRequest.ts
 models/ExternalIngestError.ts
 models/ExternalIngestResult.ts
 models/ExternalUsageEvent.ts
+models/GateResultResponse.ts
 models/GatewaySettings.ts
 models/GuardrailCatalog.ts
 models/GuardrailCategory.ts
@@ -797,6 +817,7 @@ models/Input1.ts
 models/InvitationPreviewPublic.ts
 models/InviteOrganizationMemberRequest.ts
 models/InviteOrganizationMemberResultPublic.ts
+models/JudgeVerdictRequest.ts
 models/KeyInfo.ts
 models/KnownProviderSchema.ts
 models/KnownProviderSummarySchema.ts
@@ -951,6 +972,9 @@ models/McpServerConfig.ts
 models/McpToolDefinition.ts
 models/McpToolWarning.ts
 models/McpToolsResponse.ts
+models/MemberAttributionPublic.ts
+models/MemberCeilingPublic.ts
+models/MemberWorkspacePlacementPublic.ts
 models/Message.ts
 models/MessageResponse.ts
 models/MessagesRequest.ts
@@ -995,6 +1019,7 @@ models/OrganizationScopedBudgetPublic.ts
 models/OrganizationScopedBudgetUpdate.ts
 models/OrganizationScopedBudgetsPublic.ts
 models/OutputShape.ts
+models/OverviewSummaryResponse.ts
 models/PasskeySessionResponse.ts
 models/PasswordResponse.ts
 models/PendingOrganizationInvitationPublic.ts
@@ -1015,6 +1040,8 @@ models/PlaygroundMessagePublic.ts
 models/PlaygroundMessagesPublic.ts
 models/PlaygroundToolStatus.ts
 models/PlaygroundToolsResponse.ts
+models/PolicyCheckRequest.ts
+models/PolicyCheckResponse.ts
 models/PolicyRequest.ts
 models/PolicyResponse.ts
 models/PoolStatus.ts
@@ -1159,5 +1186,6 @@ models/WorkspaceUpdate.ts
 models/WorkspaceWebSearchConfigPublic.ts
 models/WorkspaceWebSearchConfigUpdate.ts
 models/WorkspacesPublic.ts
+models/WorstAllocationResponse.ts
 models/index.ts
 runtime.ts
