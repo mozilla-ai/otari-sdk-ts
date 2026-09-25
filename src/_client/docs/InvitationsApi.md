@@ -15,7 +15,7 @@ All URIs are relative to *http://localhost*
 
 Accept Invitation
 
-Accept a pending invitation, resolving it to an active membership.
+Accept a pending invitation, resolving it to an active membership and optionally setting a first password.
 
 ### Example
 

@@ -10,6 +10,7 @@ Name | Type
 `dataPlaneUrl` | string
 `deploymentType` | string
 `docsUrl` | string
+`feedbackEnabled` | boolean
 `mailReady` | boolean
 `maintenanceMode` | boolean
 `managementUrl` | string
@@ -20,6 +21,7 @@ Name | Type
 `publicCatalog` | boolean
 `sessionType` | string
 `signInMethods` | Array&lt;string&gt;
+`siteUrl` | string
 `surfaces` | Array&lt;string&gt;
 `termsUrl` | string
 
@@ -33,6 +35,7 @@ const example = {
   "dataPlaneUrl": null,
   "deploymentType": null,
   "docsUrl": null,
+  "feedbackEnabled": null,
   "mailReady": null,
   "maintenanceMode": null,
   "managementUrl": null,
@@ -43,6 +46,7 @@ const example = {
   "publicCatalog": null,
   "sessionType": null,
   "signInMethods": null,
+  "siteUrl": null,
   "surfaces": null,
   "termsUrl": null,
 } satisfies DeploymentBootstrap

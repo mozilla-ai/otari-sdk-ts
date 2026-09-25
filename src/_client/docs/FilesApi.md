@@ -14,11 +14,11 @@ All URIs are relative to *http://localhost*
 
 ## filesCreateFile
 
-> { [key: string]: any; } filesCreateFile(file, purpose, user)
+> ResponseFilesCreateFile filesCreateFile(file, purpose, user)
 
 Create File
 
-OpenAI-compatible file upload endpoint.
+Upload a file. Answers in the OpenAI or Anthropic file shape, following the caller\&#39;s headers.
 
 ### Example
 
@@ -71,7 +71,7 @@ example().catch(console.error);
 
 ### Return type
 
-**{ [key: string]: any; }**
+[**ResponseFilesCreateFile**](ResponseFilesCreateFile.md)
 
 ### Authorization
 
@@ -94,7 +94,7 @@ example().catch(console.error);
 
 ## filesDeleteFile
 
-> { [key: string]: any; } filesDeleteFile(fileId, user)
+> ResponseFilesDeleteFile filesDeleteFile(fileId, user)
 
 Delete File
 
@@ -148,7 +148,7 @@ example().catch(console.error);
 
 ### Return type
 
-**{ [key: string]: any; }**
+[**ResponseFilesDeleteFile**](ResponseFilesDeleteFile.md)
 
 ### Authorization
 
@@ -171,7 +171,7 @@ example().catch(console.error);
 
 ## filesGetFile
 
-> { [key: string]: any; } filesGetFile(fileId, user)
+> ResponseFilesGetFile filesGetFile(fileId, user)
 
 Get File
 
@@ -225,7 +225,7 @@ example().catch(console.error);
 
 ### Return type
 
-**{ [key: string]: any; }**
+[**ResponseFilesGetFile**](ResponseFilesGetFile.md)
 
 ### Authorization
 
@@ -325,11 +325,11 @@ example().catch(console.error);
 
 ## filesListFiles
 
-> { [key: string]: any; } filesListFiles(user, purpose, workspaceId)
+> ResponseFilesListFiles filesListFiles(user, purpose, workspaceId, limit, after, order, page, ids)
 
 List Files
 
-List the authenticated user\&#39;s uploaded files in the request\&#39;s workspace.  &#x60;&#x60;workspace_id&#x60;&#x60; narrows a master-key listing to one workspace; a keyed request is already confined to its key\&#39;s own and cannot widen or move it.
+List the authenticated user\&#39;s uploaded files in the request\&#39;s workspace.  &#x60;&#x60;workspace_id&#x60;&#x60; narrows a master-key listing to one workspace; a keyed request is already confined to its key\&#39;s own and cannot widen or move it.  Each flavor pages with its own cursor. OpenAI\&#39;s &#x60;&#x60;after&#x60;&#x60; names the last file of the previous page, and &#x60;&#x60;has_more&#x60;&#x60; says whether to ask again. Anthropic\&#39;s &#x60;&#x60;next_page&#x60;&#x60; is passed back as &#x60;&#x60;page&#x60;&#x60;, and &#x60;&#x60;ids[]&#x60;&#x60; reads up to 100 named files in one page. A cursor whose file has since been deleted or has expired is still a position. An &#x60;&#x60;after&#x60;&#x60; the caller never owned is a 404, and a &#x60;&#x60;page&#x60;&#x60; token this gateway did not issue is a 400.
 
 ### Example
 
@@ -357,6 +357,16 @@ async function example() {
     purpose: purpose_example,
     // string (optional)
     workspaceId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+    // number (optional)
+    limit: 56,
+    // string (optional)
+    after: after_example,
+    // 'asc' | 'desc' (optional)
+    order: order_example,
+    // string (optional)
+    page: page_example,
+    // Array<string> (optional)
+    ids: ...,
   } satisfies FilesListFilesRequest;
 
   try {
@@ -379,10 +389,15 @@ example().catch(console.error);
 | **user** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **purpose** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **workspaceId** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **limit** | `number` |  | [Optional] [Defaults to `100`] |
+| **after** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **order** | `asc`, `desc` |  | [Optional] [Defaults to `&#39;desc&#39;`] [Enum: asc, desc] |
+| **page** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **ids** | `Array<string>` |  | [Optional] |
 
 ### Return type
 
-**{ [key: string]: any; }**
+[**ResponseFilesListFiles**](ResponseFilesListFiles.md)
 
 ### Authorization
 

@@ -4,20 +4,104 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**providerKeysAddOrgProviderKeyModel**](ProviderKeysApi.md#providerkeysaddorgproviderkeymodel) | **POST** /api/v1/organizations/me/provider-keys/{key_id}/models | Add Org Provider Key Model |
 | [**providerKeysAddWorkspaceProviderKeyModelRestriction**](ProviderKeysApi.md#providerkeysaddworkspaceproviderkeymodelrestriction) | **POST** /api/v1/workspaces/{workspace_id}/provider-keys/{key_id}/models | Add Workspace Provider Key Model Restriction |
 | [**providerKeysArchiveOrgProviderKey**](ProviderKeysApi.md#providerkeysarchiveorgproviderkey) | **POST** /api/v1/organizations/me/provider-keys/{key_id}/archive | Archive Org Provider Key |
 | [**providerKeysCreateOrgProviderKey**](ProviderKeysApi.md#providerkeyscreateorgproviderkey) | **POST** /api/v1/organizations/me/provider-keys | Create Org Provider Key |
 | [**providerKeysDeleteOrgProviderKey**](ProviderKeysApi.md#providerkeysdeleteorgproviderkey) | **DELETE** /api/v1/organizations/me/provider-keys/{key_id} | Delete Org Provider Key |
+| [**providerKeysListOrgProviderKeyAvailableModels**](ProviderKeysApi.md#providerkeyslistorgproviderkeyavailablemodels) | **GET** /api/v1/organizations/me/provider-keys/{key_id}/available-models | List Org Provider Key Available Models |
+| [**providerKeysListOrgProviderKeyModels**](ProviderKeysApi.md#providerkeyslistorgproviderkeymodels) | **GET** /api/v1/organizations/me/provider-keys/{key_id}/models | List Org Provider Key Models |
 | [**providerKeysListOrgProviderKeys**](ProviderKeysApi.md#providerkeyslistorgproviderkeys) | **GET** /api/v1/organizations/me/provider-keys | List Org Provider Keys |
 | [**providerKeysListWorkspaceProviderKeyModelRestrictions**](ProviderKeysApi.md#providerkeyslistworkspaceproviderkeymodelrestrictions) | **GET** /api/v1/workspaces/{workspace_id}/provider-keys/{key_id}/models | List Workspace Provider Key Model Restrictions |
 | [**providerKeysListWorkspaceProviderKeys**](ProviderKeysApi.md#providerkeyslistworkspaceproviderkeys) | **GET** /api/v1/workspaces/{workspace_id}/provider-keys | List Workspace Provider Keys |
+| [**providerKeysRefreshOrgProviderKeyModelPricing**](ProviderKeysApi.md#providerkeysrefreshorgproviderkeymodelpricing) | **POST** /api/v1/organizations/me/provider-keys/{key_id}/pricing/refresh | Refresh Org Provider Key Model Pricing |
+| [**providerKeysRefreshOrgProviderKeyModels**](ProviderKeysApi.md#providerkeysrefreshorgproviderkeymodels) | **POST** /api/v1/organizations/me/provider-keys/{key_id}/models/refresh | Refresh Org Provider Key Models |
+| [**providerKeysRemoveOrgProviderKeyModel**](ProviderKeysApi.md#providerkeysremoveorgproviderkeymodel) | **DELETE** /api/v1/organizations/me/provider-keys/{key_id}/models/{model_id} | Remove Org Provider Key Model |
 | [**providerKeysRemoveWorkspaceProviderKeyModelRestriction**](ProviderKeysApi.md#providerkeysremoveworkspaceproviderkeymodelrestriction) | **DELETE** /api/v1/workspaces/{workspace_id}/provider-keys/{key_id}/models/{model} | Remove Workspace Provider Key Model Restriction |
 | [**providerKeysResetWorkspaceProviderKeyOverride**](ProviderKeysApi.md#providerkeysresetworkspaceproviderkeyoverride) | **DELETE** /api/v1/workspaces/{workspace_id}/provider-keys/{key_id} | Reset Workspace Provider Key Override |
 | [**providerKeysRestoreOrgProviderKey**](ProviderKeysApi.md#providerkeysrestoreorgproviderkey) | **POST** /api/v1/organizations/me/provider-keys/{key_id}/restore | Restore Org Provider Key |
 | [**providerKeysSetOrgProviderKeyDefault**](ProviderKeysApi.md#providerkeyssetorgproviderkeydefault) | **POST** /api/v1/organizations/me/provider-keys/{key_id}/default | Set Org Provider Key Default |
+| [**providerKeysSetOrgProviderKeyModelEnabled**](ProviderKeysApi.md#providerkeyssetorgproviderkeymodelenabled) | **PATCH** /api/v1/organizations/me/provider-keys/{key_id}/models/{model_id} | Set Org Provider Key Model Enabled |
 | [**providerKeysSetWorkspaceProviderKeyOverride**](ProviderKeysApi.md#providerkeyssetworkspaceproviderkeyoverride) | **PATCH** /api/v1/workspaces/{workspace_id}/provider-keys/{key_id} | Set Workspace Provider Key Override |
 | [**providerKeysUpdateOrgProviderKey**](ProviderKeysApi.md#providerkeysupdateorgproviderkey) | **PATCH** /api/v1/organizations/me/provider-keys/{key_id} | Update Org Provider Key |
 
+
+
+## providerKeysAddOrgProviderKeyModel
+
+> OrgProviderKeyModelPublic providerKeysAddOrgProviderKeyModel(keyId, orgProviderKeyModelCreateRequest)
+
+Add Org Provider Key Model
+
+Offer one model by name, for a backend whose models cannot be listed.  Carries no rate: an organization\&#39;s rates are written through &#x60;&#x60;/api/v1/organizations/me/pricing&#x60;&#x60;, so a price set here and a price set there could not disagree about what a request costs. The offer seeds the community default like any other, and a model nothing prices arrives disabled. Organization owners and admins only.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ProviderKeysApi,
+} from '';
+import type { ProviderKeysAddOrgProviderKeyModelRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new ProviderKeysApi(config);
+
+  const body = {
+    // string
+    keyId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+    // OrgProviderKeyModelCreateRequest
+    orgProviderKeyModelCreateRequest: ...,
+  } satisfies ProviderKeysAddOrgProviderKeyModelRequest;
+
+  try {
+    const data = await api.providerKeysAddOrgProviderKeyModel(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **keyId** | `string` |  | [Defaults to `undefined`] |
+| **orgProviderKeyModelCreateRequest** | [OrgProviderKeyModelCreateRequest](OrgProviderKeyModelCreateRequest.md) |  | |
+
+### Return type
+
+[**OrgProviderKeyModelPublic**](OrgProviderKeyModelPublic.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
 ## providerKeysAddWorkspaceProviderKeyModelRestriction
@@ -180,7 +264,7 @@ example().catch(console.error);
 
 Create Org Provider Key
 
-Create a provider key in the caller\&#39;s organization. Organization owners and admins only.
+Create a provider key in the caller\&#39;s organization. Organization owners and admins only.  Everything the provider lists on the new credential is offered at once, so a key starts with its real catalog rather than an empty list an admin retypes by hand. A provider that will not say (no listing endpoint, unreachable, credential refused) yields a key with no models rather than a failed create: the credential may still be right for dispatch, and models can be added by name. The response is the key either way; the models are read back through &#x60;&#x60;GET /{key_id}/models&#x60;&#x60;.
 
 ### Example
 
@@ -302,6 +386,160 @@ example().catch(console.error);
 ### Return type
 
 [**Message**](Message.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## providerKeysListOrgProviderKeyAvailableModels
+
+> OrgProviderAvailableModelsPublic providerKeysListOrgProviderKeyAvailableModels(keyId)
+
+List Org Provider Key Available Models
+
+Ask the provider what it serves on this key\&#39;s stored credential.  Dials the upstream on every call rather than caching: the caller is a model picker, opened rarely and entitled to a current answer. The credential never leaves the process; only model names come back. Organization owners and admins only.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ProviderKeysApi,
+} from '';
+import type { ProviderKeysListOrgProviderKeyAvailableModelsRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new ProviderKeysApi(config);
+
+  const body = {
+    // string
+    keyId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies ProviderKeysListOrgProviderKeyAvailableModelsRequest;
+
+  try {
+    const data = await api.providerKeysListOrgProviderKeyAvailableModels(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **keyId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**OrgProviderAvailableModelsPublic**](OrgProviderAvailableModelsPublic.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## providerKeysListOrgProviderKeyModels
+
+> OrgProviderKeyModelsPublic providerKeysListOrgProviderKeyModels(keyId, skip, limit)
+
+List Org Provider Key Models
+
+List the models offered on one key, each with the rate it currently serves at.  Organization owners and admins only. &#x60;&#x60;count&#x60;&#x60; is the total rather than the page length, so a client knows whether another page is owed.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ProviderKeysApi,
+} from '';
+import type { ProviderKeysListOrgProviderKeyModelsRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new ProviderKeysApi(config);
+
+  const body = {
+    // string
+    keyId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+    // number | Number of records to skip (optional)
+    skip: 56,
+    // number | Maximum number of records to return (optional)
+    limit: 56,
+  } satisfies ProviderKeysListOrgProviderKeyModelsRequest;
+
+  try {
+    const data = await api.providerKeysListOrgProviderKeyModels(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **keyId** | `string` |  | [Defaults to `undefined`] |
+| **skip** | `number` | Number of records to skip | [Optional] [Defaults to `0`] |
+| **limit** | `number` | Maximum number of records to return | [Optional] [Defaults to `500`] |
+
+### Return type
+
+[**OrgProviderKeyModelsPublic**](OrgProviderKeyModelsPublic.md)
 
 ### Authorization
 
@@ -533,6 +771,231 @@ example().catch(console.error);
 ### Return type
 
 [**WorkspaceProviderKeyOverridesPublic**](WorkspaceProviderKeyOverridesPublic.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## providerKeysRefreshOrgProviderKeyModelPricing
+
+> OrgProviderModelsRefreshPublic providerKeysRefreshOrgProviderKeyModelPricing(keyId)
+
+Refresh Org Provider Key Model Pricing
+
+Move every rate this surface seeded onto today\&#39;s community default.  The other half of the refresh above, without the dial: re-reading community rates is cheap and asking a provider for its whole catalog is not, so an admin who only wants the price move does not wait on an upstream. A rate an admin has since set is left alone, and a model that arrived unpriced is offered a rate and switched on if one has appeared. Organization owners and admins only.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ProviderKeysApi,
+} from '';
+import type { ProviderKeysRefreshOrgProviderKeyModelPricingRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new ProviderKeysApi(config);
+
+  const body = {
+    // string
+    keyId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies ProviderKeysRefreshOrgProviderKeyModelPricingRequest;
+
+  try {
+    const data = await api.providerKeysRefreshOrgProviderKeyModelPricing(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **keyId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**OrgProviderModelsRefreshPublic**](OrgProviderModelsRefreshPublic.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## providerKeysRefreshOrgProviderKeyModels
+
+> OrgProviderModelsRefreshPublic providerKeysRefreshOrgProviderKeyModels(keyId)
+
+Refresh Org Provider Key Models
+
+Ask the provider again and offer whatever is newly listed.  Additive only: nothing already offered is removed or switched off, because delisting a model is a decision the serving switch owns and an upstream hiccup must not empty a catalog. New models follow the offer rule, seeded with the community default rate and disabled when nothing prices them. A rate this surface seeded and nobody has changed moves to today\&#39;s default. Organization owners and admins only.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ProviderKeysApi,
+} from '';
+import type { ProviderKeysRefreshOrgProviderKeyModelsRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new ProviderKeysApi(config);
+
+  const body = {
+    // string
+    keyId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies ProviderKeysRefreshOrgProviderKeyModelsRequest;
+
+  try {
+    const data = await api.providerKeysRefreshOrgProviderKeyModels(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **keyId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**OrgProviderModelsRefreshPublic**](OrgProviderModelsRefreshPublic.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## providerKeysRemoveOrgProviderKeyModel
+
+> Message providerKeysRemoveOrgProviderKeyModel(keyId, modelId)
+
+Remove Org Provider Key Model
+
+Stop offering one model. Its rate and its history stay. Organization owners and admins only.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ProviderKeysApi,
+} from '';
+import type { ProviderKeysRemoveOrgProviderKeyModelRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new ProviderKeysApi(config);
+
+  const body = {
+    // string
+    keyId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+    // string
+    modelId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies ProviderKeysRemoveOrgProviderKeyModelRequest;
+
+  try {
+    const data = await api.providerKeysRemoveOrgProviderKeyModel(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **keyId** | `string` |  | [Defaults to `undefined`] |
+| **modelId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**Message**](Message.md)
 
 ### Authorization
 
@@ -846,6 +1309,86 @@ example().catch(console.error);
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## providerKeysSetOrgProviderKeyModelEnabled
+
+> OrgProviderKeyModelPublic providerKeysSetOrgProviderKeyModelEnabled(keyId, modelId, orgProviderKeyModelUpdateRequest)
+
+Set Org Provider Key Model Enabled
+
+Turn one offered model\&#39;s serving switch on or off. Organization owners and admins only.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ProviderKeysApi,
+} from '';
+import type { ProviderKeysSetOrgProviderKeyModelEnabledRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new ProviderKeysApi(config);
+
+  const body = {
+    // string
+    keyId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+    // string
+    modelId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+    // OrgProviderKeyModelUpdateRequest
+    orgProviderKeyModelUpdateRequest: ...,
+  } satisfies ProviderKeysSetOrgProviderKeyModelEnabledRequest;
+
+  try {
+    const data = await api.providerKeysSetOrgProviderKeyModelEnabled(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **keyId** | `string` |  | [Defaults to `undefined`] |
+| **modelId** | `string` |  | [Defaults to `undefined`] |
+| **orgProviderKeyModelUpdateRequest** | [OrgProviderKeyModelUpdateRequest](OrgProviderKeyModelUpdateRequest.md) |  | |
+
+### Return type
+
+[**OrgProviderKeyModelPublic**](OrgProviderKeyModelPublic.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 

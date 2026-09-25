@@ -6,6 +6,9 @@
 
 Name | Type
 ------------ | -------------
+`fullName` | string
+`password` | string
+`termsAccepted` | boolean
 `token` | string
 
 ## Example
@@ -15,6 +18,9 @@ import type { AcceptInvitationRequest } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "fullName": null,
+  "password": null,
+  "termsAccepted": null,
   "token": null,
 } satisfies AcceptInvitationRequest
 

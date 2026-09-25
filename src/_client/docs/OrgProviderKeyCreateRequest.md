@@ -1,7 +1,7 @@
 
 # OrgProviderKeyCreateRequest
 
-What a caller sends to create a key.  The plaintext key is never stored as sent: the service encrypts it (`services/secret_box.py`) and keeps only the ciphertext and ``last4``, the same convention `entities.ProviderCredential` already uses.
+What a caller sends to create a key.  The plaintext key is never stored as sent: the service encrypts it (`services/secret_box.py`) and keeps only the ciphertext and ``last4``, the same convention `providers.ProviderCredential` already uses.
 
 ## Properties
 

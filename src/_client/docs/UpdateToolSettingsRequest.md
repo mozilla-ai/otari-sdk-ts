@@ -7,6 +7,7 @@ Change one or more tool settings. Omitted fields are left unchanged; an explicit
 
 Name | Type
 ------------ | -------------
+`codeExecutionExecutor` | string
 `guardrailsUrl` | string
 `sandboxPurposeHint` | string
 `sandboxSessionImage` | string
@@ -25,6 +26,7 @@ import type { UpdateToolSettingsRequest } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "codeExecutionExecutor": null,
   "guardrailsUrl": null,
   "sandboxPurposeHint": null,
   "sandboxSessionImage": null,

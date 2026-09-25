@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `appliesToAllWorkspaces` | boolean
 `createdAt` | string
+`definitionId` | string
 `enabled` | boolean
 `hasCredential` | boolean
 `id` | string
@@ -30,6 +31,7 @@ import type { OrganizationGuardrailPublic } from ''
 const example = {
   "appliesToAllWorkspaces": null,
   "createdAt": null,
+  "definitionId": null,
   "enabled": null,
   "hasCredential": null,
   "id": null,

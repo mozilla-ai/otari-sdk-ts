@@ -86,11 +86,11 @@ example().catch(console.error);
 
 ## catalogListCatalog
 
-> CatalogResponse catalogListCatalog(atContext)
+> CatalogResponse catalogListCatalog(atContext, search, skip, limit)
 
 List Catalog
 
-The models this caller may use, one entry each however many providers serve it.  Prices are the caller\&#39;s: an organization\&#39;s override where one applies, else the deployment\&#39;s row, else the genai-prices default. Aliases and routing policies are not models and are not listed; see Routing. A visitor, where the catalog is public, sees the configured instances at the deployment\&#39;s rates and nothing that belongs to a tenant.
+The models this caller may use, one entry each however many providers serve it.  Prices are the caller\&#39;s: an organization\&#39;s override where one applies, else the deployment\&#39;s row, else the genai-prices default. Aliases and routing policies are not models and are not listed; see Routing. A visitor, where the catalog is public, sees the configured instances and the hosted models at the deployment\&#39;s rates, and nothing that belongs to a tenant.
 
 ### Example
 
@@ -114,6 +114,12 @@ async function example() {
   const body = {
     // number | Compare prices for a request of this many input tokens: each model\'s minimum is taken from the pricing tier that request would settle at. Omitted, the base rates compare. (optional)
     atContext: 56,
+    // string | Narrow to models whose name, catalog id or any selector contains this text, case-insensitively. (optional)
+    search: search_example,
+    // number | Number of models to skip (optional)
+    skip: 56,
+    // number | Maximum number of models to return (optional)
+    limit: 56,
   } satisfies CatalogListCatalogRequest;
 
   try {
@@ -134,6 +140,9 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **atContext** | `number` | Compare prices for a request of this many input tokens: each model\&#39;s minimum is taken from the pricing tier that request would settle at. Omitted, the base rates compare. | [Optional] [Defaults to `undefined`] |
+| **search** | `string` | Narrow to models whose name, catalog id or any selector contains this text, case-insensitively. | [Optional] [Defaults to `undefined`] |
+| **skip** | `number` | Number of models to skip | [Optional] [Defaults to `0`] |
+| **limit** | `number` | Maximum number of models to return | [Optional] [Defaults to `100`] |
 
 ### Return type
 

@@ -10,6 +10,7 @@ Name | Type
 `defaultPurposeHint` | string
 `enabled` | boolean
 `execTimeoutS` | number
+`executor` | [CodeExecutor](CodeExecutor.md)
 `image` | string
 `maxIterations` | number
 `tools` | Array&lt;string&gt;
@@ -24,6 +25,7 @@ const example = {
   "defaultPurposeHint": null,
   "enabled": null,
   "execTimeoutS": null,
+  "executor": null,
   "image": null,
   "maxIterations": null,
   "tools": null,

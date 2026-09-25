@@ -18,7 +18,7 @@ All URIs are relative to *http://localhost*
 
 Create Own Key
 
-Create an API key owned by the caller, in a workspace they may see.  The member-scoped counterpart of &#x60;&#x60;POST /api/v1/keys&#x60;&#x60;: the owner is always the caller\&#39;s own attribution user, the key is always budget-enforced, and the workspace must be visible to the caller (a member of it, or an organization owner/admin/superuser, who see every workspace). The secret is returned once.
+Create an API key owned by the caller, in a workspace they may see.  The member-scoped counterpart of &#x60;&#x60;POST /api/v1/keys&#x60;&#x60;: the owner is always the caller\&#39;s own attribution user, the key is always budget-enforced, and the workspace must be visible to the caller (a member of it, or an organization owner/admin, who see every workspace). The secret is returned once.
 
 ### Example
 

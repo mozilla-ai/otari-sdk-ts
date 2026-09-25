@@ -676,11 +676,11 @@ This endpoint does not need any parameter.
 
 ## organizationsListActiveOrganizationMembers
 
-> ActiveOrganizationMembersPublic organizationsListActiveOrganizationMembers(skip, limit)
+> ActiveOrganizationMembersPublic organizationsListActiveOrganizationMembers(skip, limit, search)
 
 List Active Organization Members
 
-List the members of the caller\&#39;s active organization.
+List the members of the caller\&#39;s active organization.  &#x60;&#x60;search&#x60;&#x60; narrows the page and the count together, so a caller offering these members as options can ask for the matches instead of filtering whatever page it happened to fetch.
 
 ### Example
 
@@ -706,6 +706,8 @@ async function example() {
     skip: 56,
     // number | Maximum number of records to return (optional)
     limit: 56,
+    // string | Narrow to members whose name or email contains this text, case-insensitively. (optional)
+    search: search_example,
   } satisfies OrganizationsListActiveOrganizationMembersRequest;
 
   try {
@@ -727,6 +729,7 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **skip** | `number` | Number of records to skip | [Optional] [Defaults to `0`] |
 | **limit** | `number` | Maximum number of records to return | [Optional] [Defaults to `100`] |
+| **search** | `string` | Narrow to members whose name or email contains this text, case-insensitively. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

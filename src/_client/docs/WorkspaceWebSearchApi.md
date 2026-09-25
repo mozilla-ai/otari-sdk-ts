@@ -90,7 +90,7 @@ example().catch(console.error);
 
 Get Workspace Web Search Config
 
-Read a workspace\&#39;s web-search configuration.  Takes the same role as setting it (an organization owner/admin, or an owner/admin of this workspace), because the row describes the workspace\&#39;s posture rather than one member\&#39;s allowance. A workspace with no row answers with the unconfigured shape (&#x60;&#x60;configured: false&#x60;&#x60;), which is the deployment\&#39;s own behavior described in the same shape rather than a 404.
+Read a workspace\&#39;s web-access configuration.  Takes the same role as setting it (an organization owner/admin, or an owner/admin of this workspace), because the row describes the workspace\&#39;s posture rather than one member\&#39;s allowance. A workspace with no row answers with the unconfigured shape (&#x60;&#x60;configured: false&#x60;&#x60;), which is the deployment\&#39;s own behavior described in the same shape rather than a 404.
 
 ### Example
 
@@ -164,7 +164,7 @@ example().catch(console.error);
 
 Set Workspace Web Search Config
 
-Set a workspace\&#39;s web-search configuration, replacing any existing one.  An organization owner/admin, or an owner/admin of this workspace, may write it. The configuration can only narrow what the deployment permits: turning web search off for the workspace, lowering the result ceiling, and adding to the domains a search may not reach. It never turns on a backend the deployment has not configured, and it carries no credential.
+Set a workspace\&#39;s web-access configuration, replacing any existing one.  An organization owner/admin, or an owner/admin of this workspace, may write it. The configuration can only narrow what the deployment permits: turning web access off for the workspace, lowering the Search result ceiling, and constraining domains for Search and Fetch. It never turns on a backend the deployment has not configured, and it carries no credential.
 
 ### Example
 

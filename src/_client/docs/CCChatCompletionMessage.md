@@ -15,6 +15,7 @@ Name | Type
 `toolCalls` | [Array&lt;CCChatCompletionMessageToolCallsInner&gt;](CCChatCompletionMessageToolCallsInner.md)
 `reasoning` | string
 `extraContent` | { [key: string]: any; }
+`images` | [Array&lt;CCImageContent&gt;](CCImageContent.md)
 
 ## Example
 
@@ -32,6 +33,7 @@ const example = {
   "toolCalls": null,
   "reasoning": null,
   "extraContent": null,
+  "images": null,
 } satisfies CCChatCompletionMessage
 
 console.log(example)
