@@ -16,15 +16,20 @@ name: Release
 # release created with GITHUB_TOKEN does not trigger further workflow runs.
 # Splitting it out would require a PAT, reintroducing the long-lived secret that
 # OIDC removes. workflow_dispatch covers the manual case instead.
+#
+# Retrying a publish means dispatching this workflow *from the release tag*,
+# which the Run workflow ref picker offers alongside branches. npm provenance is
+# built from the run's own ref rather than from whatever the checkout step pulled,
+# so dispatching from a branch and checking out a tag would attest the package to
+# a commit that did not build it.
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
-    inputs:
-      tag:
-        description: "Release tag to publish, for retrying a failed publish (e.g. otari-v0.6.0)"
-        required: true
+
+permissions:
+  contents: read
 
 jobs:
   release-please:
@@ -48,21 +53,24 @@ jobs:
     # On a manual run the release-please job is skipped. A condition without a
     # status function is implicitly ANDed with success(), which a skipped
     # dependency fails, so !cancelled() is required for the dispatch path.
+    # A dispatch is restricted to tag refs. The ref picker offers branches too,
+    # and a run started on one would publish whatever version that branch
+    # carries, which release-please never cut.
     if: >-
       !cancelled()
       && (needs.release-please.outputs.release_created == 'true'
-          || github.event_name == 'workflow_dispatch')
+          || (github.event_name == 'workflow_dispatch'
+              && startsWith(github.ref, 'refs/tags/')))
     runs-on: ubuntu-latest
     permissions:
       contents: read
       # Required for OIDC trusted publishing and npm provenance.
       id-token: write
     steps:
+      # Checks out the ref that triggered the run: main's new commit on the push
+      # path, where release-please has already committed the version bump, or the
+      # release tag on a dispatch.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          # Empty on the push path, which checks out the commit that triggered
-          # the run. release-please has already committed the version bump there.
-          ref: ${{ inputs.tag || '' }}
 
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:

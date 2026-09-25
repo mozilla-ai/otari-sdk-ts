@@ -18,10 +18,10 @@ Releases are automated with [release-please](https://github.com/googleapis/relea
 ## Configuration
 
 - **Registry:** npm (`@mozilla-ai/otari`, public).
-- **Auth:** OIDC trusted publishing. No npm token is stored anywhere. The publish
-  job requests `id-token: write`, and npm checks the repository and the workflow
-  filename against the package's trusted publisher before issuing a credential
-  scoped to that single job. The same token carries npm provenance.
+- **Auth:** OIDC trusted publishing. The workflow stores no npm credential. The
+  publish job requests `id-token: write`, and npm checks the repository and the
+  workflow filename against the package's trusted publisher before issuing a
+  credential scoped to that single job. The same token carries npm provenance.
 - **Version file:** `package.json` `version` (release-please owns it; do not edit
   it by hand).
 
@@ -55,14 +55,25 @@ Trusted publisher, added under the package's settings on npm:
 An environment name set here requires the publish job to declare the same
 environment, so leave it blank unless the workflow gains one.
 
+Once a release has published without it, delete the `NPM_TOKEN` repository secret
+and revoke the token behind it on npm. Until both are gone a long-lived publish
+credential stays live and usable by any workflow in this repository, which is the
+risk trusted publishing is adopted to remove.
+
 ## If the publish fails
 
 The release tag and GitHub Release already exist, so only the publish needs
 repeating. Run the **Release** workflow from the Actions tab using **Run
-workflow**, passing the release tag (for example `otari-v0.6.0`). That checks out
-the tag and publishes that exact version without cutting a new one. Avoid
-publishing by hand; the automated path keeps `package.json`, the tag, and the
-changelog in sync.
+workflow**, and set the ref picker to the release tag itself (for example
+`otari-v0.6.0`) rather than a branch. That publishes the version at that tag
+without cutting a new one. Avoid publishing by hand; the automated path keeps
+`package.json`, the tag, and the changelog in sync.
+
+Dispatching from a branch is refused. npm builds provenance from the ref the run
+was started on rather than from whatever the checkout step pulled, so a run
+started on `main` would attest the package to a commit that did not build it.
+Because the workflow that runs is the one stored at the chosen ref, only tags cut
+after this mechanism landed can be republished this way.
 
 A publish that fails with `E404` on a `PUT` is an authentication failure, not a
 missing package. npm answers 404 rather than 403 so it does not reveal whether a
