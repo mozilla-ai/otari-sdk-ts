@@ -709,8 +709,8 @@ describe("OtariClient error mapping", () => {
     ).rejects.toMatchObject({ retryAfter: "30" });
   });
 
-  it("includes correlation_id in the message", async () => {
-    const mock = jsonFetch(402, { detail: "no funds" }, { "x-correlation-id": "abc-123" });
+  it("includes attempt_id in the message", async () => {
+    const mock = jsonFetch(402, { detail: "no funds" }, { "Otari-Attempt-ID": "abc-123" });
     const client = new OtariClient({
       apiBase: "http://localhost:8000",
       apiKey: "vk",
@@ -718,7 +718,7 @@ describe("OtariClient error mapping", () => {
     });
     await expect(
       client.completion({ model: "m", messages: [{ role: "user", content: "Hi" }] }),
-    ).rejects.toThrow(/abc-123/);
+    ).rejects.toThrow(/attempt_id=abc-123/);
   });
 
   it("maps unsupported-moderation 400 in any mode", async () => {
