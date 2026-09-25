@@ -9,7 +9,7 @@ Name | Type
 ------------ | -------------
 `betas` | Array&lt;string&gt;
 `cacheControl` | { [key: string]: any; }
-`container` | string
+`container` | [Container](Container.md)
 `contextManagement` | { [key: string]: any; }
 `guardrails` | [Array&lt;GuardrailConfig&gt;](GuardrailConfig.md)
 `maxTokens` | number

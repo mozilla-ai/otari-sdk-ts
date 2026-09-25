@@ -1,7 +1,6 @@
 
 # CCKCompletionUsage
 
-Usage statistics for the completion request.
 
 ## Properties
 

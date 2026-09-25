@@ -1,7 +1,7 @@
 
 # OrganizationGuardrailUpdate
 
-Partial update. Only the fields the caller sets are applied.  ``credential`` and ``url`` have three states rather than two, which is what a write-only field and its nullable partner need: omit to leave the stored value alone, send ``\"\"`` to clear it, send a value to replace it. An explicit ``null`` also leaves them alone, matching `WorkspaceMcpServerUpdate`: a client that serializes its whole form back, with an empty credential box it never filled in, must not destroy a credential it was never shown.  ``workspace_ids`` replaces the scope whole when sent; ``[]`` clears it.
+Partial update. Only the fields the caller sets are applied.  ``credential`` and ``url`` have three states rather than two, which is what a write-only field and its nullable partner need: omit to leave the stored value alone, send ``\"\"`` to clear it, send a value to replace it. An explicit ``null`` also leaves them alone, matching `WorkspaceMcpServerUpdate`: a client that serializes its whole form back, with an empty credential box it never filled in, must not destroy a credential it was never shown.  ``workspace_ids`` replaces the scope whole when sent; ``[]`` clears it.  ``definition_id`` diverges: an explicit ``null`` **clears** it. The rule above protects a field the client was never shown, and this one is returned on every read, so a form sending ``null`` is sending back a field it was given rather than an empty box it never filled in. Omitting it still leaves the link alone.
 
 ## Properties
 
@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `appliesToAllWorkspaces` | boolean
 `credential` | string
+`definitionId` | string
 `enabled` | boolean
 `mode` | string
 `onUnavailable` | string
@@ -26,6 +27,7 @@ import type { OrganizationGuardrailUpdate } from ''
 const example = {
   "appliesToAllWorkspaces": null,
   "credential": null,
+  "definitionId": null,
   "enabled": null,
   "mode": null,
   "onUnavailable": null,

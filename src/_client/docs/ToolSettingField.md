@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `description` | string
 `key` | string
+`options` | Array&lt;string&gt;
 `service` | string
 `type` | string
 `value` | [Value1](Value1.md)
@@ -22,6 +23,7 @@ import type { ToolSettingField } from ''
 const example = {
   "description": null,
   "key": null,
+  "options": null,
   "service": null,
   "type": null,
   "value": null,

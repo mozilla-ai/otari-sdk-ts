@@ -9,7 +9,7 @@ Name | Type
 ------------ | -------------
 `models` | number
 `offerings` | number
-`shortSelectors` | number
+`pinnedSelectors` | number
 
 ## Example
 
@@ -20,7 +20,7 @@ import type { SelectorIndexResponse } from ''
 const example = {
   "models": null,
   "offerings": null,
-  "shortSelectors": null,
+  "pinnedSelectors": null,
 } satisfies SelectorIndexResponse
 
 console.log(example)

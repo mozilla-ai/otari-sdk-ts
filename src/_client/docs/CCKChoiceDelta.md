@@ -13,6 +13,8 @@ Name | Type
 `toolCalls` | [Array&lt;CCKChoiceDeltaToolCall&gt;](CCKChoiceDeltaToolCall.md)
 `reasoning` | string
 `extraContent` | { [key: string]: any; }
+`images` | [Array&lt;CCKImageContent&gt;](CCKImageContent.md)
+`audio` | [CCKChoiceDeltaAudio](CCKChoiceDeltaAudio.md)
 
 ## Example
 
@@ -28,6 +30,8 @@ const example = {
   "toolCalls": null,
   "reasoning": null,
   "extraContent": null,
+  "images": null,
+  "audio": null,
 } satisfies CCKChoiceDelta
 
 console.log(example)

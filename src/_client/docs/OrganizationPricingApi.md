@@ -17,7 +17,7 @@ All URIs are relative to *http://localhost*
 
 Create Organization Pricing
 
-Set the organization\&#39;s rate for a model over a period.  Refused with a 409 when the period overlaps one already stored for that model, naming the period it collides with, rather than shadowing it. Refused with a 403 when the model is addressed through one of the deployment\&#39;s own provider instances: the deployment holds that credential and settles its upstream bill, so its rate is the deployment price list\&#39;s rather than a tenant\&#39;s.  The key is normalized to its canonical &#x60;&#x60;instance:model&#x60;&#x60; form first, the same call &#x60;&#x60;POST /api/v1/pricing&#x60;&#x60; makes, and that is what makes one model one row rather than one per spelling. Stored verbatim, &#x60;&#x60;openai:gpt-4o&#x60;&#x60; and &#x60;&#x60;openai/gpt-4o&#x60;&#x60; are two keys: the overlap rule would not see them as colliding, and both would resolve, with the canonical one preferred, leaving the other dormant until the first is deleted. Normalizing on the way in is what stops that pair existing at all.
+Set the organization\&#39;s rate for a model over a period.  Refused with a 409 when the period overlaps one already stored for that model, naming the period it collides with, rather than shadowing it. Refused with a 403 when the deployment, not the caller\&#39;s organization, holds the credential that serves the model, whether through one of its own provider instances or a hosted credential the bound port supplies because no usable BYO credential of the organization\&#39;s own covers every one of its workspaces: either way the deployment settles the upstream bill, so its rate is the deployment price list\&#39;s rather than a tenant\&#39;s.  The key is normalized to its canonical &#x60;&#x60;instance:model&#x60;&#x60; form first, the same call &#x60;&#x60;POST /api/v1/pricing&#x60;&#x60; makes, and that is what makes one model one row rather than one per spelling. Stored verbatim, &#x60;&#x60;openai:gpt-4o&#x60;&#x60; and &#x60;&#x60;openai/gpt-4o&#x60;&#x60; are two keys: the overlap rule would not see them as colliding, and both would resolve, with the canonical one preferred, leaving the other dormant until the first is deleted. Normalizing on the way in is what stops that pair existing at all.
 
 ### Example
 
@@ -161,11 +161,11 @@ example().catch(console.error);
 
 ## organizationPricingListOrganizationPricing
 
-> OrganizationModelPricingsPublic organizationPricingListOrganizationPricing(skip, limit)
+> OrganizationModelPricingsPublic organizationPricingListOrganizationPricing(modelKey, skip, limit)
 
 List Organization Pricing
 
-List the organization\&#39;s rate overrides.  Readable by any member: these rates decide what the caller\&#39;s own requests cost, so they are not withheld from the people billed at them. Writing needs an owner or admin.  Paged on the same bounds the rest of the tenancy surface uses, because the table grows a row per model per period. &#x60;&#x60;count&#x60;&#x60; is the total, so a client knows whether another page is owed.
+List the organization\&#39;s rate overrides.  Readable by any member: these rates decide what the caller\&#39;s own requests cost, so they are not withheld from the people billed at them. Writing needs an owner or admin.  Paged on the same bounds the rest of the tenancy surface uses, because the table grows a row per model per period. &#x60;&#x60;count&#x60;&#x60; is the total, so a client knows whether another page is owed.  &#x60;&#x60;model_key&#x60;&#x60; narrows to one model, which is what an editor for that model needs: every period stored for it, so it can open on the one in force and refuse a new one that would overlap. Normalized the same way a write is, so a legacy &#x60;&#x60;provider/model&#x60;&#x60; spelling finds the rows a canonical one stored.
 
 ### Example
 
@@ -187,6 +187,8 @@ async function example() {
   const api = new OrganizationPricingApi(config);
 
   const body = {
+    // string | Return only this model\'s periods, in the canonical \'provider:model\' form. (optional)
+    modelKey: modelKey_example,
     // number | Number of records to skip (optional)
     skip: 56,
     // number | Maximum number of records to return (optional)
@@ -210,6 +212,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
+| **modelKey** | `string` | Return only this model\&#39;s periods, in the canonical \&#39;provider:model\&#39; form. | [Optional] [Defaults to `undefined`] |
 | **skip** | `number` | Number of records to skip | [Optional] [Defaults to `0`] |
 | **limit** | `number` | Maximum number of records to return | [Optional] [Defaults to `100`] |
 

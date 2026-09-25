@@ -1,7 +1,7 @@
 
 # CCKPromptTokensDetails
 
-Breakdown of tokens used in the prompt.
+OpenAI prompt token breakdown extended with the TTL split of cache writes.  As in OpenAI, ``cached_tokens`` and ``cache_write_tokens`` are subsets of ``prompt_tokens``.
 
 ## Properties
 
@@ -9,6 +9,8 @@ Name | Type
 ------------ | -------------
 `audioTokens` | number
 `cachedTokens` | number
+`cacheWriteTokens` | number
+`cacheCreationTokenDetails` | [CCKCacheCreationTokenDetails](CCKCacheCreationTokenDetails.md)
 
 ## Example
 
@@ -19,6 +21,8 @@ import type { CCKPromptTokensDetails } from ''
 const example = {
   "audioTokens": null,
   "cachedTokens": null,
+  "cacheWriteTokens": null,
+  "cacheCreationTokenDetails": null,
 } satisfies CCKPromptTokensDetails
 
 console.log(example)

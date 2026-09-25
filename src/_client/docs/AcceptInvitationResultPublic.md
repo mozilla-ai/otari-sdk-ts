@@ -1,13 +1,14 @@
 
 # AcceptInvitationResultPublic
 
-What accepting produces: enough for the accept page to say where the visitor landed.  No session and no token: accepting resolves the membership to ``active`` and stops there. The identity it resolves to is password-less on the roster until it is claimed, so the next step is a sign-up on the invited address, not a sign-in.
+What accepting produces: enough for the accept page to say where the visitor landed.  No session and no token. When the request carried a password, the identity can sign in straight away; otherwise it stays password-less until claimed by signup or a provider sign-in.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
 `organizationName` | string
+`passwordSet` | boolean
 `role` | string
 
 ## Example
@@ -18,6 +19,7 @@ import type { AcceptInvitationResultPublic } from ''
 // TODO: Update the object below with actual values
 const example = {
   "organizationName": null,
+  "passwordSet": null,
   "role": null,
 } satisfies AcceptInvitationResultPublic
 

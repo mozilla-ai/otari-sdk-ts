@@ -1,7 +1,6 @@
 
 # CCCompletionUsage
 
-Usage statistics for the completion request.
 
 ## Properties
 

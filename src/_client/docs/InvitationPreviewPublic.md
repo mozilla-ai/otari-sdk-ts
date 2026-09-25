@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `email` | string
 `expiresAt` | Date
+`needsPassword` | boolean
 `organizationName` | string
 `role` | string
 
@@ -21,6 +22,7 @@ import type { InvitationPreviewPublic } from ''
 const example = {
   "email": null,
   "expiresAt": null,
+  "needsPassword": null,
   "organizationName": null,
   "role": null,
 } satisfies InvitationPreviewPublic

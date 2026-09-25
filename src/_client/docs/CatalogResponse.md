@@ -7,6 +7,7 @@ The grouped catalog, and the facts a reader needs to interpret its prices.
 
 Name | Type
 ------------ | -------------
+`count` | number
 `defaultPricing` | boolean
 `defaultsAsOf` | Date
 `metadataAvailable` | boolean
@@ -19,6 +20,7 @@ import type { CatalogResponse } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "count": null,
   "defaultPricing": null,
   "defaultsAsOf": null,
   "metadataAvailable": null,

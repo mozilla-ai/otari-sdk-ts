@@ -7,6 +7,7 @@ All URIs are relative to *http://localhost*
 | [**organizationGuardrailsCreateOrganizationGuardrail**](OrganizationGuardrailsApi.md#organizationguardrailscreateorganizationguardrail) | **POST** /api/v1/organizations/me/guardrails | Create Organization Guardrail |
 | [**organizationGuardrailsDeleteOrganizationGuardrail**](OrganizationGuardrailsApi.md#organizationguardrailsdeleteorganizationguardrail) | **DELETE** /api/v1/organizations/me/guardrails/{guardrail_id} | Delete Organization Guardrail |
 | [**organizationGuardrailsListOrganizationGuardrails**](OrganizationGuardrailsApi.md#organizationguardrailslistorganizationguardrails) | **GET** /api/v1/organizations/me/guardrails | List Organization Guardrails |
+| [**organizationGuardrailsTestOrganizationGuardrail**](OrganizationGuardrailsApi.md#organizationguardrailstestorganizationguardrail) | **POST** /api/v1/organizations/me/guardrails/{guardrail_id}/test | Test Organization Guardrail |
 | [**organizationGuardrailsUpdateOrganizationGuardrail**](OrganizationGuardrailsApi.md#organizationguardrailsupdateorganizationguardrail) | **PATCH** /api/v1/organizations/me/guardrails/{guardrail_id} | Update Organization Guardrail |
 
 
@@ -224,6 +225,83 @@ example().catch(console.error);
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## organizationGuardrailsTestOrganizationGuardrail
+
+> OrganizationGuardrailTestResult organizationGuardrailsTestOrganizationGuardrail(guardrailId, organizationGuardrailTest)
+
+Test Organization Guardrail
+
+Post some text to the guardrails service a mandate names and return its verdict.  Organization owners and admins only. Uses the mandate\&#39;s own endpoint and credential, or the deployment\&#39;s guardrails URL when it names none, and faces the same safety check a request does. Nothing is stored. &#x60;&#x60;validate_kwargs&#x60;&#x60; replaces the stored arguments for this call, a &#x60;&#x60;***&#x60;&#x60; in it keeps the value stored under that name, and omitting it sends the stored arguments.  A mandate that runs a configured guardrail answers 409: test that guardrail through &#x60;&#x60;/api/v1/organizations/me/guardrail-definitions&#x60;&#x60;. So does one with nowhere to send the check. A service that cannot be reached, or answers something malformed, answers 502, and the reason is in the gateway\&#39;s log only.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  OrganizationGuardrailsApi,
+} from '';
+import type { OrganizationGuardrailsTestOrganizationGuardrailRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new OrganizationGuardrailsApi(config);
+
+  const body = {
+    // string
+    guardrailId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+    // OrganizationGuardrailTest
+    organizationGuardrailTest: ...,
+  } satisfies OrganizationGuardrailsTestOrganizationGuardrailRequest;
+
+  try {
+    const data = await api.organizationGuardrailsTestOrganizationGuardrail(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **guardrailId** | `string` |  | [Defaults to `undefined`] |
+| **organizationGuardrailTest** | [OrganizationGuardrailTest](OrganizationGuardrailTest.md) |  | |
+
+### Return type
+
+[**OrganizationGuardrailTestResult**](OrganizationGuardrailTestResult.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 
