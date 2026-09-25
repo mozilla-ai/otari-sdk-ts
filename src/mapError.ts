@@ -32,6 +32,11 @@ export const PROVIDER_NAME = "gateway";
  */
 const UNSUPPORTED_MODERATION_RE = /does not support (?:multimodal )?moderation/;
 
+/** Names the single provider attempt that served the request, not the whole resolve call. */
+const ATTEMPT_ID_HEADER = "Otari-Attempt-ID";
+
+const RETRY_AFTER_HEADER = "retry-after";
+
 /** Pull the gateway's human-readable detail out of a parsed error body. */
 function extractDetail(body: unknown, fallback: string): string {
   if (typeof body === "string" && body) {
@@ -75,7 +80,7 @@ function extractStatus(message: string): string | undefined {
 interface MappedErrorInput {
   status: number;
   detail: string;
-  correlationId?: string;
+  attemptId?: string;
   retryAfter?: string;
   originalError?: Error;
 }
@@ -86,8 +91,8 @@ interface MappedErrorInput {
  * moderation 400; every other case maps purely on status.
  */
 function buildError(input: MappedErrorInput): OtariError {
-  const { status, detail, correlationId, retryAfter, originalError } = input;
-  const message = correlationId ? `${detail} (correlation_id=${correlationId})` : detail;
+  const { status, detail, attemptId, retryAfter, originalError } = input;
+  const message = attemptId ? `${detail} (attempt_id=${attemptId})` : detail;
   const base = {
     message,
     statusCode: status,
@@ -148,8 +153,8 @@ export async function mapResponse(response: Response, originalError?: Error): Pr
   return buildError({
     status: response.status,
     detail,
-    correlationId: headerGet(response.headers, "x-correlation-id"),
-    retryAfter: headerGet(response.headers, "retry-after"),
+    attemptId: headerGet(response.headers, ATTEMPT_ID_HEADER),
+    retryAfter: headerGet(response.headers, RETRY_AFTER_HEADER),
     originalError,
   });
 }
