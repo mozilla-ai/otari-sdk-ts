@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.6.0](https://github.com/mozilla-ai/otari-sdk-ts/compare/otari-v0.5.0...otari-v0.6.0) (2026-09-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* read the renamed Otari-Attempt-ID header ([#49](https://github.com/mozilla-ai/otari-sdk-ts/issues/49))
+
+### Features
+
+* regenerate SDK client core from Otari OpenAPI spec ([#47](https://github.com/mozilla-ai/otari-sdk-ts/issues/47)) ([ab4b5e5](https://github.com/mozilla-ai/otari-sdk-ts/commit/ab4b5e5e6987d42e335980f3b246612a25cdd923))
+
+
+### Bug Fixes
+
+* read the renamed Otari-Attempt-ID header ([#49](https://github.com/mozilla-ai/otari-sdk-ts/issues/49)) ([3a5ecc8](https://github.com/mozilla-ai/otari-sdk-ts/commit/3a5ecc81d657dd1233e805c9f81dcddfda372af8))
+
 ## [0.5.0](https://github.com/mozilla-ai/otari-sdk-ts/compare/otari-v0.4.0...otari-v0.5.0) (2026-09-16)
 
 
