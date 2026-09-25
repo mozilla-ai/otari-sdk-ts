@@ -4,24 +4,45 @@ name: Release
 # releases). release-please watches main: each merged conventional commit
 # accumulates into a release PR that bumps the version in package.json and
 # updates CHANGELOG.md. Merging that release PR tags the release and creates a
-# GitHub Release, and the publish job below ships it to npm in the same run (so
-# no PAT is needed to chain a separate workflow off the release event).
+# GitHub Release, and the publish job below ships it to npm in the same run.
+#
+# The publish job authenticates to npm with OIDC (npm trusted publishing), so no
+# npm token is stored here. npm verifies the repository and the workflow filename
+# against the trusted publisher configured on the package, then issues a
+# credential scoped to the single job. Renaming this file breaks publishing until
+# the trusted publisher is updated to match.
+#
+# Publish runs in this workflow rather than on `release: published` because a
+# release created with GITHUB_TOKEN does not trigger further workflow runs.
+# Splitting it out would require a PAT, reintroducing the long-lived secret that
+# OIDC removes. workflow_dispatch covers the manual case instead.
+#
+# Retrying a publish means dispatching this workflow *from the release tag*,
+# which the Run workflow ref picker offers alongside branches. npm provenance is
+# built from the run's own ref rather than from whatever the checkout step pulled,
+# so dispatching from a branch and checking out a tag would attest the package to
+# a commit that did not build it.
 
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 jobs:
   release-please:
+    name: Release PR
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
     steps:
-      - uses: googleapis/release-please-action@v4
+      - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
         id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -29,27 +50,50 @@ jobs:
   publish:
     name: Publish
     needs: release-please
-    if: ${{ needs.release-please.outputs.release_created == 'true' }}
+    # On a manual run the release-please job is skipped. A condition without a
+    # status function is implicitly ANDed with success(), which a skipped
+    # dependency fails, so !cancelled() is required for the dispatch path.
+    # A dispatch is restricted to tag refs. The ref picker offers branches too,
+    # and a run started on one would publish whatever version that branch
+    # carries, which release-please never cut.
+    if: >-
+      !cancelled()
+      && (needs.release-please.outputs.release_created == 'true'
+          || (github.event_name == 'workflow_dispatch'
+              && startsWith(github.ref, 'refs/tags/')))
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      # Required for npm provenance.
+      # Required for OIDC trusted publishing and npm provenance.
       id-token: write
     steps:
-      - uses: actions/checkout@v6
+      # Checks out the ref that triggered the run: main's new commit on the push
+      # path, where release-please has already committed the version bump, or the
+      # release tag on a dispatch.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: "24"
           cache: "npm"
           registry-url: "https://registry.npmjs.org"
 
+      # Trusted publishing requires npm 11.5.1 or newer. Node 24 ships a newer
+      # npm than that, so fail loudly here rather than on an opaque auth error.
+      - name: Verify npm supports trusted publishing
+        run: |
+          required=11.5.1
+          actual="$(npm --version)"
+          if [ "$(printf '%s\n%s\n' "$required" "$actual" | sort -V | head -n1)" != "$required" ]; then
+            echo "npm $actual is too old for trusted publishing; need >= $required"
+            exit 1
+          fi
+          echo "npm $actual supports trusted publishing"
+
       - run: npm ci
 
       - run: npm run build
 
-      # release-please already committed the version bump to package.json on
-      # main, so publish picks it up with no tag-to-file patching needed.
+      # No NODE_AUTH_TOKEN: npm authenticates via the OIDC token granted by
+      # id-token: write above.
       - run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
