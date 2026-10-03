@@ -10,7 +10,7 @@ All URIs are relative to *http://localhost*
 
 ## responsesCreateResponse
 
-> any responsesCreateResponse(responsesRequest)
+> any responsesCreateResponse(responsesRequest, idempotencyKey)
 
 Create Response
 
@@ -38,6 +38,8 @@ async function example() {
   const body = {
     // ResponsesRequest
     responsesRequest: ...,
+    // string | A unique value, such as a UUID, that makes a non-streaming request safe to retry. A retry with the same key and body returns the original response, request ID and cost without calling the provider or billing again. A retry while the original is still running is answered 409 with Retry-After. Reusing a key for a different body is refused with 422. Ignored for streaming requests, in hybrid mode, and on a deployment without OTARI_SECRET_KEY, which encrypts the stored response. (optional)
+    idempotencyKey: idempotencyKey_example,
   } satisfies ResponsesCreateResponseRequest;
 
   try {
@@ -58,6 +60,7 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **responsesRequest** | [ResponsesRequest](ResponsesRequest.md) |  | |
+| **idempotencyKey** | `string` | A unique value, such as a UUID, that makes a non-streaming request safe to retry. A retry with the same key and body returns the original response, request ID and cost without calling the provider or billing again. A retry while the original is still running is answered 409 with Retry-After. Reusing a key for a different body is refused with 422. Ignored for streaming requests, in hybrid mode, and on a deployment without OTARI_SECRET_KEY, which encrypts the stored response. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

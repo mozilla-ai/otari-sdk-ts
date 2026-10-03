@@ -86,7 +86,7 @@ example().catch(console.error);
 
 ## catalogListCatalog
 
-> CatalogResponse catalogListCatalog(atContext, search, skip, limit)
+> CatalogResponse catalogListCatalog(atContext, search, skip, limit, provider, vendor, inputModality, outputModality, capability, minContext, maxInput, pricing, source, releasedWithinDays, sort, direction, includeFacets)
 
 List Catalog
 
@@ -114,12 +114,38 @@ async function example() {
   const body = {
     // number | Compare prices for a request of this many input tokens: each model\'s minimum is taken from the pricing tier that request would settle at. Omitted, the base rates compare. (optional)
     atContext: 56,
-    // string | Narrow to models whose name, catalog id or any selector contains this text, case-insensitively. (optional)
+    // string | Case-insensitive text in a model\'s name, vendor, id, selectors, or provider instances. (optional)
     search: search_example,
-    // number | Number of models to skip (optional)
+    // number | Number of matching models to skip. (optional)
     skip: 56,
-    // number | Maximum number of models to return (optional)
+    // number | Maximum number of models to return. (optional)
     limit: 56,
+    // Array<string> | Match any named provider instance. (optional)
+    provider: ...,
+    // Array<string> | Match any vendor; an empty value names unknown vendors. (optional)
+    vendor: ...,
+    // Array<string> | Require every input modality. (optional)
+    inputModality: ...,
+    // Array<string> | Require every output modality. (optional)
+    outputModality: ...,
+    // Array<CatalogCapability> | Require every capability. (optional)
+    capability: ...,
+    // number | Minimum context window; unknown windows do not match. (optional)
+    minContext: 56,
+    // number | Maximum cheapest input price per million tokens; unpriced models do not match. (optional)
+    maxInput: 8.14,
+    // 'all' | 'custom' | 'default' | 'priced' | 'unpriced' (optional)
+    pricing: pricing_example,
+    // 'all' | 'discovered' | 'custom' (optional)
+    source: source_example,
+    // number | Release window ending today (UTC); zero disables it. Unknown and future releases do not match. (optional)
+    releasedWithinDays: 56,
+    // 'name' | 'released' | 'input' | 'output' | 'context' | 'providers' (optional)
+    sort: sort_example,
+    // 'asc' | 'desc' (optional)
+    direction: direction_example,
+    // boolean | Include the filter choices drawn from the whole authorized catalog. (optional)
+    includeFacets: true,
   } satisfies CatalogListCatalogRequest;
 
   try {
@@ -140,9 +166,22 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **atContext** | `number` | Compare prices for a request of this many input tokens: each model\&#39;s minimum is taken from the pricing tier that request would settle at. Omitted, the base rates compare. | [Optional] [Defaults to `undefined`] |
-| **search** | `string` | Narrow to models whose name, catalog id or any selector contains this text, case-insensitively. | [Optional] [Defaults to `undefined`] |
-| **skip** | `number` | Number of models to skip | [Optional] [Defaults to `0`] |
-| **limit** | `number` | Maximum number of models to return | [Optional] [Defaults to `100`] |
+| **search** | `string` | Case-insensitive text in a model\&#39;s name, vendor, id, selectors, or provider instances. | [Optional] [Defaults to `undefined`] |
+| **skip** | `number` | Number of matching models to skip. | [Optional] [Defaults to `0`] |
+| **limit** | `number` | Maximum number of models to return. | [Optional] [Defaults to `100`] |
+| **provider** | `Array<string>` | Match any named provider instance. | [Optional] |
+| **vendor** | `Array<string>` | Match any vendor; an empty value names unknown vendors. | [Optional] |
+| **inputModality** | `Array<string>` | Require every input modality. | [Optional] |
+| **outputModality** | `Array<string>` | Require every output modality. | [Optional] |
+| **capability** | `Array<CatalogCapability>` | Require every capability. | [Optional] |
+| **minContext** | `number` | Minimum context window; unknown windows do not match. | [Optional] [Defaults to `0`] |
+| **maxInput** | `number` | Maximum cheapest input price per million tokens; unpriced models do not match. | [Optional] [Defaults to `undefined`] |
+| **pricing** | `all`, `custom`, `default`, `priced`, `unpriced` |  | [Optional] [Defaults to `&#39;all&#39;`] [Enum: all, custom, default, priced, unpriced] |
+| **source** | `all`, `discovered`, `custom` |  | [Optional] [Defaults to `&#39;all&#39;`] [Enum: all, discovered, custom] |
+| **releasedWithinDays** | `number` | Release window ending today (UTC); zero disables it. Unknown and future releases do not match. | [Optional] [Defaults to `0`] |
+| **sort** | `name`, `released`, `input`, `output`, `context`, `providers` |  | [Optional] [Defaults to `&#39;name&#39;`] [Enum: name, released, input, output, context, providers] |
+| **direction** | `asc`, `desc` |  | [Optional] [Defaults to `&#39;asc&#39;`] [Enum: asc, desc] |
+| **includeFacets** | `boolean` | Include the filter choices drawn from the whole authorized catalog. | [Optional] [Defaults to `false`] |
 
 ### Return type
 

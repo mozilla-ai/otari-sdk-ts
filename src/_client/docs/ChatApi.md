@@ -10,7 +10,7 @@ All URIs are relative to *http://localhost*
 
 ## chatChatCompletions
 
-> ChatCompletion chatChatCompletions(chatCompletionRequest)
+> ChatCompletion chatChatCompletions(chatCompletionRequest, idempotencyKey)
 
 Chat Completions
 
@@ -38,6 +38,8 @@ async function example() {
   const body = {
     // ChatCompletionRequest
     chatCompletionRequest: ...,
+    // string | A unique value, such as a UUID, that makes a non-streaming request safe to retry. A retry with the same key and body returns the original response, request ID and cost without calling the provider or billing again. A retry while the original is still running is answered 409 with Retry-After. Reusing a key for a different body is refused with 422. Ignored for streaming requests, in hybrid mode, and on a deployment without OTARI_SECRET_KEY, which encrypts the stored response. (optional)
+    idempotencyKey: idempotencyKey_example,
   } satisfies ChatChatCompletionsRequest;
 
   try {
@@ -58,6 +60,7 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **chatCompletionRequest** | [ChatCompletionRequest](ChatCompletionRequest.md) |  | |
+| **idempotencyKey** | `string` | A unique value, such as a UUID, that makes a non-streaming request safe to retry. A retry with the same key and body returns the original response, request ID and cost without calling the provider or billing again. A retry while the original is still running is answered 409 with Retry-After. Reusing a key for a different body is refused with 422. Ignored for streaming requests, in hybrid mode, and on a deployment without OTARI_SECRET_KEY, which encrypts the stored response. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

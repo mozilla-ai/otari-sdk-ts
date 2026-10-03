@@ -10,6 +10,7 @@ export * from './BootstrapApi.js';
 export * from './BudgetsApi.js';
 export * from './CatalogApi.js';
 export * from './ChatApi.js';
+export * from './DecisionsApi.js';
 export * from './EmbeddingsApi.js';
 export * from './FeedbackApi.js';
 export * from './FilesApi.js';
