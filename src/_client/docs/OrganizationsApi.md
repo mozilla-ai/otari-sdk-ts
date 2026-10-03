@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**organizationsAcceptCallerPendingMembership**](OrganizationsApi.md#organizationsacceptcallerpendingmembership) | **POST** /api/v1/organizations/me/pending-memberships/{organization_member_id}/accept | Accept Caller Pending Membership |
+| [**organizationsBulkInviteActiveOrganizationMembers**](OrganizationsApi.md#organizationsbulkinviteactiveorganizationmembers) | **POST** /api/v1/organizations/me/member-invitations/bulk | Bulk Invite Active Organization Members |
 | [**organizationsCreateActiveOrganizationDomain**](OrganizationsApi.md#organizationscreateactiveorganizationdomain) | **POST** /api/v1/organizations/me/domains | Create Active Organization Domain |
 | [**organizationsCreateActiveOrganizationMember**](OrganizationsApi.md#organizationscreateactiveorganizationmember) | **POST** /api/v1/organizations/me/members | Create Active Organization Member |
 | [**organizationsCreateOrganization**](OrganizationsApi.md#organizationscreateorganization) | **POST** /api/v1/organizations | Create Organization |
@@ -88,6 +89,80 @@ example().catch(console.error);
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## organizationsBulkInviteActiveOrganizationMembers
+
+> BulkInviteOrganizationMembersResultPublic organizationsBulkInviteActiveOrganizationMembers(bulkInviteOrganizationMembersRequest)
+
+Bulk Invite Active Organization Members
+
+Invite several addresses to the caller\&#39;s active organization at once.  Organization owners and admins only. Every address gets the same role and workspace assignments. Each one is checked as &#x60;&#x60;POST /me/member-invitations&#x60;&#x60; would check it, and an address that is refused lands in &#x60;&#x60;failed&#x60;&#x60; with the reason rather than failing the request, so the answer is 200 even when some or all were refused. Each invited entry carries its own &#x60;&#x60;mail_sent&#x60;&#x60; and accept link.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  OrganizationsApi,
+} from '';
+import type { OrganizationsBulkInviteActiveOrganizationMembersRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new OrganizationsApi(config);
+
+  const body = {
+    // BulkInviteOrganizationMembersRequest
+    bulkInviteOrganizationMembersRequest: ...,
+  } satisfies OrganizationsBulkInviteActiveOrganizationMembersRequest;
+
+  try {
+    const data = await api.organizationsBulkInviteActiveOrganizationMembers(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **bulkInviteOrganizationMembersRequest** | [BulkInviteOrganizationMembersRequest](BulkInviteOrganizationMembersRequest.md) |  | |
+
+### Return type
+
+[**BulkInviteOrganizationMembersResultPublic**](BulkInviteOrganizationMembersResultPublic.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 

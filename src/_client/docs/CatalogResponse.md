@@ -10,6 +10,7 @@ Name | Type
 `count` | number
 `defaultPricing` | boolean
 `defaultsAsOf` | Date
+`facets` | [CatalogFacets](CatalogFacets.md)
 `metadataAvailable` | boolean
 `models` | [Array&lt;CatalogModelSummary&gt;](CatalogModelSummary.md)
 
@@ -23,6 +24,7 @@ const example = {
   "count": null,
   "defaultPricing": null,
   "defaultsAsOf": null,
+  "facets": null,
   "metadataAvailable": null,
   "models": null,
 } satisfies CatalogResponse

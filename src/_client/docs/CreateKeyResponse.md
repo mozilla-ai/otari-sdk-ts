@@ -10,10 +10,12 @@ Name | Type
 `allowedModels` | Array&lt;string&gt;
 `captureAgentTelemetry` | boolean
 `createdAt` | string
+`endUserBudgetId` | string
 `excludeFromBudget` | boolean
 `expiresAt` | string
 `id` | string
 `isActive` | boolean
+`isServiceKey` | boolean
 `key` | string
 `keyName` | string
 `keyPrefix` | string
@@ -32,10 +34,12 @@ const example = {
   "allowedModels": null,
   "captureAgentTelemetry": null,
   "createdAt": null,
+  "endUserBudgetId": null,
   "excludeFromBudget": null,
   "expiresAt": null,
   "id": null,
   "isActive": null,
+  "isServiceKey": null,
   "key": null,
   "keyName": null,
   "keyPrefix": null,

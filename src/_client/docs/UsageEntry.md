@@ -28,6 +28,7 @@ Name | Type
 `pricingBreakdown` | [Array&lt;UsageEntryPricingBreakdownInner&gt;](UsageEntryPricingBreakdownInner.md)
 `promptTokens` | number
 `provider` | string
+`reasoningTokens` | number
 `requestGroupId` | string
 `selectionReason` | string
 `source` | string
@@ -67,6 +68,7 @@ const example = {
   "pricingBreakdown": null,
   "promptTokens": null,
   "provider": null,
+  "reasoningTokens": null,
   "requestGroupId": null,
   "selectionReason": null,
   "source": null,
