@@ -9,8 +9,11 @@ Name | Type
 ------------ | -------------
 `allowedModels` | Array&lt;string&gt;
 `captureAgentTelemetry` | boolean
+`endUserBudgetId` | string
+`endUserBudgetIds` | Array&lt;string&gt;
 `excludeFromBudget` | boolean
 `expiresAt` | Date
+`isServiceKey` | boolean
 `keyName` | string
 `metadata` | { [key: string]: any; }
 `rejectUserMismatch` | boolean
@@ -26,8 +29,11 @@ import type { CreateKeyRequest } from ''
 const example = {
   "allowedModels": null,
   "captureAgentTelemetry": null,
+  "endUserBudgetId": null,
+  "endUserBudgetIds": null,
   "excludeFromBudget": null,
   "expiresAt": null,
+  "isServiceKey": null,
   "keyName": null,
   "metadata": null,
   "rejectUserMismatch": null,

@@ -14,7 +14,7 @@ All URIs are relative to *http://localhost*
 
 Create Rerank
 
-Rerank documents by relevance to a query.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \&quot;default\&quot; user
+Rerank documents by relevance to a query.  Billing: a model priced per request (&#x60;&#x60;unit: requests&#x60;&#x60;) is charged per search unit the provider reports, or for one unit when it reports none. A model priced per token is charged on the input tokens the provider reports.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \&quot;default\&quot; user
 
 ### Example
 

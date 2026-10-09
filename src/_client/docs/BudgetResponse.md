@@ -15,9 +15,11 @@ Name | Type
 `organizationId` | string
 `requestLimit` | number
 `resetAlignment` | string
+`rpmLimit` | number
 `tokenLimit` | number
 `totalReserved` | number
 `totalSpend` | number
+`tpmLimit` | number
 `updatedAt` | string
 `userCount` | number
 
@@ -36,9 +38,11 @@ const example = {
   "organizationId": null,
   "requestLimit": null,
   "resetAlignment": null,
+  "rpmLimit": null,
   "tokenLimit": null,
   "totalReserved": null,
   "totalSpend": null,
+  "tpmLimit": null,
   "updatedAt": null,
   "userCount": null,
 } satisfies BudgetResponse

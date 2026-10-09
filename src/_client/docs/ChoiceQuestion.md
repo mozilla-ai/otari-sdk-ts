@@ -1,26 +1,27 @@
 
-# ContentAnyOfInner
+# ChoiceQuestion
 
+A question answered with one of the named options.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`text` | string
+`criteria` | [{ [key: string]: CriteriaValue; }](CriteriaValue.md)
+`instructions` | [Instructions](Instructions.md)
 `type` | string
-`refusal` | string
 
 ## Example
 
 ```typescript
-import type { ContentAnyOfInner } from ''
+import type { ChoiceQuestion } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "text": null,
+  "criteria": null,
+  "instructions": null,
   "type": null,
-  "refusal": null,
-} satisfies ContentAnyOfInner
+} satisfies ChoiceQuestion
 
 console.log(example)
 
@@ -29,7 +30,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as ContentAnyOfInner
+const exampleParsed = JSON.parse(exampleJSON) as ChoiceQuestion
 console.log(exampleParsed)
 ```
 

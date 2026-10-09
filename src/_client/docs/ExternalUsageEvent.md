@@ -16,6 +16,7 @@ Name | Type
 `model` | string
 `outputTokens` | number
 `provider` | string
+`reasoningTokens` | number
 `sessionLabel` | string
 `sourceEventId` | string
 `status` | string
@@ -38,6 +39,7 @@ const example = {
   "model": null,
   "outputTokens": null,
   "provider": null,
+  "reasoningTokens": null,
   "sessionLabel": null,
   "sourceEventId": null,
   "status": null,

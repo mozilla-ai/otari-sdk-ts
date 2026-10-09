@@ -7,6 +7,7 @@ One turn in a transcript being saved.
 
 Name | Type
 ------------ | -------------
+`attachments` | [Array&lt;PlaygroundAttachment&gt;](PlaygroundAttachment.md)
 `content` | string
 `reasoning` | string
 `role` | string
@@ -18,6 +19,7 @@ import type { PlaygroundMessageCreate } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "attachments": null,
   "content": null,
   "reasoning": null,
   "role": null,

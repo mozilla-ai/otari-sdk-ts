@@ -1,7 +1,7 @@
 
 # StoredSearchToolSchema
 
-A runtime-stored search tool. The API key is never returned, only ``last4``.
+A runtime-stored search or fetch instance. The API key is never returned, only ``last4``.
 
 ## Properties
 
@@ -10,6 +10,8 @@ Name | Type
 `apiBase` | string
 `createdAt` | string
 `decryptable` | boolean
+`fetchTool` | string
+`kind` | string
 `last4` | string
 `name` | string
 `options` | { [key: string]: any; }
@@ -28,6 +30,8 @@ const example = {
   "apiBase": null,
   "createdAt": null,
   "decryptable": null,
+  "fetchTool": null,
+  "kind": null,
   "last4": null,
   "name": null,
   "options": null,

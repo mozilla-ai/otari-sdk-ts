@@ -17,6 +17,7 @@ Name | Type
 `cost` | number
 `errorCount` | number
 `promptTokens` | number
+`reasoningTokens` | number
 `requestCount` | number
 `totalTokens` | number
 `unpricedRequests` | number
@@ -38,6 +39,7 @@ const example = {
   "cost": null,
   "errorCount": null,
   "promptTokens": null,
+  "reasoningTokens": null,
   "requestCount": null,
   "totalTokens": null,
   "unpricedRequests": null,

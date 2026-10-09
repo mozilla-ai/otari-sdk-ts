@@ -9,6 +9,7 @@ All URIs are relative to *http://localhost*
 | [**budgetsGetBudget**](BudgetsApi.md#budgetsgetbudget) | **GET** /api/v1/budgets/{budget_id} | Get Budget |
 | [**budgetsListBudgetResetLogs**](BudgetsApi.md#budgetslistbudgetresetlogs) | **GET** /api/v1/budgets/{budget_id}/reset-logs | List Budget Reset Logs |
 | [**budgetsListBudgets**](BudgetsApi.md#budgetslistbudgets) | **GET** /api/v1/budgets | List Budgets |
+| [**budgetsPutBudget**](BudgetsApi.md#budgetsputbudget) | **PUT** /api/v1/budgets/{budget_id} | Put Budget |
 | [**budgetsUpdateBudget**](BudgetsApi.md#budgetsupdatebudget) | **PATCH** /api/v1/budgets/{budget_id} | Update Budget |
 
 
@@ -93,7 +94,7 @@ example().catch(console.error);
 
 Delete Budget
 
-Delete a budget.  Refused with 409 while anything still names this budget: a workspace handing it to its members, or a scoped ceiling enforcing it. Both foreign keys are &#x60;&#x60;RESTRICT&#x60;&#x60;, so the database would refuse either anyway, but as an &#x60;&#x60;IntegrityError&#x60;&#x60; reported as \&quot;Database error\&quot; with nothing naming what to go and change. Checked here so the refusal can say which, and where.
+Delete a budget the deployment owns.  Refused with 409 for an organization\&#39;s budget: the operator may edit one (&#x60;&#x60;PATCH&#x60;&#x60; retimes its ceilings) but deleting it would take a budget the tenant defined out from under them.  Refused with 409, too, while anything still names this budget: a workspace handing it to its members, or a scoped ceiling enforcing it. The refusal says which, and where.  Gateway users assigned to the budget are left uncapped, as the dashboard\&#39;s confirmation says, its reset history is deleted with it, and it is taken off every service key\&#39;s &#x60;&#x60;end_user_budget_ids&#x60;&#x60;. A budget that is a key\&#39;s &#x60;&#x60;end_user_budget_id&#x60;&#x60; is refused (409) until that key\&#39;s default changes.
 
 ### Example
 
@@ -387,6 +388,84 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## budgetsPutBudget
+
+> BudgetResponse budgetsPutBudget(budgetId, createBudgetRequest)
+
+Put Budget
+
+Create a budget under an id you choose, or replace the one with that id.  Every field takes the value in the body, and a field left out is cleared, so the same request always leaves the same budget. Answers 201 when it created the budget. Users on a budget it replaces stay on it, and its ceilings follow a change of reset period. A budget an organization owns is not replaced.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  BudgetsApi,
+} from '';
+import type { BudgetsPutBudgetRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new BudgetsApi(config);
+
+  const body = {
+    // string | An id you choose: up to 128 letters, digits, \'.\', \'_\' and \'-\', starting with a letter or digit
+    budgetId: budgetId_example,
+    // CreateBudgetRequest
+    createBudgetRequest: ...,
+  } satisfies BudgetsPutBudgetRequest;
+
+  try {
+    const data = await api.budgetsPutBudget(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **budgetId** | `string` | An id you choose: up to 128 letters, digits, \&#39;.\&#39;, \&#39;_\&#39; and \&#39;-\&#39;, starting with a letter or digit | [Defaults to `undefined`] |
+| **createBudgetRequest** | [CreateBudgetRequest](CreateBudgetRequest.md) |  | |
+
+### Return type
+
+[**BudgetResponse**](BudgetResponse.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **201** | The budget was created |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

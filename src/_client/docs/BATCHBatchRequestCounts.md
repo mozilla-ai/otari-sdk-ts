@@ -1,30 +1,27 @@
 
-# Content2AnyOfInner
+# BATCHBatchRequestCounts
 
+The request counts for different statuses within the batch.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`text` | string
-`type` | string
-`imageUrl` | [MSGImageURL](MSGImageURL.md)
-`inputAudio` | [MSGInputAudio](MSGInputAudio.md)
-`file` | [MSGFileFile](MSGFileFile.md)
+`completed` | number
+`failed` | number
+`total` | number
 
 ## Example
 
 ```typescript
-import type { Content2AnyOfInner } from ''
+import type { BATCHBatchRequestCounts } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "text": null,
-  "type": null,
-  "imageUrl": null,
-  "inputAudio": null,
-  "file": null,
-} satisfies Content2AnyOfInner
+  "completed": null,
+  "failed": null,
+  "total": null,
+} satisfies BATCHBatchRequestCounts
 
 console.log(example)
 
@@ -33,7 +30,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as Content2AnyOfInner
+const exampleParsed = JSON.parse(exampleJSON) as BATCHBatchRequestCounts
 console.log(exampleParsed)
 ```
 
