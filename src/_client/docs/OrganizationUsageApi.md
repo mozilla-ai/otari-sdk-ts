@@ -13,7 +13,7 @@ All URIs are relative to *http://localhost*
 
 ## organizationUsageCountOrganizationUsage
 
-> UsageCount organizationUsageCountOrganizationUsage(startDate, endDate, userId, status, statusCode, model, endpoint, provider, source, sourceLabel, apiKeyId, priced, tool, countsTowardBudget, requestGroupId, workspaceId)
+> UsageCount organizationUsageCountOrganizationUsage(startDate, endDate, userId, status, statusCode, model, endpoint, provider, source, sourceLabel, tag, apiKeyId, priced, tool, countsTowardBudget, requestGroupId, workspaceId)
 
 Count Organization Usage
 
@@ -59,6 +59,8 @@ async function example() {
     source: source_example,
     // string | Filter to a single session/project label (the source_label carried by imported usage) (optional)
     sourceLabel: sourceLabel_example,
+    // Array<string> | Filter by a request tag (what a request sent in its `metadata`), as `key:value`. Repeatable: values for the same key match any of them, and different keys must all match. At most 50 per call. (optional)
+    tag: ...,
     // Array<string> | Filter to one or more API key ids; repeatable (api_key_id=a&api_key_id=b). Several values match any of them. At most 50 per call. (optional)
     apiKeyId: ...,
     // boolean | Filter by token-pricing state: true = only rows whose model tokens were priced, false = only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. (optional)
@@ -100,6 +102,7 @@ example().catch(console.error);
 | **provider** | `string` | Filter to a single provider (e.g. \&#39;openai\&#39;) | [Optional] [Defaults to `undefined`] |
 | **source** | `string` | Filter to a single provenance source (e.g. \&#39;gateway\&#39; or \&#39;claude_code\&#39;) | [Optional] [Defaults to `undefined`] |
 | **sourceLabel** | `string` | Filter to a single session/project label (the source_label carried by imported usage) | [Optional] [Defaults to `undefined`] |
+| **tag** | `Array<string>` | Filter by a request tag (what a request sent in its &#x60;metadata&#x60;), as &#x60;key:value&#x60;. Repeatable: values for the same key match any of them, and different keys must all match. At most 50 per call. | [Optional] |
 | **apiKeyId** | `Array<string>` | Filter to one or more API key ids; repeatable (api_key_id&#x3D;a&amp;api_key_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **priced** | `boolean` | Filter by token-pricing state: true &#x3D; only rows whose model tokens were priced, false &#x3D; only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. | [Optional] [Defaults to `undefined`] |
 | **tool** | `any`, `web_search`, `web_fetch`, `code_execution` | Filter to requests that ran a gateway-run tool. \&#39;any\&#39; matches any tool; a tool name (web_search, web_fetch, code_execution) matches that tool specifically. | [Optional] [Defaults to `undefined`] [Enum: any, web_search, web_fetch, code_execution] |
@@ -132,7 +135,7 @@ example().catch(console.error);
 
 ## organizationUsageListOrganizationUsage
 
-> Array&lt;UsageEntry&gt; organizationUsageListOrganizationUsage(startDate, endDate, userId, status, statusCode, model, endpoint, provider, source, sourceLabel, apiKeyId, priced, tool, countsTowardBudget, requestGroupId, workspaceId, skip, limit)
+> Array&lt;UsageEntry&gt; organizationUsageListOrganizationUsage(startDate, endDate, userId, status, statusCode, model, endpoint, provider, source, sourceLabel, tag, apiKeyId, priced, tool, countsTowardBudget, requestGroupId, workspaceId, skip, limit)
 
 List Organization Usage
 
@@ -178,6 +181,8 @@ async function example() {
     source: source_example,
     // string | Filter to a single session/project label (the source_label carried by imported usage) (optional)
     sourceLabel: sourceLabel_example,
+    // Array<string> | Filter by a request tag (what a request sent in its `metadata`), as `key:value`. Repeatable: values for the same key match any of them, and different keys must all match. At most 50 per call. (optional)
+    tag: ...,
     // Array<string> | Filter to one or more API key ids; repeatable (api_key_id=a&api_key_id=b). Several values match any of them. At most 50 per call. (optional)
     apiKeyId: ...,
     // boolean | Filter by token-pricing state: true = only rows whose model tokens were priced, false = only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. (optional)
@@ -223,6 +228,7 @@ example().catch(console.error);
 | **provider** | `string` | Filter to a single provider (e.g. \&#39;openai\&#39;) | [Optional] [Defaults to `undefined`] |
 | **source** | `string` | Filter to a single provenance source (e.g. \&#39;gateway\&#39; or \&#39;claude_code\&#39;) | [Optional] [Defaults to `undefined`] |
 | **sourceLabel** | `string` | Filter to a single session/project label (the source_label carried by imported usage) | [Optional] [Defaults to `undefined`] |
+| **tag** | `Array<string>` | Filter by a request tag (what a request sent in its &#x60;metadata&#x60;), as &#x60;key:value&#x60;. Repeatable: values for the same key match any of them, and different keys must all match. At most 50 per call. | [Optional] |
 | **apiKeyId** | `Array<string>` | Filter to one or more API key ids; repeatable (api_key_id&#x3D;a&amp;api_key_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **priced** | `boolean` | Filter by token-pricing state: true &#x3D; only rows whose model tokens were priced, false &#x3D; only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. | [Optional] [Defaults to `undefined`] |
 | **tool** | `any`, `web_search`, `web_fetch`, `code_execution` | Filter to requests that ran a gateway-run tool. \&#39;any\&#39; matches any tool; a tool name (web_search, web_fetch, code_execution) matches that tool specifically. | [Optional] [Defaults to `undefined`] [Enum: any, web_search, web_fetch, code_execution] |
@@ -257,7 +263,7 @@ example().catch(console.error);
 
 ## organizationUsageOrganizationUsageSeries
 
-> UsageGroupedSeries organizationUsageOrganizationUsageSeries(groupBy, startDate, endDate, userId, status, statusCode, model, endpoint, provider, source, sourceLabel, apiKeyId, priced, tool, countsTowardBudget, workspaceId, bucket)
+> UsageGroupedSeries organizationUsageOrganizationUsageSeries(groupBy, startDate, endDate, userId, status, statusCode, model, endpoint, provider, source, sourceLabel, tag, apiKeyId, priced, tool, countsTowardBudget, workspaceId, bucket)
 
 Organization Usage Series
 
@@ -305,6 +311,8 @@ async function example() {
     source: source_example,
     // string | Filter to a single session/project label (the source_label carried by imported usage) (optional)
     sourceLabel: sourceLabel_example,
+    // Array<string> | Filter by a request tag (what a request sent in its `metadata`), as `key:value`. Repeatable: values for the same key match any of them, and different keys must all match. At most 50 per call. (optional)
+    tag: ...,
     // Array<string> | Filter to one or more API key ids; repeatable (api_key_id=a&api_key_id=b). Several values match any of them. At most 50 per call. (optional)
     apiKeyId: ...,
     // boolean | Filter by token-pricing state: true = only rows whose model tokens were priced, false = only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. (optional)
@@ -347,6 +355,7 @@ example().catch(console.error);
 | **provider** | `string` | Filter to a single provider (e.g. \&#39;openai\&#39;) | [Optional] [Defaults to `undefined`] |
 | **source** | `string` | Filter to a single provenance source (e.g. \&#39;gateway\&#39; or \&#39;claude_code\&#39;) | [Optional] [Defaults to `undefined`] |
 | **sourceLabel** | `string` | Filter to a single session/project label (the source_label carried by imported usage) | [Optional] [Defaults to `undefined`] |
+| **tag** | `Array<string>` | Filter by a request tag (what a request sent in its &#x60;metadata&#x60;), as &#x60;key:value&#x60;. Repeatable: values for the same key match any of them, and different keys must all match. At most 50 per call. | [Optional] |
 | **apiKeyId** | `Array<string>` | Filter to one or more API key ids; repeatable (api_key_id&#x3D;a&amp;api_key_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **priced** | `boolean` | Filter by token-pricing state: true &#x3D; only rows whose model tokens were priced, false &#x3D; only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. | [Optional] [Defaults to `undefined`] |
 | **tool** | `any`, `web_search`, `web_fetch`, `code_execution` | Filter to requests that ran a gateway-run tool. \&#39;any\&#39; matches any tool; a tool name (web_search, web_fetch, code_execution) matches that tool specifically. | [Optional] [Defaults to `undefined`] [Enum: any, web_search, web_fetch, code_execution] |
@@ -379,7 +388,7 @@ example().catch(console.error);
 
 ## organizationUsageOrganizationUsageSummary
 
-> UsageSummary organizationUsageOrganizationUsageSummary(startDate, endDate, userId, status, statusCode, model, endpoint, provider, source, sourceLabel, apiKeyId, priced, tool, countsTowardBudget, workspaceId, bucket, dimensions)
+> UsageSummary organizationUsageOrganizationUsageSummary(startDate, endDate, userId, status, statusCode, model, endpoint, provider, source, sourceLabel, tag, apiKeyId, priced, tool, countsTowardBudget, workspaceId, bucket, dimensions, groupByTag)
 
 Organization Usage Summary
 
@@ -425,6 +434,8 @@ async function example() {
     source: source_example,
     // string | Filter to a single session/project label (the source_label carried by imported usage) (optional)
     sourceLabel: sourceLabel_example,
+    // Array<string> | Filter by a request tag (what a request sent in its `metadata`), as `key:value`. Repeatable: values for the same key match any of them, and different keys must all match. At most 50 per call. (optional)
+    tag: ...,
     // Array<string> | Filter to one or more API key ids; repeatable (api_key_id=a&api_key_id=b). Several values match any of them. At most 50 per call. (optional)
     apiKeyId: ...,
     // boolean | Filter by token-pricing state: true = only rows whose model tokens were priced, false = only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. (optional)
@@ -439,6 +450,8 @@ async function example() {
     bucket: bucket_example,
     // Array<'model' | 'user' | 'api_key' | 'source' | 'source_label' | 'endpoint' | 'provider' | 'status_code' | 'tool' | 'none'> | Which breakdowns to compute; repeatable (dimensions=model&dimensions=user). Each value names the \'by_<value>\' response field it fills, except \'status_code\', which fills the failure taxonomy in \'errors_by_status_code\'. Omit for every breakdown (the default); pass \'none\' for a totals-and-series-only response. Each dimension left out skips one GROUP BY scan, so a caller that reads only the tiles or the time series should say so. Fields that were not requested come back empty. (optional)
     dimensions: ...,
+    // string | A tag key to break spend down by, returned as `by_tag`. Rows that do not carry the tag group under a null key. (optional)
+    groupByTag: groupByTag_example,
   } satisfies OrganizationUsageOrganizationUsageSummaryRequest;
 
   try {
@@ -468,6 +481,7 @@ example().catch(console.error);
 | **provider** | `string` | Filter to a single provider (e.g. \&#39;openai\&#39;) | [Optional] [Defaults to `undefined`] |
 | **source** | `string` | Filter to a single provenance source (e.g. \&#39;gateway\&#39; or \&#39;claude_code\&#39;) | [Optional] [Defaults to `undefined`] |
 | **sourceLabel** | `string` | Filter to a single session/project label (the source_label carried by imported usage) | [Optional] [Defaults to `undefined`] |
+| **tag** | `Array<string>` | Filter by a request tag (what a request sent in its &#x60;metadata&#x60;), as &#x60;key:value&#x60;. Repeatable: values for the same key match any of them, and different keys must all match. At most 50 per call. | [Optional] |
 | **apiKeyId** | `Array<string>` | Filter to one or more API key ids; repeatable (api_key_id&#x3D;a&amp;api_key_id&#x3D;b). Several values match any of them. At most 50 per call. | [Optional] |
 | **priced** | `boolean` | Filter by token-pricing state: true &#x3D; only rows whose model tokens were priced, false &#x3D; only rows that still need pricing (no cost at all, or tokens that were never metered because the model had no rate). A row charged only for gateway-run tool calls still counts as needing pricing. | [Optional] [Defaults to `undefined`] |
 | **tool** | `any`, `web_search`, `web_fetch`, `code_execution` | Filter to requests that ran a gateway-run tool. \&#39;any\&#39; matches any tool; a tool name (web_search, web_fetch, code_execution) matches that tool specifically. | [Optional] [Defaults to `undefined`] [Enum: any, web_search, web_fetch, code_execution] |
@@ -475,6 +489,7 @@ example().catch(console.error);
 | **workspaceId** | `string` | Only usage recorded in this workspace. | [Optional] [Defaults to `undefined`] |
 | **bucket** | `hour`, `day` | Time-series granularity: \&#39;hour\&#39; or \&#39;day\&#39; | [Optional] [Defaults to `&#39;day&#39;`] [Enum: hour, day] |
 | **dimensions** | `model`, `user`, `api_key`, `source`, `source_label`, `endpoint`, `provider`, `status_code`, `tool`, `none` | Which breakdowns to compute; repeatable (dimensions&#x3D;model&amp;dimensions&#x3D;user). Each value names the \&#39;by_&lt;value&gt;\&#39; response field it fills, except \&#39;status_code\&#39;, which fills the failure taxonomy in \&#39;errors_by_status_code\&#39;. Omit for every breakdown (the default); pass \&#39;none\&#39; for a totals-and-series-only response. Each dimension left out skips one GROUP BY scan, so a caller that reads only the tiles or the time series should say so. Fields that were not requested come back empty. | [Optional] [Enum: model, user, api_key, source, source_label, endpoint, provider, status_code, tool, none] |
+| **groupByTag** | `string` | A tag key to break spend down by, returned as &#x60;by_tag&#x60;. Rows that do not carry the tag group under a null key. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

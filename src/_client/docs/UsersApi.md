@@ -317,11 +317,11 @@ example().catch(console.error);
 
 ## usersListUsers
 
-> Array&lt;UserResponse&gt; usersListUsers(skip, limit)
+> Array&lt;UserResponse&gt; usersListUsers(skip, limit, parentUserId, externalId, blocked, includeTotal)
 
 List Users
 
-List the users the caller\&#39;s organization can name, with pagination.  &#x60;&#x60;users&#x60;&#x60; is deployment-global and has no organization column, so which of them this organization can name is derived: a key, usage, or a roster row puts one in reach, and one reached from nowhere at all (the shared &#x60;&#x60;default&#x60;&#x60; owner, or a user just created) is shared rather than hidden. See &#x60;&#x60;repositories.users_repository.in_organization&#x60;&#x60;.
+List the users the caller\&#39;s organization can name, with pagination.  &#x60;&#x60;users&#x60;&#x60; is deployment-global and has no organization column, so which of them this organization can name is derived: a key, usage, or a roster row puts one in reach, and one reached from nowhere at all (the shared &#x60;&#x60;default&#x60;&#x60; owner, or a user just created) is shared rather than hidden. See &#x60;&#x60;repositories.users_repository.in_organization&#x60;&#x60;.  &#x60;&#x60;parent_user_id&#x60;&#x60; with &#x60;&#x60;external_id&#x60;&#x60; finds the end user a service key created for a &#x60;&#x60;user&#x60;&#x60; value, which is how a caller maps its own ids to Otari\&#39;s. &#x60;&#x60;include_total&#x60;&#x60; adds an &#x60;&#x60;Otari-Total-Count&#x60;&#x60; header counting every match, so &#x60;&#x60;limit&#x3D;1&#x60;&#x60; with it counts a service key\&#39;s end users.
 
 ### Example
 
@@ -347,6 +347,14 @@ async function example() {
     skip: 56,
     // number (optional)
     limit: 56,
+    // string | Only the end users of this owner: the user a service key belongs to. (optional)
+    parentUserId: parentUserId_example,
+    // string | Only the end user a service key names with this `user` value. (optional)
+    externalId: externalId_example,
+    // boolean | Only blocked users (true) or only unblocked ones (false). (optional)
+    blocked: true,
+    // boolean | Also count every matching user, in the Otari-Total-Count response header. (optional)
+    includeTotal: true,
   } satisfies UsersListUsersRequest;
 
   try {
@@ -368,6 +376,10 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **skip** | `number` |  | [Optional] [Defaults to `0`] |
 | **limit** | `number` |  | [Optional] [Defaults to `100`] |
+| **parentUserId** | `string` | Only the end users of this owner: the user a service key belongs to. | [Optional] [Defaults to `undefined`] |
+| **externalId** | `string` | Only the end user a service key names with this &#x60;user&#x60; value. | [Optional] [Defaults to `undefined`] |
+| **blocked** | `boolean` | Only blocked users (true) or only unblocked ones (false). | [Optional] [Defaults to `undefined`] |
+| **includeTotal** | `boolean` | Also count every matching user, in the Otari-Total-Count response header. | [Optional] [Defaults to `false`] |
 
 ### Return type
 

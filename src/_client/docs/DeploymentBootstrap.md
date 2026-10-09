@@ -16,6 +16,7 @@ Name | Type
 `managementUrl` | string
 `oauthProviders` | Array&lt;string&gt;
 `openSignup` | boolean
+`passkeysEnabled` | boolean
 `passkeysReady` | boolean
 `privacyUrl` | string
 `publicCatalog` | boolean
@@ -41,6 +42,7 @@ const example = {
   "managementUrl": null,
   "oauthProviders": null,
   "openSignup": null,
+  "passkeysEnabled": null,
   "passkeysReady": null,
   "privacyUrl": null,
   "publicCatalog": null,

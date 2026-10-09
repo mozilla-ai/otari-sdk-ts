@@ -15,7 +15,7 @@ All URIs are relative to *http://localhost*
 
 Create Search
 
-Run a search against a configured search tool.  The tool is taken from &#x60;&#x60;search_tool_name&#x60;&#x60;, which may be omitted when exactly one tool is configured.  Authentication modes: - Master key: the &#x60;&#x60;user&#x60;&#x60; field is required and may name any existing user. - API key: usage and spend always bind to the key\&#39;s own user. A &#x60;&#x60;user&#x60;&#x60;   field naming a different user is rejected with 403 (or ignored, when the   key\&#39;s own &#x60;&#x60;reject_user_mismatch&#x60;&#x60; is false, or the deployment-wide   setting is disabled and the key does not override it); it is never billed   to that user.
+Run a search against a configured search tool.  The tool is taken from &#x60;&#x60;search_tool_name&#x60;&#x60;, which may be omitted when exactly one tool is configured.  Authentication modes: - Master key: the &#x60;&#x60;user&#x60;&#x60; field is required and may name any existing user. - API key: usage and spend bind to the key\&#39;s own user. A &#x60;&#x60;user&#x60;&#x60; field   naming a different user is rejected with 403 (or ignored, when the key\&#39;s   own &#x60;&#x60;reject_user_mismatch&#x60;&#x60; is false, or the deployment-wide setting is   disabled and the key does not override it); it is never billed to that   user. - Service key: a &#x60;&#x60;user&#x60;&#x60; field names one of the key owner\&#39;s end users,   created on first use on the budget &#x60;&#x60;Otari-End-User-Budget&#x60;&#x60; names (or   the key\&#39;s default), and is billed and rate limited as that end user, as   on chat completions.
 
 ### Example
 
@@ -89,7 +89,7 @@ example().catch(console.error);
 
 Create Search For Tool
 
-Run a search against the search tool named in the path.  Identical to &#x60;&#x60;POST /api/v1/search&#x60;&#x60; except that the path names the tool, which is the form LiteLLM clients use. Any &#x60;&#x60;search_tool_name&#x60;&#x60; in the body is ignored.  Authentication modes: - Master key: the &#x60;&#x60;user&#x60;&#x60; field is required and may name any existing user. - API key: usage and spend always bind to the key\&#39;s own user. A &#x60;&#x60;user&#x60;&#x60;   field naming a different user is rejected with 403 (or ignored, when the   key\&#39;s own &#x60;&#x60;reject_user_mismatch&#x60;&#x60; is false, or the deployment-wide   setting is disabled and the key does not override it); it is never billed   to that user.
+Run a search against the search tool named in the path.  Identical to &#x60;&#x60;POST /api/v1/search&#x60;&#x60; except that the path names the tool, which is the form LiteLLM clients use. Any &#x60;&#x60;search_tool_name&#x60;&#x60; in the body is ignored.  Authentication modes: - Master key: the &#x60;&#x60;user&#x60;&#x60; field is required and may name any existing user. - API key: usage and spend bind to the key\&#39;s own user. A &#x60;&#x60;user&#x60;&#x60; field   naming a different user is rejected with 403 (or ignored, when the key\&#39;s   own &#x60;&#x60;reject_user_mismatch&#x60;&#x60; is false, or the deployment-wide setting is   disabled and the key does not override it); it is never billed to that   user. - Service key: a &#x60;&#x60;user&#x60;&#x60; field names one of the key owner\&#39;s end users,   created on first use on the budget &#x60;&#x60;Otari-End-User-Budget&#x60;&#x60; names (or   the key\&#39;s default), and is billed and rate limited as that end user, as   on chat completions.
 
 ### Example
 

@@ -10,6 +10,7 @@ All URIs are relative to *http://localhost*
 | [**routingListPolicies**](RoutingApi.md#routinglistpolicies) | **GET** /api/v1/routing/policies | List Policies |
 | [**routingListVisibleRoutingPolicies**](RoutingApi.md#routinglistvisibleroutingpolicies) | **GET** /api/v1/organizations/me/routing-policies | List Visible Routing Policies |
 | [**routingRankCandidates**](RoutingApi.md#routingrankcandidates) | **POST** /api/v1/routing/preferences/rank | Rank Candidates |
+| [**routingRecommendModelForAgent**](RoutingApi.md#routingrecommendmodelforagent) | **POST** /api/v1/routing/recommend | Recommend Model For Agent |
 | [**routingRoutingMemoryStatus**](RoutingApi.md#routingroutingmemorystatus) | **GET** /api/v1/routing/status | Routing Memory Status |
 | [**routingSetOrganizationRoutingPolicy**](RoutingApi.md#routingsetorganizationroutingpolicy) | **POST** /api/v1/organizations/me/routing-policies | Set Organization Routing Policy |
 | [**routingSetPolicy**](RoutingApi.md#routingsetpolicy) | **POST** /api/v1/routing/policies | Set Policy |
@@ -452,6 +453,80 @@ example().catch(console.error);
 ### Return type
 
 [**RankResponse**](RankResponse.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## routingRecommendModelForAgent
+
+> AgentModelRecommendation routingRecommendModelForAgent(agentModelRecommendationRequest)
+
+Recommend Model For Agent
+
+Recommend the model a subagent about to start should run on.  The harness sends the facts it holds at spawn time: its own ids for the session and the spawning tool call, the subagent type, the task, the parent\&#39;s model and the model the caller asked for, if any. The recommender this build binds picks one of the candidate models and the answer names it. A standalone deployment asks the decision model &#x60;agent_recommender_model&#x60; names to choose among &#x60;agent_recommender_candidates&#x60;; a hosted build may bind a recommender of its own, which the caller never configures. Where the recommender reports them, the answer also carries a one-line reason and its probability for each candidate.  Authentication modes: - Master key: the &#x60;&#x60;user&#x60;&#x60; field is required and names who the decision is billed to. - API key: the decision is billed to the key\&#39;s own user.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  RoutingApi,
+} from '';
+import type { RoutingRecommendModelForAgentRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new RoutingApi(config);
+
+  const body = {
+    // AgentModelRecommendationRequest
+    agentModelRecommendationRequest: ...,
+  } satisfies RoutingRecommendModelForAgentRequest;
+
+  try {
+    const data = await api.routingRecommendModelForAgent(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **agentModelRecommendationRequest** | [AgentModelRecommendationRequest](AgentModelRecommendationRequest.md) |  | |
+
+### Return type
+
+[**AgentModelRecommendation**](AgentModelRecommendation.md)
 
 ### Authorization
 

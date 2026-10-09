@@ -12,9 +12,12 @@ Name | Type
 `sandboxPurposeHint` | string
 `sandboxSessionImage` | string
 `sandboxUrl` | string
+`webFetchDefaultTool` | string
+`webSearchDefaultTool` | string
 `webSearchEngines` | string
 `webSearchExtract` | boolean
 `webSearchIntercept` | boolean
+`webSearchMaxCalls` | number
 `webSearchMaxResults` | number
 `webSearchPurposeHint` | string
 `webSearchUrl` | string
@@ -31,9 +34,12 @@ const example = {
   "sandboxPurposeHint": null,
   "sandboxSessionImage": null,
   "sandboxUrl": null,
+  "webFetchDefaultTool": null,
+  "webSearchDefaultTool": null,
   "webSearchEngines": null,
   "webSearchExtract": null,
   "webSearchIntercept": null,
+  "webSearchMaxCalls": null,
   "webSearchMaxResults": null,
   "webSearchPurposeHint": null,
   "webSearchUrl": null,

@@ -15,8 +15,10 @@ Name | Type
 `isOrgDefault` | boolean
 `last4` | string
 `name` | string
+`offeredCount` | number
 `organizationId` | string
 `provider` | string
+`servingCount` | number
 `updatedAt` | Date
 `usable` | boolean
 
@@ -35,8 +37,10 @@ const example = {
   "isOrgDefault": null,
   "last4": null,
   "name": null,
+  "offeredCount": null,
   "organizationId": null,
   "provider": null,
+  "servingCount": null,
   "updatedAt": null,
   "usable": null,
 } satisfies OrgProviderKeyPublic

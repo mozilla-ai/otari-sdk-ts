@@ -1,7 +1,7 @@
 
 # OrgProviderKeyModelPublic
 
-One offered model, with the rate the caller\'s organization is charged for it.  ``price_source`` says which rung of ``services.pricing_service`` answered: ``organization`` for a rate an admin set, ``defaults`` for the community-maintained rate this surface seeded or the genai-prices fallback, ``deployment`` for the deployment\'s own price list, and None when nothing prices the model yet. ``pricing_id`` names the organization\'s own row where there is one, so a client can edit that rate without re-deriving the key.
+One offered model, with the rate the caller\'s organization is charged for it.  ``price_source`` says which rung of ``services.pricing_service`` answered: ``organization`` for a rate an admin set, ``defaults`` for the community-maintained rate this surface seeded or the genai-prices fallback, ``deployment`` for the deployment\'s own price list, and None when nothing prices the model yet. ``pricing_id`` names the organization\'s own row where there is one, so a client can edit that rate without re-deriving the key. ``unit`` says what the rates are per, as on a pricing row: tokens, requests or images, so a per-request rate is not read as a per-token one.
 
 ## Properties
 
@@ -19,6 +19,7 @@ Name | Type
 `outputPricePerMillion` | number
 `priceSource` | string
 `pricingId` | string
+`unit` | string
 `updatedAt` | Date
 
 ## Example
@@ -40,6 +41,7 @@ const example = {
   "outputPricePerMillion": null,
   "priceSource": null,
   "pricingId": null,
+  "unit": null,
   "updatedAt": null,
 } satisfies OrgProviderKeyModelPublic
 

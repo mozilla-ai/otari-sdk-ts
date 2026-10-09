@@ -1,7 +1,7 @@
 
 # McpToolDefinition
 
-One live tool a caller-orchestrated application may expose to its model.  ``annotations`` is the remote server\'s own metadata, passed through as untrusted data. Otari never turns ``readOnlyHint`` into an authorization decision (R-RISK-1); each application owns its risk policy, and a server cannot waive an application\'s approval gate by labeling itself read-only.
+One live tool a caller-orchestrated application may expose to its model.  ``annotations`` is the remote server\'s own metadata, passed through as untrusted data. Otari never turns ``readOnlyHint`` into an authorization decision; each application owns its risk policy, and a server cannot waive an application\'s approval gate by labeling itself read-only.
 
 ## Properties
 
