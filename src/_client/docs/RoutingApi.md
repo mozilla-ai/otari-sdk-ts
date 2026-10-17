@@ -7,9 +7,11 @@ All URIs are relative to *http://localhost*
 | [**routingDeleteOrganizationRoutingPolicy**](RoutingApi.md#routingdeleteorganizationroutingpolicy) | **DELETE** /api/v1/organizations/me/routing-policies/{name} | Delete Organization Routing Policy |
 | [**routingDeletePolicy**](RoutingApi.md#routingdeletepolicy) | **DELETE** /api/v1/routing/policies/{name} | Delete Policy |
 | [**routingExplainPolicy**](RoutingApi.md#routingexplainpolicy) | **POST** /api/v1/routing/policies/explain | Explain Policy |
+| [**routingListAutomaticFallbacks**](RoutingApi.md#routinglistautomaticfallbacks) | **GET** /api/v1/organizations/me/automatic-fallbacks | List Automatic Fallbacks |
 | [**routingListPolicies**](RoutingApi.md#routinglistpolicies) | **GET** /api/v1/routing/policies | List Policies |
 | [**routingListVisibleRoutingPolicies**](RoutingApi.md#routinglistvisibleroutingpolicies) | **GET** /api/v1/organizations/me/routing-policies | List Visible Routing Policies |
 | [**routingRankCandidates**](RoutingApi.md#routingrankcandidates) | **POST** /api/v1/routing/preferences/rank | Rank Candidates |
+| [**routingRecommendModelForAgent**](RoutingApi.md#routingrecommendmodelforagent) | **POST** /api/v1/routing/recommend | Recommend Model For Agent |
 | [**routingRoutingMemoryStatus**](RoutingApi.md#routingroutingmemorystatus) | **GET** /api/v1/routing/status | Routing Memory Status |
 | [**routingSetOrganizationRoutingPolicy**](RoutingApi.md#routingsetorganizationroutingpolicy) | **POST** /api/v1/organizations/me/routing-policies | Set Organization Routing Policy |
 | [**routingSetPolicy**](RoutingApi.md#routingsetpolicy) | **POST** /api/v1/routing/policies | Set Policy |
@@ -247,13 +249,78 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## routingListAutomaticFallbacks
+
+> AutomaticFallbacksResponse routingListAutomaticFallbacks()
+
+List Automatic Fallbacks
+
+The models the caller\&#39;s organization sent requests to in the last 30 days, and the fallback each gets.  A request that sends a model\&#39;s catalog ID moves to the model\&#39;s next offering when one fails, with no policy. Each model lists its offerings in the order such a request tries them, priced for this organization, with who runs the built-in tools on each, beside its traffic: how many requests a backup served, and how many named one offering and so had no fallback. The traffic is the workspaces the caller may see in their active organization, by the rule the organization\&#39;s usage reads use.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  RoutingApi,
+} from '';
+import type { RoutingListAutomaticFallbacksRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new RoutingApi(config);
+
+  try {
+    const data = await api.routingListAutomaticFallbacks();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**AutomaticFallbacksResponse**](AutomaticFallbacksResponse.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## routingListPolicies
 
 > Array&lt;PolicyResponse&gt; routingListPolicies(workspaceId)
 
 List Policies
 
-List every routing policy in force, from config.yml and from storage.  Every scope at once, workspace-wide and user-scoped alike: this is the master-key management view, not what any one caller resolves.
+List every routing policy in force in your organization, from config.yml and from storage.  Every scope at once, workspace-wide and user-scoped alike: this is the master-key management view, not what any one caller resolves.
 
 ### Example
 
@@ -275,7 +342,7 @@ async function example() {
   const api = new RoutingApi(config);
 
   const body = {
-    // string | Only stored policies in this workspace. Config-file policies are always included, being deployment-wide. Omit to list the stored policies of every workspace. (optional)
+    // string | Only stored policies in this workspace. Config-file policies are always included, being deployment-wide. Omit to list the stored policies of every workspace in your organization. (optional)
     workspaceId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
   } satisfies RoutingListPoliciesRequest;
 
@@ -296,7 +363,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **workspaceId** | `string` | Only stored policies in this workspace. Config-file policies are always included, being deployment-wide. Omit to list the stored policies of every workspace. | [Optional] [Defaults to `undefined`] |
+| **workspaceId** | `string` | Only stored policies in this workspace. Config-file policies are always included, being deployment-wide. Omit to list the stored policies of every workspace in your organization. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -452,6 +519,80 @@ example().catch(console.error);
 ### Return type
 
 [**RankResponse**](RankResponse.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## routingRecommendModelForAgent
+
+> AgentModelRecommendation routingRecommendModelForAgent(agentModelRecommendationRequest)
+
+Recommend Model For Agent
+
+Recommend the model a subagent about to start should run on.  The harness sends the facts it holds at spawn time: its own ids for the session and the spawning tool call, the subagent type, the task, the parent\&#39;s model and the model the caller asked for, if any. The recommender this build binds picks one of the candidate models and the answer names it. A standalone deployment asks the decision model &#x60;agent_recommender_model&#x60; names to choose among &#x60;agent_recommender_candidates&#x60; for Claude Code and among the request\&#39;s own &#x60;candidates&#x60; for pi; a hosted build may bind a recommender of its own, which the caller never configures. Where the recommender reports them, the answer also carries a one-line reason and its probability for each candidate.  Authentication modes: - Master key: the &#x60;&#x60;user&#x60;&#x60; field is required and names who the decision is billed to. - API key: the decision is billed to the key\&#39;s own user.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  RoutingApi,
+} from '';
+import type { RoutingRecommendModelForAgentRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new RoutingApi(config);
+
+  const body = {
+    // AgentModelRecommendationRequest
+    agentModelRecommendationRequest: ...,
+  } satisfies RoutingRecommendModelForAgentRequest;
+
+  try {
+    const data = await api.routingRecommendModelForAgent(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **agentModelRecommendationRequest** | [AgentModelRecommendationRequest](AgentModelRecommendationRequest.md) |  | |
+
+### Return type
+
+[**AgentModelRecommendation**](AgentModelRecommendation.md)
 
 ### Authorization
 

@@ -8,7 +8,6 @@ Response model for model pricing.
 Name | Type
 ------------ | -------------
 `cacheReadPricePerMillion` | number
-`cacheWrite1hPricePerMillion` | number
 `cacheWritePricePerMillion` | number
 `createdAt` | string
 `effectiveAt` | string
@@ -28,7 +27,6 @@ import type { PricingResponse } from ''
 // TODO: Update the object below with actual values
 const example = {
   "cacheReadPricePerMillion": null,
-  "cacheWrite1hPricePerMillion": null,
   "cacheWritePricePerMillion": null,
   "createdAt": null,
   "effectiveAt": null,

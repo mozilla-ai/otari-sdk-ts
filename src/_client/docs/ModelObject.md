@@ -11,6 +11,7 @@ Name | Type
 `created` | number
 `deploymentManaged` | boolean
 `id` | string
+`maxOutputTokens` | number
 `object` | string
 `ownedBy` | string
 `pricing` | [ModelPricingInfo](ModelPricingInfo.md)
@@ -27,6 +28,7 @@ const example = {
   "created": null,
   "deploymentManaged": null,
   "id": null,
+  "maxOutputTokens": null,
   "object": null,
   "ownedBy": null,
   "pricing": null,

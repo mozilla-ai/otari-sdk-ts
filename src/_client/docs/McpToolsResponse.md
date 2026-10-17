@@ -1,7 +1,7 @@
 
 # McpToolsResponse
 
-The authorized catalog for one stored server.  Carries no server URL, no credential, and no allowlist entry that the live catalog did not return (R-DISC-2). ``server_revision`` is what an application persists with a proposed call and sends back to ``/api/v1/mcp/execute``, so a stored-configuration change between the two is refused rather than executed.
+The authorized catalog for one stored server.  Carries no server URL, no credential, and no allowlist entry that the live catalog did not return. ``server_revision`` is what an application persists with a proposed call and sends back to ``/api/v1/mcp/execute``, so a stored-configuration change between the two is refused rather than executed.
 
 ## Properties
 

@@ -21,7 +21,7 @@ All URIs are relative to *http://localhost*
 
 ## pricingConfirmPricingRefresh
 
-> PricingRefreshConfirmationResponse pricingConfirmPricingRefresh()
+> PricingRefreshConfirmationResponse pricingConfirmPricingRefresh(digest)
 
 Confirm Pricing Refresh
 
@@ -46,8 +46,13 @@ async function example() {
   });
   const api = new PricingApi(config);
 
+  const body = {
+    // string | The `digest` of the previewed snapshot; 409 when the pending one differs. (optional)
+    digest: digest_example,
+  } satisfies PricingConfirmPricingRefreshRequest;
+
   try {
-    const data = await api.pricingConfirmPricingRefresh();
+    const data = await api.pricingConfirmPricingRefresh(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -60,7 +65,10 @@ example().catch(console.error);
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **digest** | `string` | The &#x60;digest&#x60; of the previewed snapshot; 409 when the pending one differs. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -80,6 +88,7 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -232,7 +241,7 @@ This endpoint does not need any parameter.
 
 Get Pricing
 
-Get pricing for a specific model as of a timestamp.
+Get pricing for a specific model as of a timestamp.  A 404 for a model of a hosted provider restricted to another organization than the caller\&#39;s.
 
 ### Example
 
@@ -298,6 +307,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
+| **404** | Nothing prices the model, or its hosted provider is restricted to another organization. |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -309,7 +319,7 @@ example().catch(console.error);
 
 Get Pricing History
 
-Return the full pricing history for a model.
+Return the full pricing history for a model.  A 404 for a model of a hosted provider restricted to another organization than the caller\&#39;s.
 
 ### Example
 
@@ -372,6 +382,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
+| **404** | Nothing prices the model, or its hosted provider is restricted to another organization. |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -383,7 +394,7 @@ example().catch(console.error);
 
 List Current Pricing
 
-List the rate each priced model is metered at, one row per model key.  Listing prices answers the stored history, one row per &#x60;&#x60;effective_at&#x60;&#x60;, so a page of that is a page of revisions rather than a page of models. This answers one row per key: the newest rate that has taken effect, or the earliest scheduled rate for a key that has none yet. &#x60;&#x60;count&#x60;&#x60; is the number of priced models, so a caller can page without reading the collection to learn how long it is.
+List the rate each priced model is metered at, one row per model key.  Listing prices answers the stored history, one row per &#x60;&#x60;effective_at&#x60;&#x60;, so a page of that is a page of revisions rather than a page of models. This answers one row per key: the newest rate that has taken effect, or the earliest scheduled rate for a key that has none yet. &#x60;&#x60;count&#x60;&#x60; is the number of priced models, so a caller can page without reading the collection to learn how long it is. A hosted provider restricted to another organization than the caller\&#39;s is left out of both.
 
 ### Example
 
@@ -460,7 +471,7 @@ example().catch(console.error);
 
 List Pricing
 
-List all model pricing.
+List all model pricing.  A hosted provider restricted to another organization than the caller\&#39;s is left out, as it is from the catalog.
 
 ### Example
 
@@ -537,7 +548,7 @@ example().catch(console.error);
 
 List Pricing Drift
 
-Every stored deployment rate in force today, beside today\&#39;s default for it.  A stored row shadows the genai-prices default silently and forever, whether it was a deliberate override or a copy of a then-current default. This is what makes the difference visible: a row that matches the default is a row that could be deleted, and a row far from it is one worth a second look. Tool rows (&#x60;&#x60;otari:&#x60;&#x60;) are per request and have no default to drift from, so they are left out.
+Every stored deployment rate in force today, beside today\&#39;s default for it.  A stored row shadows the models.dev default silently and forever, whether it was a deliberate override or a copy of a then-current default. This is what makes the difference visible: a row that matches the default is a row that could be deleted, and a row far from it is one worth a second look. Tool rows (&#x60;&#x60;otari:&#x60;&#x60;) are per request and have no default to drift from, so they are left out.
 
 ### Example
 
@@ -746,7 +757,7 @@ This endpoint does not need any parameter.
 
 ## pricingRejectPricingRefresh
 
-> pricingRejectPricingRefresh()
+> pricingRejectPricingRefresh(digest)
 
 Reject Pricing Refresh
 
@@ -771,8 +782,13 @@ async function example() {
   });
   const api = new PricingApi(config);
 
+  const body = {
+    // string | The `digest` of the previewed snapshot; 409 when the pending one differs. (optional)
+    digest: digest_example,
+  } satisfies PricingRejectPricingRefreshRequest;
+
   try {
-    const data = await api.pricingRejectPricingRefresh();
+    const data = await api.pricingRejectPricingRefresh(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -785,7 +801,10 @@ example().catch(console.error);
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **digest** | `string` | The &#x60;digest&#x60; of the previewed snapshot; 409 when the pending one differs. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -798,13 +817,14 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: `application/json`
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

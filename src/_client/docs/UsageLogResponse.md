@@ -17,6 +17,7 @@ Name | Type
 `model` | string
 `promptTokens` | number
 `provider` | string
+`providerLatencyMs` | number
 `status` | string
 `timestamp` | string
 `totalTokens` | number
@@ -39,6 +40,7 @@ const example = {
   "model": null,
   "promptTokens": null,
   "provider": null,
+  "providerLatencyMs": null,
   "status": null,
   "timestamp": null,
   "totalTokens": null,

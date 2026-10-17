@@ -8,7 +8,6 @@ Create one rate override for a model, for a period.
 Name | Type
 ------------ | -------------
 `cacheReadPricePerMillion` | number
-`cacheWrite1hPricePerMillion` | number
 `cacheWritePricePerMillion` | number
 `effectiveFrom` | Date
 `effectiveTo` | Date
@@ -26,7 +25,6 @@ import type { OrganizationModelPricingCreate } from ''
 // TODO: Update the object below with actual values
 const example = {
   "cacheReadPricePerMillion": null,
-  "cacheWrite1hPricePerMillion": null,
   "cacheWritePricePerMillion": null,
   "effectiveFrom": null,
   "effectiveTo": null,

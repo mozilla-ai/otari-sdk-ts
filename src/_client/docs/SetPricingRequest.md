@@ -8,7 +8,6 @@ Create a versioned per-model price, with optional cache and context tiers.
 Name | Type
 ------------ | -------------
 `cacheReadPricePerMillion` | number
-`cacheWrite1hPricePerMillion` | number
 `cacheWritePricePerMillion` | number
 `effectiveAt` | Date
 `inputPricePerMillion` | number
@@ -25,7 +24,6 @@ import type { SetPricingRequest } from ''
 // TODO: Update the object below with actual values
 const example = {
   "cacheReadPricePerMillion": null,
-  "cacheWrite1hPricePerMillion": null,
   "cacheWritePricePerMillion": null,
   "effectiveAt": null,
   "inputPricePerMillion": null,
