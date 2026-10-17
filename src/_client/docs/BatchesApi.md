@@ -14,7 +14,7 @@ All URIs are relative to *http://localhost*
 
 ## batchesCancelBatch
 
-> any batchesCancelBatch(batchId, provider)
+> BatchResponse batchesCancelBatch(batchId, provider)
 
 Cancel Batch
 
@@ -68,7 +68,7 @@ example().catch(console.error);
 
 ### Return type
 
-**any**
+[**BatchResponse**](BatchResponse.md)
 
 ### Authorization
 
@@ -83,7 +83,7 @@ example().catch(console.error);
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Successful Response |  -  |
+| **200** | Canceled batch |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -91,7 +91,7 @@ example().catch(console.error);
 
 ## batchesCreateBatch
 
-> any batchesCreateBatch(createBatchRequest)
+> BatchResponse batchesCreateBatch(createBatchRequest)
 
 Create Batch
 
@@ -142,7 +142,7 @@ example().catch(console.error);
 
 ### Return type
 
-**any**
+[**BatchResponse**](BatchResponse.md)
 
 ### Authorization
 
@@ -157,7 +157,7 @@ example().catch(console.error);
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Successful Response |  -  |
+| **200** | Created batch |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -165,7 +165,7 @@ example().catch(console.error);
 
 ## batchesListBatches
 
-> any batchesListBatches(provider, after, limit)
+> BatchListResponse batchesListBatches(provider, after, limit)
 
 List Batches
 
@@ -222,7 +222,7 @@ example().catch(console.error);
 
 ### Return type
 
-**any**
+[**BatchListResponse**](BatchListResponse.md)
 
 ### Authorization
 
@@ -237,7 +237,7 @@ example().catch(console.error);
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Successful Response |  -  |
+| **200** | Batches |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -245,7 +245,7 @@ example().catch(console.error);
 
 ## batchesRetrieveBatch
 
-> any batchesRetrieveBatch(batchId, provider)
+> BatchResponse batchesRetrieveBatch(batchId, provider)
 
 Retrieve Batch
 
@@ -299,7 +299,7 @@ example().catch(console.error);
 
 ### Return type
 
-**any**
+[**BatchResponse**](BatchResponse.md)
 
 ### Authorization
 
@@ -314,7 +314,7 @@ example().catch(console.error);
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Successful Response |  -  |
+| **200** | Batch |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -322,7 +322,7 @@ example().catch(console.error);
 
 ## batchesRetrieveBatchResults
 
-> any batchesRetrieveBatchResults(batchId, provider)
+> BatchResultsResponse batchesRetrieveBatchResults(batchId, provider)
 
 Retrieve Batch Results
 
@@ -376,7 +376,7 @@ example().catch(console.error);
 
 ### Return type
 
-**any**
+[**BatchResultsResponse**](BatchResultsResponse.md)
 
 ### Authorization
 
@@ -391,7 +391,7 @@ example().catch(console.error);
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Successful Response |  -  |
+| **200** | Batch results |  -  |
 | **409** | Batch is not yet complete |  -  |
 | **422** | Validation Error |  -  |
 | **502** | LLM provider error |  -  |

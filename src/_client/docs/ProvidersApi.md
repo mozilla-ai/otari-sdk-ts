@@ -172,7 +172,7 @@ example().catch(console.error);
 
 List Providers
 
-List static metadata for every configured provider.  Operator-facing: reports each provider\&#39;s capabilities, documentation and pricing links, and display name from the bundled any-llm and genai-prices datasets. No provider is contacted, so this is cheap and always available.
+List static metadata for every configured provider.  Operator-facing: reports each provider\&#39;s capabilities, documentation and pricing links, and display name from the bundled any-llm and models.dev datasets. No provider is contacted, so this is cheap and always available.
 
 ### Example
 
@@ -302,7 +302,7 @@ This endpoint does not need any parameter.
 
 Provider Catalog
 
-List every known provider for the add-provider picker: id and name only.  Lightweight by design so the picker never lags: provider ids come from the any-llm registry and names from the bundled genai-prices dataset, so no provider SDK is imported. The autofill hints for a chosen provider come from GET /api/v1/providers/catalog/{provider_id}, which imports only that one SDK.
+List every known provider for the add-provider picker: id and name only.  Lightweight by design so the picker never lags: provider ids come from the any-llm registry and names from the models.dev catalog, so no provider SDK is imported. The autofill hints for a chosen provider come from GET /api/v1/providers/catalog/{provider_id}, which imports only that one SDK.
 
 ### Example
 
@@ -441,7 +441,7 @@ example().catch(console.error);
 
 Provider Health
 
-Report every configured provider\&#39;s reachability, with a last-checked time.  Reuses the per-provider model-discovery test path, so a provider is healthy when its credentials can list models. Results are served from the discovery cache (cheap enough to poll), so &#x60;&#x60;checked_at&#x60;&#x60; reflects when each provider was actually dialed. Pass &#x60;&#x60;refresh&#x3D;true&#x60;&#x60; to force a live re-dial of every provider.  A provider whose backend serves no model-listing endpoint cannot be verified this way, but it is not unreachable either: it is reported with &#x60;&#x60;discovery_unsupported&#x60;&#x60; and counted under &#x60;&#x60;degraded&#x60;&#x60; rather than as a reachability failure.
+Report every configured provider\&#39;s reachability, with a last-checked time.  Covers the configured provider instances and every hosted provider switched on, each hosted provider under its provider name. A hosted provider that a configured instance of the same name shadows is not reported. One whose stored key cannot be decrypted with the configured &#x60;OTARI_SECRET_KEY&#x60; is reported unreachable with that reason.  Reuses the per-provider model-discovery test path, so a provider is healthy when its credentials can list models. Results are served from the discovery cache (cheap enough to poll), so &#x60;&#x60;checked_at&#x60;&#x60; reflects when each provider was actually dialed. Pass &#x60;&#x60;refresh&#x3D;true&#x60;&#x60; to force a live re-dial of every provider.  A provider whose backend serves no model-listing endpoint cannot be verified this way, but it is not unreachable either: it is reported with &#x60;&#x60;discovery_unsupported&#x60;&#x60; and counted under &#x60;&#x60;degraded&#x60;&#x60; rather than as a reachability failure.
 
 ### Example
 

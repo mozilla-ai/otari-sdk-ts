@@ -15,8 +15,10 @@ Name | Type
 `createdAt` | string
 `currentRequests` | number
 `currentTokens` | number
+`externalId` | string
 `metadata` | { [key: string]: any; }
 `nextBudgetResetAt` | string
+`parentUserId` | string
 `reserved` | number
 `reservedRequests` | number
 `reservedTokens` | number
@@ -39,8 +41,10 @@ const example = {
   "createdAt": null,
   "currentRequests": null,
   "currentTokens": null,
+  "externalId": null,
   "metadata": null,
   "nextBudgetResetAt": null,
+  "parentUserId": null,
   "reserved": null,
   "reservedRequests": null,
   "reservedTokens": null,

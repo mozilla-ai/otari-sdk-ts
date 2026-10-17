@@ -17,6 +17,7 @@ Name | Type
 `mcpServerIds` | Array&lt;string&gt;
 `mcpServers` | [Array&lt;McpServerConfig&gt;](McpServerConfig.md)
 `messages` | [Array&lt;ChatMessageInput&gt;](ChatMessageInput.md)
+`metadata` | { [key: string]: any; }
 `model` | string
 `n` | number
 `parallelToolCalls` | boolean
@@ -55,6 +56,7 @@ const example = {
   "mcpServerIds": null,
   "mcpServers": null,
   "messages": null,
+  "metadata": null,
   "model": null,
   "n": null,
   "parallelToolCalls": null,

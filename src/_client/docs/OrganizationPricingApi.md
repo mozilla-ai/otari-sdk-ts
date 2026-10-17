@@ -80,6 +80,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Successful Response |  -  |
+| **403** | The deployment holds the credential that serves the model. |  -  |
+| **409** | The period overlaps one already stored for the model. |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -91,7 +93,7 @@ example().catch(console.error);
 
 Delete Organization Pricing
 
-Remove an override, returning the model to the deployment price list.
+Remove an override, returning the model to the deployment price list.  Refused with a 403 for a rate the deployment operator set, which only the operator may remove.
 
 ### Example
 
@@ -154,6 +156,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | Successful Response |  -  |
+| **403** | The deployment operator set the rate. |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -245,7 +248,7 @@ example().catch(console.error);
 
 Replace Organization Pricing
 
-Replace an override\&#39;s rates and period.  Future requests in the period price at the new rate; usage already settled keeps the cost it was billed, because a settled cost is stored on the usage row rather than recomputed.  Refused with a 403 on the same deployment-supplied-model rule the create path carries, so a row stored before that rule existed cannot be edited into a rate nobody could create today.
+Replace an override\&#39;s rates and period.  Future requests in the period price at the new rate; usage already settled keeps the cost it was billed, because a settled cost is stored on the usage row rather than recomputed.  Refused with a 403 on the same deployment-supplied-model rule the create path carries, so a row stored before that rule existed cannot be edited into a rate nobody could create today, and with a 403 for a rate the deployment operator set, which only the operator may change.
 
 ### Example
 
@@ -311,6 +314,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
+| **403** | The deployment serves the model, or the deployment operator set the rate. |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

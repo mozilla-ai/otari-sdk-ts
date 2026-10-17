@@ -7,11 +7,13 @@ What an unauthenticated visitor sees before committing to accept.  Deliberately 
 
 Name | Type
 ------------ | -------------
+`canSignIn` | boolean
 `email` | string
 `expiresAt` | Date
 `needsPassword` | boolean
 `organizationName` | string
 `role` | string
+`waysIn` | Array&lt;string&gt;
 
 ## Example
 
@@ -20,11 +22,13 @@ import type { InvitationPreviewPublic } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "canSignIn": null,
   "email": null,
   "expiresAt": null,
   "needsPassword": null,
   "organizationName": null,
   "role": null,
+  "waysIn": null,
 } satisfies InvitationPreviewPublic
 
 console.log(example)

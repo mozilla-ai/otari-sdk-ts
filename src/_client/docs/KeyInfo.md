@@ -9,11 +9,15 @@ Name | Type
 ------------ | -------------
 `allowedModels` | Array&lt;string&gt;
 `captureAgentTelemetry` | boolean
+`configName` | string
 `createdAt` | string
+`endUserBudgetId` | string
+`endUserBudgetIds` | Array&lt;string&gt;
 `excludeFromBudget` | boolean
 `expiresAt` | string
 `id` | string
 `isActive` | boolean
+`isServiceKey` | boolean
 `keyName` | string
 `keyPrefix` | string
 `keySuffix` | string
@@ -32,11 +36,15 @@ import type { KeyInfo } from ''
 const example = {
   "allowedModels": null,
   "captureAgentTelemetry": null,
+  "configName": null,
   "createdAt": null,
+  "endUserBudgetId": null,
+  "endUserBudgetIds": null,
   "excludeFromBudget": null,
   "expiresAt": null,
   "id": null,
   "isActive": null,
+  "isServiceKey": null,
   "keyName": null,
   "keyPrefix": null,
   "keySuffix": null,

@@ -7,9 +7,12 @@ What accepting produces: enough for the accept page to say where the visitor lan
 
 Name | Type
 ------------ | -------------
+`canSignIn` | boolean
 `organizationName` | string
 `passwordSet` | boolean
 `role` | string
+`verificationPending` | boolean
+`waysIn` | Array&lt;string&gt;
 
 ## Example
 
@@ -18,9 +21,12 @@ import type { AcceptInvitationResultPublic } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "canSignIn": null,
   "organizationName": null,
   "passwordSet": null,
   "role": null,
+  "verificationPending": null,
+  "waysIn": null,
 } satisfies AcceptInvitationResultPublic
 
 console.log(example)

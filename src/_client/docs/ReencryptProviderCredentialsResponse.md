@@ -8,6 +8,7 @@ Result of re-encrypting stored provider keys with the primary secret key.
 Name | Type
 ------------ | -------------
 `reencrypted` | number
+`skipped` | number
 `unreadable` | number
 
 ## Example
@@ -18,6 +19,7 @@ import type { ReencryptProviderCredentialsResponse } from ''
 // TODO: Update the object below with actual values
 const example = {
   "reencrypted": null,
+  "skipped": null,
   "unreadable": null,
 } satisfies ReencryptProviderCredentialsResponse
 

@@ -91,7 +91,7 @@ example().catch(console.error);
 
 List Discoverable Models
 
-List every model the configured provider credentials can reach.  Operator-facing counterpart to GET /api/v1/models, which serves a curated catalog to API callers. This reports each provider separately and keeps its error, so a provider with a bad key is distinguishable from one with no models. It is operator-gated because a provider error message describes the gateway\&#39;s own configuration.  Answers from the discovery cache, which a background refresher keeps warm, so the call does not wait on a slow or unreachable provider. Each provider carries the &#x60;&#x60;checked_at&#x60;&#x60; its result was produced at; a null one has not been dialed yet. Pass &#x60;&#x60;refresh&#x3D;true&#x60;&#x60; to force a live re-dial of every provider.
+List every model the configured provider credentials can reach.  Operator-facing counterpart to GET /api/v1/models, which serves a curated catalog to API callers. This reports each provider separately and keeps its error, so a provider with a bad key is distinguishable from one with no models. It is operator-gated because a provider error message describes the gateway\&#39;s own configuration.  Covers the configured provider instances and every hosted provider switched on, whatever organization it is restricted to. A hosted provider that a configured instance of the same name shadows is not listed.  Answers from the discovery cache, which a background refresher keeps warm, so the call does not wait on a slow or unreachable provider. Each provider carries the &#x60;&#x60;checked_at&#x60;&#x60; its result was produced at; a null one has not been dialed yet. Pass &#x60;&#x60;refresh&#x3D;true&#x60;&#x60; to force a live re-dial of every provider.
 
 ### Example
 
@@ -230,7 +230,7 @@ This endpoint does not need any parameter.
 
 List Models
 
-List all available models.  Returns models auto-discovered from configured providers, enriched with pricing data from the model_pricing table when available. Models that only exist in the pricing table are also included for backward compatibility.
+List all available models.  Returns models auto-discovered from configured providers, enriched with pricing data from the model_pricing table when available, and with each model\&#39;s token limits: the context window from the live models.dev catalog, or from the pricing snapshot where it has none, and the output limit from the live catalog alone. A limit neither knows is null. Models that only exist in the pricing table are also included for backward compatibility.
 
 ### Example
 
