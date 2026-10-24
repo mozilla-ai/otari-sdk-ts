@@ -10,7 +10,6 @@ Name | Type
 `config` | [Array&lt;ConfigField&gt;](ConfigField.md)
 `defaultPricing` | boolean
 `masterKeySource` | string
-`mode` | string
 `modelDiscovery` | boolean
 `requirePricing` | boolean
 `secretKeyConfigured` | boolean
@@ -26,7 +25,6 @@ const example = {
   "config": null,
   "defaultPricing": null,
   "masterKeySource": null,
-  "mode": null,
   "modelDiscovery": null,
   "requirePricing": null,
   "secretKeyConfigured": null,

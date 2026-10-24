@@ -1,13 +1,14 @@
 
 # SearchResultItem
 
-One search result.
+One search result, shaped as LiteLLM\'s ``SearchResult``.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
 `date` | string
+`lastUpdated` | string
 `snippet` | string
 `title` | string
 `url` | string
@@ -20,6 +21,7 @@ import type { SearchResultItem } from ''
 // TODO: Update the object below with actual values
 const example = {
   "date": null,
+  "lastUpdated": null,
   "snippet": null,
   "title": null,
   "url": null,

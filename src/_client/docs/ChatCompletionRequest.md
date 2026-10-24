@@ -17,6 +17,7 @@ Name | Type
 `mcpServerIds` | Array&lt;string&gt;
 `mcpServers` | [Array&lt;McpServerConfig&gt;](McpServerConfig.md)
 `messages` | [Array&lt;ChatMessageInput&gt;](ChatMessageInput.md)
+`metadata` | { [key: string]: any; }
 `model` | string
 `n` | number
 `parallelToolCalls` | boolean
@@ -24,6 +25,7 @@ Name | Type
 `promptCacheKey` | string
 `reasoningEffort` | string
 `responseFormat` | { [key: string]: any; }
+`safetyIdentifier` | string
 `seed` | number
 `serviceTier` | string
 `sessionLabel` | string
@@ -55,6 +57,7 @@ const example = {
   "mcpServerIds": null,
   "mcpServers": null,
   "messages": null,
+  "metadata": null,
   "model": null,
   "n": null,
   "parallelToolCalls": null,
@@ -62,6 +65,7 @@ const example = {
   "promptCacheKey": null,
   "reasoningEffort": null,
   "responseFormat": null,
+  "safetyIdentifier": null,
   "seed": null,
   "serviceTier": null,
   "sessionLabel": null,

@@ -8,6 +8,7 @@ Create-key body for the member surface.  Deliberately not ``CreateKeyRequest``: 
 Name | Type
 ------------ | -------------
 `allowedModels` | Array&lt;string&gt;
+`allowedTools` | Array&lt;string&gt;
 `captureAgentTelemetry` | boolean
 `expiresAt` | Date
 `keyName` | string
@@ -23,6 +24,7 @@ import type { CreateOwnKeyRequest } from ''
 // TODO: Update the object below with actual values
 const example = {
   "allowedModels": null,
+  "allowedTools": null,
   "captureAgentTelemetry": null,
   "expiresAt": null,
   "keyName": null,

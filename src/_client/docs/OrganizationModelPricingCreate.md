@@ -1,18 +1,18 @@
 
 # OrganizationModelPricingCreate
 
-Create one rate override for a model, for a period.
+Create one rate override for a model, or a search or fetch instance, for a period.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
 `cacheReadPricePerMillion` | number
-`cacheWrite1hPricePerMillion` | number
 `cacheWritePricePerMillion` | number
 `effectiveFrom` | Date
 `effectiveTo` | Date
 `inputPricePerMillion` | number
+`kind` | string
 `modelKey` | string
 `outputPricePerMillion` | number
 `pricingTiers` | [Array&lt;PricingTier&gt;](PricingTier.md)
@@ -26,11 +26,11 @@ import type { OrganizationModelPricingCreate } from ''
 // TODO: Update the object below with actual values
 const example = {
   "cacheReadPricePerMillion": null,
-  "cacheWrite1hPricePerMillion": null,
   "cacheWritePricePerMillion": null,
   "effectiveFrom": null,
   "effectiveTo": null,
   "inputPricePerMillion": null,
+  "kind": null,
   "modelKey": null,
   "outputPricePerMillion": null,
   "pricingTiers": null,

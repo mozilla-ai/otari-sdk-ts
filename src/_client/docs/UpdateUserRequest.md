@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `alias` | string
 `allowedModels` | Array&lt;string&gt;
+`allowedTools` | Array&lt;string&gt;
 `blocked` | boolean
 `budgetId` | string
 `metadata` | { [key: string]: any; }
@@ -22,6 +23,7 @@ import type { UpdateUserRequest } from ''
 const example = {
   "alias": null,
   "allowedModels": null,
+  "allowedTools": null,
   "blocked": null,
   "budgetId": null,
   "metadata": null,
