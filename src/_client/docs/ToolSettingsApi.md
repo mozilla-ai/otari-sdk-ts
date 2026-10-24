@@ -4,12 +4,79 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**toolSettingsClearSandboxCredential**](ToolSettingsApi.md#toolsettingsclearsandboxcredential) | **DELETE** /api/v1/tool-settings/sandbox/credential | Clear Sandbox Credential |
 | [**toolSettingsGetToolSettings**](ToolSettingsApi.md#toolsettingsgettoolsettings) | **GET** /api/v1/tool-settings | Get Tool Settings |
 | [**toolSettingsListBuiltinGuardrails**](ToolSettingsApi.md#toolsettingslistbuiltinguardrails) | **GET** /api/v1/tool-settings/guardrails/catalog | List Builtin Guardrails |
 | [**toolSettingsListGuardrailProfiles**](ToolSettingsApi.md#toolsettingslistguardrailprofiles) | **GET** /api/v1/tool-settings/guardrails/profiles | List Guardrail Profiles |
+| [**toolSettingsSetSandboxCredential**](ToolSettingsApi.md#toolsettingssetsandboxcredential) | **PUT** /api/v1/tool-settings/sandbox/credential | Set Sandbox Credential |
 | [**toolSettingsTestService**](ToolSettingsApi.md#toolsettingstestservice) | **POST** /api/v1/tool-settings/{service}/test | Test Service |
 | [**toolSettingsUpdateToolSettings**](ToolSettingsApi.md#toolsettingsupdatetoolsettings) | **PATCH** /api/v1/tool-settings | Update Tool Settings |
 
+
+
+## toolSettingsClearSandboxCredential
+
+> SandboxCredentialPublic toolSettingsClearSandboxCredential()
+
+Clear Sandbox Credential
+
+Delete the stored sandbox key, so sandboxes are leased with the environment\&#39;s key again.  Clearing a key that was never stored is not an error. Operator-gated.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ToolSettingsApi,
+} from '';
+import type { ToolSettingsClearSandboxCredentialRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new ToolSettingsApi(config);
+
+  try {
+    const data = await api.toolSettingsClearSandboxCredential();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**SandboxCredentialPublic**](SandboxCredentialPublic.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
 ## toolSettingsGetToolSettings
@@ -148,7 +215,7 @@ This endpoint does not need any parameter.
 
 List Guardrail Profiles
 
-List the guardrail profiles this deployment\&#39;s guardrails service has built.  What an organization guardrail\&#39;s &#x60;&#x60;profile&#x60;&#x60; may name, with the &#x60;&#x60;validate_kwargs&#x60;&#x60; each one accepts, so the dashboard offers a picker and typed fields instead of a free-text box beside an unrendered dict. The profiles come from the service itself and the parameter schemas from the &#x60;&#x60;any_guardrail&#x60;&#x60; registry; neither is a list kept in this repository. See &#x60;gateway.services.guardrail_catalog&#x60;.  Reports &#x60;&#x60;available: false&#x60;&#x60; with a reason rather than an error when the service is unconfigured, unreachable, or older than its &#x60;&#x60;/profiles&#x60;&#x60; endpoint, because a guardrails outage must not also break the page that configures guardrails.  Read against &#x60;&#x60;guardrails_url&#x60;&#x60;, which is the deployment\&#39;s own service. An entry that carries an endpoint of its own is not probed: that URL is caller-supplied and fetching it here would make this a way to have the gateway request an address of the caller\&#39;s choosing.  Not on &#x60;&#x60;verify_catalog_reader&#x60;&#x60;, despite being a catalog read: that plane is the three deployment-describing reads a data-plane key may also make, and admitting a key here would let any workspace credential dial the deployment\&#39;s guardrails service. This is a management read, so it takes the router\&#39;s own gate.
+List the guardrail profiles this deployment\&#39;s guardrails service has built.  What an organization guardrail\&#39;s &#x60;&#x60;profile&#x60;&#x60; may name, with the &#x60;&#x60;validate_kwargs&#x60;&#x60; each one accepts, so the dashboard offers a picker and typed fields instead of a free-text box beside an unrendered dict. The profiles come from the service itself and the parameter schemas from the &#x60;&#x60;any_guardrail&#x60;&#x60; registry; neither is a list kept in this repository. See &#x60;gateway.services.guardrail_catalog&#x60;.  Reports &#x60;&#x60;available: false&#x60;&#x60; with a reason rather than an error when the service is unconfigured, unreachable, or older than its &#x60;&#x60;/profiles&#x60;&#x60; endpoint, because a guardrails outage must not also break the page that configures guardrails.  Read against &#x60;&#x60;guardrails_url&#x60;&#x60;, which is the deployment\&#39;s own service. An entry that carries an endpoint of its own is not probed: that URL is caller-supplied and fetching it here would make this a way to have the gateway request an address of the caller\&#39;s choosing.  Not on &#x60;&#x60;verify_catalog_reader&#x60;&#x60;, despite being a catalog read: that gate admits any API key to the deployment-describing reads, and admitting a key here would let any workspace credential dial the deployment\&#39;s guardrails service. This is a management read, so it takes the router\&#39;s own gate.
 
 ### Example
 
@@ -203,6 +270,80 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## toolSettingsSetSandboxCredential
+
+> SandboxCredentialPublic toolSettingsSetSandboxCredential(sandboxCredentialRequest)
+
+Set Sandbox Credential
+
+Store the key this deployment\&#39;s hosted sandbox provider leases sandboxes with.  Wins over the provider\&#39;s environment variable (&#x60;&#x60;E2B_API_KEY&#x60;&#x60;), on this worker at once and on every other within 30 seconds, so a rotated key needs no redeploy. Refused for the &#x60;&#x60;protocol&#x60;&#x60; provider, which takes no key of its own. Operator-gated.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ToolSettingsApi,
+} from '';
+import type { ToolSettingsSetSandboxCredentialRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new ToolSettingsApi(config);
+
+  const body = {
+    // SandboxCredentialRequest
+    sandboxCredentialRequest: ...,
+  } satisfies ToolSettingsSetSandboxCredentialRequest;
+
+  try {
+    const data = await api.toolSettingsSetSandboxCredential(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **sandboxCredentialRequest** | [SandboxCredentialRequest](SandboxCredentialRequest.md) |  | |
+
+### Return type
+
+[**SandboxCredentialPublic**](SandboxCredentialPublic.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -290,7 +431,7 @@ example().catch(console.error);
 
 Update Tool Settings
 
-Persist and apply tool/guardrail setting changes.  Uses &#x60;&#x60;model_fields_set&#x60;&#x60; so an explicit &#x60;&#x60;null&#x60;&#x60; clears a field while an omitted field is left unchanged. Operator-gated and standalone-only.
+Persist and apply tool/guardrail setting changes.  Uses &#x60;&#x60;model_fields_set&#x60;&#x60; so an explicit &#x60;&#x60;null&#x60;&#x60; clears a field while an omitted field is left unchanged. Operator-gated.
 
 ### Example
 

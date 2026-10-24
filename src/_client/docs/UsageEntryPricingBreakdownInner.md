@@ -7,10 +7,11 @@
 Name | Type
 ------------ | -------------
 `cost` | number
+`label` | string
 `meter` | string
-`ratePerMillion` | number
-`units` | [Units1](Units1.md)
 `unitRate` | number
+`units` | [Units1](Units1.md)
+`ratePerMillion` | number
 
 ## Example
 
@@ -20,10 +21,11 @@ import type { UsageEntryPricingBreakdownInner } from ''
 // TODO: Update the object below with actual values
 const example = {
   "cost": null,
+  "label": null,
   "meter": null,
-  "ratePerMillion": null,
-  "units": null,
   "unitRate": null,
+  "units": null,
+  "ratePerMillion": null,
 } satisfies UsageEntryPricingBreakdownInner
 
 console.log(example)

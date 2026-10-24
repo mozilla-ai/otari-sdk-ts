@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**hooksCheckPolicy**](HooksApi.md#hookscheckpolicy) | **POST** /api/v1/hooks/check | Check Policy |
+| [**hooksRecordGuardrailDefinition**](HooksApi.md#hooksrecordguardraildefinition) | **POST** /api/v1/hooks/guardrails | Record Guardrail Definition |
 
 
 
@@ -62,6 +63,80 @@ example().catch(console.error);
 ### Return type
 
 [**PolicyCheckResponse**](PolicyCheckResponse.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## hooksRecordGuardrailDefinition
+
+> GuardrailDefinitionResponse hooksRecordGuardrailDefinition(guardrailDefinitionRequest)
+
+Record Guardrail Definition
+
+Keep one version of an agent guardrail, so the gate spans that name it can say what each gate is for.  &#x60;otari hook&#x60; sends this once per version, the first time it reports a check against it. The fingerprint is recomputed from the gates, and one that does not match the one sent is refused, so a version cannot be stored under another\&#39;s name. Sending a version again changes nothing. It is stored in the API key\&#39;s workspace, beside that key\&#39;s traces, and takes the same key a trace export does: a budget-exempt API key, never the master key.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  HooksApi,
+} from '';
+import type { HooksRecordGuardrailDefinitionRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new HooksApi(config);
+
+  const body = {
+    // GuardrailDefinitionRequest
+    guardrailDefinitionRequest: ...,
+  } satisfies HooksRecordGuardrailDefinitionRequest;
+
+  try {
+    const data = await api.hooksRecordGuardrailDefinition(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **guardrailDefinitionRequest** | [GuardrailDefinitionRequest](GuardrailDefinitionRequest.md) |  | |
+
+### Return type
+
+[**GuardrailDefinitionResponse**](GuardrailDefinitionResponse.md)
 
 ### Authorization
 

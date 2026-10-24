@@ -22,7 +22,7 @@ All URIs are relative to *http://localhost*
 
 Add Workspace Member
 
-Add an existing organization member to a workspace.
+Add an existing organization member to a workspace.  The 404 for a workspace deleted during the add describes PostgreSQL. SQLite does not name the foreign key it enforced, so it surfaces that race as a 500.
 
 ### Example
 
@@ -91,6 +91,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Successful Response |  -  |
+| **404** | The workspace does not exist, or was deleted during the add. |  -  |
+| **409** | The user is already a member of the workspace. |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

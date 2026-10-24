@@ -1,7 +1,7 @@
 
 # McpExecuteRequest
 
-One stored server, and the exact call the application authorized.  No inline server fields (R-REQ-4): a caller registers a remote MCP server through the control plane once and refers to it by id afterwards, which keeps URLs, credentials, revocation and allowlist policy on Otari\'s side of the boundary instead of in every request.  Extras are forbidden rather than ignored, so a caller still sending the old inline ``server`` block is told its configuration was not used instead of watching Otari quietly execute against a different server than the one it named.
+One stored server, and the exact call the application authorized.  No inline server fields: a caller registers a remote MCP server through the control plane once and refers to it by id afterwards, which keeps URLs, credentials, revocation and allowlist policy on Otari\'s side of the boundary instead of in every request.  Extras are forbidden rather than ignored, so a caller still sending the old inline ``server`` block is told its configuration was not used instead of watching Otari quietly execute against a different server than the one it named.
 
 ## Properties
 

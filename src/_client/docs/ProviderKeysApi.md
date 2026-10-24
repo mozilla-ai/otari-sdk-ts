@@ -23,6 +23,7 @@ All URIs are relative to *http://localhost*
 | [**providerKeysSetOrgProviderKeyDefault**](ProviderKeysApi.md#providerkeyssetorgproviderkeydefault) | **POST** /api/v1/organizations/me/provider-keys/{key_id}/default | Set Org Provider Key Default |
 | [**providerKeysSetOrgProviderKeyModelEnabled**](ProviderKeysApi.md#providerkeyssetorgproviderkeymodelenabled) | **PATCH** /api/v1/organizations/me/provider-keys/{key_id}/models/{model_id} | Set Org Provider Key Model Enabled |
 | [**providerKeysSetWorkspaceProviderKeyOverride**](ProviderKeysApi.md#providerkeyssetworkspaceproviderkeyoverride) | **PATCH** /api/v1/workspaces/{workspace_id}/provider-keys/{key_id} | Set Workspace Provider Key Override |
+| [**providerKeysUnsetOrgProviderKeyDefault**](ProviderKeysApi.md#providerkeysunsetorgproviderkeydefault) | **DELETE** /api/v1/organizations/me/provider-keys/{key_id}/default | Unset Org Provider Key Default |
 | [**providerKeysUpdateOrgProviderKey**](ProviderKeysApi.md#providerkeysupdateorgproviderkey) | **PATCH** /api/v1/organizations/me/provider-keys/{key_id} | Update Org Provider Key |
 
 
@@ -1469,6 +1470,80 @@ example().catch(console.error);
 ### HTTP request headers
 
 - **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## providerKeysUnsetOrgProviderKeyDefault
+
+> OrgProviderKeyPublic providerKeysUnsetOrgProviderKeyDefault(keyId)
+
+Unset Org Provider Key Default
+
+Stop a key being the organization\&#39;s default for its provider. Organization owners and admins only.  Idempotent: a key that is not the default is returned unchanged. With no default, a request that names no instance gets the provider\&#39;s earliest-created key the workspace has not disabled.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ProviderKeysApi,
+} from '';
+import type { ProviderKeysUnsetOrgProviderKeyDefaultRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new ProviderKeysApi(config);
+
+  const body = {
+    // string
+    keyId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies ProviderKeysUnsetOrgProviderKeyDefaultRequest;
+
+  try {
+    const data = await api.providerKeysUnsetOrgProviderKeyDefault(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **keyId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**OrgProviderKeyPublic**](OrgProviderKeyPublic.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: `application/json`
 
 

@@ -10,6 +10,7 @@ Name | Type
 `dimensions` | number
 `encodingFormat` | string
 `input` | [Input](Input.md)
+`inputType` | string
 `model` | string
 `user` | string
 
@@ -23,6 +24,7 @@ const example = {
   "dimensions": null,
   "encodingFormat": null,
   "input": null,
+  "inputType": null,
   "model": null,
   "user": null,
 } satisfies EmbeddingRequest

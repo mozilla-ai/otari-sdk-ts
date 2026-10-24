@@ -1,7 +1,7 @@
 
 # PricingRefreshConfirmationResponse
 
-Result of activating a reviewed genai-prices refresh.
+Result of activating a reviewed models.dev refresh.
 
 ## Properties
 

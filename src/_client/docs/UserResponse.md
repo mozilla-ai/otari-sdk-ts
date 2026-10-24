@@ -9,14 +9,17 @@ Name | Type
 ------------ | -------------
 `alias` | string
 `allowedModels` | Array&lt;string&gt;
+`allowedTools` | Array&lt;string&gt;
 `blocked` | boolean
 `budgetId` | string
 `budgetStartedAt` | string
 `createdAt` | string
 `currentRequests` | number
 `currentTokens` | number
+`externalId` | string
 `metadata` | { [key: string]: any; }
 `nextBudgetResetAt` | string
+`parentUserId` | string
 `reserved` | number
 `reservedRequests` | number
 `reservedTokens` | number
@@ -33,14 +36,17 @@ import type { UserResponse } from ''
 const example = {
   "alias": null,
   "allowedModels": null,
+  "allowedTools": null,
   "blocked": null,
   "budgetId": null,
   "budgetStartedAt": null,
   "createdAt": null,
   "currentRequests": null,
   "currentTokens": null,
+  "externalId": null,
   "metadata": null,
   "nextBudgetResetAt": null,
+  "parentUserId": null,
   "reserved": null,
   "reservedRequests": null,
   "reservedTokens": null,

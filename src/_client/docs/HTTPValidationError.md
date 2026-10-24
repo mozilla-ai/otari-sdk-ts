@@ -6,6 +6,7 @@
 
 Name | Type
 ------------ | -------------
+`code` | string
 `detail` | [Array&lt;ValidationError&gt;](ValidationError.md)
 
 ## Example
@@ -15,6 +16,7 @@ import type { HTTPValidationError } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "code": null,
   "detail": null,
 } satisfies HTTPValidationError
 

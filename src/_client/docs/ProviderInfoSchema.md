@@ -15,6 +15,7 @@ Name | Type
 `name` | string
 `pricingUrls` | Array&lt;string&gt;
 `providerType` | string
+`source` | string
 
 ## Example
 
@@ -31,6 +32,7 @@ const example = {
   "name": null,
   "pricingUrls": null,
   "providerType": null,
+  "source": null,
 } satisfies ProviderInfoSchema
 
 console.log(example)

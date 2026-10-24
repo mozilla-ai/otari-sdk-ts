@@ -6,8 +6,10 @@ All URIs are relative to *http://localhost*
 |------------- | ------------- | -------------|
 | [**playgroundDeletePlaygroundComparison**](PlaygroundApi.md#playgrounddeleteplaygroundcomparison) | **DELETE** /api/v1/playground/comparisons/{comparison_id} | Delete Playground Comparison |
 | [**playgroundDeletePlaygroundConversation**](PlaygroundApi.md#playgrounddeleteplaygroundconversation) | **DELETE** /api/v1/playground/conversations/{conversation_id} | Delete Playground Conversation |
+| [**playgroundDeletePlaygroundFile**](PlaygroundApi.md#playgrounddeleteplaygroundfile) | **DELETE** /api/v1/playground/files/{file_id} | Delete Playground File |
 | [**playgroundListPlaygroundComparisons**](PlaygroundApi.md#playgroundlistplaygroundcomparisons) | **GET** /api/v1/playground/comparisons | List Playground Comparisons |
 | [**playgroundListPlaygroundConversations**](PlaygroundApi.md#playgroundlistplaygroundconversations) | **GET** /api/v1/playground/conversations | List Playground Conversations |
+| [**playgroundListPlaygroundFiles**](PlaygroundApi.md#playgroundlistplaygroundfiles) | **GET** /api/v1/playground/files | List Playground Files |
 | [**playgroundPlaygroundChatCompletions**](PlaygroundApi.md#playgroundplaygroundchatcompletions) | **POST** /api/v1/playground/chat/completions | Playground Chat Completions |
 | [**playgroundReadPlaygroundConsent**](PlaygroundApi.md#playgroundreadplaygroundconsent) | **GET** /api/v1/playground/consent | Read Playground Consent |
 | [**playgroundReadPlaygroundConversationMessages**](PlaygroundApi.md#playgroundreadplaygroundconversationmessages) | **GET** /api/v1/playground/conversations/{conversation_id}/messages | Read Playground Conversation Messages |
@@ -17,6 +19,7 @@ All URIs are relative to *http://localhost*
 | [**playgroundSavePlaygroundComparison**](PlaygroundApi.md#playgroundsaveplaygroundcomparison) | **POST** /api/v1/playground/comparisons | Save Playground Comparison |
 | [**playgroundSavePlaygroundConversation**](PlaygroundApi.md#playgroundsaveplaygroundconversation) | **POST** /api/v1/playground/conversations | Save Playground Conversation |
 | [**playgroundUpdatePlaygroundConsent**](PlaygroundApi.md#playgroundupdateplaygroundconsent) | **PUT** /api/v1/playground/consent | Update Playground Consent |
+| [**playgroundUploadPlaygroundFile**](PlaygroundApi.md#playgrounduploadplaygroundfile) | **POST** /api/v1/playground/files | Upload Playground File |
 
 
 
@@ -163,6 +166,83 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## playgroundDeletePlaygroundFile
+
+> OpenAIFileDeleted playgroundDeletePlaygroundFile(fileId, workspaceId)
+
+Delete Playground File
+
+Delete one of the caller\&#39;s files. Another identity\&#39;s answers 404, as a nonexistent one does.  A saved transcript that attached the file keeps its record of the attachment, but the file is gone, so sending that turn again does not send its contents.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PlaygroundApi,
+} from '';
+import type { PlaygroundDeletePlaygroundFileRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PlaygroundApi(config);
+
+  const body = {
+    // string
+    fileId: fileId_example,
+    // string | Workspace to act in. Defaults to the caller\'s organization\'s default workspace. A workspace the caller is not a member of answers 404, as a nonexistent one does. (optional)
+    workspaceId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies PlaygroundDeletePlaygroundFileRequest;
+
+  try {
+    const data = await api.playgroundDeletePlaygroundFile(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **fileId** | `string` |  | [Defaults to `undefined`] |
+| **workspaceId** | `string` | Workspace to act in. Defaults to the caller\&#39;s organization\&#39;s default workspace. A workspace the caller is not a member of answers 404, as a nonexistent one does. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**OpenAIFileDeleted**](OpenAIFileDeleted.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -316,13 +396,93 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## playgroundListPlaygroundFiles
+
+> OpenAIFileList playgroundListPlaygroundFiles(workspaceId, limit, after)
+
+List Playground Files
+
+The caller\&#39;s own files in one workspace, newest first, in OpenAI\&#39;s list shape.  Every file the caller owns there is listed, including one uploaded with an API key of theirs in the same workspace, because a message here can attach it.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PlaygroundApi,
+} from '';
+import type { PlaygroundListPlaygroundFilesRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PlaygroundApi(config);
+
+  const body = {
+    // string | Workspace to act in. Defaults to the caller\'s organization\'s default workspace. A workspace the caller is not a member of answers 404, as a nonexistent one does. (optional)
+    workspaceId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+    // number (optional)
+    limit: 56,
+    // string (optional)
+    after: after_example,
+  } satisfies PlaygroundListPlaygroundFilesRequest;
+
+  try {
+    const data = await api.playgroundListPlaygroundFiles(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **workspaceId** | `string` | Workspace to act in. Defaults to the caller\&#39;s organization\&#39;s default workspace. A workspace the caller is not a member of answers 404, as a nonexistent one does. | [Optional] [Defaults to `undefined`] |
+| **limit** | `number` |  | [Optional] [Defaults to `100`] |
+| **after** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**OpenAIFileList**](OpenAIFileList.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## playgroundPlaygroundChatCompletions
 
 > any playgroundPlaygroundChatCompletions(chatCompletionRequest, workspaceId)
 
 Playground Chat Completions
 
-Run one chat completion for the signed-in caller.  Streaming and non-streaming both, identically to &#x60;&#x60;POST /api/v1/chat/completions&#x60;&#x60;: this resolves the principal and then calls the very same handler. The request is billed to the caller\&#39;s own attribution user in the workspace they named (or their organization\&#39;s default), against that user\&#39;s budget, and writes the ordinary usage row with no &#x60;&#x60;api_key_id&#x60;&#x60;, because there was no key.  The body is &#x60;&#x60;ChatCompletionRequest&#x60;&#x60; unchanged, so the page sends the same request an SDK would and a model, tool or parameter the gateway gains is available here the day it lands. The workspace rides in the query string rather than in the body for that reason: a field added to the body would also have to be added to the pipeline\&#39;s strip list, and a gateway-internal field that is not stripped is forwarded to the provider as a call kwarg.  &#x60;&#x60;user&#x60;&#x60; in the body is the one field the pipeline will not read here: spend binds to the session\&#39;s own attribution user, derived and never accepted.  On a hosted control plane there is no local pipeline to call, so the same principal is forwarded to the data-plane gateway instead (:func:&#x60;_dispatch_to_data_plane&#x60;). The request and the response are the same either way.
+Run one chat completion for the signed-in caller.  Streaming and non-streaming both, identically to &#x60;&#x60;POST /api/v1/chat/completions&#x60;&#x60;: this resolves the principal and then calls the very same handler. The request is billed to the caller\&#39;s own attribution user in the workspace they named (or their organization\&#39;s default), against that user\&#39;s budget, and writes the ordinary usage row with no &#x60;&#x60;api_key_id&#x60;&#x60;, because there was no key.  The body is &#x60;&#x60;ChatCompletionRequest&#x60;&#x60; unchanged, so the page sends the same request an SDK would and a model, tool or parameter the gateway gains is available here the day it lands. The workspace rides in the query string rather than in the body for that reason: a field added to the body would also have to be added to the pipeline\&#39;s strip list, and a gateway-internal field that is not stripped is forwarded to the provider as a call kwarg.  &#x60;&#x60;user&#x60;&#x60; and &#x60;&#x60;safety_identifier&#x60;&#x60; in the body are the fields the pipeline will not read here: spend and the provider\&#39;s end-user identifier both bind to the session\&#39;s own attribution user, derived and never accepted.
 
 ### Example
 
@@ -967,6 +1127,83 @@ example().catch(console.error);
 ### HTTP request headers
 
 - **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## playgroundUploadPlaygroundFile
+
+> OpenAIFileObject playgroundUploadPlaygroundFile(file, workspaceId)
+
+Upload Playground File
+
+Upload a file for the caller, in a workspace they belong to.  The row is owned by the same principal a Playground completion runs as, so a &#x60;&#x60;file_id&#x60;&#x60; returned here resolves in the caller\&#39;s own messages and in nobody else\&#39;s. &#x60;&#x60;POST /api/v1/files&#x60;&#x60; takes an API key, which a dashboard session does not hold; this is the session\&#39;s way in.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PlaygroundApi,
+} from '';
+import type { PlaygroundUploadPlaygroundFileRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new PlaygroundApi(config);
+
+  const body = {
+    // string
+    file: file_example,
+    // string | Workspace to act in. Defaults to the caller\'s organization\'s default workspace. A workspace the caller is not a member of answers 404, as a nonexistent one does. (optional)
+    workspaceId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies PlaygroundUploadPlaygroundFileRequest;
+
+  try {
+    const data = await api.playgroundUploadPlaygroundFile(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **file** | `string` |  | [Defaults to `undefined`] |
+| **workspaceId** | `string` | Workspace to act in. Defaults to the caller\&#39;s organization\&#39;s default workspace. A workspace the caller is not a member of answers 404, as a nonexistent one does. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**OpenAIFileObject**](OpenAIFileObject.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `multipart/form-data`
 - **Accept**: `application/json`
 
 
