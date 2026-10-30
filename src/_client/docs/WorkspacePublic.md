@@ -12,6 +12,7 @@ Name | Type
 `id` | string
 `name` | string
 `organizationId` | string
+`traceContentEnabled` | boolean
 `updatedAt` | Date
 
 ## Example
@@ -27,6 +28,7 @@ const example = {
   "id": null,
   "name": null,
   "organizationId": null,
+  "traceContentEnabled": null,
   "updatedAt": null,
 } satisfies WorkspacePublic
 

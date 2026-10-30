@@ -11,6 +11,7 @@ Name | Type
 `availableTools` | Array&lt;string&gt;
 `configured` | boolean
 `createdAt` | string
+`defaultEnabled` | boolean
 `defaultPurposeHint` | string
 `enabled` | boolean
 `execTimeoutS` | number
@@ -33,6 +34,7 @@ const example = {
   "availableTools": null,
   "configured": null,
   "createdAt": null,
+  "defaultEnabled": null,
   "defaultPurposeHint": null,
   "enabled": null,
   "execTimeoutS": null,

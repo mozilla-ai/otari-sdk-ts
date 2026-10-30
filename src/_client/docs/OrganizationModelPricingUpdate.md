@@ -8,7 +8,6 @@ Replace an override\'s rates and period.  ``effective_from`` is required here, w
 Name | Type
 ------------ | -------------
 `cacheReadPricePerMillion` | number
-`cacheWrite1hPricePerMillion` | number
 `cacheWritePricePerMillion` | number
 `effectiveFrom` | Date
 `effectiveTo` | Date
@@ -25,7 +24,6 @@ import type { OrganizationModelPricingUpdate } from ''
 // TODO: Update the object below with actual values
 const example = {
   "cacheReadPricePerMillion": null,
-  "cacheWrite1hPricePerMillion": null,
   "cacheWritePricePerMillion": null,
   "effectiveFrom": null,
   "effectiveTo": null,

@@ -17,7 +17,7 @@ All URIs are relative to *http://localhost*
 
 Get Model
 
-Get details for a specific model.
+Get details for a specific model, by catalog id, alias or &#x60;instance:model&#x60; selector.  A value the gateway does not know is omitted rather than sent as null.
 
 ### Example
 
@@ -91,7 +91,7 @@ example().catch(console.error);
 
 List Discoverable Models
 
-List every model the configured provider credentials can reach.  Operator-facing counterpart to GET /api/v1/models, which serves a curated catalog to API callers. This reports each provider separately and keeps its error, so a provider with a bad key is distinguishable from one with no models. It is operator-gated because a provider error message describes the gateway\&#39;s own configuration.  Answers from the discovery cache, which a background refresher keeps warm, so the call does not wait on a slow or unreachable provider. Each provider carries the &#x60;&#x60;checked_at&#x60;&#x60; its result was produced at; a null one has not been dialed yet. Pass &#x60;&#x60;refresh&#x3D;true&#x60;&#x60; to force a live re-dial of every provider.
+List every model the configured provider credentials can reach.  Operator-facing counterpart to GET /api/v1/models, which serves a curated catalog to API callers. This reports each provider separately and keeps its error, so a provider with a bad key is distinguishable from one with no models. It is operator-gated because a provider error message describes the gateway\&#39;s own configuration.  Covers the configured provider instances and every hosted provider switched on, whatever organization it is restricted to. A hosted provider that a configured instance of the same name shadows is not listed.  Answers from the discovery cache, which a background refresher keeps warm, so the call does not wait on a slow or unreachable provider. Each provider carries the &#x60;&#x60;checked_at&#x60;&#x60; its result was produced at; a null one has not been dialed yet. Pass &#x60;&#x60;refresh&#x3D;true&#x60;&#x60; to force a live re-dial of every provider.
 
 ### Example
 
@@ -230,7 +230,7 @@ This endpoint does not need any parameter.
 
 List Models
 
-List all available models.  Returns models auto-discovered from configured providers, enriched with pricing data from the model_pricing table when available. Models that only exist in the pricing table are also included for backward compatibility.
+List all available models, one entry per model however many providers serve it.  Each &#x60;id&#x60; is the model\&#39;s catalog id (&#x60;deepseek/deepseek-v4.1-flash&#x60;), which a request sends as &#x60;model&#x60; to let the gateway choose the provider: it tries the model\&#39;s offerings best first and falls back down the list. An entry\&#39;s price, token limits and capabilities are those of the offering tried first, at the caller\&#39;s own rate. A value nobody knows is omitted rather than sent as null.  Aliases and routing policies are listed beside the models. An &#x60;instance:model&#x60; selector still pins a request to one provider, and GET /api/v1/catalog/models/{model_id} lists the offerings of a model.
 
 ### Example
 
@@ -252,7 +252,7 @@ async function example() {
   const api = new ModelsApi(config);
 
   const body = {
-    // string | Filter models by provider name (optional)
+    // string | Only the models this provider instance serves, described as served there. (optional)
     provider: provider_example,
   } satisfies ModelsListModelsRequest;
 
@@ -273,7 +273,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **provider** | `string` | Filter models by provider name | [Optional] [Defaults to `undefined`] |
+| **provider** | `string` | Only the models this provider instance serves, described as served there. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

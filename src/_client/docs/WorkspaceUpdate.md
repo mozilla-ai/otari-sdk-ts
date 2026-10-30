@@ -8,6 +8,7 @@ Name | Type
 ------------ | -------------
 `description` | string
 `name` | string
+`traceContentEnabled` | boolean
 
 ## Example
 
@@ -18,6 +19,7 @@ import type { WorkspaceUpdate } from ''
 const example = {
   "description": null,
   "name": null,
+  "traceContentEnabled": null,
 } satisfies WorkspaceUpdate
 
 console.log(example)

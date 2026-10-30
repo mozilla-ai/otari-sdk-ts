@@ -1,7 +1,7 @@
 
 # SearchToolsResponse
 
-Every search tool ``POST /api/v1/search`` can name, by where it came from.
+Every search instance ``POST /api/v1/search`` can name, or every fetch instance, by where it came from.
 
 ## Properties
 

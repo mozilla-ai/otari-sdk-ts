@@ -28,12 +28,15 @@ Name | Type
 `pricingBreakdown` | [Array&lt;UsageEntryPricingBreakdownInner&gt;](UsageEntryPricingBreakdownInner.md)
 `promptTokens` | number
 `provider` | string
+`providerLatencyMs` | number
+`reasoningTokens` | number
 `requestGroupId` | string
 `selectionReason` | string
 `source` | string
 `sourceLabel` | string
 `status` | string
 `statusCode` | number
+`tags` | { [key: string]: string; }
 `timestamp` | string
 `totalTokens` | number
 `userAlias` | string
@@ -67,12 +70,15 @@ const example = {
   "pricingBreakdown": null,
   "promptTokens": null,
   "provider": null,
+  "providerLatencyMs": null,
+  "reasoningTokens": null,
   "requestGroupId": null,
   "selectionReason": null,
   "source": null,
   "sourceLabel": null,
   "status": null,
   "statusCode": null,
+  "tags": null,
   "timestamp": null,
   "totalTokens": null,
   "userAlias": null,
