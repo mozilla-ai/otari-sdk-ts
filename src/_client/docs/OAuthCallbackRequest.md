@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `code` | string
 `state` | string
+`termsAccepted` | boolean
 
 ## Example
 
@@ -19,6 +20,7 @@ import type { OAuthCallbackRequest } from ''
 const example = {
   "code": null,
   "state": null,
+  "termsAccepted": null,
 } satisfies OAuthCallbackRequest
 
 console.log(example)

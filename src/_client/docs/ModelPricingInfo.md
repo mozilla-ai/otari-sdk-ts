@@ -8,7 +8,6 @@ Pricing information for a model.
 Name | Type
 ------------ | -------------
 `cacheReadPricePerMillion` | number
-`cacheWrite1hPricePerMillion` | number
 `cacheWritePricePerMillion` | number
 `inputPricePerMillion` | number
 `outputPricePerMillion` | number
@@ -23,7 +22,6 @@ import type { ModelPricingInfo } from ''
 // TODO: Update the object below with actual values
 const example = {
   "cacheReadPricePerMillion": null,
-  "cacheWrite1hPricePerMillion": null,
   "cacheWritePricePerMillion": null,
   "inputPricePerMillion": null,
   "outputPricePerMillion": null,

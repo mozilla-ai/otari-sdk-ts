@@ -11,6 +11,7 @@ Name | Type
 `blockedDomains` | Array&lt;string&gt;
 `configured` | boolean
 `createdAt` | string
+`defaultEnabled` | boolean
 `enabled` | boolean
 `maxResults` | number
 `providerOptions` | { [key: string]: any; }
@@ -30,6 +31,7 @@ const example = {
   "blockedDomains": null,
   "configured": null,
   "createdAt": null,
+  "defaultEnabled": null,
   "enabled": null,
   "maxResults": null,
   "providerOptions": null,

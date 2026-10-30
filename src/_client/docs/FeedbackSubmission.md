@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `message` | string
+`shareEmail` | string
 
 ## Example
 
@@ -16,6 +17,7 @@ import type { FeedbackSubmission } from ''
 // TODO: Update the object below with actual values
 const example = {
   "message": null,
+  "shareEmail": null,
 } satisfies FeedbackSubmission
 
 console.log(example)

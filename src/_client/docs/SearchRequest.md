@@ -1,15 +1,17 @@
 
 # SearchRequest
 
-A search request, following LiteLLM\'s ``/v1/search`` body.
+A direct search request: LiteLLM\'s ``/v1/search`` body, plus ``include_raw`` and ``provider_options``.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
 `country` | string
+`includeRaw` | boolean
 `maxResults` | number
 `maxTokensPerPage` | number
+`providerOptions` | { [key: string]: any; }
 `query` | string
 `searchDomainFilter` | Array&lt;string&gt;
 `searchToolName` | string
@@ -23,8 +25,10 @@ import type { SearchRequest } from ''
 // TODO: Update the object below with actual values
 const example = {
   "country": null,
+  "includeRaw": null,
   "maxResults": null,
   "maxTokensPerPage": null,
+  "providerOptions": null,
   "query": null,
   "searchDomainFilter": null,
   "searchToolName": null,

@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `activeOrganizationId` | string
 `expiresAt` | Date
+`passwordRemoved` | boolean
 `userId` | string
 
 ## Example
@@ -20,6 +21,7 @@ import type { OAuthSessionResponse } from ''
 const example = {
   "activeOrganizationId": null,
   "expiresAt": null,
+  "passwordRemoved": null,
   "userId": null,
 } satisfies OAuthSessionResponse
 

@@ -8,17 +8,24 @@ Response model for key information.
 Name | Type
 ------------ | -------------
 `allowedModels` | Array&lt;string&gt;
+`allowedTools` | Array&lt;string&gt;
 `captureAgentTelemetry` | boolean
+`configName` | string
 `createdAt` | string
+`endUserBudgetId` | string
+`endUserBudgetIds` | Array&lt;string&gt;
 `excludeFromBudget` | boolean
 `expiresAt` | string
 `id` | string
 `isActive` | boolean
+`isServiceKey` | boolean
 `keyName` | string
 `keyPrefix` | string
 `keySuffix` | string
 `lastUsedAt` | string
+`maxEndUsers` | number
 `metadata` | { [key: string]: any; }
+`operatorDisabled` | boolean
 `rejectUserMismatch` | boolean
 `userId` | string
 `workspaceId` | string
@@ -31,17 +38,24 @@ import type { KeyInfo } from ''
 // TODO: Update the object below with actual values
 const example = {
   "allowedModels": null,
+  "allowedTools": null,
   "captureAgentTelemetry": null,
+  "configName": null,
   "createdAt": null,
+  "endUserBudgetId": null,
+  "endUserBudgetIds": null,
   "excludeFromBudget": null,
   "expiresAt": null,
   "id": null,
   "isActive": null,
+  "isServiceKey": null,
   "keyName": null,
   "keyPrefix": null,
   "keySuffix": null,
   "lastUsedAt": null,
+  "maxEndUsers": null,
   "metadata": null,
+  "operatorDisabled": null,
   "rejectUserMismatch": null,
   "userId": null,
   "workspaceId": null,

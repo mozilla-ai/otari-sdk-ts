@@ -1,7 +1,7 @@
 
 # CurrentPricingPage
 
-One page of current model prices, with the total number of priced models.
+One page of current prices, with the total number of priced keys of any kind.
 
 ## Properties
 

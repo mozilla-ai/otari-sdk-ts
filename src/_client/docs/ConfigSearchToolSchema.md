@@ -1,14 +1,16 @@
 
 # ConfigSearchToolSchema
 
-A search tool declared in the config file. Read-only: it cannot be edited here.
+A search or fetch instance declared in the config file, or ``builtin_fetch``. Read-only here.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
 `apiBase` | string
+`fetchTool` | string
 `hasApiKey` | boolean
+`kind` | string
 `name` | string
 `provider` | string
 `shadowed` | boolean
@@ -21,7 +23,9 @@ import type { ConfigSearchToolSchema } from ''
 // TODO: Update the object below with actual values
 const example = {
   "apiBase": null,
+  "fetchTool": null,
   "hasApiKey": null,
+  "kind": null,
   "name": null,
   "provider": null,
   "shadowed": null,

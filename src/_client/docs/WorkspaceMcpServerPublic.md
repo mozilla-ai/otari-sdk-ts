@@ -11,6 +11,7 @@ Name | Type
 `createdAt` | string
 `enabled` | boolean
 `hasToken` | boolean
+`health` | [WorkspaceMcpServerHealth](WorkspaceMcpServerHealth.md)
 `id` | string
 `name` | string
 `purposeHint` | string
@@ -29,6 +30,7 @@ const example = {
   "createdAt": null,
   "enabled": null,
   "hasToken": null,
+  "health": null,
   "id": null,
   "name": null,
   "purposeHint": null,

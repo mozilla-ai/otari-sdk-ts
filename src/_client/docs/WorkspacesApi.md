@@ -7,6 +7,7 @@ All URIs are relative to *http://localhost*
 | [**workspacesAddWorkspaceMember**](WorkspacesApi.md#workspacesaddworkspacemember) | **POST** /api/v1/workspaces/{workspace_id}/members/{user_id} | Add Workspace Member |
 | [**workspacesCreateWorkspace**](WorkspacesApi.md#workspacescreateworkspace) | **POST** /api/v1/workspaces | Create Workspace |
 | [**workspacesDeleteWorkspace**](WorkspacesApi.md#workspacesdeleteworkspace) | **DELETE** /api/v1/workspaces/{workspace_id} | Delete Workspace |
+| [**workspacesDeleteWorkspaceTraceContent**](WorkspacesApi.md#workspacesdeleteworkspacetracecontent) | **DELETE** /api/v1/workspaces/{workspace_id}/trace-content | Delete Workspace Trace Content |
 | [**workspacesGetWorkspace**](WorkspacesApi.md#workspacesgetworkspace) | **GET** /api/v1/workspaces/{workspace_id} | Get Workspace |
 | [**workspacesListWorkspaceMembers**](WorkspacesApi.md#workspaceslistworkspacemembers) | **GET** /api/v1/workspaces/{workspace_id}/members | List Workspace Members |
 | [**workspacesListWorkspaces**](WorkspacesApi.md#workspaceslistworkspaces) | **GET** /api/v1/workspaces | List Workspaces |
@@ -22,7 +23,7 @@ All URIs are relative to *http://localhost*
 
 Add Workspace Member
 
-Add an existing organization member to a workspace.
+Add an existing organization member to a workspace.  The 404 for a workspace deleted during the add describes PostgreSQL. SQLite does not name the foreign key it enforced, so it surfaces that race as a 500.
 
 ### Example
 
@@ -91,6 +92,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Successful Response |  -  |
+| **404** | The workspace does not exist, or was deleted during the add. |  -  |
+| **409** | The user is already a member of the workspace. |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -204,6 +207,80 @@ async function example() {
 
   try {
     const data = await api.workspacesDeleteWorkspace(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **workspaceId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**Message**](Message.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## workspacesDeleteWorkspaceTraceContent
+
+> Message workspacesDeleteWorkspaceTraceContent(workspaceId)
+
+Delete Workspace Trace Content
+
+Delete what this workspace\&#39;s agent sessions were about, keeping the sessions. Its managers only.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  WorkspacesApi,
+} from '';
+import type { WorkspacesDeleteWorkspaceTraceContentRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new WorkspacesApi(config);
+
+  const body = {
+    // string
+    workspaceId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies WorkspacesDeleteWorkspaceTraceContentRequest;
+
+  try {
+    const data = await api.workspacesDeleteWorkspaceTraceContent(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -558,7 +635,7 @@ example().catch(console.error);
 
 Update Workspace
 
-Rename a workspace or change its description.
+Rename a workspace, change its description, or turn keeping its agent sessions\&#39; content on or off.  Turning content off keeps nothing new from the next export on; what is already stored stays until it ages out, or until &#x60;&#x60;DELETE .../trace-content&#x60;&#x60; deletes it.
 
 ### Example
 

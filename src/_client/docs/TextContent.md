@@ -1,7 +1,7 @@
 
 # TextContent
 
-Text content for a message.
+Text provided to or from an LLM.
 
 ## Properties
 

@@ -8,16 +8,21 @@ Response model for creating a new API key.
 Name | Type
 ------------ | -------------
 `allowedModels` | Array&lt;string&gt;
+`allowedTools` | Array&lt;string&gt;
 `captureAgentTelemetry` | boolean
 `createdAt` | string
+`endUserBudgetId` | string
+`endUserBudgetIds` | Array&lt;string&gt;
 `excludeFromBudget` | boolean
 `expiresAt` | string
 `id` | string
 `isActive` | boolean
+`isServiceKey` | boolean
 `key` | string
 `keyName` | string
 `keyPrefix` | string
 `keySuffix` | string
+`maxEndUsers` | number
 `metadata` | { [key: string]: any; }
 `rejectUserMismatch` | boolean
 `userId` | string
@@ -30,16 +35,21 @@ import type { CreateKeyResponse } from ''
 // TODO: Update the object below with actual values
 const example = {
   "allowedModels": null,
+  "allowedTools": null,
   "captureAgentTelemetry": null,
   "createdAt": null,
+  "endUserBudgetId": null,
+  "endUserBudgetIds": null,
   "excludeFromBudget": null,
   "expiresAt": null,
   "id": null,
   "isActive": null,
+  "isServiceKey": null,
   "key": null,
   "keyName": null,
   "keyPrefix": null,
   "keySuffix": null,
+  "maxEndUsers": null,
   "metadata": null,
   "rejectUserMismatch": null,
   "userId": null,

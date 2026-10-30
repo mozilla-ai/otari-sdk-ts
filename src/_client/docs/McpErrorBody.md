@@ -1,7 +1,7 @@
 
 # McpErrorBody
 
-The one error shape both stored-server endpoints return (R-ERR-1).
+The one error shape both stored-server endpoints return.
 
 ## Properties
 

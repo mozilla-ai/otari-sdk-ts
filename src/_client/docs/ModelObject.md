@@ -7,14 +7,18 @@ OpenAI-compatible model object.
 
 Name | Type
 ------------ | -------------
+`architecture` | [ModelArchitecture](ModelArchitecture.md)
 `contextWindow` | number
 `created` | number
 `deploymentManaged` | boolean
 `id` | string
+`maxOutputTokens` | number
+`name` | string
 `object` | string
 `ownedBy` | string
 `pricing` | [ModelPricingInfo](ModelPricingInfo.md)
 `pricingSource` | string
+`supportedParameters` | Array&lt;string&gt;
 
 ## Example
 
@@ -23,14 +27,18 @@ import type { ModelObject } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "architecture": null,
   "contextWindow": null,
   "created": null,
   "deploymentManaged": null,
   "id": null,
+  "maxOutputTokens": null,
+  "name": null,
   "object": null,
   "ownedBy": null,
   "pricing": null,
   "pricingSource": null,
+  "supportedParameters": null,
 } satisfies ModelObject
 
 console.log(example)
