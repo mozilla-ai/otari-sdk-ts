@@ -30,8 +30,10 @@ Name | Type
 `resolvesTo` | string
 `selector` | string
 `selectors` | Array&lt;string&gt;
+`type` | string
 `unpricedCount` | number
 `vendor` | string
+`zeroDataRetentionProviders` | Array&lt;string&gt;
 
 ## Example
 
@@ -63,8 +65,10 @@ const example = {
   "resolvesTo": null,
   "selector": null,
   "selectors": null,
+  "type": null,
   "unpricedCount": null,
   "vendor": null,
+  "zeroDataRetentionProviders": null,
 } satisfies CatalogModelSummary
 
 console.log(example)

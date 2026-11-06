@@ -9,7 +9,7 @@ Name | Type
 ------------ | -------------
 `id` | string
 `expiresAt` | Date
-`skills` | [Array&lt;MRBetaSkill&gt;](MRBetaSkill.md)
+`skills` | [Array&lt;MRBetaContainerSkill&gt;](MRBetaContainerSkill.md)
 
 ## Example
 

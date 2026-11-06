@@ -1,7 +1,7 @@
 
 # AcceptedSnapshotResponse
 
-One accepted genai-prices snapshot in the history.
+One accepted models.dev snapshot in the history.
 
 ## Properties
 

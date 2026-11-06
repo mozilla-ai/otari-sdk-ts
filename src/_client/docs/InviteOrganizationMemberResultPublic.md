@@ -12,6 +12,7 @@ Name | Type
 `email` | string
 `expiresAt` | Date
 `invitationId` | string
+`mailLimited` | boolean
 `mailSent` | boolean
 `organizationMemberId` | string
 `role` | string
@@ -29,6 +30,7 @@ const example = {
   "email": null,
   "expiresAt": null,
   "invitationId": null,
+  "mailLimited": null,
   "mailSent": null,
   "organizationMemberId": null,
   "role": null,

@@ -1,16 +1,21 @@
 
 # CreateOwnKeyRequest
 
-Create-key body for the member surface.  Deliberately not ``CreateKeyRequest``: it carries no ``user_id`` (the owner is always the caller) and no ``exclude_from_budget`` (a member must not exempt their own spend from enforcement).
+Create-key body for the member surface.  Deliberately not ``CreateKeyRequest``: it carries no ``user_id`` (the owner is the caller, or one of the key\'s own for a service key) and no ``exclude_from_budget`` (a member must not exempt their own spend from enforcement). A field it does not take is refused rather than dropped.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
 `allowedModels` | Array&lt;string&gt;
+`allowedTools` | Array&lt;string&gt;
 `captureAgentTelemetry` | boolean
+`endUserBudgetId` | string
+`endUserBudgetIds` | Array&lt;string&gt;
 `expiresAt` | Date
+`isServiceKey` | boolean
 `keyName` | string
+`maxEndUsers` | number
 `metadata` | { [key: string]: any; }
 `rejectUserMismatch` | boolean
 `workspaceId` | string
@@ -23,9 +28,14 @@ import type { CreateOwnKeyRequest } from ''
 // TODO: Update the object below with actual values
 const example = {
   "allowedModels": null,
+  "allowedTools": null,
   "captureAgentTelemetry": null,
+  "endUserBudgetId": null,
+  "endUserBudgetIds": null,
   "expiresAt": null,
+  "isServiceKey": null,
   "keyName": null,
+  "maxEndUsers": null,
   "metadata": null,
   "rejectUserMismatch": null,
   "workspaceId": null,

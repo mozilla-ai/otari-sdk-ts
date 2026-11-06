@@ -19,6 +19,7 @@ Name | Type
 `messages` | Array&lt;{ [key: string]: any; }&gt;
 `metadata` | { [key: string]: any; }
 `model` | string
+`outputConfig` | { [key: string]: any; }
 `outputFormat` | { [key: string]: any; }
 `promptCacheKey` | string
 `serviceTier` | string
@@ -53,6 +54,7 @@ const example = {
   "messages": null,
   "metadata": null,
   "model": null,
+  "outputConfig": null,
   "outputFormat": null,
   "promptCacheKey": null,
   "serviceTier": null,

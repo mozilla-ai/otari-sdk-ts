@@ -12,6 +12,8 @@ Name | Type
 `clientArgs` | { [key: string]: any; }
 `name` | string
 `provider` | string
+`slug` | string
+`zeroDataRetention` | boolean
 
 ## Example
 
@@ -25,6 +27,8 @@ const example = {
   "clientArgs": null,
   "name": null,
   "provider": null,
+  "slug": null,
+  "zeroDataRetention": null,
 } satisfies OrgProviderKeyCreateRequest
 
 console.log(example)

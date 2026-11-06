@@ -10,8 +10,10 @@ Name | Type
 `allowedTools` | Array&lt;string&gt;
 `authorizationToken` | string
 `enabled` | boolean
+`everyoneTools` | Array&lt;string&gt;
 `name` | string
 `purposeHint` | string
+`readTools` | Array&lt;string&gt;
 `url` | string
 
 ## Example
@@ -24,8 +26,10 @@ const example = {
   "allowedTools": null,
   "authorizationToken": null,
   "enabled": null,
+  "everyoneTools": null,
   "name": null,
   "purposeHint": null,
+  "readTools": null,
   "url": null,
 } satisfies WorkspaceMcpServerUpdate
 

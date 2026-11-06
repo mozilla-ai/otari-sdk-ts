@@ -1,7 +1,7 @@
 
 # ImageContent
 
-Image content for a message.
+An image provided to or from an LLM.
 
 ## Properties
 

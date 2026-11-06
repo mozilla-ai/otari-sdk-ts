@@ -1,7 +1,7 @@
 
 # Icon
 
-An icon for display in user interfaces.
+An optionally-sized icon for display in a user interface (2025-11-25+).
 
 ## Properties
 
@@ -10,6 +10,7 @@ Name | Type
 `mimeType` | string
 `sizes` | Array&lt;string&gt;
 `src` | string
+`theme` | string
 
 ## Example
 
@@ -21,6 +22,7 @@ const example = {
   "mimeType": null,
   "sizes": null,
   "src": null,
+  "theme": null,
 } satisfies Icon
 
 console.log(example)
