@@ -11,10 +11,13 @@ Name | Type
 `blockedDomains` | Array&lt;string&gt;
 `configured` | boolean
 `createdAt` | string
+`defaultEnabled` | boolean
 `enabled` | boolean
+`fetchExecutor` | [CodeExecutor](CodeExecutor.md)
 `maxResults` | number
 `providerOptions` | { [key: string]: any; }
 `purposeHint` | string
+`searchExecutor` | [CodeExecutor](CodeExecutor.md)
 `updatedAt` | string
 `webSearchConfigured` | boolean
 `workspaceId` | string
@@ -30,10 +33,13 @@ const example = {
   "blockedDomains": null,
   "configured": null,
   "createdAt": null,
+  "defaultEnabled": null,
   "enabled": null,
+  "fetchExecutor": null,
   "maxResults": null,
   "providerOptions": null,
   "purposeHint": null,
+  "searchExecutor": null,
   "updatedAt": null,
   "webSearchConfigured": null,
   "workspaceId": null,

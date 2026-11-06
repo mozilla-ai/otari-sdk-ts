@@ -12,6 +12,9 @@ Name | Type
 `id` | string
 `name` | string
 `organizationId` | string
+`requestMcpServersAllowed` | boolean
+`traceContentEnabled` | boolean
+`traceContentToolOutput` | boolean
 `updatedAt` | Date
 
 ## Example
@@ -27,6 +30,9 @@ const example = {
   "id": null,
   "name": null,
   "organizationId": null,
+  "requestMcpServersAllowed": null,
+  "traceContentEnabled": null,
+  "traceContentToolOutput": null,
   "updatedAt": null,
 } satisfies WorkspacePublic
 

@@ -8,6 +8,7 @@ Normalized rerank response, provider-agnostic.
 Name | Type
 ------------ | -------------
 `id` | string
+`model` | string
 `results` | [Array&lt;RRRerankResult&gt;](RRRerankResult.md)
 `meta` | [RRRerankMeta](RRRerankMeta.md)
 `usage` | [RRRerankUsage](RRRerankUsage.md)
@@ -20,6 +21,7 @@ import type { RerankResponse } from ''
 // TODO: Update the object below with actual values
 const example = {
   "id": null,
+  "model": null,
   "results": null,
   "meta": null,
   "usage": null,

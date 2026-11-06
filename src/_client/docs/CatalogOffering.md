@@ -10,6 +10,7 @@ Name | Type
 `contextWindow` | number
 `credential` | [CatalogCredential](CatalogCredential.md)
 `discovered` | boolean
+`endpoints` | Array&lt;string&gt;
 `maxOutputTokens` | number
 `metadataInputPricePerMillion` | number
 `metadataOutputPricePerMillion` | number
@@ -22,6 +23,7 @@ Name | Type
 `selector` | string
 `shortSelector` | string
 `usage30d` | [OfferingUsage](OfferingUsage.md)
+`zeroDataRetention` | boolean
 
 ## Example
 
@@ -33,6 +35,7 @@ const example = {
   "contextWindow": null,
   "credential": null,
   "discovered": null,
+  "endpoints": null,
   "maxOutputTokens": null,
   "metadataInputPricePerMillion": null,
   "metadataOutputPricePerMillion": null,
@@ -45,6 +48,7 @@ const example = {
   "selector": null,
   "shortSelector": null,
   "usage30d": null,
+  "zeroDataRetention": null,
 } satisfies CatalogOffering
 
 console.log(example)

@@ -12,6 +12,7 @@ All URIs are relative to *http://localhost*
 | [**authCreateSession**](AuthApi.md#authcreatesession) | **POST** /api/v1/auth/session | Create Session |
 | [**authDeletePasskey**](AuthApi.md#authdeletepasskey) | **DELETE** /api/v1/auth/webauthn/credentials/{credential_id} | Delete Passkey |
 | [**authDeleteSession**](AuthApi.md#authdeletesession) | **DELETE** /api/v1/auth/session | Delete Session |
+| [**authGetOwnProfile**](AuthApi.md#authgetownprofile) | **GET** /api/v1/auth/profile | Get Own Profile |
 | [**authListPasskeys**](AuthApi.md#authlistpasskeys) | **GET** /api/v1/auth/webauthn/credentials | List Passkeys |
 | [**authRegisterPasskey**](AuthApi.md#authregisterpasskey) | **POST** /api/v1/auth/webauthn/register | Register Passkey |
 | [**authRegistrationOptions**](AuthApi.md#authregistrationoptions) | **POST** /api/v1/auth/webauthn/register/options | Registration Options |
@@ -21,6 +22,8 @@ All URIs are relative to *http://localhost*
 | [**authSetDashboardPassword**](AuthApi.md#authsetdashboardpassword) | **PUT** /api/v1/auth/password | Set Dashboard Password |
 | [**authSignup**](AuthApi.md#authsignup) | **POST** /api/v1/auth/signup | Signup |
 | [**authUpdateOwnProfile**](AuthApi.md#authupdateownprofile) | **PATCH** /api/v1/auth/profile | Update Own Profile |
+| [**authValidateResetLink**](AuthApi.md#authvalidateresetlink) | **POST** /api/v1/auth/password/reset/validate | Validate Reset Link |
+| [**authValidateVerificationLink**](AuthApi.md#authvalidateverificationlink) | **POST** /api/v1/auth/verify-email/validate | Validate Verification Link |
 | [**authVerifyEmailRoute**](AuthApi.md#authverifyemailroute) | **POST** /api/v1/auth/verify-email | Verify Email Route |
 
 
@@ -226,7 +229,7 @@ No authorization required
 
 Callback
 
-Exchange an authorization code and set the HttpOnly session cookie.  The session is bound to the identity the provider\&#39;s account resolves to, exactly as a password sign-in binds one to the identity that authenticated, so every request it later authenticates resolves the same caller.  A refusal is counted like the other sign-in failures (&#x60;&#x60;record_auth_failure&#x60;&#x60;) and rendered by the tenancy error handler. Like the passkey route there is no separate post-failure throttle: this route is throttled unconditionally on the way in, because there is no legitimate caller here whose correct credential must never be blocked. An authorization code is single-use and minted by a redirect, not something a person retries by hand.  **Maintenance mode freezes this the way it freezes the other two sign-ins.** The freeze is on starting a session, not on a credential, so an OAuth sign-in has to answer to it or the switch is bypassable by anybody holding a Google account. Refused before the exchange, so a frozen deployment makes no outbound call, spends nobody\&#39;s authorization code, and counts no auth failure: nobody failed to authenticate, the gateway declined to try.
+Exchange an authorization code and set the HttpOnly session cookie.  The session is bound to the identity the provider\&#39;s account resolves to, exactly as a password sign-in binds one to the identity that authenticated, so every request it later authenticates resolves the same caller.  A refusal is counted like the other sign-in failures (&#x60;&#x60;record_auth_failure&#x60;&#x60;) and rendered by the tenancy error handler. Like the passkey route there is no separate post-failure throttle: this route is throttled unconditionally on the way in, because there is no legitimate caller here whose correct credential must never be blocked. An authorization code is single-use and minted by a redirect, not something a person retries by hand.  **Maintenance mode freezes this the way it freezes the other two sign-ins.** The freeze is on starting a session, not on a credential, so an OAuth sign-in has to answer to it or the switch is bypassable by anybody holding a Google account. Refused before the exchange, so a frozen deployment makes no outbound call, spends nobody\&#39;s authorization code, and counts no auth failure: nobody failed to authenticate, the gateway declined to try.  A sign-in that created the account, or is the first way in to one, is reported to &#x60;&#x60;GrowthSignalPort&#x60;&#x60; as a signup once it has committed. Where the deployment publishes terms, that sign-in is refused with &#x60;&#x60;terms_not_accepted&#x60;&#x60; unless the body carries &#x60;&#x60;terms_accepted&#x60;&#x60;, and nothing it would have created is kept.
 
 ### Example
 
@@ -297,7 +300,7 @@ No authorization required
 
 Confirm Reset
 
-Complete a password reset. Single-use: the token stops working after this.
+Complete a password reset, or choose a first password. Single-use: the token stops working after this.  Not throttled with the address-bearing routes, for the reason the verification route gives: the token is the proof.
 
 ### Example
 
@@ -556,6 +559,71 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | Successful Response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## authGetOwnProfile
+
+> CallerIdentityPublic authGetOwnProfile()
+
+Get Own Profile
+
+Report who the caller is, whether or not they belong to an organization.  The same shape &#x60;&#x60;GET /api/v1/organizations/me&#x60;&#x60; carries as &#x60;&#x60;caller&#x60;&#x60;, for an identity that context cannot describe because it has no active membership.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  AuthApi,
+} from '';
+import type { AuthGetOwnProfileRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new AuthApi(config);
+
+  try {
+    const data = await api.authGetOwnProfile();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**CallerIdentityPublic**](CallerIdentityPublic.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -983,7 +1051,7 @@ No authorization required
 
 Set Dashboard Password
 
-Set or change the password the caller signs in to the dashboard with.  Always the caller\&#39;s own identity. Supply &#x60;&#x60;email&#x60;&#x60; when it has no sign-in address yet, which is the state first boot leaves the operator in, and &#x60;&#x60;current_password&#x60;&#x60; when it already has a password and the request is authenticated by the session cookie. The master key in a header is what excuses &#x60;&#x60;current_password&#x60;&#x60;, which is how a forgotten password is recovered; it does not excuse &#x60;&#x60;email&#x60;&#x60;, because an identity with no address has nothing to sign in with whoever is asking. The operator setting a password for the first time retires master-key sign-in on this deployment.  Every other session this identity holds ends, the caller\&#39;s own excepted, so a cookie stolen before the change does not outlive it.
+Set or change the password the caller signs in to the dashboard with.  Always the caller\&#39;s own identity. Supply &#x60;&#x60;email&#x60;&#x60; when it has no sign-in address yet, which is the state first boot leaves the operator in, and &#x60;&#x60;current_password&#x60;&#x60; when it already has a password and the request is authenticated by the session cookie. The master key in a header is what excuses &#x60;&#x60;current_password&#x60;&#x60;, which is how a forgotten password is recovered; it does not excuse &#x60;&#x60;email&#x60;&#x60;, because an identity with no address has nothing to sign in with whoever is asking. The operator setting a password for the first time retires master-key sign-in on this deployment.  With the master key the caller is the deployment\&#39;s operator, so an &#x60;&#x60;email&#x60;&#x60; sent then is the operator\&#39;s own sign-in address: on an unclaimed deployment it claims the deployment with that address. This never sets another account\&#39;s password; an address another account holds is refused with 409. To help a member who forgot their password, send them a link with &#x60;&#x60;POST /api/v1/admin/users/{user_id}/password-link&#x60;&#x60;.  Every other session this identity holds ends, the caller\&#39;s own excepted, so a cookie stolen before the change does not outlive it.
 
 ### Example
 
@@ -1057,7 +1125,7 @@ example().catch(console.error);
 
 Signup
 
-Claim a roster identity, register a new one, or do nothing: the response never says which.  Which of the three this deployment will do is &#x60;&#x60;open_signup&#x60;&#x60;, published in the bootstrap so the page can say so before anyone types an address.  No session is minted. A newly claimed or registered identity is hard-blocked from signing in until it verifies, so there is nothing yet to sign it into.
+Claim a roster identity, register a new one, or do nothing: the response never says which.  Which of the three this deployment will do is &#x60;&#x60;open_signup&#x60;&#x60;, published in the bootstrap so the page can say so before anyone types an address.  No session is minted. A newly claimed or registered identity is hard-blocked from signing in until it verifies, so there is nothing yet to sign it into.  Refused with a 400 where the deployment publishes terms and &#x60;&#x60;terms_accepted&#x60;&#x60; is not set, whatever the address.
 
 ### Example
 
@@ -1193,13 +1261,161 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## authValidateResetLink
+
+> MailedLinkStatusResponse authValidateResetLink(mailedLinkRequest)
+
+Validate Reset Link
+
+Say whether a password reset link can still be used, without using it.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  AuthApi,
+} from '';
+import type { AuthValidateResetLinkRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new AuthApi(config);
+
+  const body = {
+    // MailedLinkRequest
+    mailedLinkRequest: ...,
+  } satisfies AuthValidateResetLinkRequest;
+
+  try {
+    const data = await api.authValidateResetLink(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **mailedLinkRequest** | [MailedLinkRequest](MailedLinkRequest.md) |  | |
+
+### Return type
+
+[**MailedLinkStatusResponse**](MailedLinkStatusResponse.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## authValidateVerificationLink
+
+> MailedLinkStatusResponse authValidateVerificationLink(mailedLinkRequest)
+
+Validate Verification Link
+
+Say whether an email verification link can still be used, without using it.  Verifying still needs the password chosen at signup, which this does not check.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  AuthApi,
+} from '';
+import type { AuthValidateVerificationLinkRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new AuthApi(config);
+
+  const body = {
+    // MailedLinkRequest
+    mailedLinkRequest: ...,
+  } satisfies AuthValidateVerificationLinkRequest;
+
+  try {
+    const data = await api.authValidateVerificationLink(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **mailedLinkRequest** | [MailedLinkRequest](MailedLinkRequest.md) |  | |
+
+### Return type
+
+[**MailedLinkStatusResponse**](MailedLinkStatusResponse.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## authVerifyEmailRoute
 
 > VerifyEmailResponse authVerifyEmailRoute(verifyEmailRequest)
 
 Verify Email Route
 
-Confirm an address from its verification link, lifting the sign-in gate.
+Confirm an address from its verification link and the password chosen at signup, lifting the sign-in gate.  One refusal for a link that is unknown, expired or spent and for a password that does not match, and a refusal consumes nothing. Refusals are counted per client IP and answer 429 once over the limit, so a held link cannot be used to guess its password; a verification that succeeds is never counted.
 
 ### Example
 

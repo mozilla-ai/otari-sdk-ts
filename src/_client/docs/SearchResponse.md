@@ -1,13 +1,14 @@
 
 # SearchResponse
 
-A completed search.
+A completed direct search.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
 `object` | string
+`raw` | { [key: string]: any; }
 `results` | [Array&lt;SearchResultItem&gt;](SearchResultItem.md)
 `searchTool` | string
 
@@ -19,6 +20,7 @@ import type { SearchResponse } from ''
 // TODO: Update the object below with actual values
 const example = {
   "object": null,
+  "raw": null,
   "results": null,
   "searchTool": null,
 } satisfies SearchResponse

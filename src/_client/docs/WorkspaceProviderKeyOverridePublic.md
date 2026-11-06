@@ -15,6 +15,7 @@ Name | Type
 `orgProviderKeyId` | string
 `usable` | boolean
 `workspaceId` | string
+`zeroDataRetention` | boolean
 
 ## Example
 
@@ -31,6 +32,7 @@ const example = {
   "orgProviderKeyId": null,
   "usable": null,
   "workspaceId": null,
+  "zeroDataRetention": null,
 } satisfies WorkspaceProviderKeyOverridePublic
 
 console.log(example)

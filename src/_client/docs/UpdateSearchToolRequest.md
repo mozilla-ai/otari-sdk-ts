@@ -1,7 +1,7 @@
 
 # UpdateSearchToolRequest
 
-Update a stored search tool. Omitted fields are unchanged; ``api_key`` rotates in place.
+Update a stored search or fetch instance. Omitted fields are unchanged; ``api_key`` rotates in place.
 
 ## Properties
 
@@ -10,6 +10,8 @@ Name | Type
 `apiBase` | string
 `apiKey` | string
 `expectedUpdatedAt` | string
+`fetchTool` | string
+`kind` | string
 `options` | { [key: string]: any; }
 `provider` | string
 `timeout` | number
@@ -24,6 +26,8 @@ const example = {
   "apiBase": null,
   "apiKey": null,
   "expectedUpdatedAt": null,
+  "fetchTool": null,
+  "kind": null,
   "options": null,
   "provider": null,
   "timeout": null,
