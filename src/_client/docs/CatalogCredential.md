@@ -1,7 +1,7 @@
 
 # CatalogCredential
 
-Who may price a catalog offering.
+Whose key serves a catalog offering, which also says who may price it.
 
 ## Properties
 

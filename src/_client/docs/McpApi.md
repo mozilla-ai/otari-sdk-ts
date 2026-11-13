@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**mcpExecuteMcpTool**](McpApi.md#mcpexecutemcptool) | **POST** /api/v1/mcp/execute | Execute Mcp Tool |
+| [**mcpListMcpServers**](McpApi.md#mcplistmcpservers) | **GET** /api/v1/mcp/servers | List Mcp Servers |
 | [**mcpListMcpTools**](McpApi.md#mcplistmcptools) | **GET** /api/v1/mcp/servers/{mcp_server_id}/tools | List Mcp Tools |
 
 
@@ -90,6 +91,76 @@ example().catch(console.error);
 | **502** | Bad Gateway |  -  |
 | **503** | Service Unavailable |  -  |
 | **504** | Gateway Timeout |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## mcpListMcpServers
+
+> McpServersResponse mcpListMcpServers()
+
+List Mcp Servers
+
+List the enabled stored MCP servers this API key can reach.  A server appears when its access list grants the key something: the key\&#39;s own grant, else its owner\&#39;s, else the server\&#39;s &#x60;everyone_tools&#x60;. Each has the &#x60;id&#x60; to send in &#x60;mcp_server_ids&#x60; (or to the tool discovery and execution routes), its &#x60;name&#x60;, and its &#x60;purpose_hint&#x60;. The URL and the token are never returned. A master key has no workspace and is refused with a 404.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  McpApi,
+} from '';
+import type { McpListMcpServersRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new McpApi(config);
+
+  try {
+    const data = await api.mcpListMcpServers();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**McpServersResponse**](McpServersResponse.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **401** | Unauthorized |  -  |
+| **404** | Not Found |  -  |
+| **429** | Too Many Requests |  -  |
+| **500** | Internal Server Error |  -  |
+| **503** | Service Unavailable |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

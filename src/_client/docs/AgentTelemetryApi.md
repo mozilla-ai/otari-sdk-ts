@@ -17,7 +17,7 @@ All URIs are relative to *http://localhost*
 
 Agent Telemetry Series
 
-Row volume over time, split by user or API key (standalone).  Mirrors &#x60;/api/v1/usage/series&#x60;: same window bounds and bucket-grid cap, the top groups as their own series with the remainder folded into a reconciling &#x60;&#x60;other&#x60;&#x60;, and sparse points (populated cells only). Counts rows, not spend, so it charts telemetry volume rather than cost. Master-key only.
+Row volume over time, split by user or API key.  Mirrors &#x60;/api/v1/usage/series&#x60;: same window bounds and bucket-grid cap, the top groups as their own series with the remainder folded into a reconciling &#x60;&#x60;other&#x60;&#x60;, and sparse points (populated cells only). Counts rows, not spend, so it charts telemetry volume rather than cost. Master-key only.
 
 ### Example
 
@@ -109,7 +109,7 @@ example().catch(console.error);
 
 Agent Telemetry Summary
 
-What the coding agent produced in a window, and what it cost (standalone).  Range-bounded like &#x60;/api/v1/usage/summary&#x60; (default last 30 days, hard-capped), so the aggregates stay served by the timestamp index. Returns the outcome totals (commits, pull requests, lines changed, active time), the behavioral counts already captured from the logs signal (tool calls and their mix, tool accept/reject, turns, API errors), the recorded spend over the same scope, and the derived per-unit measures: cost per commit / pull request / line, spend per active hour, acceptance rate, turns per session, and error rate. Each measure is null rather than an error when its denominator is zero. Filterable by user, API key, and &#x60;session_label&#x60;, so cost per outcome can be read for one agent session as well as for a whole window.  The spend side is every usage row in scope, not only the agent\&#39;s: unfiltered, that includes traffic from clients that never reported telemetry, so a per-outcome measure read over a whole deployment answers \&quot;what did this deployment spend per commit\&quot;, not \&quot;what did the agent spend per commit\&quot;. Filter by user, API key, or session to divide only the matching spend.  Outcome metrics are stored exactly as the agent reported them, so a cumulative counter is converted to a window increment here, at read time, diffed per series generation: a re-exported total adds nothing, and a counter reset never reads as negative work. Master-key only.
+What the coding agent produced in a window, and what it cost.  Range-bounded like &#x60;/api/v1/usage/summary&#x60; (default last 30 days, hard-capped), so the aggregates stay served by the timestamp index. Returns the outcome totals (commits, pull requests, lines changed, active time), the behavioral counts already captured from the logs signal (tool calls and their mix, tool accept/reject, turns, API errors), the recorded spend over the same scope, and the derived per-unit measures: cost per commit / pull request / line, spend per active hour, acceptance rate, turns per session, and error rate. Each measure is null rather than an error when its denominator is zero. Filterable by user, API key, and &#x60;session_label&#x60;, so cost per outcome can be read for one agent session as well as for a whole window.  The spend side is every usage row in scope, not only the agent\&#39;s: unfiltered, that includes traffic from clients that never reported telemetry, so a per-outcome measure read over a whole deployment answers \&quot;what did this deployment spend per commit\&quot;, not \&quot;what did the agent spend per commit\&quot;. Filter by user, API key, or session to divide only the matching spend.  Outcome metrics are stored exactly as the agent reported them, so a cumulative counter is converted to a window increment here, at read time, diffed per series generation: a re-exported total adds nothing, and a counter reset never reads as negative work. Master-key only.
 
 ### Example
 
@@ -198,7 +198,7 @@ example().catch(console.error);
 
 Count Agent Telemetry
 
-Total agent_telemetry rows matching the given filters (standalone).  The filter set mirrors the purge endpoint\&#39;s, so this sizes exactly what a \&quot;delete all N matching\&quot; would remove. Behavioral and metric rows are counted together: neither this nor the purge distinguishes them. Master-key only.
+Total agent_telemetry rows matching the given filters.  The filter set mirrors the purge endpoint\&#39;s, so this sizes exactly what a \&quot;delete all N matching\&quot; would remove. Behavioral and metric rows are counted together: neither this nor the purge distinguishes them. Master-key only.
 
 ### Example
 
@@ -284,7 +284,7 @@ example().catch(console.error);
 
 Delete Agent Telemetry Rows
 
-Delete agent_telemetry rows by explicit ids or by filter (standalone).  Target either an explicit selection (&#x60;ids&#x60;) or everything matching a filter (&#x60;by_filter: true&#x60; plus optional &#x60;user_id&#x60; / &#x60;api_key_id&#x60; / &#x60;name&#x60; / date range). A selection matching zero rows succeeds with &#x60;deleted: 0&#x60;. Master-key only.
+Delete agent_telemetry rows by explicit ids or by filter.  Target either an explicit selection (&#x60;ids&#x60;) or everything matching a filter (&#x60;by_filter: true&#x60; plus optional &#x60;user_id&#x60; / &#x60;api_key_id&#x60; / &#x60;name&#x60; / date range). A selection matching zero rows succeeds with &#x60;deleted: 0&#x60;. Master-key only.
 
 ### Example
 

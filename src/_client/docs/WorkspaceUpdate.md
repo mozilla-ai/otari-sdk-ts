@@ -8,6 +8,9 @@ Name | Type
 ------------ | -------------
 `description` | string
 `name` | string
+`requestMcpServersAllowed` | boolean
+`traceContentEnabled` | boolean
+`traceContentToolOutput` | boolean
 
 ## Example
 
@@ -18,6 +21,9 @@ import type { WorkspaceUpdate } from ''
 const example = {
   "description": null,
   "name": null,
+  "requestMcpServersAllowed": null,
+  "traceContentEnabled": null,
+  "traceContentToolOutput": null,
 } satisfies WorkspaceUpdate
 
 console.log(example)

@@ -12,6 +12,7 @@ Name | Type
 `definitionId` | string
 `enabled` | boolean
 `mode` | string
+`on` | Array&lt;string&gt;
 `onUnavailable` | string
 `profile` | string
 `url` | string
@@ -30,6 +31,7 @@ const example = {
   "definitionId": null,
   "enabled": null,
   "mode": null,
+  "on": null,
   "onUnavailable": null,
   "profile": null,
   "url": null,

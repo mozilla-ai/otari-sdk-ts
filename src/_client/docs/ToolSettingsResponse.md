@@ -8,6 +8,8 @@ The effective value of every editable tool/guardrail field.
 Name | Type
 ------------ | -------------
 `fields` | [Array&lt;ToolSettingField&gt;](ToolSettingField.md)
+`sandboxCredential` | [SandboxCredentialPublic](SandboxCredentialPublic.md)
+`sandboxProvider` | [SandboxProvider](SandboxProvider.md)
 
 ## Example
 
@@ -17,6 +19,8 @@ import type { ToolSettingsResponse } from ''
 // TODO: Update the object below with actual values
 const example = {
   "fields": null,
+  "sandboxCredential": null,
+  "sandboxProvider": null,
 } satisfies ToolSettingsResponse
 
 console.log(example)

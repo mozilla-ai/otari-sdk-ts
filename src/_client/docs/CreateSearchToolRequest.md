@@ -1,7 +1,7 @@
 
 # CreateSearchToolRequest
 
-Create a stored search tool. ``api_key`` is write-only and requires OTARI_SECRET_KEY.
+Create a stored search or fetch instance. ``api_key`` is write-only and requires OTARI_SECRET_KEY.
 
 ## Properties
 
@@ -9,6 +9,8 @@ Name | Type
 ------------ | -------------
 `apiBase` | string
 `apiKey` | string
+`fetchTool` | string
+`kind` | string
 `name` | string
 `options` | { [key: string]: any; }
 `provider` | string
@@ -23,6 +25,8 @@ import type { CreateSearchToolRequest } from ''
 const example = {
   "apiBase": null,
   "apiKey": null,
+  "fetchTool": null,
+  "kind": null,
   "name": null,
   "options": null,
   "provider": null,

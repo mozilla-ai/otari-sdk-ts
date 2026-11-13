@@ -26,6 +26,7 @@ Name | Type
 `structuredOutput` | boolean
 `temperature` | boolean
 `toolCall` | boolean
+`type` | string
 
 ## Example
 
@@ -53,6 +54,7 @@ const example = {
   "structuredOutput": null,
   "temperature": null,
   "toolCall": null,
+  "type": null,
 } satisfies ModelMetadata
 
 console.log(example)

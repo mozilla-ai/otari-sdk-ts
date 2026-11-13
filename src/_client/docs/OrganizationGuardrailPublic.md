@@ -14,6 +14,7 @@ Name | Type
 `hasCredential` | boolean
 `id` | string
 `mode` | string
+`on` | Array&lt;string&gt;
 `onUnavailable` | string
 `organizationId` | string
 `profile` | string
@@ -36,6 +37,7 @@ const example = {
   "hasCredential": null,
   "id": null,
   "mode": null,
+  "on": null,
   "onUnavailable": null,
   "organizationId": null,
   "profile": null,

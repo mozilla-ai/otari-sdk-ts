@@ -7,6 +7,7 @@ Who the caller is, as against what they may do.  The account control at the foot
 
 Name | Type
 ------------ | -------------
+`avatarFace` | number
 `claimsDeployment` | boolean
 `email` | string
 `fullName` | string
@@ -20,6 +21,7 @@ import type { CallerIdentityPublic } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "avatarFace": null,
   "claimsDeployment": null,
   "email": null,
   "fullName": null,

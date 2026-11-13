@@ -14,7 +14,7 @@ All URIs are relative to *http://localhost*
 
 List Tools
 
-List the tools Otari runs itself, with the declaration forms it accepts.  Every other &#x60;tools[]&#x60; entry, including provider-native keywords not listed here, is forwarded to the upstream provider untouched.
+List the tools Otari runs itself, with the declaration forms it accepts.  Called with an API key, a tool its workspace does not allow is listed as unavailable, and so is a tool that runs on the deployment\&#39;s account while the key\&#39;s organization has no funds. Every other &#x60;tools[]&#x60; entry, including provider-native keywords not listed here, is forwarded to the upstream provider untouched.
 
 ### Example
 

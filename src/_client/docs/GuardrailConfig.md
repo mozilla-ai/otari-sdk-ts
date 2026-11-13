@@ -1,12 +1,13 @@
 
 # GuardrailConfig
 
-A single guardrail check the caller wants the gateway to enforce.  URL safety: when ``url`` is supplied it is validated by :func:`gateway.services.guardrails.run_input_guardrails` (not here at parse time — the check does a DNS lookup that must be awaited) with the same SSRF guard used for MCP server URLs (loopback allowed by default for same-host sidecars; gated by ``OTARI_MCP_ALLOW_LOOPBACK`` / ``OTARI_MCP_ALLOW_PRIVATE_HOSTS``). Most deployments omit ``url`` and rely on the operator-set ``OTARI_GUARDRAILS_URL`` instead.
+A single guardrail check the caller wants the gateway to enforce.  URL safety: when ``url`` is supplied it is validated by :func:`gateway.services.guardrails.check_guardrail_urls` (not here at parse time — the check does a DNS lookup that must be awaited) with the same SSRF guard used for MCP server URLs (loopback allowed by default for same-host sidecars; gated by ``OTARI_MCP_ALLOW_LOOPBACK`` / ``OTARI_MCP_ALLOW_PRIVATE_HOSTS``). Most deployments omit ``url`` and rely on the operator-set ``OTARI_GUARDRAILS_URL`` instead.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
+`credential` | string
 `mode` | string
 `on` | Array&lt;string&gt;
 `onUnavailable` | string
@@ -21,6 +22,7 @@ import type { GuardrailConfig } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "credential": null,
   "mode": null,
   "on": null,
   "onUnavailable": null,
