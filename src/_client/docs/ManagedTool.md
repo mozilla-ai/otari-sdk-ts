@@ -14,6 +14,7 @@ Name | Type
 `id` | string
 `inputSchema` | { [key: string]: any; }
 `object` | string
+`reason` | string
 
 ## Example
 
@@ -29,6 +30,7 @@ const example = {
   "id": null,
   "inputSchema": null,
   "object": null,
+  "reason": null,
 } satisfies ManagedTool
 
 console.log(example)

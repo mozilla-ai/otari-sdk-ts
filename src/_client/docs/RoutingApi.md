@@ -6,11 +6,12 @@ All URIs are relative to *http://localhost*
 |------------- | ------------- | -------------|
 | [**routingDeleteOrganizationRoutingPolicy**](RoutingApi.md#routingdeleteorganizationroutingpolicy) | **DELETE** /api/v1/organizations/me/routing-policies/{name} | Delete Organization Routing Policy |
 | [**routingDeletePolicy**](RoutingApi.md#routingdeletepolicy) | **DELETE** /api/v1/routing/policies/{name} | Delete Policy |
+| [**routingExplainOrganizationRoutingPolicy**](RoutingApi.md#routingexplainorganizationroutingpolicy) | **POST** /api/v1/organizations/me/routing-policies/explain | Explain Organization Routing Policy |
 | [**routingExplainPolicy**](RoutingApi.md#routingexplainpolicy) | **POST** /api/v1/routing/policies/explain | Explain Policy |
+| [**routingListAutomaticFallbacks**](RoutingApi.md#routinglistautomaticfallbacks) | **GET** /api/v1/organizations/me/automatic-fallbacks | List Automatic Fallbacks |
 | [**routingListPolicies**](RoutingApi.md#routinglistpolicies) | **GET** /api/v1/routing/policies | List Policies |
 | [**routingListVisibleRoutingPolicies**](RoutingApi.md#routinglistvisibleroutingpolicies) | **GET** /api/v1/organizations/me/routing-policies | List Visible Routing Policies |
-| [**routingRankCandidates**](RoutingApi.md#routingrankcandidates) | **POST** /api/v1/routing/preferences/rank | Rank Candidates |
-| [**routingRoutingMemoryStatus**](RoutingApi.md#routingroutingmemorystatus) | **GET** /api/v1/routing/status | Routing Memory Status |
+| [**routingRecommendModelForAgent**](RoutingApi.md#routingrecommendmodelforagent) | **POST** /api/v1/routing/recommend | Recommend Model For Agent |
 | [**routingSetOrganizationRoutingPolicy**](RoutingApi.md#routingsetorganizationroutingpolicy) | **POST** /api/v1/organizations/me/routing-policies | Set Organization Routing Policy |
 | [**routingSetPolicy**](RoutingApi.md#routingsetpolicy) | **POST** /api/v1/routing/policies | Set Policy |
 
@@ -173,6 +174,80 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## routingExplainOrganizationRoutingPolicy
+
+> ExplainResponse routingExplainOrganizationRoutingPolicy(explainRequest)
+
+Explain Organization Routing Policy
+
+Compile a policy in one of the organization\&#39;s workspaces and return the plan, without dispatching anything.  The tenant reading of &#x60;&#x60;POST /api/v1/routing/policies/explain&#x60;&#x60;: any member who may see the workspace, which is who may already read its policies here. &#x60;&#x60;workspace_id&#x60;&#x60; is required; &#x60;&#x60;user_id&#x60;&#x60; is not accepted, as on the writes. Every candidate, from a draft or a stored policy, is held to what the organization reaches, narrowed further by &#x60;&#x60;allowed_models&#x60;&#x60; when sent: one outside it is listed as dropped, so a draft cannot show where a model the organization lacks would resolve, and a stored policy whose target the organization lost still explains.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  RoutingApi,
+} from '';
+import type { RoutingExplainOrganizationRoutingPolicyRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new RoutingApi(config);
+
+  const body = {
+    // ExplainRequest
+    explainRequest: ...,
+  } satisfies RoutingExplainOrganizationRoutingPolicyRequest;
+
+  try {
+    const data = await api.routingExplainOrganizationRoutingPolicy(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **explainRequest** | [ExplainRequest](ExplainRequest.md) |  | |
+
+### Return type
+
+[**ExplainResponse**](ExplainResponse.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## routingExplainPolicy
 
 > ExplainResponse routingExplainPolicy(explainRequest)
@@ -247,13 +322,87 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## routingListAutomaticFallbacks
+
+> AutomaticFallbacksResponse routingListAutomaticFallbacks(workspaceId)
+
+List Automatic Fallbacks
+
+The models the caller\&#39;s organization sent requests to in the last 30 days, and the fallback each gets.  A request that sends a model\&#39;s catalog ID moves to the model\&#39;s next offering when one fails, with no policy. Each model lists its offerings in the order such a request tries them before automatic selection reorders it, each with its input price for this organization and who runs the built-in tools on it, beside its traffic: how many requests a backup served, and how many named one offering or a policy instead, by API key and provider. The traffic is the workspaces the caller may see in their active organization, by the rule the organization\&#39;s usage reads use.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  RoutingApi,
+} from '';
+import type { RoutingListAutomaticFallbacksRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new RoutingApi(config);
+
+  const body = {
+    // string | Only the offerings a request billed to this workspace may call. (optional)
+    workspaceId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies RoutingListAutomaticFallbacksRequest;
+
+  try {
+    const data = await api.routingListAutomaticFallbacks(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **workspaceId** | `string` | Only the offerings a request billed to this workspace may call. | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**AutomaticFallbacksResponse**](AutomaticFallbacksResponse.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## routingListPolicies
 
 > Array&lt;PolicyResponse&gt; routingListPolicies(workspaceId)
 
 List Policies
 
-List every routing policy in force, from config.yml and from storage.  Every scope at once, workspace-wide and user-scoped alike: this is the master-key management view, not what any one caller resolves.
+List every routing policy in force in your organization, from config.yml and from storage.  Every scope at once, workspace-wide and user-scoped alike: this is the master-key management view, not what any one caller resolves.
 
 ### Example
 
@@ -275,7 +424,7 @@ async function example() {
   const api = new RoutingApi(config);
 
   const body = {
-    // string | Only stored policies in this workspace. Config-file policies are always included, being deployment-wide. Omit to list the stored policies of every workspace. (optional)
+    // string | Only stored policies in this workspace. Config-file policies are always included, being deployment-wide. Omit to list the stored policies of every workspace in your organization. (optional)
     workspaceId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
   } satisfies RoutingListPoliciesRequest;
 
@@ -296,7 +445,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **workspaceId** | `string` | Only stored policies in this workspace. Config-file policies are always included, being deployment-wide. Omit to list the stored policies of every workspace. | [Optional] [Defaults to `undefined`] |
+| **workspaceId** | `string` | Only stored policies in this workspace. Config-file policies are always included, being deployment-wide. Omit to list the stored policies of every workspace in your organization. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -398,13 +547,13 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## routingRankCandidates
+## routingRecommendModelForAgent
 
-> RankResponse routingRankCandidates(rankRequest)
+> AgentModelRecommendation routingRecommendModelForAgent(agentModelRecommendationRequest)
 
-Rank Candidates
+Recommend Model For Agent
 
-Record scored examples: one routing-memory record each, plus an audit row.  The routing-memory record is written before its audit row for each example, because it is the load-bearing one (the router votes over it) and embedding it can fail; writing the audit row only afterwards means a failed embedding never leaves an orphan audit row.  A failed embedding is a 502 that names the model, not a 500. Every example in the batch is embedded, so this is the call an operator makes most often and the one most likely to meet a misconfigured &#x60;&#x60;router_embedding_model&#x60;&#x60;.  Score keys are stored canonically as &#x60;&#x60;instance:model&#x60;&#x60; (see :func:&#x60;_validated_scores&#x60;), which is the form the router canonicalizes its candidates to, so how a policy spells a candidate cannot decide whether it matches.
+Recommend the model a subagent about to start should run on.  The harness sends the facts it holds at spawn time: its own ids for the session and the spawning tool call, the subagent type, the task, the parent\&#39;s model and the model the caller asked for, if any. The recommender this build binds picks one of the candidate models and the answer names it. By default the deployment asks the subagent router an operator switched on in the dashboard to choose among &#x60;agent_recommender_candidates&#x60; for Claude Code and among the request\&#39;s own &#x60;candidates&#x60; for pi; a bootstrap may bind a recommender of its own, which the caller never configures. Where the recommender reports them, the answer also carries a one-line reason and its probability for each candidate.  Authentication modes: - Master key: the &#x60;&#x60;user&#x60;&#x60; field is required and names who the decision is billed to. - API key: the decision is billed to the key\&#39;s own user.
 
 ### Example
 
@@ -413,7 +562,7 @@ import {
   Configuration,
   RoutingApi,
 } from '';
-import type { RoutingRankCandidatesRequest } from '';
+import type { RoutingRecommendModelForAgentRequest } from '';
 
 async function example() {
   console.log("🚀 Testing  SDK...");
@@ -426,12 +575,12 @@ async function example() {
   const api = new RoutingApi(config);
 
   const body = {
-    // RankRequest
-    rankRequest: ...,
-  } satisfies RoutingRankCandidatesRequest;
+    // AgentModelRecommendationRequest
+    agentModelRecommendationRequest: ...,
+  } satisfies RoutingRecommendModelForAgentRequest;
 
   try {
-    const data = await api.routingRankCandidates(body);
+    const data = await api.routingRecommendModelForAgent(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -447,11 +596,11 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **rankRequest** | [RankRequest](RankRequest.md) |  | |
+| **agentModelRecommendationRequest** | [AgentModelRecommendationRequest](AgentModelRecommendationRequest.md) |  | |
 
 ### Return type
 
-[**RankResponse**](RankResponse.md)
+[**AgentModelRecommendation**](AgentModelRecommendation.md)
 
 ### Authorization
 
@@ -467,83 +616,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
-| **422** | Validation Error |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-
-## routingRoutingMemoryStatus
-
-> RouterStatus routingRoutingMemoryStatus(userId, workspaceId)
-
-Routing Memory Status
-
-Report how warm one user\&#39;s routing memory is in one workspace, per pool.  &#x60;&#x60;user_id&#x60;&#x60; is required rather than optional because there is no aggregate answer: warmth is per user, and a total across users would describe a pool that no request ever votes over. The same holds across workspaces, which is why &#x60;&#x60;workspace_id&#x60;&#x60; narrows rather than aggregating; it merely defaults instead of being required, because a single-workspace deployment has one answer.
-
-### Example
-
-```ts
-import {
-  Configuration,
-  RoutingApi,
-} from '';
-import type { RoutingRoutingMemoryStatusRequest } from '';
-
-async function example() {
-  console.log("🚀 Testing  SDK...");
-  const config = new Configuration({ 
-    // To configure API key authorization: XApiKeyAuth
-    apiKey: "YOUR API KEY",
-    // To configure API key authorization: ApiKeyAuth
-    apiKey: "YOUR API KEY",
-  });
-  const api = new RoutingApi(config);
-
-  const body = {
-    // string | Whose routing memory to report on.
-    userId: userId_example,
-    // string | Which workspace\'s routing memory to report on. Omit for the default workspace. (optional)
-    workspaceId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
-  } satisfies RoutingRoutingMemoryStatusRequest;
-
-  try {
-    const data = await api.routingRoutingMemoryStatus(body);
-    console.log(data);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// Run the test
-example().catch(console.error);
-```
-
-### Parameters
-
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` | Whose routing memory to report on. | [Defaults to `undefined`] |
-| **workspaceId** | `string` | Which workspace\&#39;s routing memory to report on. Omit for the default workspace. | [Optional] [Defaults to `undefined`] |
-
-### Return type
-
-[**RouterStatus**](RouterStatus.md)
-
-### Authorization
-
-[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: `application/json`
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | Successful Response |  -  |
+| **400** | No subagent router is switched on, or a master-key call names no &#x60;user&#x60;. |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

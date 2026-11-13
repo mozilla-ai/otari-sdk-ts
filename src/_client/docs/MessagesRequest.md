@@ -12,6 +12,7 @@ Name | Type
 `container` | [Container](Container.md)
 `contextManagement` | { [key: string]: any; }
 `guardrails` | [Array&lt;GuardrailConfig&gt;](GuardrailConfig.md)
+`inferenceGeo` | string
 `maxTokens` | number
 `maxToolIterations` | number
 `mcpServerIds` | Array&lt;string&gt;
@@ -19,6 +20,7 @@ Name | Type
 `messages` | Array&lt;{ [key: string]: any; }&gt;
 `metadata` | { [key: string]: any; }
 `model` | string
+`outputConfig` | { [key: string]: any; }
 `outputFormat` | { [key: string]: any; }
 `promptCacheKey` | string
 `serviceTier` | string
@@ -46,6 +48,7 @@ const example = {
   "container": null,
   "contextManagement": null,
   "guardrails": null,
+  "inferenceGeo": null,
   "maxTokens": null,
   "maxToolIterations": null,
   "mcpServerIds": null,
@@ -53,6 +56,7 @@ const example = {
   "messages": null,
   "metadata": null,
   "model": null,
+  "outputConfig": null,
   "outputFormat": null,
   "promptCacheKey": null,
   "serviceTier": null,

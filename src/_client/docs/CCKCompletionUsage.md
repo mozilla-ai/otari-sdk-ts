@@ -11,6 +11,8 @@ Name | Type
 `totalTokens` | number
 `completionTokensDetails` | [CCKCompletionTokensDetails](CCKCompletionTokensDetails.md)
 `promptTokensDetails` | [CCKPromptTokensDetails](CCKPromptTokensDetails.md)
+`inferenceGeo` | string
+`serverToolUse` | [CCKServerToolUsage](CCKServerToolUsage.md)
 
 ## Example
 
@@ -24,6 +26,8 @@ const example = {
   "totalTokens": null,
   "completionTokensDetails": null,
   "promptTokensDetails": null,
+  "inferenceGeo": null,
+  "serverToolUse": null,
 } satisfies CCKCompletionUsage
 
 console.log(example)

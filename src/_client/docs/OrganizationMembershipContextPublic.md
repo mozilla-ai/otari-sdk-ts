@@ -7,7 +7,6 @@ An organization plus the caller\'s standing in it.  What every tenancy page read
 
 Name | Type
 ------------ | -------------
-`byoProviderKeysAllowed` | boolean
 `caller` | [CallerIdentityPublic](CallerIdentityPublic.md)
 `deploymentOperator` | boolean
 `organization` | [OrganizationPublic](OrganizationPublic.md)
@@ -24,7 +23,6 @@ import type { OrganizationMembershipContextPublic } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "byoProviderKeysAllowed": null,
   "caller": null,
   "deploymentOperator": null,
   "organization": null,

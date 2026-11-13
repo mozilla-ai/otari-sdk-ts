@@ -240,7 +240,7 @@ example().catch(console.error);
 
 List Scoped Budgets
 
-List scoped budgets, optionally filtered to one scope.
+List the scoped budgets in the caller\&#39;s organization, optionally filtered to one scope.
 
 ### Example
 

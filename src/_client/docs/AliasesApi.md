@@ -176,7 +176,7 @@ example().catch(console.error);
 
 List Aliases
 
-List every alias in force, from config.yml and from storage.  Every scope at once, workspace-wide and user-scoped alike: this is the master-key management view, not what any one caller resolves.
+List every alias in force in your organization, from config.yml and from storage.  Every scope at once, workspace-wide and user-scoped alike: this is the master-key management view, not what any one caller resolves.
 
 ### Example
 
@@ -198,7 +198,7 @@ async function example() {
   const api = new AliasesApi(config);
 
   const body = {
-    // string | Only stored entries in this workspace. Config-file entries are always included, being deployment-wide. Omit to list the stored entries of every workspace. (optional)
+    // string | Only stored entries in this workspace. Config-file entries are always included, being deployment-wide. Omit to list the stored entries of every workspace in your organization. (optional)
     workspaceId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
   } satisfies AliasesListAliasesRequest;
 
@@ -219,7 +219,7 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **workspaceId** | `string` | Only stored entries in this workspace. Config-file entries are always included, being deployment-wide. Omit to list the stored entries of every workspace. | [Optional] [Defaults to `undefined`] |
+| **workspaceId** | `string` | Only stored entries in this workspace. Config-file entries are always included, being deployment-wide. Omit to list the stored entries of every workspace in your organization. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

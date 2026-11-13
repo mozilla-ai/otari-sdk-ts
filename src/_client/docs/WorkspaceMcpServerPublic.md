@@ -10,10 +10,13 @@ Name | Type
 `allowedTools` | Array&lt;string&gt;
 `createdAt` | string
 `enabled` | boolean
+`everyoneTools` | Array&lt;string&gt;
 `hasToken` | boolean
+`health` | [WorkspaceMcpServerHealth](WorkspaceMcpServerHealth.md)
 `id` | string
 `name` | string
 `purposeHint` | string
+`readTools` | Array&lt;string&gt;
 `updatedAt` | string
 `url` | string
 `workspaceId` | string
@@ -28,10 +31,13 @@ const example = {
   "allowedTools": null,
   "createdAt": null,
   "enabled": null,
+  "everyoneTools": null,
   "hasToken": null,
+  "health": null,
   "id": null,
   "name": null,
   "purposeHint": null,
+  "readTools": null,
   "updatedAt": null,
   "url": null,
   "workspaceId": null,

@@ -27,14 +27,17 @@ Name | Type
 `openWeights` | boolean
 `outputModalities` | Array&lt;string&gt;
 `priceSources` | Array&lt;string&gt;
+`priceUnit` | string
 `providerCount` | number
 `providers` | Array&lt;string&gt;
 `releaseDate` | string
 `resolvesTo` | string
 `selector` | string
 `selectors` | Array&lt;string&gt;
+`type` | string
 `unpricedCount` | number
 `vendor` | string
+`zeroDataRetentionProviders` | Array&lt;string&gt;
 
 ## Example
 
@@ -63,14 +66,17 @@ const example = {
   "openWeights": null,
   "outputModalities": null,
   "priceSources": null,
+  "priceUnit": null,
   "providerCount": null,
   "providers": null,
   "releaseDate": null,
   "resolvesTo": null,
   "selector": null,
   "selectors": null,
+  "type": null,
   "unpricedCount": null,
   "vendor": null,
+  "zeroDataRetentionProviders": null,
 } satisfies CatalogModelDetail
 
 console.log(example)

@@ -1,7 +1,7 @@
 
 # CCCompletionTokensDetails
 
-Breakdown of tokens used in a completion.
+OpenAI completion token breakdown extended with image output tokens.  Like ``audio_tokens`` and ``reasoning_tokens``, ``image_tokens`` is a subset of ``completion_tokens``. The name follows OpenAI\'s Images API usage (``output_tokens_details.image_tokens``).
 
 ## Properties
 
@@ -11,6 +11,7 @@ Name | Type
 `audioTokens` | number
 `reasoningTokens` | number
 `rejectedPredictionTokens` | number
+`imageTokens` | number
 
 ## Example
 
@@ -23,6 +24,7 @@ const example = {
   "audioTokens": null,
   "reasoningTokens": null,
   "rejectedPredictionTokens": null,
+  "imageTokens": null,
 } satisfies CCCompletionTokensDetails
 
 console.log(example)

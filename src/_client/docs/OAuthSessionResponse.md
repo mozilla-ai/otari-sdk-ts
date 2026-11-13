@@ -1,7 +1,7 @@
 
 # OAuthSessionResponse
 
-A dashboard session minted by an OAuth sign-in (the token travels only in the cookie).  The same three fields ``POST /api/v1/auth/session`` answers, deliberately: the dashboard\'s sign-in path does not care which credential got it here.
+A dashboard session minted by an OAuth sign-in (the token travels only in the cookie).  The three fields ``POST /api/v1/auth/session`` answers, deliberately, so the dashboard\'s sign-in path does not care which credential got it here, and two only a provider sign-in can produce: ``password_removed`` and ``new_account``.
 
 ## Properties
 
@@ -9,6 +9,8 @@ Name | Type
 ------------ | -------------
 `activeOrganizationId` | string
 `expiresAt` | Date
+`newAccount` | boolean
+`passwordRemoved` | boolean
 `userId` | string
 
 ## Example
@@ -20,6 +22,8 @@ import type { OAuthSessionResponse } from ''
 const example = {
   "activeOrganizationId": null,
   "expiresAt": null,
+  "newAccount": null,
+  "passwordRemoved": null,
   "userId": null,
 } satisfies OAuthSessionResponse
 
