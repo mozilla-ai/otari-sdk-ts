@@ -1,7 +1,7 @@
 
 # MSGChatCompletionContentPartTextParam
 
-Learn about [text inputs](https://platform.openai.com/docs/guides/text-generation).
+Learn about [text inputs](https://developers.openai.com/api/docs/guides/text).
 
 ## Properties
 
@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `text` | string
 `type` | string
+`promptCacheBreakpoint` | [MSGPromptCacheBreakpoint](MSGPromptCacheBreakpoint.md)
 
 ## Example
 
@@ -19,6 +20,7 @@ import type { MSGChatCompletionContentPartTextParam } from ''
 const example = {
   "text": null,
   "type": null,
+  "promptCacheBreakpoint": null,
 } satisfies MSGChatCompletionContentPartTextParam
 
 console.log(example)

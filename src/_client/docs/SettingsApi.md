@@ -4,6 +4,8 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**settingsDeleteCountryDatabase**](SettingsApi.md#settingsdeletecountrydatabase) | **DELETE** /api/v1/settings/country-database | Delete Country Database |
+| [**settingsGetCountryDatabase**](SettingsApi.md#settingsgetcountrydatabase) | **GET** /api/v1/settings/country-database | Get Country Database |
 | [**settingsGetMailSettings**](SettingsApi.md#settingsgetmailsettings) | **GET** /api/v1/settings/mail | Get Mail Settings |
 | [**settingsGetMaintenanceMode**](SettingsApi.md#settingsgetmaintenancemode) | **GET** /api/v1/settings/maintenance-mode | Get Maintenance Mode |
 | [**settingsGetSettings**](SettingsApi.md#settingsgetsettings) | **GET** /api/v1/settings | Get Settings |
@@ -11,7 +13,138 @@ All URIs are relative to *http://localhost*
 | [**settingsSendTestMail**](SettingsApi.md#settingssendtestmail) | **POST** /api/v1/settings/mail/test | Send Test Mail |
 | [**settingsUpdateMaintenanceMode**](SettingsApi.md#settingsupdatemaintenancemode) | **PATCH** /api/v1/settings/maintenance-mode | Update Maintenance Mode |
 | [**settingsUpdateSettings**](SettingsApi.md#settingsupdatesettings) | **PATCH** /api/v1/settings | Update Settings |
+| [**settingsUploadCountryDatabase**](SettingsApi.md#settingsuploadcountrydatabase) | **PUT** /api/v1/settings/country-database | Upload Country Database |
 
+
+
+## settingsDeleteCountryDatabase
+
+> settingsDeleteCountryDatabase()
+
+Delete Country Database
+
+Remove the stored country file.  Answers 404 when none is stored, and 409 when it is the only country source for &#x60;&#x60;provider_supported_countries&#x60;&#x60; or for the supported countries of an enabled hosted provider.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  SettingsApi,
+} from '';
+import type { SettingsDeleteCountryDatabaseRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new SettingsApi(config);
+
+  try {
+    const data = await api.settingsDeleteCountryDatabase();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Successful Response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## settingsGetCountryDatabase
+
+> CountryDatabaseStatus settingsGetCountryDatabase()
+
+Get Country Database
+
+Describe the stored country file, and say whether &#x60;&#x60;client_country_database&#x60;&#x60; is read instead.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  SettingsApi,
+} from '';
+import type { SettingsGetCountryDatabaseRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new SettingsApi(config);
+
+  try {
+    const data = await api.settingsGetCountryDatabase();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**CountryDatabaseStatus**](CountryDatabaseStatus.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
 ## settingsGetMailSettings
@@ -492,6 +625,81 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
 | **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## settingsUploadCountryDatabase
+
+> CountryDatabaseStatus settingsUploadCountryDatabase(file)
+
+Upload Country Database
+
+Store a country file in place of the one stored before.  A file larger than 32 MiB answers 413, and one that is no MaxMind DB country file answers 400. Either way the file stored before stays. While &#x60;&#x60;client_country_database&#x60;&#x60; is set, the stored file is kept but not read.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  SettingsApi,
+} from '';
+import type { SettingsUploadCountryDatabaseRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new SettingsApi(config);
+
+  const body = {
+    // string | A MaxMind DB country file, such as GeoLite2 Country or DB-IP Lite Country.
+    file: file_example,
+  } satisfies SettingsUploadCountryDatabaseRequest;
+
+  try {
+    const data = await api.settingsUploadCountryDatabase(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **file** | `string` | A MaxMind DB country file, such as GeoLite2 Country or DB-IP Lite Country. | [Defaults to `undefined`] |
+
+### Return type
+
+[**CountryDatabaseStatus**](CountryDatabaseStatus.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `multipart/form-data`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **413** | The file is larger than 32 MiB. |  -  |
+| **422** | The body holds no file in the field &#x60;&#x60;file&#x60;&#x60;. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

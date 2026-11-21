@@ -8,10 +8,16 @@ Request body for registering a server.  ``authorization_token`` is never stored 
 Name | Type
 ------------ | -------------
 `allowedTools` | Array&lt;string&gt;
+`attachByDefault` | boolean
 `authorizationToken` | string
+`credentialMode` | [McpCredentialMode](McpCredentialMode.md)
 `enabled` | boolean
+`everyoneTools` | Array&lt;string&gt;
 `name` | string
+`oauthClientId` | string
+`oauthClientSecret` | string
 `purposeHint` | string
+`readTools` | Array&lt;string&gt;
 `url` | string
 
 ## Example
@@ -22,10 +28,16 @@ import type { WorkspaceMcpServerCreate } from ''
 // TODO: Update the object below with actual values
 const example = {
   "allowedTools": null,
+  "attachByDefault": null,
   "authorizationToken": null,
+  "credentialMode": null,
   "enabled": null,
+  "everyoneTools": null,
   "name": null,
+  "oauthClientId": null,
+  "oauthClientSecret": null,
   "purposeHint": null,
+  "readTools": null,
   "url": null,
 } satisfies WorkspaceMcpServerCreate
 

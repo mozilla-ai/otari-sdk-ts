@@ -14,7 +14,7 @@ All URIs are relative to *http://localhost*
 
 Create Embedding
 
-OpenAI-compatible embeddings endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \&quot;default\&quot; user
+OpenAI-compatible embeddings endpoint.  Authentication modes: - Master key + user field: Use specified user (must exist) - API key + user field: Use specified user (must exist) - API key without user field: Use the shared \&quot;default\&quot; user  A priced response carries its cost on &#x60;usage&#x60; as &#x60;cost_usd&#x60; (a six-decimal USD string) and &#x60;pricing_source&#x60;, as a chat completion does; an unpriced one carries neither.
 
 ### Example
 

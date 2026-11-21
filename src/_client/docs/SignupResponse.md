@@ -8,6 +8,7 @@ The same message whether or not the address had anything to claim.
 Name | Type
 ------------ | -------------
 `message` | string
+`verified` | boolean
 
 ## Example
 
@@ -17,6 +18,7 @@ import type { SignupResponse } from ''
 // TODO: Update the object below with actual values
 const example = {
   "message": null,
+  "verified": null,
 } satisfies SignupResponse
 
 console.log(example)

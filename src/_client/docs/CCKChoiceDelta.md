@@ -6,6 +6,7 @@
 
 Name | Type
 ------------ | -------------
+`audio` | [CCKChoiceDeltaAudio](CCKChoiceDeltaAudio.md)
 `content` | string
 `functionCall` | [CCKChoiceDeltaFunctionCall](CCKChoiceDeltaFunctionCall.md)
 `refusal` | string
@@ -14,7 +15,6 @@ Name | Type
 `reasoning` | string
 `extraContent` | { [key: string]: any; }
 `images` | [Array&lt;CCKImageContent&gt;](CCKImageContent.md)
-`audio` | [CCKChoiceDeltaAudio](CCKChoiceDeltaAudio.md)
 
 ## Example
 
@@ -23,6 +23,7 @@ import type { CCKChoiceDelta } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "audio": null,
   "content": null,
   "functionCall": null,
   "refusal": null,
@@ -31,7 +32,6 @@ const example = {
   "reasoning": null,
   "extraContent": null,
   "images": null,
-  "audio": null,
 } satisfies CCKChoiceDelta
 
 console.log(example)

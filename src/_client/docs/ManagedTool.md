@@ -10,10 +10,12 @@ Name | Type
 `acceptedTypes` | Array&lt;string&gt;
 `available` | boolean
 `description` | string
+`directAvailable` | boolean
 `example` | { [key: string]: any; }
 `id` | string
 `inputSchema` | { [key: string]: any; }
 `object` | string
+`reason` | string
 
 ## Example
 
@@ -25,10 +27,12 @@ const example = {
   "acceptedTypes": null,
   "available": null,
   "description": null,
+  "directAvailable": null,
   "example": null,
   "id": null,
   "inputSchema": null,
   "object": null,
+  "reason": null,
 } satisfies ManagedTool
 
 console.log(example)

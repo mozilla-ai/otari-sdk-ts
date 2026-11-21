@@ -1,12 +1,14 @@
 
 # Annotations
 
+Optional annotations the client can use to inform how objects are used or displayed.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
 `audience` | Array&lt;string&gt;
+`lastModified` | string
 `priority` | number
 
 ## Example
@@ -17,6 +19,7 @@ import type { Annotations } from ''
 // TODO: Update the object below with actual values
 const example = {
   "audience": null,
+  "lastModified": null,
   "priority": null,
 } satisfies Annotations
 

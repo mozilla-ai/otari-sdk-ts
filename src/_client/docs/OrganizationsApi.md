@@ -5,10 +5,12 @@ All URIs are relative to *http://localhost*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**organizationsAcceptCallerPendingMembership**](OrganizationsApi.md#organizationsacceptcallerpendingmembership) | **POST** /api/v1/organizations/me/pending-memberships/{organization_member_id}/accept | Accept Caller Pending Membership |
+| [**organizationsBulkInviteActiveOrganizationMembers**](OrganizationsApi.md#organizationsbulkinviteactiveorganizationmembers) | **POST** /api/v1/organizations/me/member-invitations/bulk | Bulk Invite Active Organization Members |
 | [**organizationsCreateActiveOrganizationDomain**](OrganizationsApi.md#organizationscreateactiveorganizationdomain) | **POST** /api/v1/organizations/me/domains | Create Active Organization Domain |
 | [**organizationsCreateActiveOrganizationMember**](OrganizationsApi.md#organizationscreateactiveorganizationmember) | **POST** /api/v1/organizations/me/members | Create Active Organization Member |
 | [**organizationsCreateOrganization**](OrganizationsApi.md#organizationscreateorganization) | **POST** /api/v1/organizations | Create Organization |
 | [**organizationsDeclineCallerPendingMembership**](OrganizationsApi.md#organizationsdeclinecallerpendingmembership) | **POST** /api/v1/organizations/me/pending-memberships/{organization_member_id}/decline | Decline Caller Pending Membership |
+| [**organizationsDeleteActiveOrganization**](OrganizationsApi.md#organizationsdeleteactiveorganization) | **DELETE** /api/v1/organizations/me | Delete Active Organization |
 | [**organizationsDeleteActiveOrganizationDomain**](OrganizationsApi.md#organizationsdeleteactiveorganizationdomain) | **DELETE** /api/v1/organizations/me/domains/{organization_domain_id} | Delete Active Organization Domain |
 | [**organizationsGetActiveOrganizationContext**](OrganizationsApi.md#organizationsgetactiveorganizationcontext) | **GET** /api/v1/organizations/me | Get Active Organization Context |
 | [**organizationsInviteActiveOrganizationMember**](OrganizationsApi.md#organizationsinviteactiveorganizationmember) | **POST** /api/v1/organizations/me/member-invitations | Invite Active Organization Member |
@@ -16,6 +18,7 @@ All URIs are relative to *http://localhost*
 | [**organizationsListActiveOrganizationMembers**](OrganizationsApi.md#organizationslistactiveorganizationmembers) | **GET** /api/v1/organizations/me/members | List Active Organization Members |
 | [**organizationsListCallerOrganizationMemberships**](OrganizationsApi.md#organizationslistcallerorganizationmemberships) | **GET** /api/v1/organizations/me/memberships | List Caller Organization Memberships |
 | [**organizationsListCallerPendingMemberships**](OrganizationsApi.md#organizationslistcallerpendingmemberships) | **GET** /api/v1/organizations/me/pending-memberships | List Caller Pending Memberships |
+| [**organizationsReissueActiveOrganizationMemberInvitation**](OrganizationsApi.md#organizationsreissueactiveorganizationmemberinvitation) | **POST** /api/v1/organizations/me/member-invitations/{invitation_id}/reissue | Reissue Active Organization Member Invitation |
 | [**organizationsRemoveActiveOrganizationMember**](OrganizationsApi.md#organizationsremoveactiveorganizationmember) | **DELETE** /api/v1/organizations/me/members/{organization_member_id} | Remove Active Organization Member |
 | [**organizationsRevokeActiveOrganizationMemberInvitation**](OrganizationsApi.md#organizationsrevokeactiveorganizationmemberinvitation) | **DELETE** /api/v1/organizations/me/member-invitations/{invitation_id} | Revoke Active Organization Member Invitation |
 | [**organizationsSwitchActiveOrganization**](OrganizationsApi.md#organizationsswitchactiveorganization) | **POST** /api/v1/organizations/me/switch | Switch Active Organization |
@@ -100,13 +103,87 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## organizationsBulkInviteActiveOrganizationMembers
+
+> BulkInviteOrganizationMembersResultPublic organizationsBulkInviteActiveOrganizationMembers(bulkInviteOrganizationMembersRequest)
+
+Bulk Invite Active Organization Members
+
+Invite several addresses to the caller\&#39;s active organization at once.  Organization owners and admins only. Every address gets the same role and workspace assignments. Each one is checked as &#x60;&#x60;POST /me/member-invitations&#x60;&#x60; would check it, and an address that is refused lands in &#x60;&#x60;failed&#x60;&#x60; with the reason rather than failing the request, so the answer is 200 even when some or all were refused. Each invited entry carries its own &#x60;&#x60;mail_sent&#x60;&#x60;, and its accept link when that is false, on the terms &#x60;&#x60;POST /me/member-invitations&#x60;&#x60; returns one.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  OrganizationsApi,
+} from '';
+import type { OrganizationsBulkInviteActiveOrganizationMembersRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new OrganizationsApi(config);
+
+  const body = {
+    // BulkInviteOrganizationMembersRequest
+    bulkInviteOrganizationMembersRequest: ...,
+  } satisfies OrganizationsBulkInviteActiveOrganizationMembersRequest;
+
+  try {
+    const data = await api.organizationsBulkInviteActiveOrganizationMembers(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **bulkInviteOrganizationMembersRequest** | [BulkInviteOrganizationMembersRequest](BulkInviteOrganizationMembersRequest.md) |  | |
+
+### Return type
+
+[**BulkInviteOrganizationMembersResultPublic**](BulkInviteOrganizationMembersResultPublic.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## organizationsCreateActiveOrganizationDomain
 
 > OrganizationDomainPublic organizationsCreateActiveOrganizationDomain(organizationDomainCreateRequest)
 
 Create Active Organization Domain
 
-Claim an email domain for the caller\&#39;s organization. Owners and admins only.  The claim lands unverified and does nothing until &#x60;&#x60;POST /me/domains/{id}/verify&#x60;&#x60; finds the record in &#x60;&#x60;verification_record&#x60;&#x60; published at the domain\&#39;s apex. A public email provider is refused outright, and a domain another organization already claims answers 409 without saying who holds it.
+Claim an email domain for the caller\&#39;s organization. Owners and admins only.  The claim starts unverified and does nothing. &#x60;&#x60;POST /me/domains/{id}/verify&#x60;&#x60; verifies it by finding the record in &#x60;&#x60;verification_record&#x60;&#x60; at the domain\&#39;s apex. Verifying is refused while another organization has a current proof of the same domain. A public email provider is refused, and so is a domain this organization has already claimed.
 
 ### Example
 
@@ -180,7 +257,7 @@ example().catch(console.error);
 
 Create Active Organization Member
 
-Add a member to the caller\&#39;s active organization, by email address.  Organization owners and admins only. The member is active immediately and the response says so: this edition has no invitation to send and no way to accept one, so it answers on the &#x60;&#x60;active&#x60;&#x60; arm of the result rather than the &#x60;&#x60;invited&#x60;&#x60; one the platform uses. An address that belongs to no identity yet creates one, which carries the address as the handle a future sign-in flow will claim it by, and can do nothing until then.
+Add a member to the caller\&#39;s active organization, by email address.  Organization owners and admins only. The member is active immediately, with no invitation to accept and no email sent, so the person has to be told some other way. An address that belongs to no identity yet creates one, which gets in by signing up, by \&quot;Forgot your password?\&quot; or by a Google or GitHub sign-in; on a deployment with no mail and no provider it waits for an operator\&#39;s password link, so invite it instead (&#x60;&#x60;POST /me/member-invitations&#x60;&#x60;), whose link can set its first password.  On a deployment with &#x60;&#x60;open_signup&#x60;&#x60; on, only a deployment operator may add members this way (403 for anyone else, who invites instead). An address at an email domain another organization has verified is refused with 409.
 
 ### Example
 
@@ -254,7 +331,7 @@ example().catch(console.error);
 
 Create Organization
 
-Create an organization with the caller as its owner.  Takes a name; the slug is derived from it with a random suffix, so two organizations may share a name and a later rename does not move the slug. A default workspace is provisioned alongside, because an organization without one has nowhere to hold a key, a budget or a usage row.  The caller is **not** moved into it. Switching is a separate call (&#x60;&#x60;POST /me/switch&#x60;&#x60;), so creating an organization does not change what the rest of the caller\&#39;s session is looking at.
+Create an organization with the caller as its owner.  Takes a name; the slug is derived from it with a random suffix, so two organizations may share a name and a later rename does not move the slug. A default workspace is provisioned alongside, because an organization without one has nowhere to hold a key, a budget or a usage row.  The caller is **not** moved into it. Switching is a separate call (&#x60;&#x60;POST /me/switch&#x60;&#x60;), so creating an organization does not change what the rest of the caller\&#39;s session is looking at.  Where signup is closed, the caller must already be an active member of an organization; a caller with none is refused with a 403.
 
 ### Example
 
@@ -317,6 +394,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Successful Response |  -  |
+| **403** | Signup is closed and the caller is not an active member of any organization. |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -392,6 +470,74 @@ example().catch(console.error);
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
 | **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## organizationsDeleteActiveOrganization
+
+> OrganizationMembershipContextPublic organizationsDeleteActiveOrganization()
+
+Delete Active Organization
+
+Delete the caller\&#39;s active organization, if it has no usage, and move the caller out of it.  Owners and admins only. Its workspaces, memberships, invitations and organization-level settings go with it. Refused for the deployment\&#39;s default organization, for the only organization the caller belongs to, and for one whose workspaces still hold usage, API keys, aliases or routing policies, so a deletion never takes spend history with it.  Answers with the caller\&#39;s context in the organization they are moved to: the oldest of their other memberships that admits them. One requiring sign-in through its own connection admits a member who holds a link to it, and the account its enforcement exempts, and nobody else.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  OrganizationsApi,
+} from '';
+import type { OrganizationsDeleteActiveOrganizationRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new OrganizationsApi(config);
+
+  try {
+    const data = await api.organizationsDeleteActiveOrganization();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**OrganizationMembershipContextPublic**](OrganizationMembershipContextPublic.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **400** | It is the deployment\&#39;s default organization, or the only one the caller belongs to. |  -  |
+| **403** | The caller is not an owner or admin of the organization. |  -  |
+| **409** | The organization still holds usage, API keys, aliases or routing policies. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -531,6 +677,7 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
+| **404** | The caller is an active member of no organization. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
@@ -541,7 +688,7 @@ This endpoint does not need any parameter.
 
 Invite Active Organization Member
 
-Invite an address to the caller\&#39;s active organization by email.  Organization owners and admins only. Unlike &#x60;&#x60;POST /me/members&#x60;&#x60;, the membership lands &#x60;&#x60;invited&#x60;&#x60; rather than &#x60;&#x60;active&#x60;&#x60;: it becomes active once the recipient accepts (&#x60;&#x60;POST /api/v1/invitations/accept&#x60;&#x60;). The response always carries the accept link, whether or not it was actually emailed (&#x60;&#x60;mail_sent&#x60;&#x60;), so an operator can share it themselves when mail is not configured or the send fails.
+Invite an address to the caller\&#39;s active organization by email.  Organization owners and admins only. Unlike &#x60;&#x60;POST /me/members&#x60;&#x60;, the membership lands &#x60;&#x60;invited&#x60;&#x60; rather than &#x60;&#x60;active&#x60;&#x60;: it becomes active once the recipient accepts (&#x60;&#x60;POST /api/v1/invitations/accept&#x60;&#x60;). When the email did not go out (&#x60;&#x60;mail_sent&#x60;&#x60; is false: mail is not configured, the send failed, or the invitation mail limit was reached), the response carries the accept link so the caller can share it themselves, except under &#x60;&#x60;open_signup&#x60;&#x60; to a caller who is not a deployment operator, whose invitee accepts from their pending invitations once signed in. An address whose invitation is still pending is refused; reissue that invitation to send a new link.
 
 ### Example
 
@@ -760,7 +907,7 @@ example().catch(console.error);
 
 List Caller Organization Memberships
 
-List the organizations the caller belongs to, and their role in each.  The caller\&#39;s own active memberships, not a directory of the deployment\&#39;s organizations: this is what an organization switcher renders, and one row carries &#x60;&#x60;is_active_organization&#x60;&#x60; so it can mark the current one. Not to be confused with &#x60;&#x60;GET /me/members&#x60;&#x60;, which is the active organization\&#39;s roster.
+List the organizations the caller belongs to, and their role in each.  The caller\&#39;s own active memberships, not a directory of the deployment\&#39;s organizations: this is what an organization switcher renders, and one row carries &#x60;&#x60;is_active_organization&#x60;&#x60; so it can mark the current one. Not to be confused with &#x60;&#x60;GET /me/members&#x60;&#x60;, which is the active organization\&#39;s memberships. An organization whose own SSO enforcement refuses the caller is left off.
 
 ### Example
 
@@ -908,6 +1055,80 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## organizationsReissueActiveOrganizationMemberInvitation
+
+> InviteOrganizationMemberResultPublic organizationsReissueActiveOrganizationMemberInvitation(invitationId)
+
+Reissue Active Organization Member Invitation
+
+Give a pending or expired invitation a new accept link. Organization owners and admins only.  The old link stops working. The new one is emailed as an invitation is, and returned in &#x60;&#x60;accept_link&#x60;&#x60; when it was not, on the terms &#x60;&#x60;POST /me/member-invitations&#x60;&#x60; returns one. Where the link was neither emailed nor returned, the invitee accepts from their pending invitations once signed in.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  OrganizationsApi,
+} from '';
+import type { OrganizationsReissueActiveOrganizationMemberInvitationRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new OrganizationsApi(config);
+
+  const body = {
+    // string
+    invitationId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies OrganizationsReissueActiveOrganizationMemberInvitationRequest;
+
+  try {
+    const data = await api.organizationsReissueActiveOrganizationMemberInvitation(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **invitationId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**InviteOrganizationMemberResultPublic**](InviteOrganizationMemberResultPublic.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## organizationsRemoveActiveOrganizationMember
 
 > Message organizationsRemoveActiveOrganizationMember(organizationMemberId)
@@ -988,7 +1209,7 @@ example().catch(console.error);
 
 Revoke Active Organization Member Invitation
 
-Revoke an unaccepted invitation. Organization owners and admins only.  Suspends the paired membership rather than deleting it, the same as removing an active member: re-inviting the same address later revives it.
+Revoke an unaccepted invitation, pending or expired. Organization owners and admins only.  Suspends the paired membership rather than deleting it, the same as removing an active member: re-inviting the same address later revives it.
 
 ### Example
 
@@ -1062,7 +1283,7 @@ example().catch(console.error);
 
 Switch Active Organization
 
-Point the caller\&#39;s identity at another organization they belong to.  Distinct from &#x60;&#x60;PATCH /me&#x60;&#x60;, which renames the organization already active. This changes which organization every later request is scoped to, so workspaces, keys, budgets and usage all follow it. Answers 404 for an organization the caller holds no active membership in, whether or not it exists.
+Point the caller\&#39;s identity at another organization they belong to.  Distinct from &#x60;&#x60;PATCH /me&#x60;&#x60;, which renames the organization already active. This changes which organization every later request is scoped to, so workspaces, keys, budgets and usage all follow it. Answers 404 for an organization the caller holds no active membership in, whether or not it exists, and for one whose own SSO enforcement refuses the caller.
 
 ### Example
 
@@ -1287,7 +1508,7 @@ example().catch(console.error);
 
 Update Active Organization Member
 
-Change a member\&#39;s role or status. Organization owners and admins only.
+Change a member\&#39;s role or status. Organization owners and admins only.  On a deployment with &#x60;&#x60;open_signup&#x60;&#x60; on, only a deployment operator may make active a member who never accepted an invitation (403 for anyone else).
 
 ### Example
 

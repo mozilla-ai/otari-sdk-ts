@@ -8,13 +8,13 @@ Replace an override\'s rates and period.  ``effective_from`` is required here, w
 Name | Type
 ------------ | -------------
 `cacheReadPricePerMillion` | number
-`cacheWrite1hPricePerMillion` | number
 `cacheWritePricePerMillion` | number
 `effectiveFrom` | Date
 `effectiveTo` | Date
 `inputPricePerMillion` | number
 `outputPricePerMillion` | number
 `pricingTiers` | [Array&lt;PricingTier&gt;](PricingTier.md)
+`rates` | [RatesDocumentInput](RatesDocumentInput.md)
 `unit` | string
 
 ## Example
@@ -25,13 +25,13 @@ import type { OrganizationModelPricingUpdate } from ''
 // TODO: Update the object below with actual values
 const example = {
   "cacheReadPricePerMillion": null,
-  "cacheWrite1hPricePerMillion": null,
   "cacheWritePricePerMillion": null,
   "effectiveFrom": null,
   "effectiveTo": null,
   "inputPricePerMillion": null,
   "outputPricePerMillion": null,
   "pricingTiers": null,
+  "rates": null,
   "unit": null,
 } satisfies OrganizationModelPricingUpdate
 

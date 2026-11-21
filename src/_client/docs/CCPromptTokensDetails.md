@@ -8,8 +8,10 @@ OpenAI prompt token breakdown extended with the TTL split of cache writes.  As i
 Name | Type
 ------------ | -------------
 `audioTokens` | number
-`cachedTokens` | number
 `cacheWriteTokens` | number
+`cachedTokens` | number
+`imageTokens` | number
+`textTokens` | number
 `cacheCreationTokenDetails` | [CCCacheCreationTokenDetails](CCCacheCreationTokenDetails.md)
 
 ## Example
@@ -20,8 +22,10 @@ import type { CCPromptTokensDetails } from ''
 // TODO: Update the object below with actual values
 const example = {
   "audioTokens": null,
-  "cachedTokens": null,
   "cacheWriteTokens": null,
+  "cachedTokens": null,
+  "imageTokens": null,
+  "textTokens": null,
   "cacheCreationTokenDetails": null,
 } satisfies CCPromptTokensDetails
 

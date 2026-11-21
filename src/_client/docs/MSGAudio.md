@@ -1,7 +1,7 @@
 
 # MSGAudio
 
-Data about a previous audio response from the model. [Learn more](https://platform.openai.com/docs/guides/audio).
+Data about a previous audio response from the model. [Learn more](https://developers.openai.com/api/docs/guides/audio).
 
 ## Properties
 

@@ -1,14 +1,14 @@
 
 # SearchToolsResponse
 
-Every search tool ``POST /api/v1/search`` can name, by where it came from.
+Every search instance ``POST /api/v1/search`` can name, or every fetch instance, by where it came from.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
 `config` | [Array&lt;ConfigSearchToolSchema&gt;](ConfigSearchToolSchema.md)
-`stored` | [Array&lt;StoredSearchToolSchema&gt;](StoredSearchToolSchema.md)
+`stored` | [Array&lt;ListedSearchToolSchema&gt;](ListedSearchToolSchema.md)
 
 ## Example
 

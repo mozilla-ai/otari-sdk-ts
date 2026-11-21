@@ -1,7 +1,7 @@
 
 # MSGFile
 
-Learn about [file inputs](https://platform.openai.com/docs/guides/text) for text generation.
+Learn about [file inputs](https://developers.openai.com/api/docs/guides/text) for text generation.
 
 ## Properties
 
@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `file` | [MSGFileFile](MSGFileFile.md)
 `type` | string
+`promptCacheBreakpoint` | [MSGFilePromptCacheBreakpoint](MSGFilePromptCacheBreakpoint.md)
 
 ## Example
 
@@ -19,6 +20,7 @@ import type { MSGFile } from ''
 const example = {
   "file": null,
   "type": null,
+  "promptCacheBreakpoint": null,
 } satisfies MSGFile
 
 console.log(example)

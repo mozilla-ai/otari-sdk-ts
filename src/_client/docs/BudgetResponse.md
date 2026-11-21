@@ -13,11 +13,14 @@ Name | Type
 `maxBudget` | number
 `name` | string
 `organizationId` | string
+`origin` | string
 `requestLimit` | number
 `resetAlignment` | string
+`rpmLimit` | number
 `tokenLimit` | number
 `totalReserved` | number
 `totalSpend` | number
+`tpmLimit` | number
 `updatedAt` | string
 `userCount` | number
 
@@ -34,11 +37,14 @@ const example = {
   "maxBudget": null,
   "name": null,
   "organizationId": null,
+  "origin": null,
   "requestLimit": null,
   "resetAlignment": null,
+  "rpmLimit": null,
   "tokenLimit": null,
   "totalReserved": null,
   "totalSpend": null,
+  "tpmLimit": null,
   "updatedAt": null,
   "userCount": null,
 } satisfies BudgetResponse

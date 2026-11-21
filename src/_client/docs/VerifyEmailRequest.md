@@ -6,6 +6,7 @@
 
 Name | Type
 ------------ | -------------
+`password` | string
 `token` | string
 
 ## Example
@@ -15,6 +16,7 @@ import type { VerifyEmailRequest } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "password": null,
   "token": null,
 } satisfies VerifyEmailRequest
 

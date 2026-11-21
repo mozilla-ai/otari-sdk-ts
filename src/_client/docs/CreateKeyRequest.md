@@ -8,12 +8,18 @@ Request model for creating a new API key.
 Name | Type
 ------------ | -------------
 `allowedModels` | Array&lt;string&gt;
+`allowedTools` | Array&lt;string&gt;
 `captureAgentTelemetry` | boolean
+`endUserBudgetId` | string
+`endUserBudgetIds` | Array&lt;string&gt;
 `excludeFromBudget` | boolean
 `expiresAt` | Date
+`isServiceKey` | boolean
 `keyName` | string
+`maxEndUsers` | number
 `metadata` | { [key: string]: any; }
 `rejectUserMismatch` | boolean
+`scopes` | [Array&lt;KeyScope&gt;](KeyScope.md)
 `userId` | string
 `workspaceId` | string
 
@@ -25,12 +31,18 @@ import type { CreateKeyRequest } from ''
 // TODO: Update the object below with actual values
 const example = {
   "allowedModels": null,
+  "allowedTools": null,
   "captureAgentTelemetry": null,
+  "endUserBudgetId": null,
+  "endUserBudgetIds": null,
   "excludeFromBudget": null,
   "expiresAt": null,
+  "isServiceKey": null,
   "keyName": null,
+  "maxEndUsers": null,
   "metadata": null,
   "rejectUserMismatch": null,
+  "scopes": null,
   "userId": null,
   "workspaceId": null,
 } satisfies CreateKeyRequest

@@ -11,6 +11,7 @@ Name | Type
 `apiKey` | string
 `clientArgs` | { [key: string]: any; }
 `name` | string
+`zeroDataRetention` | boolean
 
 ## Example
 
@@ -23,6 +24,7 @@ const example = {
   "apiKey": null,
   "clientArgs": null,
   "name": null,
+  "zeroDataRetention": null,
 } satisfies OrgProviderKeyUpdateRequest
 
 console.log(example)

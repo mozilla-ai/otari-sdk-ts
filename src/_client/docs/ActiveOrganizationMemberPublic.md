@@ -1,7 +1,7 @@
 
 # ActiveOrganizationMemberPublic
 
-A member row joined to the identity behind it, as the roster shows it.  Field-for-field the platform\'s shape, so the ported roster page is not rewritten around a new contract, with two consequences of the OSS line: ``email`` is nullable here (a local operator identity has no sign-in address), and ``invitation_id`` is always null until the invitation flow rehomes, which is what fills it.  ``attribution_user_id`` is the addition the platform has no counterpart for. Keys, budgets, and usage attach to the gateway\'s string-keyed ``users`` row, not to this UUID identity, so this carries the ``user_id`` a caller passes to when minting a key for this member. It is null when no usable row exists (nobody minted one, or it was soft-deleted through soft-deleted), which is the signal not to offer this member as a key owner: key creation would refuse. How the two ids converge is the open question in otari-ai#1727; this field is the join until it is answered, and is what lets either answer land without the dashboard changing.
+A member row joined to the identity behind it, as the roster shows it.  Field-for-field the platform\'s shape, so the ported roster page is not rewritten around a new contract, except that ``email`` is nullable here (a local operator identity has no sign-in address).  ``invitation_id`` and ``invitation_expires_at`` name an ``invited`` row\'s current invitation, which may have expired, so the roster can offer to revoke or reissue it.  ``is_sso_account`` records how the account came about, not whether the connection still admits it: an organization that repoints or drops its connection leaves the account provisioned by one and unable to sign in.  ``attribution_user_id`` is the addition the platform has no counterpart for. Keys, budgets, and usage attach to the gateway\'s string-keyed ``users`` row, not to this UUID identity, so this carries the ``user_id`` a caller passes to when minting a key for this member. It is null when no usable row exists (nobody minted one, or it was soft-deleted through soft-deleted), which is the signal not to offer this member as a key owner: key creation would refuse. How the two ids converge is the open question in otari-ai#1727; this field is the join until it is answered, and is what lets either answer land without the dashboard changing.
 
 ## Properties
 
@@ -9,10 +9,13 @@ Name | Type
 ------------ | -------------
 `attribution` | [MemberAttributionPublic](MemberAttributionPublic.md)
 `attributionUserId` | string
+`avatarFace` | number
 `createdAt` | Date
 `email` | string
 `fullName` | string
+`invitationExpiresAt` | Date
 `invitationId` | string
+`isSsoAccount` | boolean
 `organizationMemberId` | string
 `role` | string
 `status` | string
@@ -29,10 +32,13 @@ import type { ActiveOrganizationMemberPublic } from ''
 const example = {
   "attribution": null,
   "attributionUserId": null,
+  "avatarFace": null,
   "createdAt": null,
   "email": null,
   "fullName": null,
+  "invitationExpiresAt": null,
   "invitationId": null,
+  "isSsoAccount": null,
   "organizationMemberId": null,
   "role": null,
   "status": null,

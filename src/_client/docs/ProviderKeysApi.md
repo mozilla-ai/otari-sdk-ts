@@ -23,6 +23,7 @@ All URIs are relative to *http://localhost*
 | [**providerKeysSetOrgProviderKeyDefault**](ProviderKeysApi.md#providerkeyssetorgproviderkeydefault) | **POST** /api/v1/organizations/me/provider-keys/{key_id}/default | Set Org Provider Key Default |
 | [**providerKeysSetOrgProviderKeyModelEnabled**](ProviderKeysApi.md#providerkeyssetorgproviderkeymodelenabled) | **PATCH** /api/v1/organizations/me/provider-keys/{key_id}/models/{model_id} | Set Org Provider Key Model Enabled |
 | [**providerKeysSetWorkspaceProviderKeyOverride**](ProviderKeysApi.md#providerkeyssetworkspaceproviderkeyoverride) | **PATCH** /api/v1/workspaces/{workspace_id}/provider-keys/{key_id} | Set Workspace Provider Key Override |
+| [**providerKeysUnsetOrgProviderKeyDefault**](ProviderKeysApi.md#providerkeysunsetorgproviderkeydefault) | **DELETE** /api/v1/organizations/me/provider-keys/{key_id}/default | Unset Org Provider Key Default |
 | [**providerKeysUpdateOrgProviderKey**](ProviderKeysApi.md#providerkeysupdateorgproviderkey) | **PATCH** /api/v1/organizations/me/provider-keys/{key_id} | Update Org Provider Key |
 
 
@@ -338,7 +339,7 @@ example().catch(console.error);
 
 Delete Org Provider Key
 
-Permanently delete an archived key. Organization owners and admins only.
+Permanently delete an archived key. Organization owners and admins only.  The model details the organization set under the key\&#39;s prefix go with its last key there.
 
 ### Example
 
@@ -482,7 +483,7 @@ example().catch(console.error);
 
 ## providerKeysListOrgProviderKeyModels
 
-> OrgProviderKeyModelsPublic providerKeysListOrgProviderKeyModels(keyId, skip, limit)
+> OrgProviderKeyModelsPublic providerKeysListOrgProviderKeyModels(keyId, skip, limit, type, search, enabled)
 
 List Org Provider Key Models
 
@@ -514,6 +515,12 @@ async function example() {
     skip: 56,
     // number | Maximum number of records to return (optional)
     limit: 56,
+    // 'chat' | 'embedding' | 'image' | 'speech' | 'transcription' | 'rerank' | 'moderation' | 'video' | 'decision' | 'realtime' | 'other' | 'unknown' | Only models of this kind; `unknown` for those no source names a kind for (optional)
+    type: type_example,
+    // string | Only models whose name contains this text, case-insensitively (optional)
+    search: search_example,
+    // boolean | Only models served (`true`) or only models withheld (`false`) (optional)
+    enabled: true,
   } satisfies ProviderKeysListOrgProviderKeyModelsRequest;
 
   try {
@@ -536,6 +543,9 @@ example().catch(console.error);
 | **keyId** | `string` |  | [Defaults to `undefined`] |
 | **skip** | `number` | Number of records to skip | [Optional] [Defaults to `0`] |
 | **limit** | `number` | Maximum number of records to return | [Optional] [Defaults to `500`] |
+| **type** | `chat`, `embedding`, `image`, `speech`, `transcription`, `rerank`, `moderation`, `video`, `decision`, `realtime`, `other`, `unknown` | Only models of this kind; &#x60;unknown&#x60; for those no source names a kind for | [Optional] [Defaults to `undefined`] [Enum: chat, embedding, image, speech, transcription, rerank, moderation, video, decision, realtime, other, unknown] |
+| **search** | `string` | Only models whose name contains this text, case-insensitively | [Optional] [Defaults to `undefined`] |
+| **enabled** | `boolean` | Only models served (&#x60;true&#x60;) or only models withheld (&#x60;false&#x60;) | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -1481,13 +1491,87 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## providerKeysUnsetOrgProviderKeyDefault
+
+> OrgProviderKeyPublic providerKeysUnsetOrgProviderKeyDefault(keyId)
+
+Unset Org Provider Key Default
+
+Stop a key being the organization\&#39;s default for its provider. Organization owners and admins only.  Idempotent: a key that is not the default is returned unchanged. With no default, a request that names no instance gets the provider\&#39;s earliest-created key the workspace has not disabled.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ProviderKeysApi,
+} from '';
+import type { ProviderKeysUnsetOrgProviderKeyDefaultRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new ProviderKeysApi(config);
+
+  const body = {
+    // string
+    keyId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies ProviderKeysUnsetOrgProviderKeyDefaultRequest;
+
+  try {
+    const data = await api.providerKeysUnsetOrgProviderKeyDefault(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **keyId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**OrgProviderKeyPublic**](OrgProviderKeyPublic.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## providerKeysUpdateOrgProviderKey
 
 > OrgProviderKeyPublic providerKeysUpdateOrgProviderKey(keyId, orgProviderKeyUpdateRequest)
 
 Update Org Provider Key
 
-Change a key\&#39;s name, credential, base URL, or client args. Organization owners and admins only.
+Change a key\&#39;s name, credential, base URL, or client args. Organization owners and admins only.  A new base URL on a key that holds a credential needs that credential in the same request, &#x60;api_key&#x60; and any masked &#x60;client_args&#x60; entry, since the next call sends it to the new host. Clearing the base URL needs neither.
 
 ### Example
 

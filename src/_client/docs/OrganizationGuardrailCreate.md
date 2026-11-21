@@ -1,7 +1,7 @@
 
 # OrganizationGuardrailCreate
 
-Request body for mandating a guardrail across an organization.  ``credential`` is never stored as sent: it is encrypted with ``OTARI_SECRET_KEY`` and only the ciphertext is kept, the same convention `tools.WorkspaceMcpServer` and `providers.ProviderCredential` use. It is sent to the endpoint as ``Authorization: Bearer`` when the guardrail runs, so it authenticates this gateway to the guardrails service the entry names. A guardrail *vendor\'s* own key is not this: the guardrails service builds its guardrails from the operator\'s YAML and holds those itself.  A credential therefore requires ``url``. The deployment\'s ``guardrails_url`` is not necessarily encrypted (the shipped compose file makes it a same-host ``http://`` sidecar) and this row cannot see what it is set to, so an entry that fell back to it could not promise the bearer was sent over https. See `_require_url_for_credential`.  ``on`` is not offered. This plane mandates input-direction checks, which is the only direction the request path enforces (`services.guardrails.run_input_guardrails`); an organization that could store an output-direction mandate would be storing one nothing runs.
+Request body for mandating a guardrail across an organization.  ``credential`` is never stored as sent: it is encrypted with ``OTARI_SECRET_KEY`` and only the ciphertext is kept, the same convention `tools.WorkspaceMcpServer` and `providers.ProviderCredential` use. It is sent to the endpoint as ``Authorization: Bearer`` when the guardrail runs, so it authenticates this gateway to the guardrails service the entry names. A guardrail *vendor\'s* own key is not this: the guardrails service builds its guardrails from the operator\'s YAML and holds those itself.  A credential therefore requires ``url``. The deployment\'s ``guardrails_url`` is not necessarily encrypted (the shipped compose file makes it a same-host ``http://`` sidecar) and this row cannot see what it is set to, so an entry that fell back to it could not promise the bearer was sent over https. See `_require_url_for_credential`.
 
 ## Properties
 
@@ -12,6 +12,7 @@ Name | Type
 `definitionId` | string
 `enabled` | boolean
 `mode` | string
+`on` | Array&lt;string&gt;
 `onUnavailable` | string
 `profile` | string
 `url` | string
@@ -30,6 +31,7 @@ const example = {
   "definitionId": null,
   "enabled": null,
   "mode": null,
+  "on": null,
   "onUnavailable": null,
   "profile": null,
   "url": null,

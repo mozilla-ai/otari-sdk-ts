@@ -1,0 +1,44 @@
+
+# WorkspaceWebSearchKeysPublic
+
+
+## Properties
+
+Name | Type
+------------ | -------------
+`count` | number
+`data` | [Array&lt;WorkspaceWebSearchKeyPublic&gt;](WorkspaceWebSearchKeyPublic.md)
+`deploymentFetchTool` | string
+`deploymentSearchTool` | string
+`fetchProvider` | string
+`searchProvider` | string
+
+## Example
+
+```typescript
+import type { WorkspaceWebSearchKeysPublic } from ''
+
+// TODO: Update the object below with actual values
+const example = {
+  "count": null,
+  "data": null,
+  "deploymentFetchTool": null,
+  "deploymentSearchTool": null,
+  "fetchProvider": null,
+  "searchProvider": null,
+} satisfies WorkspaceWebSearchKeysPublic
+
+console.log(example)
+
+// Convert the instance to a JSON string
+const exampleJSON: string = JSON.stringify(example)
+console.log(exampleJSON)
+
+// Parse the JSON string back to an object
+const exampleParsed = JSON.parse(exampleJSON) as WorkspaceWebSearchKeysPublic
+console.log(exampleParsed)
+```
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
