@@ -1,7 +1,7 @@
 
 # MSGChatCompletionContentPartInputAudioParam
 
-Learn about [audio inputs](https://platform.openai.com/docs/guides/audio).
+Learn about [audio inputs](https://developers.openai.com/api/docs/guides/audio).
 
 ## Properties
 
@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `inputAudio` | [MSGInputAudio](MSGInputAudio.md)
 `type` | string
+`promptCacheBreakpoint` | [MSGPromptCacheBreakpoint](MSGPromptCacheBreakpoint.md)
 
 ## Example
 
@@ -19,6 +20,7 @@ import type { MSGChatCompletionContentPartInputAudioParam } from ''
 const example = {
   "inputAudio": null,
   "type": null,
+  "promptCacheBreakpoint": null,
 } satisfies MSGChatCompletionContentPartInputAudioParam
 
 console.log(example)

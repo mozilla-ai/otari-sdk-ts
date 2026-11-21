@@ -19,23 +19,30 @@ Name | Type
 `completionTokens` | number
 `cost` | number
 `countsTowardBudget` | boolean
+`dataLocation` | string
 `endpoint` | string
 `errorMessage` | string
 `id` | string
 `latencyMs` | number
 `model` | string
+`outputTokensPerSecond` | number
 `policyName` | string
 `pricingBreakdown` | [Array&lt;UsageEntryPricingBreakdownInner&gt;](UsageEntryPricingBreakdownInner.md)
 `promptTokens` | number
 `provider` | string
+`providerLatencyMs` | number
+`reasoningTokens` | number
 `requestGroupId` | string
 `selectionReason` | string
 `source` | string
 `sourceLabel` | string
 `status` | string
 `statusCode` | number
+`streamCutBy` | string
+`tags` | { [key: string]: string; }
 `timestamp` | string
 `totalTokens` | number
+`ttftMs` | number
 `userAlias` | string
 `userId` | string
 
@@ -58,23 +65,30 @@ const example = {
   "completionTokens": null,
   "cost": null,
   "countsTowardBudget": null,
+  "dataLocation": null,
   "endpoint": null,
   "errorMessage": null,
   "id": null,
   "latencyMs": null,
   "model": null,
+  "outputTokensPerSecond": null,
   "policyName": null,
   "pricingBreakdown": null,
   "promptTokens": null,
   "provider": null,
+  "providerLatencyMs": null,
+  "reasoningTokens": null,
   "requestGroupId": null,
   "selectionReason": null,
   "source": null,
   "sourceLabel": null,
   "status": null,
   "statusCode": null,
+  "streamCutBy": null,
+  "tags": null,
   "timestamp": null,
   "totalTokens": null,
+  "ttftMs": null,
   "userAlias": null,
   "userId": null,
 } satisfies UsageEntry

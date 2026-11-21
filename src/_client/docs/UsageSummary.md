@@ -14,6 +14,7 @@ Name | Type
 `byProvider` | [Array&lt;UsageGroupRow&gt;](UsageGroupRow.md)
 `bySource` | [Array&lt;UsageGroupRow&gt;](UsageGroupRow.md)
 `bySourceLabel` | [Array&lt;UsageGroupRow&gt;](UsageGroupRow.md)
+`byTag` | [Array&lt;UsageGroupRow&gt;](UsageGroupRow.md)
 `byTool` | [Array&lt;UsageToolRow&gt;](UsageToolRow.md)
 `byUser` | [Array&lt;UsageGroupRow&gt;](UsageGroupRow.md)
 `endDate` | string
@@ -36,6 +37,7 @@ const example = {
   "byProvider": null,
   "bySource": null,
   "bySourceLabel": null,
+  "byTag": null,
   "byTool": null,
   "byUser": null,
   "endDate": null,

@@ -15,7 +15,7 @@ All URIs are relative to *http://localhost*
 
 Accept Invitation
 
-Accept a pending invitation, resolving it to an active membership and optionally setting a first password.
+Accept a pending invitation, resolving it to an active membership and optionally setting a first password.  Setting a first password makes the account usable for the first time, so it is reported to &#x60;&#x60;GrowthSignalPort&#x60;&#x60; as a signup.
 
 ### Example
 

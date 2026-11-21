@@ -10,9 +10,11 @@ Name | Type
 `contextWindow` | number
 `credential` | [CatalogCredential](CatalogCredential.md)
 `discovered` | boolean
+`endpoints` | Array&lt;string&gt;
 `maxOutputTokens` | number
 `metadataInputPricePerMillion` | number
 `metadataOutputPricePerMillion` | number
+`metadataOverride` | [ModelMetadataOverrideRequest](ModelMetadataOverrideRequest.md)
 `priceReference` | string
 `priceSource` | string
 `pricing` | [ModelPricingInfo](ModelPricingInfo.md)
@@ -21,7 +23,9 @@ Name | Type
 `quantization` | string
 `selector` | string
 `shortSelector` | string
+`speed7d` | [OfferingSpeedInfo](OfferingSpeedInfo.md)
 `usage30d` | [OfferingUsage](OfferingUsage.md)
+`zeroDataRetention` | boolean
 
 ## Example
 
@@ -33,9 +37,11 @@ const example = {
   "contextWindow": null,
   "credential": null,
   "discovered": null,
+  "endpoints": null,
   "maxOutputTokens": null,
   "metadataInputPricePerMillion": null,
   "metadataOutputPricePerMillion": null,
+  "metadataOverride": null,
   "priceReference": null,
   "priceSource": null,
   "pricing": null,
@@ -44,7 +50,9 @@ const example = {
   "quantization": null,
   "selector": null,
   "shortSelector": null,
+  "speed7d": null,
   "usage30d": null,
+  "zeroDataRetention": null,
 } satisfies CatalogOffering
 
 console.log(example)

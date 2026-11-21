@@ -11,6 +11,8 @@ Name | Type
 `created` | number
 `model` | string
 `object` | string
+`metadata` | { [key: string]: string; }
+`moderation` | [CCModeration](CCModeration.md)
 `serviceTier` | string
 `systemFingerprint` | string
 `usage` | [CCCompletionUsage](CCCompletionUsage.md)
@@ -27,6 +29,8 @@ const example = {
   "created": null,
   "model": null,
   "object": null,
+  "metadata": null,
+  "moderation": null,
   "serviceTier": null,
   "systemFingerprint": null,
   "usage": null,

@@ -12,7 +12,9 @@ Name | Type
 `name` | string
 `requestLimit` | number
 `resetAlignment` | string
+`rpmLimit` | number
 `tokenLimit` | number
+`tpmLimit` | number
 
 ## Example
 
@@ -26,7 +28,9 @@ const example = {
   "name": null,
   "requestLimit": null,
   "resetAlignment": null,
+  "rpmLimit": null,
   "tokenLimit": null,
+  "tpmLimit": null,
 } satisfies UpdateBudgetRequest
 
 console.log(example)

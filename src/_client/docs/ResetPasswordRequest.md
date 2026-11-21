@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `newPassword` | string
+`termsAccepted` | boolean
 `token` | string
 
 ## Example
@@ -17,6 +18,7 @@ import type { ResetPasswordRequest } from ''
 // TODO: Update the object below with actual values
 const example = {
   "newPassword": null,
+  "termsAccepted": null,
   "token": null,
 } satisfies ResetPasswordRequest
 

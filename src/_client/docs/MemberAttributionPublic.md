@@ -8,6 +8,7 @@ What the gateway identity behind a membership has spent, and may reach.  Deploym
 Name | Type
 ------------ | -------------
 `allowedModels` | Array&lt;string&gt;
+`allowedTools` | Array&lt;string&gt;
 `blocked` | boolean
 `reserved` | number
 `spend` | number
@@ -20,6 +21,7 @@ import type { MemberAttributionPublic } from ''
 // TODO: Update the object below with actual values
 const example = {
   "allowedModels": null,
+  "allowedTools": null,
   "blocked": null,
   "reserved": null,
   "spend": null,

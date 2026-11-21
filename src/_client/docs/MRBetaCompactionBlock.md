@@ -10,6 +10,8 @@ Name | Type
 `content` | string
 `encryptedContent` | string
 `type` | string
+`signature` | string
+`toolChanges` | [Array&lt;MRBetaCompactionBlockToolChangesInner&gt;](MRBetaCompactionBlockToolChangesInner.md)
 
 ## Example
 
@@ -21,6 +23,8 @@ const example = {
   "content": null,
   "encryptedContent": null,
   "type": null,
+  "signature": null,
+  "toolChanges": null,
 } satisfies MRBetaCompactionBlock
 
 console.log(example)

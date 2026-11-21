@@ -8,13 +8,19 @@ Request model for updating a key.
 Name | Type
 ------------ | -------------
 `allowedModels` | Array&lt;string&gt;
+`allowedTools` | Array&lt;string&gt;
 `captureAgentTelemetry` | boolean
+`endUserBudgetId` | string
+`endUserBudgetIds` | Array&lt;string&gt;
 `excludeFromBudget` | boolean
 `expiresAt` | Date
 `isActive` | boolean
+`isServiceKey` | boolean
 `keyName` | string
+`maxEndUsers` | number
 `metadata` | { [key: string]: any; }
 `rejectUserMismatch` | boolean
+`scopes` | [Array&lt;KeyScope&gt;](KeyScope.md)
 
 ## Example
 
@@ -24,13 +30,19 @@ import type { UpdateKeyRequest } from ''
 // TODO: Update the object below with actual values
 const example = {
   "allowedModels": null,
+  "allowedTools": null,
   "captureAgentTelemetry": null,
+  "endUserBudgetId": null,
+  "endUserBudgetIds": null,
   "excludeFromBudget": null,
   "expiresAt": null,
   "isActive": null,
+  "isServiceKey": null,
   "keyName": null,
+  "maxEndUsers": null,
   "metadata": null,
   "rejectUserMismatch": null,
+  "scopes": null,
 } satisfies UpdateKeyRequest
 
 console.log(example)

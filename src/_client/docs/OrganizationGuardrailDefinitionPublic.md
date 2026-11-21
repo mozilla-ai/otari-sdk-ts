@@ -7,6 +7,7 @@ The API-facing shape. Carries the names of the stored secrets and none of their 
 
 Name | Type
 ------------ | -------------
+`buildRefusal` | string
 `buildState` | string
 `createKwargs` | { [key: string]: any; }
 `createSecrets` | { [key: string]: string; }
@@ -26,6 +27,7 @@ import type { OrganizationGuardrailDefinitionPublic } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "buildRefusal": null,
   "buildState": null,
   "createKwargs": null,
   "createSecrets": null,

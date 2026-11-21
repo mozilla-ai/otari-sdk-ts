@@ -7,8 +7,8 @@
 Name | Type
 ------------ | -------------
 `delta` | [CCKChoiceDelta](CCKChoiceDelta.md)
-`finishReason` | string
 `index` | number
+`finishReason` | string
 `logprobs` | [CCKChoiceLogprobs](CCKChoiceLogprobs.md)
 
 ## Example
@@ -19,8 +19,8 @@ import type { CCKChunkChoice } from ''
 // TODO: Update the object below with actual values
 const example = {
   "delta": null,
-  "finishReason": null,
   "index": null,
+  "finishReason": null,
   "logprobs": null,
 } satisfies CCKChunkChoice
 
