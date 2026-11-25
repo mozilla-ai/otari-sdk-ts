@@ -37,6 +37,7 @@ export {
   ModelNotFoundError,
   OtariError,
   RateLimitError,
+  RedirectError,
   UnsupportedCapabilityError,
   UpstreamProviderError,
 } from "./errors.js";

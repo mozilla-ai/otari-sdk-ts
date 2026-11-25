@@ -23,7 +23,7 @@ import {
   UsageApi,
   UsersApi,
 } from "./_client/index.js";
-import { mapError } from "./mapError.js";
+import { mapError, refuseRedirects } from "./mapError.js";
 
 /**
  * Run a generated-core call, mapping its `ResponseError` to a typed otari
@@ -165,7 +165,7 @@ export class ControlPlane {
       // control-plane targets the gateway origin.
       basePath: baseUrl,
       headers: { Authorization: `Bearer ${bearerToken}` },
-      fetchApi,
+      fetchApi: refuseRedirects(fetchApi ?? globalThis.fetch),
     });
     this.keys = new KeysResource(new KeysApi(config));
     this.users = new UsersResource(new UsersApi(config));

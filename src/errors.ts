@@ -42,6 +42,22 @@ export class AuthenticationError extends OtariError {
   static override defaultMessage = "Authentication failed";
 }
 
+/**
+ * Raised when the gateway answers with a redirect. The SDK never follows one,
+ * because the request carries credentials and a redirect may name another host.
+ */
+export class RedirectError extends OtariError {
+  static override defaultMessage = "The gateway answered with a redirect";
+
+  /** Value of the Location header, when the runtime exposes it. */
+  readonly location?: string;
+
+  constructor(options: OtariErrorOptions & { location?: string } = {}) {
+    super(options);
+    this.location = options.location;
+  }
+}
+
 /** Raised when the requested model is not found (HTTP 404). */
 export class ModelNotFoundError extends OtariError {
   static override defaultMessage = "Model not found";

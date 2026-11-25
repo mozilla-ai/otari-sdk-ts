@@ -283,8 +283,9 @@ try {
 | 429 | `RateLimitError` | Rate limit exceeded (includes `retryAfter`) |
 | 502 | `UpstreamProviderError` | Upstream provider unreachable |
 | 504 | `GatewayTimeoutError` | Gateway timed out waiting for provider |
+| 301, 302, 303, 307, 308 | `RedirectError` | Gateway answered with a redirect (includes `location`). The SDK never follows one, because the request carries credentials; set `apiBase` to the address the gateway answers on |
 
-`UnsupportedCapabilityError` surfaces in both modes; the rest are platform-mode only.
+`UnsupportedCapabilityError` and `RedirectError` surface in both modes; the rest are platform-mode only.
 
 ## Development
 
