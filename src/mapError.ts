@@ -20,6 +20,7 @@ import {
   ModelNotFoundError,
   OtariError,
   RateLimitError,
+  RedirectError,
   UnsupportedCapabilityError,
   UpstreamProviderError,
 } from "./errors.js";
@@ -36,6 +37,24 @@ const UNSUPPORTED_MODERATION_RE = /does not support (?:multimodal )?moderation/;
 const ATTEMPT_ID_HEADER = "Otari-Attempt-ID";
 
 const RETRY_AFTER_HEADER = "retry-after";
+
+const REDIRECT_STATUSES = new Set([301, 302, 303, 307, 308]);
+
+/**
+ * Wrap a `fetch` so it never follows a redirect. `fetch` drops `Authorization`
+ * when a redirect leaves the origin, but it keeps `Otari-Key` and the request
+ * body, so following one would hand both to whatever address the response
+ * named. The redirect response comes back instead, and {@link mapResponse}
+ * turns it into a {@link RedirectError}.
+ */
+export function refuseRedirects(fetchApi: typeof fetch): typeof fetch {
+  return (input, init) => fetchApi(input, { ...init, redirect: "manual" });
+}
+
+/** A browser hides a manual redirect behind an opaque response with status 0. */
+function isRedirect(response: Response): boolean {
+  return response.type === "opaqueredirect" || REDIRECT_STATUSES.has(response.status);
+}
 
 /** Pull the gateway's human-readable detail out of a parsed error body. */
 function extractDetail(body: unknown, fallback: string): string {
@@ -143,6 +162,18 @@ function headerGet(headers: Headers | undefined, name: string): string | undefin
  * otari error. Used by the streaming shim and the raw-fetch helpers.
  */
 export async function mapResponse(response: Response, originalError?: Error): Promise<OtariError> {
+  if (isRedirect(response)) {
+    const location = headerGet(response.headers, "location");
+    return new RedirectError({
+      message:
+        `The gateway answered with a redirect${location ? ` to ${location}` : ""}, which the SDK ` +
+        "does not follow. Set apiBase to the address the gateway answers on.",
+      statusCode: response.status,
+      originalError,
+      providerName: PROVIDER_NAME,
+      location,
+    });
+  }
   let bodyText = "";
   try {
     bodyText = await response.text();

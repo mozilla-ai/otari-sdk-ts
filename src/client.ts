@@ -52,7 +52,7 @@ import {
 } from "./_client/index.js";
 import { ControlPlane } from "./controlPlane.js";
 import { OtariError } from "./errors.js";
-import { mapError, mapResponse } from "./mapError.js";
+import { mapError, mapResponse, refuseRedirects } from "./mapError.js";
 import { type ChatCompletionChunk, Stream, type StreamKind } from "./streaming.js";
 import type {
   BatchResult,
@@ -184,7 +184,7 @@ export class OtariClient {
 
     // One shared fetch implementation across the generated core, the streaming
     // shim, and the control-plane — the single seam tests mock.
-    this.fetchApi = options.fetch ?? globalThis.fetch;
+    this.fetchApi = refuseRedirects(options.fetch ?? globalThis.fetch);
 
     // The generated operation paths already include `/api/v1`, so the core's
     // basePath is the gateway origin. Per-mode auth + default headers are passed
