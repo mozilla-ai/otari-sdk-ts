@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1](https://github.com/mozilla-ai/otari-sdk-ts/compare/otari-v0.6.0...otari-v0.6.1) (2026-11-25)
+
+
+### Bug Fixes
+
+* refuse to follow redirects ([5b5d0e0](https://github.com/mozilla-ai/otari-sdk-ts/commit/5b5d0e0f6bbb7cd13aeca7483d11baa9f0176187))
+
 ## [0.6.0](https://github.com/mozilla-ai/otari-sdk-ts/compare/otari-v0.5.0...otari-v0.6.0) (2026-09-25)
 
 
