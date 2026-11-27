@@ -23,9 +23,12 @@ Name | Type
 `serverName` | string
 `isError` | boolean
 `encryptedContent` | string
+`toolChanges` | [Array&lt;MRBetaCompactionBlockToolChangesInner&gt;](MRBetaCompactionBlockToolChangesInner.md)
 `from` | [MRBetaFallbackInfo](MRBetaFallbackInfo.md)
 `to` | [MRBetaFallbackInfo](MRBetaFallbackInfo.md)
 `trigger` | [MRBetaFallbackRefusalTrigger](MRBetaFallbackRefusalTrigger.md)
+`mcpServerName` | string
+`tools` | [Array&lt;MRBetaMCPTool&gt;](MRBetaMCPTool.md)
 
 ## Example
 
@@ -51,9 +54,12 @@ const example = {
   "serverName": null,
   "isError": null,
   "encryptedContent": null,
+  "toolChanges": null,
   "from": null,
   "to": null,
   "trigger": null,
+  "mcpServerName": null,
+  "tools": null,
 } satisfies Content17Inner
 
 console.log(example)

@@ -8,7 +8,9 @@ What the caller\'s workspace may attach to a Playground message.
 Name | Type
 ------------ | -------------
 `codeExecution` | [PlaygroundToolStatus](PlaygroundToolStatus.md)
+`files` | [PlaygroundToolStatus](PlaygroundToolStatus.md)
 `mcpServers` | [Array&lt;PlaygroundMcpServer&gt;](PlaygroundMcpServer.md)
+`webFetch` | [PlaygroundToolStatus](PlaygroundToolStatus.md)
 `webSearch` | [PlaygroundToolStatus](PlaygroundToolStatus.md)
 
 ## Example
@@ -19,7 +21,9 @@ import type { PlaygroundToolsResponse } from ''
 // TODO: Update the object below with actual values
 const example = {
   "codeExecution": null,
+  "files": null,
   "mcpServers": null,
+  "webFetch": null,
   "webSearch": null,
 } satisfies PlaygroundToolsResponse
 

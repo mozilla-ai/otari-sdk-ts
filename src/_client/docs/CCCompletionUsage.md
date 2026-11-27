@@ -11,6 +11,8 @@ Name | Type
 `totalTokens` | number
 `completionTokensDetails` | [CCCompletionTokensDetails](CCCompletionTokensDetails.md)
 `promptTokensDetails` | [CCPromptTokensDetails](CCPromptTokensDetails.md)
+`inferenceGeo` | string
+`serverToolUse` | [CCServerToolUsage](CCServerToolUsage.md)
 
 ## Example
 
@@ -24,6 +26,8 @@ const example = {
   "totalTokens": null,
   "completionTokensDetails": null,
   "promptTokensDetails": null,
+  "inferenceGeo": null,
+  "serverToolUse": null,
 } satisfies CCCompletionUsage
 
 console.log(example)

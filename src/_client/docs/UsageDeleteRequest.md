@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `apiKeyId` | [ApiKeyId](ApiKeyId.md)
 `byFilter` | boolean
+`deploymentPaid` | boolean
 `endDate` | Date
 `endpoint` | string
 `ids` | Array&lt;string&gt;
@@ -32,6 +33,7 @@ import type { UsageDeleteRequest } from ''
 const example = {
   "apiKeyId": null,
   "byFilter": null,
+  "deploymentPaid": null,
   "endDate": null,
   "endpoint": null,
   "ids": null,

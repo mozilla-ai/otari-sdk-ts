@@ -17,7 +17,7 @@ All URIs are relative to *http://localhost*
 
 Create Organization Pricing
 
-Set the organization\&#39;s rate for a model over a period.  Refused with a 409 when the period overlaps one already stored for that model, naming the period it collides with, rather than shadowing it. Refused with a 403 when the deployment, not the caller\&#39;s organization, holds the credential that serves the model, whether through one of its own provider instances or a hosted credential the bound port supplies because no usable BYO credential of the organization\&#39;s own covers every one of its workspaces: either way the deployment settles the upstream bill, so its rate is the deployment price list\&#39;s rather than a tenant\&#39;s.  The key is normalized to its canonical &#x60;&#x60;instance:model&#x60;&#x60; form first, the same call &#x60;&#x60;POST /api/v1/pricing&#x60;&#x60; makes, and that is what makes one model one row rather than one per spelling. Stored verbatim, &#x60;&#x60;openai:gpt-4o&#x60;&#x60; and &#x60;&#x60;openai/gpt-4o&#x60;&#x60; are two keys: the overlap rule would not see them as colliding, and both would resolve, with the canonical one preferred, leaving the other dormant until the first is deleted. Normalizing on the way in is what stops that pair existing at all.
+Set the organization\&#39;s rate for a model over a period.  Refused with a 409 when the period overlaps one already stored for that model, naming the period it collides with, rather than shadowing it. Refused with a 403 when the deployment, not the caller\&#39;s organization, holds the credential that serves the model, whether through one of its own provider instances or a hosted credential the bound port supplies because no usable BYO credential of the organization\&#39;s own covers every one of its workspaces: either way the deployment settles the upstream bill, so its rate is the deployment price list\&#39;s rather than a tenant\&#39;s.  A rate on a tool the deployment\&#39;s own account runs, a search or fetch tool\&#39;s or &#x60;&#x60;otari:code_execution&#x60;&#x60;, is refused with a 403 for the same reason.  The key is normalized to its canonical &#x60;&#x60;instance:model&#x60;&#x60; form first, the same call &#x60;&#x60;POST /api/v1/pricing&#x60;&#x60; makes, and that is what makes one model one row rather than one per spelling. Stored verbatim, &#x60;&#x60;openai:gpt-4o&#x60;&#x60; and &#x60;&#x60;openai/gpt-4o&#x60;&#x60; are two keys: the overlap rule would not see them as colliding, and both would resolve, with the canonical one preferred, leaving the other dormant until the first is deleted. Normalizing on the way in is what stops that pair existing at all.
 
 ### Example
 
@@ -80,6 +80,8 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Successful Response |  -  |
+| **403** | The deployment holds the credential that serves the model, or runs the tool on its own account. |  -  |
+| **409** | The period overlaps one already stored for the model. |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -91,7 +93,7 @@ example().catch(console.error);
 
 Delete Organization Pricing
 
-Remove an override, returning the model to the deployment price list.
+Remove an override, returning the model to the deployment price list.  Refused with a 403 for a rate the deployment operator set, which only the operator may remove.
 
 ### Example
 
@@ -154,6 +156,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | Successful Response |  -  |
+| **403** | The deployment operator set the rate. |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
@@ -161,7 +164,7 @@ example().catch(console.error);
 
 ## organizationPricingListOrganizationPricing
 
-> OrganizationModelPricingsPublic organizationPricingListOrganizationPricing(modelKey, skip, limit)
+> OrganizationModelPricingsPublic organizationPricingListOrganizationPricing(modelKey, kind, skip, limit)
 
 List Organization Pricing
 
@@ -189,6 +192,8 @@ async function example() {
   const body = {
     // string | Return only this model\'s periods, in the canonical \'provider:model\' form. (optional)
     modelKey: modelKey_example,
+    // 'model' | 'search' | 'fetch' | Return only overrides of this kind. (optional)
+    kind: kind_example,
     // number | Number of records to skip (optional)
     skip: 56,
     // number | Maximum number of records to return (optional)
@@ -213,6 +218,7 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **modelKey** | `string` | Return only this model\&#39;s periods, in the canonical \&#39;provider:model\&#39; form. | [Optional] [Defaults to `undefined`] |
+| **kind** | `model`, `search`, `fetch` | Return only overrides of this kind. | [Optional] [Defaults to `undefined`] [Enum: model, search, fetch] |
 | **skip** | `number` | Number of records to skip | [Optional] [Defaults to `0`] |
 | **limit** | `number` | Maximum number of records to return | [Optional] [Defaults to `100`] |
 
@@ -245,7 +251,7 @@ example().catch(console.error);
 
 Replace Organization Pricing
 
-Replace an override\&#39;s rates and period.  Future requests in the period price at the new rate; usage already settled keeps the cost it was billed, because a settled cost is stored on the usage row rather than recomputed.  Refused with a 403 on the same deployment-supplied-model rule the create path carries, so a row stored before that rule existed cannot be edited into a rate nobody could create today.
+Replace an override\&#39;s rates and period.  Future requests in the period price at the new rate; usage already settled keeps the cost it was billed, because a settled cost is stored on the usage row rather than recomputed.  Refused with a 403 on the same deployment-supplied rules the create path carries, so an edit cannot store a rate a create would refuse, and with a 403 for a rate the deployment operator set, which only the operator may change.
 
 ### Example
 
@@ -311,6 +317,7 @@ example().catch(console.error);
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
+| **403** | The deployment serves the model or runs the tool, or the deployment operator set the rate. |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)

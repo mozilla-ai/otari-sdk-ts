@@ -1,7 +1,7 @@
 
 # PricingRefreshPreviewResponse
 
-Reviewable summary of a pending genai-prices refresh.
+Reviewable summary of a pending models.dev refresh.
 
 ## Properties
 
@@ -11,9 +11,12 @@ Name | Type
 `changedCount` | number
 `changes` | [Array&lt;PricingRefreshChangeResponse&gt;](PricingRefreshChangeResponse.md)
 `changesTruncated` | boolean
+`digest` | string
 `fetchedAt` | Date
+`needsReview` | boolean
 `protectedModelCount` | number
 `removedCount` | number
+`reviewReason` | string
 
 ## Example
 
@@ -26,9 +29,12 @@ const example = {
   "changedCount": null,
   "changes": null,
   "changesTruncated": null,
+  "digest": null,
   "fetchedAt": null,
+  "needsReview": null,
   "protectedModelCount": null,
   "removedCount": null,
+  "reviewReason": null,
 } satisfies PricingRefreshPreviewResponse
 
 console.log(example)

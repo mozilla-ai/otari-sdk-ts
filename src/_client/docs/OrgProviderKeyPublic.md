@@ -11,14 +11,20 @@ Name | Type
 `archivedAt` | Date
 `clientArgs` | { [key: string]: any; }
 `createdAt` | Date
+`endpointAuth` | [EndpointAuthPublic](EndpointAuthPublic.md)
+`endpointAuthUnreadable` | boolean
 `id` | string
 `isOrgDefault` | boolean
 `last4` | string
 `name` | string
+`offeredCount` | number
 `organizationId` | string
 `provider` | string
+`servingCount` | number
+`slug` | string
 `updatedAt` | Date
 `usable` | boolean
+`zeroDataRetention` | boolean
 
 ## Example
 
@@ -31,14 +37,20 @@ const example = {
   "archivedAt": null,
   "clientArgs": null,
   "createdAt": null,
+  "endpointAuth": null,
+  "endpointAuthUnreadable": null,
   "id": null,
   "isOrgDefault": null,
   "last4": null,
   "name": null,
+  "offeredCount": null,
   "organizationId": null,
   "provider": null,
+  "servingCount": null,
+  "slug": null,
   "updatedAt": null,
   "usable": null,
+  "zeroDataRetention": null,
 } satisfies OrgProviderKeyPublic
 
 console.log(example)

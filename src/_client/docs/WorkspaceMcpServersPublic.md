@@ -8,6 +8,7 @@ Name | Type
 ------------ | -------------
 `count` | number
 `data` | [Array&lt;WorkspaceMcpServerPublic&gt;](WorkspaceMcpServerPublic.md)
+`signInUnavailable` | string
 
 ## Example
 
@@ -18,6 +19,7 @@ import type { WorkspaceMcpServersPublic } from ''
 const example = {
   "count": null,
   "data": null,
+  "signInUnavailable": null,
 } satisfies WorkspaceMcpServersPublic
 
 console.log(example)

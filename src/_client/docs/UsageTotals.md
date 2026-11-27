@@ -15,8 +15,10 @@ Name | Type
 `cacheWriteTokens` | number
 `completionTokens` | number
 `cost` | number
+`deploymentPaidCost` | number
 `errorCount` | number
 `promptTokens` | number
+`reasoningTokens` | number
 `requestCount` | number
 `totalTokens` | number
 `unpricedRequests` | number
@@ -36,8 +38,10 @@ const example = {
   "cacheWriteTokens": null,
   "completionTokens": null,
   "cost": null,
+  "deploymentPaidCost": null,
   "errorCount": null,
   "promptTokens": null,
+  "reasoningTokens": null,
   "requestCount": null,
   "totalTokens": null,
   "unpricedRequests": null,

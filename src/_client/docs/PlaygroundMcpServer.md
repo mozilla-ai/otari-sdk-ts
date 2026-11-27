@@ -11,6 +11,7 @@ Name | Type
 `id` | string
 `name` | string
 `purposeHint` | string
+`signInRequired` | boolean
 
 ## Example
 
@@ -23,6 +24,7 @@ const example = {
   "id": null,
   "name": null,
   "purposeHint": null,
+  "signInRequired": null,
 } satisfies PlaygroundMcpServer
 
 console.log(example)

@@ -7,19 +7,19 @@ What the dashboard shell needs before it can render anything.
 
 Name | Type
 ------------ | -------------
-`dataPlaneUrl` | string
-`deploymentType` | string
 `docsUrl` | string
+`federationMemberRules` | boolean
 `feedbackEnabled` | boolean
-`mailReady` | boolean
+`mail` | [MailReadiness](MailReadiness.md)
 `maintenanceMode` | boolean
-`managementUrl` | string
 `oauthProviders` | Array&lt;string&gt;
 `openSignup` | boolean
+`organizationOidcEnabled` | boolean
+`passkeysEnabled` | boolean
 `passkeysReady` | boolean
+`platformConnect` | boolean
 `privacyUrl` | string
 `publicCatalog` | boolean
-`sessionType` | string
 `signInMethods` | Array&lt;string&gt;
 `siteUrl` | string
 `surfaces` | Array&lt;string&gt;
@@ -32,19 +32,19 @@ import type { DeploymentBootstrap } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "dataPlaneUrl": null,
-  "deploymentType": null,
   "docsUrl": null,
+  "federationMemberRules": null,
   "feedbackEnabled": null,
-  "mailReady": null,
+  "mail": null,
   "maintenanceMode": null,
-  "managementUrl": null,
   "oauthProviders": null,
   "openSignup": null,
+  "organizationOidcEnabled": null,
+  "passkeysEnabled": null,
   "passkeysReady": null,
+  "platformConnect": null,
   "privacyUrl": null,
   "publicCatalog": null,
-  "sessionType": null,
   "signInMethods": null,
   "siteUrl": null,
   "surfaces": null,

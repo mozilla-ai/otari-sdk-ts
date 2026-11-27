@@ -10,9 +10,11 @@ Name | Type
 `allowedDomains` | Array&lt;string&gt;
 `blockedDomains` | Array&lt;string&gt;
 `enabled` | boolean
+`fetchExecutor` | [CodeExecutor](CodeExecutor.md)
 `maxResults` | number
 `providerOptions` | { [key: string]: any; }
 `purposeHint` | string
+`searchExecutor` | [CodeExecutor](CodeExecutor.md)
 
 ## Example
 
@@ -24,9 +26,11 @@ const example = {
   "allowedDomains": null,
   "blockedDomains": null,
   "enabled": null,
+  "fetchExecutor": null,
   "maxResults": null,
   "providerOptions": null,
   "purposeHint": null,
+  "searchExecutor": null,
 } satisfies WorkspaceWebSearchConfigUpdate
 
 console.log(example)

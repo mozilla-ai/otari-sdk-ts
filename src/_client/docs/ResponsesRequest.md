@@ -20,7 +20,7 @@ Name | Type
 `maxToolIterations` | number
 `mcpServerIds` | Array&lt;string&gt;
 `mcpServers` | [Array&lt;McpServerConfig&gt;](McpServerConfig.md)
-`metadata` | { [key: string]: string; }
+`metadata` | { [key: string]: any; }
 `model` | string
 `parallelToolCalls` | boolean
 `presencePenalty` | number

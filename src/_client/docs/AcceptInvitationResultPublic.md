@@ -1,15 +1,16 @@
 
 # AcceptInvitationResultPublic
 
-What accepting produces: enough for the accept page to say where the visitor landed.  No session and no token. When the request carried a password, the identity can sign in straight away; otherwise it stays password-less until claimed by signup or a provider sign-in.
+What accepting through the link produced, and what it leaves the invitee to do.  No session and no token: ``next_step`` is the whole of what comes next.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
+`nextStep` | [InvitationNextStep](InvitationNextStep.md)
 `organizationName` | string
-`passwordSet` | boolean
 `role` | string
+`waysIn` | Array&lt;string&gt;
 
 ## Example
 
@@ -18,9 +19,10 @@ import type { AcceptInvitationResultPublic } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "nextStep": null,
   "organizationName": null,
-  "passwordSet": null,
   "role": null,
+  "waysIn": null,
 } satisfies AcceptInvitationResultPublic
 
 console.log(example)

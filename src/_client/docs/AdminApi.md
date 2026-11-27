@@ -4,10 +4,89 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**adminBlockEmail**](AdminApi.md#adminblockemail) | **POST** /api/v1/admin/blocked-emails | Block Email |
 | [**adminGetAdministrationAccess**](AdminApi.md#admingetadministrationaccess) | **GET** /api/v1/admin/access | Get Administration Access |
+| [**adminHandOverBootstrapOperator**](AdminApi.md#adminhandoverbootstrapoperator) | **POST** /api/v1/admin/users/{user_id}/bootstrap-operator | Hand Over Bootstrap Operator |
+| [**adminIssuePasswordLink**](AdminApi.md#adminissuepasswordlink) | **POST** /api/v1/admin/users/{user_id}/password-link | Issue Password Link |
+| [**adminListBlockedEmails**](AdminApi.md#adminlistblockedemails) | **GET** /api/v1/admin/blocked-emails | List Blocked Emails |
 | [**adminListDeploymentUsers**](AdminApi.md#adminlistdeploymentusers) | **GET** /api/v1/admin/users | List Deployment Users |
+| [**adminUnblockEmail**](AdminApi.md#adminunblockemail) | **DELETE** /api/v1/admin/blocked-emails/{entry_id} | Unblock Email |
 | [**adminUpdateDeploymentUser**](AdminApi.md#adminupdatedeploymentuser) | **PATCH** /api/v1/admin/users/{user_id} | Update Deployment User |
 
+
+
+## adminBlockEmail
+
+> BlockedEmailCreatedPublic adminBlockEmail(blockedEmailCreateRequest)
+
+Block Email
+
+Block an address, or a domain and its subdomains, from holding an account on this deployment.  A blocked address cannot sign up, be added to or invited into an organization, or sign in by password, passkey or provider, and nothing is mailed to it for signup, verification or a password reset. Every existing account the entry matches has its dashboard sessions ended now; the account itself is kept, so removing the entry lets it sign in again. API keys are not affected.  Refused with 400 for a value that is neither an address nor a domain, or one that would block your own address or the deployment\&#39;s bootstrap operator\&#39;s, and with 409 for one already blocked.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  AdminApi,
+} from '';
+import type { AdminBlockEmailRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new AdminApi(config);
+
+  const body = {
+    // BlockedEmailCreateRequest
+    blockedEmailCreateRequest: ...,
+  } satisfies AdminBlockEmailRequest;
+
+  try {
+    const data = await api.adminBlockEmail(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **blockedEmailCreateRequest** | [BlockedEmailCreateRequest](BlockedEmailCreateRequest.md) |  | |
+
+### Return type
+
+[**BlockedEmailCreatedPublic**](BlockedEmailCreatedPublic.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
 ## adminGetAdministrationAccess
@@ -75,13 +154,241 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## adminHandOverBootstrapOperator
+
+> adminHandOverBootstrapOperator(userId, bootstrapHandoverRequest)
+
+Hand Over Bootstrap Operator
+
+Make another operator the deployment\&#39;s bootstrap operator.  The bootstrap operator is the account the master key acts as: master-key sign-in and requests carrying the master key resolve to it, and it cannot be deactivated or lose operator access. Only the current bootstrap operator, or a request carrying the master key, may hand the role on, and from a dashboard session it takes the caller\&#39;s &#x60;&#x60;current_password&#x60;&#x60;. The previous bootstrap operator stays an operator, which the new one may remove afterwards.  Refused with 400 when the caller is another operator, when the current password is missing or wrong, for a session whose account has no password, and for a target that is the caller, deactivated, not an operator, or without an unblocked email address the owner proved rather than one an organization recorded, and a password.  The master key keeps working and now acts as the new bootstrap operator, including resetting their password, so rotate it when whoever held it should no longer.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  AdminApi,
+} from '';
+import type { AdminHandOverBootstrapOperatorRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new AdminApi(config);
+
+  const body = {
+    // string
+    userId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+    // BootstrapHandoverRequest (optional)
+    bootstrapHandoverRequest: ...,
+  } satisfies AdminHandOverBootstrapOperatorRequest;
+
+  try {
+    const data = await api.adminHandOverBootstrapOperator(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **bootstrapHandoverRequest** | [BootstrapHandoverRequest](BootstrapHandoverRequest.md) |  | [Optional] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## adminIssuePasswordLink
+
+> PasswordLinkPublic adminIssuePasswordLink(userId)
+
+Issue Password Link
+
+Give an account a single-use link that sets its password, for someone who cannot sign in.  Where this deployment can mail links, the link goes to the account\&#39;s address and is not returned, the same as \&quot;Forgot your password?\&quot;. Where it cannot, or the send fails, the response carries the link for you to pass on, which is how a member who forgot their password gets back in on a deployment without mail. A password chosen through a link that was not mailed leaves the address verified rather than proved. A new link replaces any earlier reset link for the account.  Refused with 409 for a deactivated account, one with no address, one that has no password and signs in with a provider or a passkey (its owner adds a password once signed in), and, where open_signup is disabled, an unverified address no organization still has as a member or invitee. The bootstrap operator\&#39;s account is refused too unless the request carries the master key.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  AdminApi,
+} from '';
+import type { AdminIssuePasswordLinkRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new AdminApi(config);
+
+  const body = {
+    // string
+    userId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies AdminIssuePasswordLinkRequest;
+
+  try {
+    const data = await api.adminIssuePasswordLink(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**PasswordLinkPublic**](PasswordLinkPublic.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## adminListBlockedEmails
+
+> BlockedEmailsPublic adminListBlockedEmails(skip, limit)
+
+List Blocked Emails
+
+List the addresses and domains blocked from holding an account on this deployment, newest first.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  AdminApi,
+} from '';
+import type { AdminListBlockedEmailsRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new AdminApi(config);
+
+  const body = {
+    // number | Number of records to skip (optional)
+    skip: 56,
+    // number | Maximum number of records to return (optional)
+    limit: 56,
+  } satisfies AdminListBlockedEmailsRequest;
+
+  try {
+    const data = await api.adminListBlockedEmails(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **skip** | `number` | Number of records to skip | [Optional] [Defaults to `0`] |
+| **limit** | `number` | Maximum number of records to return | [Optional] [Defaults to `100`] |
+
+### Return type
+
+[**BlockedEmailsPublic**](BlockedEmailsPublic.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## adminListDeploymentUsers
 
-> DeploymentUsersPublic adminListDeploymentUsers(skip, limit)
+> DeploymentUsersPublic adminListDeploymentUsers(skip, limit, search)
 
 List Deployment Users
 
-List every account on this deployment, with the organizations each belongs to.  Deployment-wide, so it is not the same list as &#x60;&#x60;GET /api/v1/organizations/me/members&#x60;&#x60;: that one is the caller\&#39;s organization roster and drops a suspended membership, while this one carries every identity at whatever standing, including one whose memberships are all suspended. Each row also reports when the account last signed in to the dashboard, and null there means never.
+List every account on this deployment, with the organizations each belongs to.  Deployment-wide, so it is not the same list as &#x60;&#x60;GET /api/v1/organizations/me/members&#x60;&#x60;: that one is the caller\&#39;s organization roster and drops a suspended membership, while this one carries every identity at whatever standing, including one whose memberships are all suspended. Each row also reports when the account last signed in to the dashboard, and null there means never. &#x60;&#x60;search&#x60;&#x60; narrows the page and the count together.
 
 ### Example
 
@@ -107,6 +414,8 @@ async function example() {
     skip: 56,
     // number | Maximum number of records to return (optional)
     limit: 56,
+    // string | Narrow to accounts whose name or email contains this text, case-insensitively. (optional)
+    search: search_example,
   } satisfies AdminListDeploymentUsersRequest;
 
   try {
@@ -128,6 +437,7 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **skip** | `number` | Number of records to skip | [Optional] [Defaults to `0`] |
 | **limit** | `number` | Maximum number of records to return | [Optional] [Defaults to `100`] |
+| **search** | `string` | Narrow to accounts whose name or email contains this text, case-insensitively. | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -152,13 +462,87 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## adminUnblockEmail
+
+> adminUnblockEmail(entryId)
+
+Unblock Email
+
+Remove a blocklist entry, so the accounts it matched may sign in again.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  AdminApi,
+} from '';
+import type { AdminUnblockEmailRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new AdminApi(config);
+
+  const body = {
+    // string
+    entryId: 38400000-8cf0-11bd-b23e-10b96e4ef00d,
+  } satisfies AdminUnblockEmailRequest;
+
+  try {
+    const data = await api.adminUnblockEmail(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **entryId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## adminUpdateDeploymentUser
 
 > DeploymentUserPublic adminUpdateDeploymentUser(userId, deploymentUserUpdateRequest)
 
 Update Deployment User
 
-Deactivate or reactivate an account, or change whether it may administer this deployment.  Both fields are optional and omitting one leaves it alone; a body naming neither is refused rather than treated as a no-op. Deactivating also ends that account\&#39;s dashboard sessions immediately, so a lost laptop stops working now rather than when its cookie is next presented.  Two changes are refused to keep a deployment reachable: an operator may not deactivate their own account or drop their own operator access, and neither may be taken from the deployment\&#39;s bootstrap operator, which is the identity master-key sign-in resolves to. Granting either is unguarded.
+Deactivate or reactivate an account, or change whether it may administer this deployment.  Both fields are optional and omitting one leaves it alone; a body naming neither is refused rather than treated as a no-op. Deactivating also ends that account\&#39;s dashboard sessions immediately, so a lost laptop stops working now rather than when its cookie is next presented, and ends every share of session content it made, which reactivating does not bring back.  Two changes are refused to keep a deployment reachable: an operator may not deactivate their own account or drop their own operator access, and neither may be taken from the deployment\&#39;s bootstrap operator, which is the identity master-key sign-in resolves to. Granting either is unguarded.
 
 ### Example
 

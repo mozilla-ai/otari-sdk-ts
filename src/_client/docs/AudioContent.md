@@ -1,7 +1,7 @@
 
 # AudioContent
 
-Audio content for a message.
+Audio provided to or from an LLM.
 
 ## Properties
 

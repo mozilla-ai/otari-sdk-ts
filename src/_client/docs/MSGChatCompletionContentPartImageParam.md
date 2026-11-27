@@ -1,7 +1,7 @@
 
 # MSGChatCompletionContentPartImageParam
 
-Learn about [image inputs](https://platform.openai.com/docs/guides/vision).
+Learn about [image inputs](https://developers.openai.com/api/docs/guides/images-vision).
 
 ## Properties
 
@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `imageUrl` | [MSGImageURL](MSGImageURL.md)
 `type` | string
+`promptCacheBreakpoint` | [MSGPromptCacheBreakpoint](MSGPromptCacheBreakpoint.md)
 
 ## Example
 
@@ -19,6 +20,7 @@ import type { MSGChatCompletionContentPartImageParam } from ''
 const example = {
   "imageUrl": null,
   "type": null,
+  "promptCacheBreakpoint": null,
 } satisfies MSGChatCompletionContentPartImageParam
 
 console.log(example)

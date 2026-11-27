@@ -11,6 +11,8 @@ Name | Type
 `created` | number
 `model` | string
 `object` | string
+`moderation` | [CCKModeration](CCKModeration.md)
+`obfuscation` | string
 `serviceTier` | string
 `systemFingerprint` | string
 `usage` | [CCKCompletionUsage](CCKCompletionUsage.md)
@@ -27,6 +29,8 @@ const example = {
   "created": null,
   "model": null,
   "object": null,
+  "moderation": null,
+  "obfuscation": null,
   "serviceTier": null,
   "systemFingerprint": null,
   "usage": null,

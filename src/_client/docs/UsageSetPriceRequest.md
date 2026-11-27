@@ -11,6 +11,7 @@ Name | Type
 `byFilter` | boolean
 `cacheReadPricePerMillion` | number
 `cacheWritePricePerMillion` | number
+`deploymentPaid` | boolean
 `endDate` | Date
 `endpoint` | string
 `ids` | Array&lt;string&gt;
@@ -38,6 +39,7 @@ const example = {
   "byFilter": null,
   "cacheReadPricePerMillion": null,
   "cacheWritePricePerMillion": null,
+  "deploymentPaid": null,
   "endDate": null,
   "endpoint": null,
   "ids": null,

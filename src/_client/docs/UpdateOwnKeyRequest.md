@@ -1,19 +1,25 @@
 
 # UpdateOwnKeyRequest
 
-Update-key body for the member surface.  The operator\'s ``UpdateKeyRequest`` minus ``exclude_from_budget``, for the reason the create body gives. The tri-state fields follow the same ``model_fields_set`` idiom: absent = unchanged, null = clear to inherit, a value = pin it.
+Update-key body for the member surface.  The operator\'s ``UpdateKeyRequest`` minus ``exclude_from_budget``, for the reason the create body gives. The tri-state fields follow the same ``model_fields_set`` idiom: absent = unchanged, null = clear to inherit, a value = pin it. ``is_service_key`` is accepted only unchanged, and ``max_end_users`` takes no null: an organization\'s service key always has a cap, so null is refused with 400.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
 `allowedModels` | Array&lt;string&gt;
+`allowedTools` | Array&lt;string&gt;
 `captureAgentTelemetry` | boolean
+`endUserBudgetId` | string
+`endUserBudgetIds` | Array&lt;string&gt;
 `expiresAt` | Date
 `isActive` | boolean
+`isServiceKey` | boolean
 `keyName` | string
+`maxEndUsers` | number
 `metadata` | { [key: string]: any; }
 `rejectUserMismatch` | boolean
+`scopes` | [Array&lt;KeyScope&gt;](KeyScope.md)
 
 ## Example
 
@@ -23,12 +29,18 @@ import type { UpdateOwnKeyRequest } from ''
 // TODO: Update the object below with actual values
 const example = {
   "allowedModels": null,
+  "allowedTools": null,
   "captureAgentTelemetry": null,
+  "endUserBudgetId": null,
+  "endUserBudgetIds": null,
   "expiresAt": null,
   "isActive": null,
+  "isServiceKey": null,
   "keyName": null,
+  "maxEndUsers": null,
   "metadata": null,
   "rejectUserMismatch": null,
+  "scopes": null,
 } satisfies UpdateOwnKeyRequest
 
 console.log(example)

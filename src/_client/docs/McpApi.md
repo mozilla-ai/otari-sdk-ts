@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**mcpExecuteMcpTool**](McpApi.md#mcpexecutemcptool) | **POST** /api/v1/mcp/execute | Execute Mcp Tool |
+| [**mcpListMcpServers**](McpApi.md#mcplistmcpservers) | **GET** /api/v1/mcp/servers | List Mcp Servers |
 | [**mcpListMcpTools**](McpApi.md#mcplistmcptools) | **GET** /api/v1/mcp/servers/{mcp_server_id}/tools | List Mcp Tools |
 
 
@@ -94,13 +95,83 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## mcpListMcpServers
+
+> McpServersResponse mcpListMcpServers()
+
+List Mcp Servers
+
+List the enabled stored MCP servers this API key can reach.  A server appears when its access list grants the key something: the key\&#39;s own grant, else its owner\&#39;s, else the server\&#39;s &#x60;everyone_tools&#x60;. Each has the &#x60;id&#x60; to send in &#x60;mcp_server_ids&#x60; (or to the tool discovery and execution routes), its &#x60;name&#x60;, and its &#x60;purpose_hint&#x60;. The URL and the token are never returned. A master key has no workspace and is refused with a 404.  A server that sends each user\&#39;s own credential is listed with &#x60;sign_in_required&#x60; true until this key\&#39;s user has signed in to it, with a &#x60;sign_in_url&#x60; to the page that starts their sign-in. Tool discovery and execution answer such a server with a 403, the code &#x60;mcp_sign_in_required&#x60; and the same &#x60;sign_in_url&#x60;. Making a link stores nothing, so listing is free. A key that has no user cannot sign in, so such a server is not in &#x60;servers&#x60; for it: it is in &#x60;left_out&#x60; instead, with the reason.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  McpApi,
+} from '';
+import type { McpListMcpServersRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const config = new Configuration({ 
+    // To configure API key authorization: XApiKeyAuth
+    apiKey: "YOUR API KEY",
+    // To configure API key authorization: ApiKeyAuth
+    apiKey: "YOUR API KEY",
+  });
+  const api = new McpApi(config);
+
+  try {
+    const data = await api.mcpListMcpServers();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**McpServersResponse**](McpServersResponse.md)
+
+### Authorization
+
+[XApiKeyAuth](../README.md#XApiKeyAuth), [ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **401** | Unauthorized |  -  |
+| **404** | Not Found |  -  |
+| **429** | Too Many Requests |  -  |
+| **500** | Internal Server Error |  -  |
+| **503** | Service Unavailable |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## mcpListMcpTools
 
 > McpToolsResponse mcpListMcpTools(mcpServerId)
 
 List Mcp Tools
 
-List the tools a stored MCP server exposes to the authenticated workspace.  Call this once per server when preparing a model or workflow run, and reuse the answer for every tool from that server for the length of the run: there is no cross-run cache in this version, so a later run rediscovers and staleness stays bounded without any invalidation state to keep.  The response is the whole authorized catalog or an error. It is never partial, because a caller would read a short catalog as the complete input to its own authorization and risk policy. The single exception is &#x60;&#x60;warnings&#x60;&#x60;, which names a tool whose descriptor Otari could not carry.  A tool the server removes after discovery may still be proposed from the run\&#39;s snapshot; execution then returns the remote server\&#39;s own typed error.
+List the tools a stored MCP server exposes to the authenticated workspace.  Otari keeps each server\&#39;s own tool listing for up to five minutes and answers from it, so calling this at the start of every run costs no connection to the server. The &#x60;Age&#x60; response header says how many seconds old the listing is, and &#x60;Cache-Control: no-cache&#x60; on the request asks the server again. A kept listing is never served across an edit to the server (its &#x60;server_revision&#x60; changes) or to a different credential, so each user of a per-user server is answered from a listing read with their own token. The key\&#39;s access rule is applied on every call, never kept.  The response is the whole authorized catalog or an error. It is never partial, because a caller would read a short catalog as the complete input to its own authorization and risk policy. The single exception is &#x60;&#x60;warnings&#x60;&#x60;, which names a tool whose descriptor Otari could not carry.  A tool the server removes after discovery may still be proposed from the run\&#39;s snapshot; execution then returns the remote server\&#39;s own typed error.
 
 ### Example
 
