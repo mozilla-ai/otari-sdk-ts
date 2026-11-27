@@ -16,7 +16,7 @@ All URIs are relative to *http://localhost*
 
 Create Workspace Activation Key
 
-Issue the workspace\&#39;s setup API key, rotating the one the guide already issued.  Workspace owners and admins only, like every other action that changes a workspace. The plaintext is returned once and never stored, so a reopened guide rotates the same key row rather than collecting a second one, and answers 409 once the workspace has activated or the guide was dismissed.
+Issue the setup API key, rotating the one the guide already issued.  The workspace\&#39;s for its owners and admins, the caller\&#39;s own for a member who does not manage it; a viewer is refused. The plaintext is returned once and never stored, so a reopened guide rotates the same key row rather than collecting a second one, and answers 409 once the guide is finished or was dismissed.
 
 ### Example
 
@@ -90,7 +90,7 @@ example().catch(console.error);
 
 Dismiss Workspace Activation
 
-Retire the guide for this workspace. Permanent, and idempotent.  Workspace owners and admins only. It retires the card and nothing else: the key the guide issued keeps working, because the operator asked for it and may well have pasted it somewhere already. Revoking one is the Keys page\&#39;s job.
+Retire the guide for this workspace. Permanent, and idempotent.  For a member who does not manage the workspace, for them alone; a viewer is refused. It retires the card and nothing else: the key the guide issued keeps working, because the operator asked for it and may well have pasted it somewhere already. Revoking one is the Keys page\&#39;s job.
 
 ### Example
 

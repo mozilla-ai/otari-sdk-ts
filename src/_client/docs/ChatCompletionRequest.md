@@ -1,7 +1,7 @@
 
 # ChatCompletionRequest
 
-OpenAI-compatible chat completion request.  The completion-param fields are derived from any-llm\'s ``CompletionParams`` (see ``_schema_derive``) so the schema cannot silently drop a param any-llm forwards. Fields below either tighten a derived field (``messages``, ``response_format``), declare an OpenAI wire param ``CompletionParams`` does not model (``service_tier``, forwarded as an any-llm ``**kwargs`` param), add gateway-internal behavior (``mcp_servers``, ``mcp_server_ids``, ``guardrails``, ``tools_header``, ``max_tool_iterations``) that is stripped before the request is forwarded upstream, or restate a derived field unchanged to document it (``max_completion_tokens``), which is only worth doing where the wire contract is not guessable from the field itself.
+OpenAI-compatible chat completion request.  The completion-param fields are derived from any-llm\'s ``CompletionParams`` (see ``_schema_derive``) so the schema cannot silently drop a param any-llm forwards. Fields below either tighten a derived field (``messages``, ``response_format``), add gateway-internal behavior (``mcp_servers``, ``mcp_server_ids``, ``guardrails``, ``tools_header``, ``max_tool_iterations``) that is stripped before the request is forwarded upstream, or restate a derived field unchanged to document it (``max_completion_tokens``), which is only worth doing where the wire contract is not guessable from the field itself.
 
 ## Properties
 
@@ -17,6 +17,7 @@ Name | Type
 `mcpServerIds` | Array&lt;string&gt;
 `mcpServers` | [Array&lt;McpServerConfig&gt;](McpServerConfig.md)
 `messages` | [Array&lt;ChatMessageInput&gt;](ChatMessageInput.md)
+`metadata` | { [key: string]: any; }
 `model` | string
 `n` | number
 `parallelToolCalls` | boolean
@@ -24,6 +25,7 @@ Name | Type
 `promptCacheKey` | string
 `reasoningEffort` | string
 `responseFormat` | { [key: string]: any; }
+`safetyIdentifier` | string
 `seed` | number
 `serviceTier` | string
 `sessionLabel` | string
@@ -55,6 +57,7 @@ const example = {
   "mcpServerIds": null,
   "mcpServers": null,
   "messages": null,
+  "metadata": null,
   "model": null,
   "n": null,
   "parallelToolCalls": null,
@@ -62,6 +65,7 @@ const example = {
   "promptCacheKey": null,
   "reasoningEffort": null,
   "responseFormat": null,
+  "safetyIdentifier": null,
   "seed": null,
   "serviceTier": null,
   "sessionLabel": null,

@@ -1,7 +1,7 @@
 
 # McpToolWarning
 
-One tool that was omitted, and the code that omitted it (R-SCHEMA-3).
+One tool that was omitted, and the code that omitted it.
 
 ## Properties
 

@@ -1,7 +1,7 @@
 
 # McpErrorBody
 
-The one error shape both stored-server endpoints return (R-ERR-1).
+The one error shape both stored-server endpoints return.
 
 ## Properties
 
@@ -11,6 +11,7 @@ Name | Type
 `detail` | string
 `executionState` | [ExecutionState](ExecutionState.md)
 `requestId` | string
+`signInUrl` | string
 
 ## Example
 
@@ -23,6 +24,7 @@ const example = {
   "detail": null,
   "executionState": null,
   "requestId": null,
+  "signInUrl": null,
 } satisfies McpErrorBody
 
 console.log(example)

@@ -10,7 +10,9 @@ Name | Type
 `apiBase` | string
 `apiKey` | string
 `clientArgs` | { [key: string]: any; }
+`endpointAuth` | [EndpointAuthRequest](EndpointAuthRequest.md)
 `name` | string
+`zeroDataRetention` | boolean
 
 ## Example
 
@@ -22,7 +24,9 @@ const example = {
   "apiBase": null,
   "apiKey": null,
   "clientArgs": null,
+  "endpointAuth": null,
   "name": null,
+  "zeroDataRetention": null,
 } satisfies OrgProviderKeyUpdateRequest
 
 console.log(example)

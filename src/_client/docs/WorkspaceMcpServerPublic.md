@@ -8,12 +8,26 @@ The API-facing shape. Never carries the token, only whether one is set.  No ``la
 Name | Type
 ------------ | -------------
 `allowedTools` | Array&lt;string&gt;
+`attachByDefault` | boolean
+`callerAccess` | string
+`connectedUsers` | number
 `createdAt` | string
+`credentialMode` | [McpCredentialMode](McpCredentialMode.md)
 `enabled` | boolean
+`everyoneTools` | Array&lt;string&gt;
+`hasOauthClientSecret` | boolean
 `hasToken` | boolean
+`health` | [WorkspaceMcpServerHealth](WorkspaceMcpServerHealth.md)
 `id` | string
+`inWorkspace` | [McpServerWorkspaceSettings](McpServerWorkspaceSettings.md)
 `name` | string
+`needsSetup` | boolean
+`oauthClientId` | string
 `purposeHint` | string
+`readTools` | Array&lt;string&gt;
+`readToolsFromServer` | boolean
+`scope` | string
+`sharedAccount` | [McpSharedAccountPublic](McpSharedAccountPublic.md)
 `updatedAt` | string
 `url` | string
 `workspaceId` | string
@@ -26,12 +40,26 @@ import type { WorkspaceMcpServerPublic } from ''
 // TODO: Update the object below with actual values
 const example = {
   "allowedTools": null,
+  "attachByDefault": null,
+  "callerAccess": null,
+  "connectedUsers": null,
   "createdAt": null,
+  "credentialMode": null,
   "enabled": null,
+  "everyoneTools": null,
+  "hasOauthClientSecret": null,
   "hasToken": null,
+  "health": null,
   "id": null,
+  "inWorkspace": null,
   "name": null,
+  "needsSetup": null,
+  "oauthClientId": null,
   "purposeHint": null,
+  "readTools": null,
+  "readToolsFromServer": null,
+  "scope": null,
+  "sharedAccount": null,
   "updatedAt": null,
   "url": null,
   "workspaceId": null,

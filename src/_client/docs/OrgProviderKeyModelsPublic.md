@@ -1,7 +1,7 @@
 
 # OrgProviderKeyModelsPublic
 
-One page of a key\'s offered models, and how many there are in total.
+One page of a key\'s offered models, and how many there are in total.  ``count`` is the total of the kind asked for, and ``type_counts`` how many of each kind the key offers, ``unknown`` for a model of no known kind.
 
 ## Properties
 
@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `count` | number
 `data` | [Array&lt;OrgProviderKeyModelPublic&gt;](OrgProviderKeyModelPublic.md)
+`typeCounts` | { [key: string]: number; }
 
 ## Example
 
@@ -19,6 +20,7 @@ import type { OrgProviderKeyModelsPublic } from ''
 const example = {
   "count": null,
   "data": null,
+  "typeCounts": null,
 } satisfies OrgProviderKeyModelsPublic
 
 console.log(example)

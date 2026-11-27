@@ -11,6 +11,7 @@ Name | Type
 `isOther` | boolean
 `key` | string
 `label` | string
+`modelGroup` | string
 `requests` | number
 `tokens` | number
 
@@ -25,6 +26,7 @@ const example = {
   "isOther": null,
   "key": null,
   "label": null,
+  "modelGroup": null,
   "requests": null,
   "tokens": null,
 } satisfies UsageGroupRow

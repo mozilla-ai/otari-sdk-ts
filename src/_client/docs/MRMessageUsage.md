@@ -15,8 +15,8 @@ Name | Type
 `outputTokensDetails` | [MROutputTokensDetails](MROutputTokensDetails.md)
 `serverToolUse` | [MRServerToolUsage](MRServerToolUsage.md)
 `serviceTier` | string
-`iterations` | [Array&lt;MRMessageUsageIterationsInner&gt;](MRMessageUsageIterationsInner.md)
 `speed` | string
+`iterations` | [Array&lt;MRMessageUsageIterationsInner&gt;](MRMessageUsageIterationsInner.md)
 
 ## Example
 
@@ -34,8 +34,8 @@ const example = {
   "outputTokensDetails": null,
   "serverToolUse": null,
   "serviceTier": null,
-  "iterations": null,
   "speed": null,
+  "iterations": null,
 } satisfies MRMessageUsage
 
 console.log(example)

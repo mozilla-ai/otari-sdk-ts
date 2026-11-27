@@ -14,7 +14,7 @@ All URIs are relative to *http://localhost*
 
 Get Bootstrap
 
-Return the deployment context the dashboard shell renders from.  Public: the shell fetches this before it knows whether it can authenticate. That is also why &#x60;&#x60;sign_in_methods&#x60;&#x60; is answered here rather than behind a credential, and it publishes nothing an unauthenticated caller could not already learn by trying both credentials against the sign-in endpoint.  The database read is two primary-key lookups: the &#x60;&#x60;tenancy_bootstrap_user_id&#x60;&#x60; marker, and the identity it names, to answer whether *that* identity holds a password (#702). It runs only in standalone mode: a hybrid gateway has no session to describe, and &#x60;&#x60;get_db_if_needed&#x60;&#x60; hands it no session to read one from.
+Return the deployment context the dashboard shell renders from.  Public: the shell fetches this before it knows whether it can authenticate. That is also why &#x60;&#x60;sign_in_methods&#x60;&#x60; is answered here rather than behind a credential, and it publishes nothing an unauthenticated caller could not already learn by trying both credentials against the sign-in endpoint.  The database read is two primary-key lookups: the &#x60;&#x60;tenancy_bootstrap_user_id&#x60;&#x60; marker, and the identity it names, to answer whether *that* identity holds a password (#702).
 
 ### Example
 

@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `email` | string
 `fullName` | string
+`invite` | string
 `password` | string
 `termsAccepted` | boolean
 
@@ -21,6 +22,7 @@ import type { SignupRequest } from ''
 const example = {
   "email": null,
   "fullName": null,
+  "invite": null,
   "password": null,
   "termsAccepted": null,
 } satisfies SignupRequest

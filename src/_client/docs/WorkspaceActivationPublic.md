@@ -10,6 +10,7 @@ Name | Type
 `activationAttempt` | [ActivationAttemptPublic](ActivationAttemptPublic.md)
 `dismissed` | boolean
 `experienceEligible` | boolean
+`issuedKey` | [ActivationIssuedKeyPublic](ActivationIssuedKeyPublic.md)
 `latestAttempt` | [ActivationAttemptPublic](ActivationAttemptPublic.md)
 `status` | string
 
@@ -23,6 +24,7 @@ const example = {
   "activationAttempt": null,
   "dismissed": null,
   "experienceEligible": null,
+  "issuedKey": null,
   "latestAttempt": null,
   "status": null,
 } satisfies WorkspaceActivationPublic

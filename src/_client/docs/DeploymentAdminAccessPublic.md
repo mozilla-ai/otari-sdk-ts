@@ -8,6 +8,7 @@ Whether the caller may reach the deployment administration surface.  The one end
 Name | Type
 ------------ | -------------
 `granted` | boolean
+`isBootstrapOperator` | boolean
 
 ## Example
 
@@ -17,6 +18,7 @@ import type { DeploymentAdminAccessPublic } from ''
 // TODO: Update the object below with actual values
 const example = {
   "granted": null,
+  "isBootstrapOperator": null,
 } satisfies DeploymentAdminAccessPublic
 
 console.log(example)

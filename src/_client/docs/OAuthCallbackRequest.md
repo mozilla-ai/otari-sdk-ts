@@ -1,7 +1,7 @@
 
 # OAuthCallbackRequest
 
-The authorization code a provider handed the browser.  No ``redirect_uri``: this deployment derives its own from ``public_base_url`` so the URI used to build the authorization request and the one sent with the exchange are the same string by construction, and a browser cannot choose what this server sends to a provider.  ``state`` is required, and is what binds this callback to an authorization request this deployment actually made: it is claimed from ``oauth_pending_state`` before the code is sent anywhere, and the row it claims is what carries the PKCE verifier the exchange needs. The flow cookie ``/authorize`` set travels alongside and binds it to the browser.
+The authorization code a provider handed the browser.  No ``redirect_uri``: this deployment derives its own from ``public_base_url`` so the URI used to build the authorization request and the one sent with the exchange are the same string by construction, and a browser cannot choose what this server sends to a provider.  ``state`` is required, and is what binds this callback to an authorization request this deployment actually made. The flow cookie carries the token that state names, so it binds the callback to the browser as well.
 
 ## Properties
 
@@ -9,6 +9,7 @@ Name | Type
 ------------ | -------------
 `code` | string
 `state` | string
+`termsAccepted` | boolean
 
 ## Example
 
@@ -19,6 +20,7 @@ import type { OAuthCallbackRequest } from ''
 const example = {
   "code": null,
   "state": null,
+  "termsAccepted": null,
 } satisfies OAuthCallbackRequest
 
 console.log(example)

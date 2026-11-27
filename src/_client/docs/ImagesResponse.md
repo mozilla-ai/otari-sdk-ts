@@ -12,7 +12,9 @@ Name | Type
 `data` | [Array&lt;IMGImage&gt;](IMGImage.md)
 `outputFormat` | string
 `quality` | string
-`size` | string
+`safetyIdentifier` | string
+`size` | [Size](Size.md)
+`svgUsage` | [IMGSvgUsage](IMGSvgUsage.md)
 `usage` | [IMGUsage](IMGUsage.md)
 
 ## Example
@@ -27,7 +29,9 @@ const example = {
   "data": null,
   "outputFormat": null,
   "quality": null,
+  "safetyIdentifier": null,
   "size": null,
+  "svgUsage": null,
   "usage": null,
 } satisfies ImagesResponse
 

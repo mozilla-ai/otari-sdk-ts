@@ -9,7 +9,6 @@ Name | Type
 ------------ | -------------
 `budgetEstimateDefaultOutputTokens` | number
 `defaultPricing` | boolean
-`fileUnderstandingEnabled` | boolean
 `modelCacheTtlSeconds` | number
 `modelDiscovery` | boolean
 `modelDiscoveryNegativeTtlSeconds` | number
@@ -34,7 +33,6 @@ import type { UpdateSettingsRequest } from ''
 const example = {
   "budgetEstimateDefaultOutputTokens": null,
   "defaultPricing": null,
-  "fileUnderstandingEnabled": null,
   "modelCacheTtlSeconds": null,
   "modelDiscovery": null,
   "modelDiscoveryNegativeTtlSeconds": null,

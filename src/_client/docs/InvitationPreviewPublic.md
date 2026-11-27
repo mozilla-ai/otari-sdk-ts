@@ -1,7 +1,7 @@
 
 # InvitationPreviewPublic
 
-What an unauthenticated visitor sees before committing to accept.  Deliberately narrow: the address it was sent to, the organization\'s name, and the role on offer. The token is the caller\'s only credential here, not a session, so this carries nothing that identifies who sent it or any other member.
+What an unauthenticated visitor sees before committing to accept.  Deliberately narrow: the address it was sent to, the organization\'s name, the role on offer, and what to do next. The token is the caller\'s only credential here, not a session, so this carries nothing that identifies who sent it or any other member.
 
 ## Properties
 
@@ -9,9 +9,10 @@ Name | Type
 ------------ | -------------
 `email` | string
 `expiresAt` | Date
-`needsPassword` | boolean
+`nextStep` | [InvitationNextStep](InvitationNextStep.md)
 `organizationName` | string
 `role` | string
+`waysIn` | Array&lt;string&gt;
 
 ## Example
 
@@ -22,9 +23,10 @@ import type { InvitationPreviewPublic } from ''
 const example = {
   "email": null,
   "expiresAt": null,
-  "needsPassword": null,
+  "nextStep": null,
   "organizationName": null,
   "role": null,
+  "waysIn": null,
 } satisfies InvitationPreviewPublic
 
 console.log(example)
